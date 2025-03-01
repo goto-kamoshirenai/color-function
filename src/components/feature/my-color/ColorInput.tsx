@@ -6,6 +6,116 @@ import {
 } from "@/const/colorConst";
 import { useMyColorStore } from "@/store/myColorStore";
 import React, { useState, useEffect } from "react";
+import { MdContentCopy, MdCheck, MdClear } from "react-icons/md";
+
+interface ColorFieldProps {
+  color: string;
+  onChange: (color: string) => void;
+  placeholder?: string;
+  onClear?: () => void;
+}
+
+const ColorField: React.FC<ColorFieldProps> = ({
+  color,
+  onChange,
+  placeholder,
+  onClear,
+}) => {
+  const { mainColorA, getHoverBaseColor, textColorA, accentColorA } =
+    useMyColorStore();
+  const [localColor, setLocalColor] = useState(color);
+  const [isCopied, setIsCopied] = useState(false);
+  const [isFocused, setIsFocused] = useState(false);
+
+  useEffect(() => {
+    setLocalColor(color);
+  }, [color]);
+
+  const handleColorChange = (value: string) => {
+    setLocalColor(value);
+    if (value.match(/^#[0-9A-Fa-f]{6}$/) || value === "") {
+      onChange(value);
+    }
+  };
+
+  const handleCopy = () => {
+    if (localColor.match(/^#[0-9A-Fa-f]{6}$/)) {
+      navigator.clipboard.writeText(localColor);
+      setIsCopied(true);
+      setTimeout(() => {
+        setIsCopied(false);
+      }, 1000);
+    }
+  };
+
+  return (
+    <div className="flex gap-2">
+      <input
+        type="color"
+        value={localColor.match(/^#[0-9A-Fa-f]{6}$/) ? localColor : "#000000"}
+        onChange={(e) => handleColorChange(e.target.value)}
+        className="w-10 h-10"
+        style={{
+          backgroundColor: "transparent",
+          borderColor: mainColorA,
+        }}
+      />
+      <div className="flex-1 relative">
+        <input
+          type="text"
+          value={localColor}
+          onChange={(e) => handleColorChange(e.target.value)}
+          onFocus={() => setIsFocused(true)}
+          onBlur={() => setIsFocused(false)}
+          className="w-full px-3 py-2 border rounded-lg pr-20 focus:outline-none"
+          style={{
+            backgroundColor: getHoverBaseColor(),
+            borderColor: isFocused ? accentColorA : undefined,
+            boxShadow: isFocused ? `0 0 0 1px ${accentColorA}` : undefined,
+          }}
+          placeholder={placeholder}
+        />
+        <div className="absolute right-3 top-1/2 -translate-y-1/2 flex gap-2">
+          {localColor.match(/^#[0-9A-Fa-f]{6}$/) && (
+            <button
+              onClick={handleCopy}
+              className="hover:opacity-70 transition-opacity"
+              style={{ color: textColorA }}
+            >
+              <div className="relative w-5 h-5">
+                <MdContentCopy
+                  size={20}
+                  className="absolute transition-all duration-200"
+                  style={{
+                    opacity: isCopied ? 0 : 1,
+                    transform: isCopied ? "scale(0.5)" : "scale(1)",
+                  }}
+                />
+                <MdCheck
+                  size={20}
+                  className="absolute transition-all duration-200"
+                  style={{
+                    opacity: isCopied ? 1 : 0,
+                    transform: isCopied ? "scale(1)" : "scale(1.5)",
+                  }}
+                />
+              </div>
+            </button>
+          )}
+          {onClear && (
+            <button
+              onClick={onClear}
+              className="hover:opacity-70 transition-opacity"
+              style={{ color: textColorA }}
+            >
+              <MdClear size={20} />
+            </button>
+          )}
+        </div>
+      </div>
+    </div>
+  );
+};
 
 interface ColorInputProps {
   label: string;
@@ -24,16 +134,8 @@ const ColorInput = ({
   onChangeA,
   onChangeB,
 }: ColorInputProps) => {
-  const {
-    mainColorA,
-    textColorA,
-    textColorB,
-    getHoverTextColor,
-    getHoverBaseColor,
-  } = useMyColorStore();
+  const { textColorA, textColorB, getHoverTextColor } = useMyColorStore();
   const [showColorB, setShowColorB] = useState(!!colorB);
-  const [localColorA, setLocalColorA] = useState(colorA);
-  const [localColorB, setLocalColorB] = useState(colorB || "");
 
   const defaultColor =
     type === "main"
@@ -43,70 +145,24 @@ const ColorInput = ({
       : type === "accent"
       ? defaultAccentColor
       : defaultTextColor;
-  useEffect(() => {
-    setLocalColorA(colorA);
-  }, [colorA]);
-
-  useEffect(() => {
-    setLocalColorB(colorB || "");
-  }, [colorB]);
-
-  const handleColorAChange = (value: string) => {
-    setLocalColorA(value);
-    if (value.match(/^#[0-9A-Fa-f]{6}$/) || value === "") {
-      onChangeA(value);
-    }
-  };
-
-  const handleColorBChange = (value: string) => {
-    setLocalColorB(value);
-    if (value.match(/^#[0-9A-Fa-f]{6}$/) || value === "") {
-      onChangeB?.(value);
-    }
-  };
 
   return (
     <div className="space-y-1">
       <h3 className="text-lg font-medium">{label}</h3>
-      <div className="flex gap-4 ">
-        <div className="flex-1 space-y-2">
-          <label
-            className="block text-sm  line-height-1"
-            style={{ color: textColorB }}
-          >
-            main color
-          </label>
-          <div className="flex gap-2">
-            <input
-              type="color"
-              value={
-                localColorA.match(/^#[0-9A-Fa-f]{6}$/) ? localColorA : "#000000"
-              }
-              onChange={(e) => handleColorAChange(e.target.value)}
-              className="w-10 h-10"
-              style={{
-                backgroundColor: "transparent",
-                borderColor: mainColorA,
-              }}
-            />
-            <input
-              type="text"
-              value={localColorA}
-              onChange={(e) => handleColorAChange(e.target.value)}
-              className="flex-1 px-3 py-2 border rounded-lg"
-              style={{
-                backgroundColor: getHoverBaseColor(),
-              }}
-              placeholder={defaultColor}
-            />
-          </div>
+      <div className="flex gap-4">
+        <div className="flex-1">
+          <ColorField
+            color={colorA}
+            onChange={onChangeA}
+            placeholder={defaultColor}
+          />
         </div>
 
         {!showColorB ? (
-          <div className="flex-1 flex items-end pb-2">
+          <div className="flex-1 flex items-center">
             <button
               onClick={() => setShowColorB(true)}
-              className="flex items-center gap-2 text-sm "
+              className="flex items-center gap-2 text-sm"
               style={{
                 color: textColorB,
               }}
@@ -142,61 +198,16 @@ const ColorInput = ({
             </button>
           </div>
         ) : (
-          <div className="flex-1 space-y-2">
-            <div className="flex items-center justify-between">
-              <label
-                className="text-sm "
-                style={{
-                  color: textColorB,
-                }}
-              >
-                sub color
-              </label>
-              <button
-                onClick={() => {
-                  setShowColorB(false);
-                  onChangeB?.("");
-                }}
-                className="text-sm "
-                style={{
-                  color: textColorB,
-                }}
-                onMouseEnter={(e) => {
-                  e.currentTarget.style.color = textColorA;
-                }}
-                onMouseLeave={(e) => {
-                  e.currentTarget.style.color = getHoverTextColor();
-                }}
-              >
-                設定しない
-              </button>
-            </div>
-            <div className="flex gap-2">
-              <input
-                type="color"
-                value={
-                  localColorB.match(/^#[0-9A-Fa-f]{6}$/)
-                    ? localColorB
-                    : defaultColor
-                }
-                onChange={(e) => handleColorBChange(e.target.value)}
-                className="w-10 h-10"
-                style={{
-                  backgroundColor: "transparent",
-                  borderColor: mainColorA,
-                }}
-              />
-              <input
-                type="text"
-                value={localColorB}
-                onChange={(e) => handleColorBChange(e.target.value)}
-                className="flex-1 px-3 py-2 border rounded-lg"
-                placeholder="#000000"
-                style={{
-                  backgroundColor: getHoverBaseColor(),
-                }}
-              />
-            </div>
+          <div className="flex-1">
+            <ColorField
+              color={colorB || ""}
+              onChange={(color) => onChangeB?.(color)}
+              placeholder="#000000"
+              onClear={() => {
+                setShowColorB(false);
+                onChangeB?.("");
+              }}
+            />
           </div>
         )}
       </div>

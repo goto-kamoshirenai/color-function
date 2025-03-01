@@ -6,6 +6,7 @@ import React from "react";
 import PanelWrapper from "@/components/elements/PanelWrapper";
 import HueWheel from "@/components/elements/HueWheel";
 import ValueMeter from "@/components/elements/ValueMeter";
+import { useTranslation } from "@/contexts/TranslationContext";
 
 interface ColorSet {
   colorA: string;
@@ -14,6 +15,7 @@ interface ColorSet {
 }
 
 const CardHSV = () => {
+  const { t } = useTranslation();
   const {
     mainColorA,
     mainColorB,
@@ -71,7 +73,7 @@ const CardHSV = () => {
   };
 
   return (
-    <PanelWrapper title="HSV Analysis">
+    <PanelWrapper title={t.sidebar.hsv}>
       <div
         className="flex flex-row flex-wrap gap-2"
         style={{ backgroundColor: getHoverBaseColor() }}

@@ -67,7 +67,7 @@ const MyColorPanel = () => {
                       e.currentTarget.style.color = getHoverMainColor();
                     }}
                     onMouseLeave={(e) => {
-                      e.currentTarget.style.color = textColorA;
+                      e.currentTarget.style.color = mainColorA;
                     }}
                   />
                 </button>
