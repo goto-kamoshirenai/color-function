@@ -3,7 +3,7 @@ import React from "react";
 
 const CardContrast = () => {
   return (
-    <PanelWrapper>
+    <PanelWrapper title="Card Contrast">
       <div className="flex flex-col items-center justify-center">
         <h1 className="text-2xl font-bold">Card Contrast</h1>
       </div>

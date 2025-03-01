@@ -1,17 +1,14 @@
+import {
+  defaultAccentColor,
+  defaultBaseColor,
+  defaultMainColor,
+  defaultTextColor,
+} from "@/const/colorConst";
 import { create } from "zustand";
 import { devtools } from "zustand/middleware";
 
-const defaultMainColor = "#000000";
-export const defaultMainColorB = "#404040";
-const defaultBaseColor = "#FFFFFF";
-export const defaultBaseColorB = "#e5e5e5";
-const defaultAccentColor = "#2EA9DF";
-export const defaultAccentColorB = "#005CAF";
-const defaultTextColor = "#000000";
-export const defaultTextColorB = "#404040";
-
 interface MyColorState {
-  // パネルの表示状態
+  // 色の設定
   mainColorA: string;
   mainColorB?: string;
   baseColorA: string;
@@ -21,6 +18,16 @@ interface MyColorState {
   textColorA: string;
   textColorB?: string;
 
+  // ゲッター
+  getMainColor: () => string;
+  getBaseColor: () => string;
+  getAccentColor: () => string;
+  getTextColor: () => string;
+  getHoverMainColor: () => string;
+  getHoverBaseColor: () => string;
+  getHoverAccentColor: () => string;
+  getHoverTextColor: () => string;
+  getBorderColor: () => string;
   // アクション
   setMainColorA: (color: string) => void;
   setMainColorB: (color: string) => void;
@@ -30,11 +37,14 @@ interface MyColorState {
   setAccentColorB: (color: string) => void;
   setTextColorA: (color: string) => void;
   setTextColorB: (color: string) => void;
+
+  // リセット
+  resetMyColorStore: () => void;
 }
 
 export const useMyColorStore = create<MyColorState>()(
   devtools(
-    (set) => ({
+    (set, get) => ({
       mainColorA: defaultMainColor,
       mainColorB: "",
       baseColorA: defaultBaseColor,
@@ -44,6 +54,24 @@ export const useMyColorStore = create<MyColorState>()(
       textColorA: defaultTextColor,
       textColorB: "",
 
+      // ゲッター
+      getMainColor: () => get().mainColorA ?? defaultMainColor,
+      getBaseColor: () => get().baseColorA ?? defaultBaseColor,
+      getAccentColor: () => get().accentColorA ?? defaultAccentColor,
+      getTextColor: () => get().textColorA ?? defaultTextColor,
+
+      getHoverMainColor: () =>
+        get().mainColorB ?? get().mainColorA ?? defaultMainColor,
+      getHoverBaseColor: () =>
+        get().baseColorB ?? get().baseColorA ?? defaultBaseColor,
+      getHoverAccentColor: () =>
+        get().accentColorB ?? get().accentColorA ?? defaultAccentColor,
+      getHoverTextColor: () =>
+        get().textColorB ?? get().textColorA ?? defaultTextColor,
+      getBorderColor: () =>
+        get().baseColorB ?? get().textColorA ?? defaultBaseColor,
+
+      // アクション
       setMainColorA: (color: string) => set({ mainColorA: color }),
       setMainColorB: (color: string) => set({ mainColorB: color }),
       setBaseColorA: (color: string) => set({ baseColorA: color }),
@@ -52,8 +80,19 @@ export const useMyColorStore = create<MyColorState>()(
       setAccentColorB: (color: string) => set({ accentColorB: color }),
       setTextColorA: (color: string) => set({ textColorA: color }),
       setTextColorB: (color: string) => set({ textColorB: color }),
-    }),
 
+      resetMyColorStore: () =>
+        set({
+          mainColorA: defaultMainColor,
+          mainColorB: "",
+          baseColorA: defaultBaseColor,
+          baseColorB: "",
+          accentColorA: defaultAccentColor,
+          accentColorB: "",
+          textColorA: defaultTextColor,
+          textColorB: "",
+        }),
+    }),
     {
       name: "MyColorStore",
     }

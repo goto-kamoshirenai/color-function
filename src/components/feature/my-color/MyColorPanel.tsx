@@ -5,6 +5,7 @@ import { useMyColorStore } from "@/store/myColorStore";
 import { motion, AnimatePresence } from "framer-motion";
 import React from "react";
 import ColorInput from "./ColorInput";
+import { MdCached } from "react-icons/md";
 
 const MyColorPanel = () => {
   const { isMyColorPanelOpen, toggleMyColorPanel } = usePanelStore();
@@ -25,6 +26,8 @@ const MyColorPanel = () => {
     setAccentColorB,
     setTextColorA,
     setTextColorB,
+    resetMyColorStore,
+    getHoverMainColor,
   } = useMyColorStore();
 
   return (
@@ -36,7 +39,7 @@ const MyColorPanel = () => {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             onClick={toggleMyColorPanel}
-            className="fixed inset-0 bg-black/50 backdrop-blur-sm z-40"
+            className="fixed inset-0 bg-black/50  z-40"
           />
           <motion.div
             initial={{ opacity: 0, scale: 0.9 }}
@@ -44,14 +47,37 @@ const MyColorPanel = () => {
             exit={{ opacity: 0, scale: 0.9 }}
             transition={{ type: "spring", duration: 0.3 }}
             className="fixed inset-0 m-auto w-[80vw] h-[80vh] bg-white rounded-xl shadow-elevation-3 p-6 z-50"
+            style={{
+              backgroundColor: baseColorA,
+            }}
           >
             <div className="space-y-2" style={{ color: textColorA }}>
-              <h2 className="text-2xl font-bold">My Color</h2>
+              <div className="flex justify-between items-center">
+                <h2
+                  className="text-2xl font-bold"
+                  style={{ color: mainColorA }}
+                >
+                  My Color Setting
+                </h2>
+                <button onClick={resetMyColorStore}>
+                  <MdCached
+                    className="w-6 h-6"
+                    style={{ color: mainColorA }}
+                    onMouseEnter={(e) => {
+                      e.currentTarget.style.color = getHoverMainColor();
+                    }}
+                    onMouseLeave={(e) => {
+                      e.currentTarget.style.color = textColorA;
+                    }}
+                  />
+                </button>
+              </div>
               <div className="space-y-1">
                 <ColorInput
                   label="Main"
                   colorA={mainColorA}
                   colorB={mainColorB}
+                  type="main"
                   onChangeA={setMainColorA}
                   onChangeB={setMainColorB}
                 />
@@ -59,6 +85,7 @@ const MyColorPanel = () => {
                   label="Base"
                   colorA={baseColorA}
                   colorB={baseColorB}
+                  type="base"
                   onChangeA={setBaseColorA}
                   onChangeB={setBaseColorB}
                 />
@@ -66,6 +93,7 @@ const MyColorPanel = () => {
                   label="Accent"
                   colorA={accentColorA}
                   colorB={accentColorB}
+                  type="accent"
                   onChangeA={setAccentColorA}
                   onChangeB={setAccentColorB}
                 />
@@ -73,6 +101,7 @@ const MyColorPanel = () => {
                   label="Text"
                   colorA={textColorA}
                   colorB={textColorB}
+                  type="text"
                   onChangeA={setTextColorA}
                   onChangeB={setTextColorB}
                 />

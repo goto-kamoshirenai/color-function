@@ -1,12 +1,6 @@
 "use client";
 
-import {
-  defaultAccentColorB,
-  defaultBaseColorB,
-  defaultMainColorB,
-  defaultTextColorB,
-  useMyColorStore,
-} from "@/store/myColorStore";
+import { useMyColorStore } from "@/store/myColorStore";
 import SlashIcon from "@/components/elements/SlashIcon";
 import React from "react";
 import { usePanelStore } from "@/store/panelStore";
@@ -17,11 +11,12 @@ const MyColorButton = () => {
     mainColorA,
     mainColorB,
     baseColorA,
-    baseColorB,
     accentColorA,
-    accentColorB,
     textColorA,
-    textColorB,
+    getHoverMainColor,
+    getHoverBaseColor,
+    getHoverAccentColor,
+    getHoverTextColor,
   } = useMyColorStore();
 
   return (
@@ -35,8 +30,7 @@ const MyColorButton = () => {
         }}
         onMouseEnter={(e) => {
           e.currentTarget.style.border = `1px solid ${mainColorB}`;
-          e.currentTarget.style.backgroundColor =
-            baseColorB ?? defaultBaseColorB;
+          e.currentTarget.style.backgroundColor = getHoverBaseColor();
         }}
         onMouseLeave={(e) => {
           e.currentTarget.style.border = `1px solid ${mainColorA}`;
@@ -47,7 +41,7 @@ const MyColorButton = () => {
         <div className="relative">
           <SlashIcon
             color={accentColorA}
-            hoverColor={accentColorB ?? defaultAccentColorB}
+            hoverColor={getHoverAccentColor()}
             className="w-4"
           />
         </div>
@@ -57,8 +51,7 @@ const MyColorButton = () => {
             backgroundColor: mainColorA,
           }}
           onMouseEnter={(e) => {
-            e.currentTarget.style.backgroundColor =
-              mainColorB ?? defaultMainColorB;
+            e.currentTarget.style.backgroundColor = getHoverMainColor();
           }}
           onMouseLeave={(e) => {
             e.currentTarget.style.backgroundColor = mainColorA;
@@ -70,7 +63,7 @@ const MyColorButton = () => {
             marginLeft: "0.2rem",
           }}
           onMouseEnter={(e) => {
-            e.currentTarget.style.color = textColorB ?? defaultTextColorB;
+            e.currentTarget.style.color = getHoverTextColor();
           }}
           onMouseLeave={(e) => {
             e.currentTarget.style.color = textColorA;

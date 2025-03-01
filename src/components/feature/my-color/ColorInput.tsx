@@ -1,3 +1,9 @@
+import {
+  defaultAccentColor,
+  defaultBaseColor,
+  defaultMainColor,
+  defaultTextColor,
+} from "@/const/colorConst";
 import { useMyColorStore } from "@/store/myColorStore";
 import React, { useState, useEffect } from "react";
 
@@ -5,6 +11,7 @@ interface ColorInputProps {
   label: string;
   colorA: string;
   colorB?: string;
+  type: "main" | "base" | "accent" | "text";
   onChangeA: (color: string) => void;
   onChangeB?: (color: string) => void;
 }
@@ -13,14 +20,29 @@ const ColorInput = ({
   label,
   colorA,
   colorB,
+  type,
   onChangeA,
   onChangeB,
 }: ColorInputProps) => {
-  const { textColorA, textColorB } = useMyColorStore();
+  const {
+    mainColorA,
+    textColorA,
+    textColorB,
+    getHoverTextColor,
+    getHoverBaseColor,
+  } = useMyColorStore();
   const [showColorB, setShowColorB] = useState(!!colorB);
   const [localColorA, setLocalColorA] = useState(colorA);
   const [localColorB, setLocalColorB] = useState(colorB || "");
 
+  const defaultColor =
+    type === "main"
+      ? defaultMainColor
+      : type === "base"
+      ? defaultBaseColor
+      : type === "accent"
+      ? defaultAccentColor
+      : defaultTextColor;
   useEffect(() => {
     setLocalColorA(colorA);
   }, [colorA]);
@@ -64,7 +86,7 @@ const ColorInput = ({
               className="w-10 h-10"
               style={{
                 backgroundColor: "transparent",
-                borderColor: "transparent",
+                borderColor: mainColorA,
               }}
             />
             <input
@@ -72,7 +94,10 @@ const ColorInput = ({
               value={localColorA}
               onChange={(e) => handleColorAChange(e.target.value)}
               className="flex-1 px-3 py-2 border rounded-lg"
-              placeholder="#000000"
+              style={{
+                backgroundColor: getHoverBaseColor(),
+              }}
+              placeholder={defaultColor}
             />
           </div>
         </div>
@@ -86,14 +111,13 @@ const ColorInput = ({
                 color: textColorB,
               }}
               onMouseEnter={(e) => {
-                e.currentTarget.style.color = textColorB ?? textColorA;
+                e.currentTarget.style.color = getHoverTextColor();
               }}
             >
               <span
                 className="inline-flex items-center justify-center w-6 h-6 border border-current rounded-full"
                 onMouseEnter={(e) => {
-                  e.currentTarget.style.backgroundColor =
-                    textColorB ?? textColorA;
+                  e.currentTarget.style.backgroundColor = getHoverTextColor();
                 }}
                 onMouseLeave={(e) => {
                   e.currentTarget.style.backgroundColor = "transparent";
@@ -108,7 +132,7 @@ const ColorInput = ({
                     e.currentTarget.style.color = textColorA;
                   }}
                   onMouseLeave={(e) => {
-                    e.currentTarget.style.color = textColorB ?? textColorA;
+                    e.currentTarget.style.color = getHoverTextColor();
                   }}
                 >
                   +
@@ -141,7 +165,7 @@ const ColorInput = ({
                   e.currentTarget.style.color = textColorA;
                 }}
                 onMouseLeave={(e) => {
-                  e.currentTarget.style.color = textColorB ?? textColorA;
+                  e.currentTarget.style.color = getHoverTextColor();
                 }}
               >
                 設定しない
@@ -153,13 +177,13 @@ const ColorInput = ({
                 value={
                   localColorB.match(/^#[0-9A-Fa-f]{6}$/)
                     ? localColorB
-                    : "#000000"
+                    : defaultColor
                 }
                 onChange={(e) => handleColorBChange(e.target.value)}
                 className="w-10 h-10"
                 style={{
                   backgroundColor: "transparent",
-                  borderColor: "transparent",
+                  borderColor: mainColorA,
                 }}
               />
               <input
@@ -168,6 +192,9 @@ const ColorInput = ({
                 onChange={(e) => handleColorBChange(e.target.value)}
                 className="flex-1 px-3 py-2 border rounded-lg"
                 placeholder="#000000"
+                style={{
+                  backgroundColor: getHoverBaseColor(),
+                }}
               />
             </div>
           </div>

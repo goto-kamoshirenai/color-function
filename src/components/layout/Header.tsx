@@ -52,56 +52,66 @@ const Header = () => {
 
       <AnimatePresence mode="wait">
         {isNavigationOpen && (
-          <motion.nav
-            variants={menuVariants}
-            initial="hidden"
-            animate="visible"
-            exit="exit"
-            transition={{ duration: 0.2 }}
-            className="fixed top-0 left-4 h-full bg-transparent z-40"
-          >
-            <div className="relative pt-16 flex ">
-              <motion.div
-                variants={iconContainerVariants}
-                initial="hidden"
-                animate="visible"
-                transition={{ duration: 0.3 }}
-                className="flex flex-col gap-y-2"
-              >
-                {MENU_ITEMS.map((item) => (
-                  <div key={`icon-${item.id}`} className="h-10">
-                    <Image
-                      src={`/color-function_list.svg`}
-                      alt={item.label}
-                      width={40}
-                      height={40}
-                    />
-                  </div>
-                ))}
-              </motion.div>
-              <motion.div
-                variants={textContainerVariants}
-                initial="hidden"
-                animate="visible"
-                transition={{ delay: 0.4, duration: 0.3 }}
-                className="absolute left-12 top-16 flex flex-col gap-y-2 pt-1"
-              >
-                {MENU_ITEMS.map((item) => (
-                  <div
-                    key={`text-${item.id}`}
-                    className="h-10 flex items-center"
-                  >
-                    <Link
-                      href="#"
-                      className="text-black border-b border-gray-400 whitespace-nowrap"
+          <>
+            <motion.div
+              variants={menuVariants}
+              initial="hidden"
+              animate="visible"
+              exit="exit"
+              transition={{ duration: 0.2 }}
+              className="fixed top-0 left-0 w-64 h-screen bg-mono-400 -z-10"
+            />
+            <motion.nav
+              variants={menuVariants}
+              initial="hidden"
+              animate="visible"
+              exit="exit"
+              transition={{ duration: 0.2 }}
+              className="fixed top-0 left-4 h-full bg-transparent z-40"
+            >
+              <div className="relative pt-16 flex ">
+                <motion.div
+                  variants={iconContainerVariants}
+                  initial="hidden"
+                  animate="visible"
+                  transition={{ duration: 0.3 }}
+                  className="flex flex-col gap-y-2"
+                >
+                  {MENU_ITEMS.map((item) => (
+                    <div key={`icon-${item.id}`} className="h-10">
+                      <Image
+                        src={`/color-function_list.svg`}
+                        alt={item.label}
+                        width={40}
+                        height={40}
+                      />
+                    </div>
+                  ))}
+                </motion.div>
+                <motion.div
+                  variants={textContainerVariants}
+                  initial="hidden"
+                  animate="visible"
+                  transition={{ delay: 0.4, duration: 0.3 }}
+                  className="absolute left-12 top-16 flex flex-col gap-y-2 pt-1"
+                >
+                  {MENU_ITEMS.map((item) => (
+                    <div
+                      key={`text-${item.id}`}
+                      className="h-10 flex items-center"
                     >
-                      {item.label}
-                    </Link>
-                  </div>
-                ))}
-              </motion.div>
-            </div>
-          </motion.nav>
+                      <Link
+                        href="#"
+                        className="text-black border-b border-gray-400 whitespace-nowrap"
+                      >
+                        {item.label}
+                      </Link>
+                    </div>
+                  ))}
+                </motion.div>
+              </div>
+            </motion.nav>
+          </>
         )}
       </AnimatePresence>
     </header>
