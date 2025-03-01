@@ -1,13 +1,8 @@
 "use client";
 
 import React, { createContext, useContext, useEffect, useState } from "react";
-
-type TranslationType = {
-  sidebar: {
-    contrast: string;
-    hsv: string;
-  };
-};
+import ja from "@locales/ja/common.json";
+import type { TranslationType } from "@/types/common";
 
 type TranslationContextType = {
   t: TranslationType;
@@ -16,12 +11,7 @@ type TranslationContextType = {
   isLoading: boolean;
 };
 
-const defaultTranslations: TranslationType = {
-  sidebar: {
-    contrast: "WCAG2.0 コントラスト基準",
-    hsv: "HSV 色分析",
-  },
-};
+const defaultTranslations: TranslationType = ja;
 
 const TranslationContext = createContext<TranslationContextType | null>(null);
 

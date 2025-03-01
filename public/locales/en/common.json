@@ -1,5 +1,6 @@
 {
   "sidebar": {
+    "myColor": "Color Setting",
     "contrast": "WCAG2.0 Contrast",
     "hsv": "HSV Analysis"
   }

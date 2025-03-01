@@ -6,8 +6,9 @@ import { motion, AnimatePresence } from "framer-motion";
 import React from "react";
 import ColorInput from "./ColorInput";
 import { MdCached } from "react-icons/md";
-
+import { useTranslation } from "@/contexts/TranslationContext";
 const MyColorPanel = () => {
+  const { t } = useTranslation();
   const { isMyColorPanelOpen, toggleMyColorPanel } = usePanelStore();
   const {
     mainColorA,
@@ -46,7 +47,7 @@ const MyColorPanel = () => {
             animate={{ opacity: 1, scale: 1 }}
             exit={{ opacity: 0, scale: 0.9 }}
             transition={{ type: "spring", duration: 0.3 }}
-            className="fixed inset-0 m-auto w-[80vw] h-[80vh] bg-white rounded-xl shadow-elevation-3 p-6 z-50"
+            className="fixed inset-0 m-auto w-[80vw] h-[80vh] bg-white rounded-xl shadow-elevation-3 p-6 z-50 overflow-y-auto"
             style={{
               backgroundColor: baseColorA,
             }}
@@ -57,7 +58,7 @@ const MyColorPanel = () => {
                   className="text-2xl font-bold"
                   style={{ color: mainColorA }}
                 >
-                  My Color Setting
+                  {t.sidebar.myColor}
                 </h2>
                 <button onClick={resetMyColorStore}>
                   <MdCached
