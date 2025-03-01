@@ -40,14 +40,15 @@ const MyColorPanel = () => {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             onClick={toggleMyColorPanel}
-            className="fixed inset-0 bg-black/50  z-40"
+            className="fixed inset-0 bg-black/50  !pointer-events-auto"
+            style={{ pointerEvents: "auto", zIndex: 51 }}
           />
           <motion.div
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
             exit={{ opacity: 0, scale: 0.9 }}
             transition={{ type: "spring", duration: 0.3 }}
-            className="fixed inset-0 m-auto w-[80vw] h-[80vh] bg-white rounded-xl shadow-elevation-3 p-6 z-50 overflow-y-auto"
+            className="fixed inset-0 m-auto w-[80vw] h-[80vh] bg-white rounded-xl shadow-elevation-3 p-6 z-[1000] overflow-y-auto"
             style={{
               backgroundColor: baseColorA,
             }}
