@@ -2,6 +2,12 @@
   "sidebar": {
     "myColor": "配色設定",
     "contrast": "WCAG2.0 コントラスト基準",
-    "hsv": "HSV 色分析"
+    "hsv": "HSV 色分析",
+    "csv": "CSV 出力/入力"
+  },
+  "csv": {
+    "import": "CSVファイルをインポート",
+    "export": "ファイルをエクスポート",
+    "exportBtn": "エクスポート"
   }
 }

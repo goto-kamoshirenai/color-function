@@ -2,6 +2,12 @@
   "sidebar": {
     "myColor": "Color Setting",
     "contrast": "WCAG2.0 Contrast",
-    "hsv": "HSV Analysis"
+    "hsv": "HSV Analysis",
+    "csv": "CSV Export/Import"
+  },
+  "csv": {
+    "import": "Import CSV File",
+    "export": "Export File",
+    "exportBtn": "Export"
   }
 }
