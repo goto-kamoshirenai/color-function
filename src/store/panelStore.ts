@@ -3,13 +3,13 @@ import { devtools } from "zustand/middleware";
 
 interface PanelState {
   // パネルの表示状態
-  isColorPickerOpen: boolean;
+  isMyColorPanelOpen: boolean;
   isHistoryPanelOpen: boolean;
   isSettingsPanelOpen: boolean;
   isNavigationOpen: boolean;
 
   // アクション
-  toggleColorPicker: () => void;
+  toggleMyColorPanel: () => void;
   toggleHistoryPanel: () => void;
   toggleSettingsPanel: () => void;
   toggleNavigation: () => void;
@@ -21,28 +21,28 @@ interface PanelState {
 export const usePanelStore = create<PanelState>()(
   devtools(
     (set) => ({
-      isColorPickerOpen: false,
+      isMyColorPanelOpen: false,
       isHistoryPanelOpen: false,
       isSettingsPanelOpen: false,
       isNavigationOpen: false,
 
-      toggleColorPicker: () =>
+      toggleMyColorPanel: () =>
         set(
           (state) => ({
-            isColorPickerOpen: !state.isColorPickerOpen,
+            isMyColorPanelOpen: !state.isMyColorPanelOpen,
             isHistoryPanelOpen: false,
             isSettingsPanelOpen: false,
             isNavigationOpen: false,
           }),
           false,
-          "toggleColorPicker"
+          "toggleMyColorPanel"
         ),
 
       toggleHistoryPanel: () =>
         set(
           (state) => ({
             isHistoryPanelOpen: !state.isHistoryPanelOpen,
-            isColorPickerOpen: false,
+            isMyColorPanelOpen: false,
             isSettingsPanelOpen: false,
             isNavigationOpen: false,
           }),
@@ -77,7 +77,7 @@ export const usePanelStore = create<PanelState>()(
       closeAllPanels: () =>
         set(
           {
-            isColorPickerOpen: false,
+            isMyColorPanelOpen: false,
             isHistoryPanelOpen: false,
             isSettingsPanelOpen: false,
             isNavigationOpen: false,
