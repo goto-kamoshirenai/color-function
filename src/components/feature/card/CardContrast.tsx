@@ -130,7 +130,7 @@ const CardContrast = () => {
 
   return (
     <PanelWrapper title={t.sidebar.contrast}>
-      <p className="text-sm text-gray-500">
+      <p className="text-sm opacity-50">
         [AAA]:7.0以上 [AA]:4.5以上 [不適合]:3.0未満
       </p>
       <div className="flex flex-col">

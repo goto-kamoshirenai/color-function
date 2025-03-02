@@ -3,7 +3,7 @@
 import { usePanelStore } from "@/store/panelStore";
 import { useMyColorStore } from "@/store/myColorStore";
 import { motion, AnimatePresence } from "framer-motion";
-import React from "react";
+import React, { useState, useEffect } from "react";
 import ColorInput from "./ColorInput";
 import { MdCached } from "react-icons/md";
 import { useTranslation } from "@/contexts/TranslationContext";
@@ -33,6 +33,72 @@ const MyColorPanel = () => {
     getHoverMainColor,
   } = useMyColorStore();
 
+  // 一時的な色の状態を管理
+  const [tempColors, setTempColors] = useState({
+    mainColorA,
+    mainColorB,
+    baseColorA,
+    baseColorB,
+    accentColorA,
+    accentColorB,
+    textColorA,
+    textColorB,
+  });
+
+  // パネルが開かれた時に現在のストアの値で一時的な状態を初期化
+  useEffect(() => {
+    if (isMyColorPanelOpen) {
+      setTempColors({
+        mainColorA,
+        mainColorB,
+        baseColorA,
+        baseColorB,
+        accentColorA,
+        accentColorB,
+        textColorA,
+        textColorB,
+      });
+    }
+  }, [isMyColorPanelOpen]);
+
+  // 一時的な色を更新する関数
+  const updateTempColor = (key: string, value: string) => {
+    setTempColors((prev) => ({ ...prev, [key]: value }));
+  };
+
+  // ストアの値を更新する関数
+  const applyColors = () => {
+    setMainColorA(tempColors.mainColorA);
+    if (tempColors.mainColorB) setMainColorB(tempColors.mainColorB);
+    setBaseColorA(tempColors.baseColorA);
+    if (tempColors.baseColorB) setBaseColorB(tempColors.baseColorB);
+    setAccentColorA(tempColors.accentColorA);
+    if (tempColors.accentColorB) setAccentColorB(tempColors.accentColorB);
+    setTextColorA(tempColors.textColorA);
+    if (tempColors.textColorB) setTextColorB(tempColors.textColorB);
+    toggleMyColorPanel();
+  };
+
+  // リセット処理
+  const handleReset = () => {
+    resetMyColorStore();
+    setTempColors({
+      mainColorA: mainColorA,
+      mainColorB: "",
+      baseColorA: baseColorA,
+      baseColorB: "",
+      accentColorA: accentColorA,
+      accentColorB: "",
+      textColorA: textColorA,
+      textColorB: "",
+    });
+  };
+
+  // パネルを閉じる処理
+  const handleClose = () => {
+    applyColors();
+  };
+
   return (
     <AnimatePresence>
       {isMyColorPanelOpen && (
@@ -41,8 +107,8 @@ const MyColorPanel = () => {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            onClick={toggleMyColorPanel}
-            className="fixed inset-0 bg-black/50  !pointer-events-auto"
+            onClick={handleClose}
+            className="fixed inset-0 bg-black/50 !pointer-events-auto"
             style={{ pointerEvents: "auto", zIndex: 51 }}
           />
           <motion.div
@@ -52,26 +118,26 @@ const MyColorPanel = () => {
             transition={{ type: "spring", duration: 0.3 }}
             className="fixed inset-0 m-auto w-[80vw] h-[80vh] bg-white rounded-xl shadow-elevation-3 p-6 z-[1000] overflow-y-auto"
             style={{
-              backgroundColor: baseColorA,
+              backgroundColor: tempColors.baseColorA,
             }}
           >
-            <div className="space-y-2" style={{ color: textColorA }}>
+            <div className="space-y-2" style={{ color: tempColors.textColorA }}>
               <div className="flex justify-between items-center">
                 <h2
                   className="text-2xl font-bold"
-                  style={{ color: mainColorA }}
+                  style={{ color: tempColors.mainColorA }}
                 >
                   {t.sidebar.myColor}
                 </h2>
-                <button onClick={resetMyColorStore}>
+                <button onClick={handleReset}>
                   <MdCached
                     className="w-6 h-6"
-                    style={{ color: mainColorA }}
+                    style={{ color: tempColors.mainColorA }}
                     onMouseEnter={(e) => {
                       e.currentTarget.style.color = getHoverMainColor();
                     }}
                     onMouseLeave={(e) => {
-                      e.currentTarget.style.color = mainColorA;
+                      e.currentTarget.style.color = tempColors.mainColorA;
                     }}
                   />
                 </button>
@@ -79,38 +145,38 @@ const MyColorPanel = () => {
               <div className="space-y-1">
                 <ColorInput
                   label="Main"
-                  colorA={mainColorA}
-                  colorB={mainColorB}
+                  colorA={tempColors.mainColorA}
+                  colorB={tempColors.mainColorB}
                   type="main"
-                  onChangeA={setMainColorA}
-                  onChangeB={setMainColorB}
+                  onChangeA={(color) => updateTempColor("mainColorA", color)}
+                  onChangeB={(color) => updateTempColor("mainColorB", color)}
                 />
                 <ColorInput
                   label="Base"
-                  colorA={baseColorA}
-                  colorB={baseColorB}
+                  colorA={tempColors.baseColorA}
+                  colorB={tempColors.baseColorB}
                   type="base"
-                  onChangeA={setBaseColorA}
-                  onChangeB={setBaseColorB}
+                  onChangeA={(color) => updateTempColor("baseColorA", color)}
+                  onChangeB={(color) => updateTempColor("baseColorB", color)}
                 />
                 <ColorInput
                   label="Accent"
-                  colorA={accentColorA}
-                  colorB={accentColorB}
+                  colorA={tempColors.accentColorA}
+                  colorB={tempColors.accentColorB}
                   type="accent"
-                  onChangeA={setAccentColorA}
-                  onChangeB={setAccentColorB}
+                  onChangeA={(color) => updateTempColor("accentColorA", color)}
+                  onChangeB={(color) => updateTempColor("accentColorB", color)}
                 />
                 <ColorInput
                   label="Text"
-                  colorA={textColorA}
-                  colorB={textColorB}
+                  colorA={tempColors.textColorA}
+                  colorB={tempColors.textColorB}
                   type="text"
-                  onChangeA={setTextColorA}
-                  onChangeB={setTextColorB}
+                  onChangeA={(color) => updateTempColor("textColorA", color)}
+                  onChangeB={(color) => updateTempColor("textColorB", color)}
                 />
-                <div className="flex justify-center ">
-                  <CommonButton onClick={toggleMyColorPanel} className="mt-8">
+                <div className="flex justify-center">
+                  <CommonButton onClick={applyColors} className="mt-8">
                     Go
                   </CommonButton>
                 </div>

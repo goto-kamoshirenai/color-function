@@ -8,6 +8,7 @@ import CardHSV from "@/components/feature/card/CardHSV";
 import CardCSV from "@/components/feature/card/CardCSV";
 import CardEntropy from "@/components/feature/card/CardEntropy";
 import ColorExtend from "@/components/feature/card/ColorExtend";
+import { useMyColorStore } from "@/store/myColorStore";
 
 export default function Home() {
   const {
@@ -17,10 +18,14 @@ export default function Home() {
     isShowCardEntropyPanel,
     isShowColorExtendPanel,
   } = usePanelStore();
+  const { textColorA } = useMyColorStore();
 
   return (
     <>
-      <main className="flex flex-wrap gap-2  p-8 ml-8">
+      <main
+        className="flex flex-wrap gap-2  p-8 ml-8 "
+        style={{ color: textColorA }}
+      >
         {isShowColorExtendPanel && <ColorExtend />}
         {isShowCardContrastPanel && <CardContrast />}
         {isShowCardEntropyPanel && <CardEntropy />}

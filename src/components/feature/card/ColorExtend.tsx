@@ -334,7 +334,7 @@ const ColorExtend = () => {
             saturationColors.length > 0 ||
             hueColors.length > 0
           ) && (
-            <p className="text-sm text-gray-500">
+            <p className="text-sm opacity-50">
               基準となる色を選択してボタンを押すと色が展開されます
             </p>
           )}
@@ -345,10 +345,23 @@ const ColorExtend = () => {
                 onClick={() => handleColorSelect(option.label, option.color)}
                 className={`relative cursor-pointer p-2 rounded-md`}
                 style={{
+                  transition: "all 0.3s ease",
                   border:
                     selectedColor.label === option.label
                       ? `2px solid ${mainColorA}`
                       : `1px solid ${textColorA}`,
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.border =
+                    selectedColor.label === option.label
+                      ? `2px solid ${mainColorA}`
+                      : `1px solid ${mainColorA}`;
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.border =
+                    selectedColor.label === option.label
+                      ? `2px solid ${mainColorA}`
+                      : `1px solid ${textColorA}`;
                 }}
               >
                 <ColorChip
