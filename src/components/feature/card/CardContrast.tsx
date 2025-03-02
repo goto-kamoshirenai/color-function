@@ -8,6 +8,7 @@ import {
   getWCAGLevel,
 } from "@/libs/wcag";
 import React from "react";
+import ColorChip from "@/components/elements/ColorChip";
 
 interface ContrastResultProps {
   textColorA: string;
@@ -92,21 +93,13 @@ const ContrastResult: React.FC<ContrastResultProps> = ({
           const level = getWCAGLevel(ratio);
           return (
             <div key={index} className="flex items-center gap-2 text-sm">
-              <div className="flex items-center gap-1 ">
-                <div
-                  className="w-4 h-4 rounded border"
-                  style={{ backgroundColor: pair.textColor }}
-                />
-                <span>{pair.textLabel}</span>
-              </div>
+              <ColorChip color={pair.textColor} label={pair.textLabel} />
               <span>/</span>
-              <div className="flex items-center gap-1 ">
-                <div
-                  className="w-4 h-4 rounded border"
-                  style={{ backgroundColor: pair.bgColor }}
-                />
-                <span className="min-w-[60px]">{pair.bgLabel}</span>
-              </div>
+              <ColorChip
+                color={pair.bgColor}
+                label={pair.bgLabel}
+                styleType="equal"
+              />
               <span>:</span>
               <span>コントラスト比</span>
               <span className="font-bold min-w-[60px] text-right">

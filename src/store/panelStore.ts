@@ -9,6 +9,7 @@ interface PanelState {
   isShowCardContrastPanel: boolean;
   isShowCardHSVPanel: boolean;
   isShowCardCSVPanel: boolean;
+  isShowCardEntropyPanel: boolean;
 
   // アクション
   toggleMyColorPanel: () => void;
@@ -17,6 +18,7 @@ interface PanelState {
   toggleCardContrastPanel: () => void;
   toggleCardHSVPanel: () => void;
   toggleCardCSVPanel: () => void;
+  toggleCardEntropyPanel: () => void;
   // 全てのパネルを閉じる
   closeAllPanels: () => void;
 }
@@ -29,6 +31,7 @@ export const usePanelStore = create<PanelState>()(
     isShowCardContrastPanel: true,
     isShowCardHSVPanel: true,
     isShowCardCSVPanel: true,
+    isShowCardEntropyPanel: true,
     toggleMyColorPanel: () =>
       set((state) => ({
         isMyColorPanelOpen: !state.isMyColorPanelOpen,
@@ -58,11 +61,17 @@ export const usePanelStore = create<PanelState>()(
         isShowCardCSVPanel: !state.isShowCardCSVPanel,
       })),
 
+    toggleCardEntropyPanel: () =>
+      set((state) => ({
+        isShowCardEntropyPanel: !state.isShowCardEntropyPanel,
+      })),
+
     closeAllPanels: () =>
       set({
         isShowCardContrastPanel: false,
         isShowCardHSVPanel: false,
         isShowCardCSVPanel: false,
+        isShowCardEntropyPanel: false,
         isMyColorPanelOpen: false,
         isNavigationOpen: false,
       }),

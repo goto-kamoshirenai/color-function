@@ -2,7 +2,12 @@
 
 import React, { useState } from "react";
 import { usePanelStore } from "@/store/panelStore";
-import { MdBrightness6, MdEqualizer, MdTextSnippet } from "react-icons/md";
+import {
+  MdBrightness6,
+  MdEqualizer,
+  MdTextSnippet,
+  MdFitbit,
+} from "react-icons/md";
 import { IconType } from "react-icons";
 import { useMyColorStore } from "@/store/myColorStore";
 import { useTranslation } from "@/contexts/TranslationContext";
@@ -70,9 +75,11 @@ const Sidebar = () => {
     isShowCardContrastPanel,
     isShowCardHSVPanel,
     isShowCardCSVPanel,
+    isShowCardEntropyPanel,
     toggleCardContrastPanel,
     toggleCardHSVPanel,
     toggleCardCSVPanel,
+    toggleCardEntropyPanel,
   } = usePanelStore();
   const { baseColorA } = useMyColorStore();
   const { t } = useTranslation();
@@ -99,6 +106,13 @@ const Sidebar = () => {
         onClick={toggleCardCSVPanel}
         Icon={MdTextSnippet}
         label={t.sidebar.csv}
+      />
+      <SidebarButton
+        baseColorA={baseColorA}
+        isActive={isShowCardEntropyPanel}
+        onClick={toggleCardEntropyPanel}
+        Icon={MdFitbit}
+        label={t.sidebar.entropy}
       />
     </div>
   );

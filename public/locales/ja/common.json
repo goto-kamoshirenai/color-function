@@ -1,9 +1,10 @@
 {
   "sidebar": {
     "myColor": "配色設定",
-    "contrast": "WCAG2.0 コントラスト基準",
+    "contrast": "WCAG2.2 コントラスト基準",
     "hsv": "HSV 色分析",
-    "csv": "CSV 出力/入力"
+    "csv": "CSV 出力 / 入力",
+    "entropy": "分布分析"
   },
   "csv": {
     "import": "CSVファイルをインポート",
