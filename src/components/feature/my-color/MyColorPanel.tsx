@@ -7,6 +7,8 @@ import React from "react";
 import ColorInput from "./ColorInput";
 import { MdCached } from "react-icons/md";
 import { useTranslation } from "@/contexts/TranslationContext";
+import CommonButton from "@/components/elements/CommonButton";
+
 const MyColorPanel = () => {
   const { t } = useTranslation();
   const { isMyColorPanelOpen, toggleMyColorPanel } = usePanelStore();
@@ -108,24 +110,9 @@ const MyColorPanel = () => {
                   onChangeB={setTextColorB}
                 />
                 <div className="flex justify-center ">
-                  <button
-                    className="mt-8 px-6 py-2 rounded-lg font-bold"
-                    style={{
-                      backgroundColor: mainColorA,
-                      color: baseColorA,
-                    }}
-                    onClick={toggleMyColorPanel}
-                    onMouseEnter={(e) => {
-                      e.currentTarget.style.backgroundColor = accentColorA;
-                      e.currentTarget.style.color = textColorA;
-                    }}
-                    onMouseLeave={(e) => {
-                      e.currentTarget.style.backgroundColor = mainColorA;
-                      e.currentTarget.style.color = baseColorA;
-                    }}
-                  >
+                  <CommonButton onClick={toggleMyColorPanel} className="mt-8">
                     Go
-                  </button>
+                  </CommonButton>
                 </div>
               </div>
             </div>

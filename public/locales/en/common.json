@@ -4,7 +4,8 @@
     "contrast": "WCAG2.2 Contrast",
     "hsv": "HSV Analysis",
     "csv": "CSV Export/Import",
-    "entropy": "Distribution Analysis"
+    "entropy": "Distribution Analysis",
+    "colorExtend": "Color Extension"
   },
   "csv": {
     "import": "Import CSV File",

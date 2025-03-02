@@ -46,19 +46,19 @@ const ColorAnalysisDisplay: React.FC<{
         </div>
         <div className="flex gap-4 text-sm">
           <div className="flex flex gap-1">
-            <div className="font-medium">色相の多様性：</div>
+            <div className="font-medium">色相分布：</div>
             <div className="font-bold">
               {Math.round(analysis.hueVariety * 100)}%
             </div>
           </div>
           <div className="flex flex gap-1">
-            <div className="font-medium">彩度の統一性：</div>
+            <div className="font-medium">彩度分布：</div>
             <div className="font-bold">
               {Math.round(analysis.saturationUnity * 100)}%
             </div>
           </div>
           <div className="flex flex gap-1">
-            <div className="font-medium">明度のバランス：</div>
+            <div className="font-medium">明度分布：</div>
             <div className="font-bold">
               {Math.round(analysis.lightnessBalance * 100)}%
             </div>

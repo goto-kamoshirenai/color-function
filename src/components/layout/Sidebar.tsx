@@ -7,6 +7,7 @@ import {
   MdEqualizer,
   MdTextSnippet,
   MdFitbit,
+  MdPalette,
 } from "react-icons/md";
 import { IconType } from "react-icons";
 import { useMyColorStore } from "@/store/myColorStore";
@@ -76,16 +77,25 @@ const Sidebar = () => {
     isShowCardHSVPanel,
     isShowCardCSVPanel,
     isShowCardEntropyPanel,
+    isShowColorExtendPanel,
     toggleCardContrastPanel,
     toggleCardHSVPanel,
     toggleCardCSVPanel,
     toggleCardEntropyPanel,
+    toggleColorExtendPanel,
   } = usePanelStore();
   const { baseColorA } = useMyColorStore();
   const { t } = useTranslation();
 
   return (
     <div className="fixed left-0 h-screen flex flex-col gap-3 p-3 z-40 justify-center">
+      <SidebarButton
+        baseColorA={baseColorA}
+        isActive={isShowColorExtendPanel}
+        onClick={toggleColorExtendPanel}
+        Icon={MdPalette}
+        label={t.sidebar.colorExtend}
+      />
       <SidebarButton
         baseColorA={baseColorA}
         isActive={isShowCardContrastPanel}
@@ -95,24 +105,25 @@ const Sidebar = () => {
       />
       <SidebarButton
         baseColorA={baseColorA}
+        isActive={isShowCardEntropyPanel}
+        onClick={toggleCardEntropyPanel}
+        Icon={MdFitbit}
+        label={t.sidebar.entropy}
+      />
+      <SidebarButton
+        baseColorA={baseColorA}
         isActive={isShowCardHSVPanel}
         onClick={toggleCardHSVPanel}
         Icon={MdEqualizer}
         label={t.sidebar.hsv}
       />
+
       <SidebarButton
         baseColorA={baseColorA}
         isActive={isShowCardCSVPanel}
         onClick={toggleCardCSVPanel}
         Icon={MdTextSnippet}
         label={t.sidebar.csv}
-      />
-      <SidebarButton
-        baseColorA={baseColorA}
-        isActive={isShowCardEntropyPanel}
-        onClick={toggleCardEntropyPanel}
-        Icon={MdFitbit}
-        label={t.sidebar.entropy}
       />
     </div>
   );

@@ -139,9 +139,15 @@ export const getColorEvaluationText = (metrics: ColorMetrics): string => {
 };
 
 // 色相の多様性を計算
-const calculateHueVariety = (hues: number[]): number => {
-  // 無効な色相値を除外
-  const validHues = hues.filter((h) => h !== null && !isNaN(h));
+const calculateHueVariety = (hues: number[], lightness: number[]): number => {
+  // 無効な色相値と無彩色（明度0%または100%）を除外
+  const validIndices = lightness
+    .map((l, i) => (l > 0 && l < 1 ? i : -1))
+    .filter((i) => i !== -1);
+  const validHues = validIndices
+    .map((i) => hues[i])
+    .filter((h) => h !== null && !isNaN(h));
+
   if (validHues.length === 0) return 0;
 
   // 色相の差分を計算
@@ -163,16 +169,28 @@ const calculateHueVariety = (hues: number[]): number => {
 export const analyzeColorPalette = (colors: string[]): ColorAnalysis => {
   const hslValues = colors.map((color) => chroma(color).hsl());
 
+  // 無彩色の判定（明度が0%/100%、または彩度が0%の色を除外）
+  const isAchromatic = (hsl: number[]) => {
+    const [, s, l] = hsl;
+    return l <= 0 || l >= 1 || s <= 0;
+  };
+
+  // 有効な（無彩色でない）色のインデックスを取得
+  const validIndices = hslValues
+    .map((hsl, i) => (isAchromatic(hsl) ? -1 : i))
+    .filter((i) => i !== -1);
+
   // 色相の多様性
   const hues = hslValues.map((hsl) => hsl[0]);
-  const hueVariety = calculateHueVariety(hues);
-
-  // 彩度の統一性
-  const saturations = hslValues.map((hsl) => hsl[1]);
-  const saturationUnity = 1 - calculateStandardDeviation(saturations);
-
-  // 明度のバランス
   const lightness = hslValues.map((hsl) => hsl[2]);
+  const hueVariety = calculateHueVariety(hues, lightness);
+
+  // 彩度の統一性（無彩色を除外）
+  const saturations = validIndices.map((i) => hslValues[i][1]);
+  const saturationUnity =
+    saturations.length === 0 ? 1 : 1 - calculateStandardDeviation(saturations);
+
+  // 明度のバランス（全ての色を含む）
   const lightnessBalance = 1 - Math.abs(0.5 - average(lightness));
 
   // 総合エントロピー

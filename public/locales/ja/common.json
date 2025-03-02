@@ -4,7 +4,8 @@
     "contrast": "WCAG2.2 コントラスト基準",
     "hsv": "HSV 色分析",
     "csv": "CSV 出力 / 入力",
-    "entropy": "分布分析"
+    "entropy": "分布分析",
+    "colorExtend": "基準色から色を展開"
   },
   "csv": {
     "import": "CSVファイルをインポート",
