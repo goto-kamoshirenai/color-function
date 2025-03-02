@@ -395,23 +395,6 @@ const ColorExtend = () => {
               />
             )}
 
-            {extendedColors.length > 0 && (
-              <ColorVariationRow
-                title="明度バリエーション"
-                colors={extendedColors}
-                activeIndex={activeValueMenu}
-                mainColor={mainColorA}
-                menuOpenColor={menuOpenColor}
-                onColorSelect={(index) => {
-                  setActiveValueMenu(activeValueMenu === index ? null : index);
-                  setActiveHueMenu(null);
-                  setActiveSaturationMenu(null);
-                  setMenuOpenColor(extendedColors[index].color);
-                }}
-                renderMenu={renderColorMenu}
-              />
-            )}
-
             {saturationColors.length > 0 && (
               <ColorVariationRow
                 title="彩度バリエーション"
@@ -426,6 +409,23 @@ const ColorExtend = () => {
                   setActiveHueMenu(null);
                   setActiveValueMenu(null);
                   setMenuOpenColor(saturationColors[index].color);
+                }}
+                renderMenu={renderColorMenu}
+              />
+            )}
+
+            {extendedColors.length > 0 && (
+              <ColorVariationRow
+                title="明度バリエーション"
+                colors={extendedColors}
+                activeIndex={activeValueMenu}
+                mainColor={mainColorA}
+                menuOpenColor={menuOpenColor}
+                onColorSelect={(index) => {
+                  setActiveValueMenu(activeValueMenu === index ? null : index);
+                  setActiveHueMenu(null);
+                  setActiveSaturationMenu(null);
+                  setMenuOpenColor(extendedColors[index].color);
                 }}
                 renderMenu={renderColorMenu}
               />
