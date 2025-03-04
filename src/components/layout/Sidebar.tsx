@@ -8,6 +8,7 @@ import {
   MdTextSnippet,
   MdFitbit,
   MdPalette,
+  MdOutlineFilterBAndW,
 } from "react-icons/md";
 import { IconType } from "react-icons";
 import { useMyColorStore } from "@/store/myColorStore";
@@ -78,11 +79,13 @@ const Sidebar = () => {
     isShowCardCSVPanel,
     isShowCardEntropyPanel,
     isShowColorExtendPanel,
+    isShowCardCIEDE2000Panel,
     toggleCardContrastPanel,
     toggleCardHSVPanel,
     toggleCardCSVPanel,
     toggleCardEntropyPanel,
     toggleColorExtendPanel,
+    toggleCardCIEDE2000Panel,
   } = usePanelStore();
   const { baseColorA } = useMyColorStore();
   const { t } = useTranslation();
@@ -102,6 +105,13 @@ const Sidebar = () => {
         onClick={toggleCardContrastPanel}
         Icon={MdBrightness6}
         label={t.sidebar.contrast}
+      />
+      <SidebarButton
+        baseColorA={baseColorA}
+        isActive={isShowCardCIEDE2000Panel}
+        onClick={toggleCardCIEDE2000Panel}
+        Icon={MdOutlineFilterBAndW}
+        label={t.sidebar.ciede2000}
       />
       <SidebarButton
         baseColorA={baseColorA}

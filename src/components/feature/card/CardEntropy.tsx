@@ -37,7 +37,7 @@ const ColorAnalysisDisplay: React.FC<{
         className="rounded-md p-2"
         style={{ border: `1px solid ${textColorA}` }}
       >
-        <div className="flex gap-1 mb-4">
+        <div className="flex gap-1 mb-1">
           {colorEntries.map((entry, i) => (
             <div key={i} className="flex items-center">
               <ColorChip color={entry.color} label={entry.label} />
@@ -123,9 +123,9 @@ const HueDistributionChart: React.FC<{ colors: string[] }> = ({ colors }) => {
 
   return (
     <ChartWrapper title="色相分布">
-      <div className="relative w-full h-full flex justify-center items-center">
+      <div className="relative w-full  flex justify-center items-center">
         {/* 色相環の背景 */}
-        <svg width={size} height={size} className="absolute top-0">
+        <svg width={size} height={size} className="absolute -top-4">
           {/* 色相環の背景セグメント */}
           {hueWheelSegments.map((segment, i) => (
             <line
@@ -233,7 +233,7 @@ const SaturationLightnessChart: React.FC<{ colors: string[] }> = ({
 
   return (
     <ChartWrapper title="彩度・明度分布">
-      <div className="relative w-full h-full flex justify-center items-start">
+      <div className="relative w-full flex justify-center items-start -top-6">
         <svg width={size} height={size}>
           {/* グリッド線 */}
           {[0, 25, 50, 75, 100].map((value) => {

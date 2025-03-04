@@ -21,7 +21,7 @@ const ColorField: React.FC<ColorFieldProps> = ({
   placeholder,
   onClear,
 }) => {
-  const { mainColorA, getHoverBaseColor, textColorA, accentColorA } =
+  const { mainColorA, baseColorB, textColorA, accentColorA } =
     useMyColorStore();
   const [localColor, setLocalColor] = useState(color);
   const [isCopied, setIsCopied] = useState(false);
@@ -69,8 +69,12 @@ const ColorField: React.FC<ColorFieldProps> = ({
           onBlur={() => setIsFocused(false)}
           className="w-full px-3 py-2 border rounded-lg pr-20 focus:outline-none"
           style={{
-            backgroundColor: getHoverBaseColor(),
-            borderColor: isFocused ? accentColorA : undefined,
+            backgroundColor: baseColorB ? baseColorB : "transparent",
+            borderColor: isFocused
+              ? accentColorA
+              : baseColorB
+              ? "transparent"
+              : textColorA,
             boxShadow: isFocused ? `0 0 0 1px ${accentColorA}` : undefined,
           }}
           placeholder={placeholder}
@@ -124,6 +128,8 @@ interface ColorInputProps {
   type: "main" | "base" | "accent" | "text";
   onChangeA: (color: string) => void;
   onChangeB?: (color: string) => void;
+  showColorB: boolean;
+  onShowColorBChange: (show: boolean) => void;
 }
 
 const ColorInput = ({
@@ -133,9 +139,10 @@ const ColorInput = ({
   type,
   onChangeA,
   onChangeB,
+  showColorB,
+  onShowColorBChange,
 }: ColorInputProps) => {
   const { textColorA, textColorB, getHoverTextColor } = useMyColorStore();
-  const [showColorB, setShowColorB] = useState(!!colorB);
 
   const defaultColor =
     type === "main"
@@ -161,7 +168,7 @@ const ColorInput = ({
         {!showColorB ? (
           <div className="flex-1 flex items-center">
             <button
-              onClick={() => setShowColorB(true)}
+              onClick={() => onShowColorBChange(true)}
               className="flex items-center gap-2 text-sm"
               style={{
                 color: textColorB,
@@ -204,7 +211,7 @@ const ColorInput = ({
               onChange={(color) => onChangeB?.(color)}
               placeholder="#000000"
               onClear={() => {
-                setShowColorB(false);
+                onShowColorBChange(false);
                 onChangeB?.("");
               }}
             />

@@ -1,15 +1,38 @@
 {
+  "page": {
+    "home": "Home",
+    "about": "About",
+    "contact": "Contact"
+  },
+  "title": {
+    "about": "About this app"
+  },
   "sidebar": {
     "myColor": "Color Setting",
     "contrast": "WCAG2.2 Contrast",
     "hsv": "HSV Analysis",
     "csv": "CSV Export/Import",
     "entropy": "Distribution Analysis",
-    "colorExtend": "Color Extension"
+    "colorExtend": "Color Extension",
+    "ciede2000": "CIEDE2000 Color Difference Analysis"
   },
   "csv": {
     "import": "Import CSV File",
     "export": "Export File",
     "exportBtn": "Export"
+  },
+  "description": {
+    "ciede2000": "[Clear Difference]:5.0 or more [Recognizable]:2.0 or more [Small Difference]:2.0 or less"
+  },
+  "about": {
+    "description1": "\"Color Follows Function\"",
+    "description2": "Color Follows Function",
+    "description3": "Color is a subjective thing.",
+    "description4": "However, this does not mean that color is not objective.",
+    "description5": "Color is scientific, and there are various indicators, standards, and analysis methods,",
+    "description6": "which have a certain degree of objectivity.",
+    "description7": "This app provides tools for handling color functionally.",
+    "description8": "I hope you can use the tools functionally ",
+    "description9": "by using the tools that can be rearranged."
   }
 }

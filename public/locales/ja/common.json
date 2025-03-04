@@ -1,15 +1,38 @@
 {
+  "page": {
+    "home": "Home",
+    "about": "About",
+    "contact": "Contact"
+  },
+  "title": {
+    "about": "このアプリについて"
+  },
   "sidebar": {
     "myColor": "配色設定",
     "contrast": "WCAG2.2 コントラスト基準",
     "hsv": "HSV 色分析",
     "csv": "CSV 出力 / 入力",
     "entropy": "分布分析",
-    "colorExtend": "基準色から色を展開"
+    "colorExtend": "基準色から色を展開",
+    "ciede2000": "CIEDE2000 色差分析"
   },
   "csv": {
     "import": "CSVファイルをインポート",
     "export": "ファイルをエクスポート",
     "exportBtn": "エクスポート"
+  },
+  "description": {
+    "ciede2000": "[明確な差]:5.0以上 [認識可能]:2.0以上 [差が小さい]:2.0未満"
+  },
+  "about": {
+    "description1": "\"Color Follows Function\"",
+    "description2": "色彩は機能に従う",
+    "description3": "色彩とは感覚的なものです。",
+    "description4": "しかし、感覚的だということは、客観的ではないことを意味しません。",
+    "description5": "色彩は科学され、さまざまな指標や基準、分析方法が存在して、",
+    "description6": "ある程度客観的な機能性を持っています。",
+    "description7": "このアプリは、色彩を機能的に扱うためのツールを提供します。",
+    "description8": "組み替え可能なツールを使用して、",
+    "description9": "色彩を機能的に使いこなしていただければ幸いです。"
   }
 }

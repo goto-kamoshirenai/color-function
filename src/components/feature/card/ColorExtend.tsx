@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import PanelWrapper from "@/components/elements/PanelWrapper";
 import { useMyColorStore } from "@/store/myColorStore";
 import ColorChip from "@/components/elements/ColorChip";
@@ -324,6 +324,28 @@ const ColorExtend = () => {
       }}
     />
   );
+
+  // 色の変更を監視するuseEffect
+  useEffect(() => {
+    if (selectedColor) {
+      const newColor = colorOptions.find(
+        (opt) => opt.label === selectedColor.label
+      )?.color;
+      if (newColor && newColor !== selectedColor.color) {
+        setSelectedColor((prev) => ({ ...prev, color: newColor }));
+        generateAllVariations(newColor);
+      }
+    }
+  }, [
+    mainColorA,
+    mainColorB,
+    baseColorA,
+    baseColorB,
+    accentColorA,
+    accentColorB,
+    textColorA,
+    textColorB,
+  ]);
 
   return (
     <PanelWrapper title={t.sidebar.colorExtend}>

@@ -4,14 +4,13 @@ import Image from "next/image";
 import React from "react";
 import { usePanelStore } from "@/store/panelStore";
 import { motion, AnimatePresence } from "framer-motion";
-import Link from "next/link";
 import { useMyColorStore } from "@/store/myColorStore";
+import { useRouter } from "next/navigation";
 
 const MENU_ITEMS = [
-  { id: "home", label: "ホーム" },
-  { id: "color-picker", label: "カラーピッカー" },
-  { id: "history", label: "履歴" },
-  { id: "settings", label: "設定" },
+  { id: "home", label: "Home" },
+  { id: "about", label: "About" },
+  { id: "contact", label: "Contact" },
 ] as const;
 
 const menuVariants = {
@@ -31,7 +30,13 @@ const textContainerVariants = {
 };
 
 const Header = () => {
-  const { isNavigationOpen, toggleNavigation } = usePanelStore();
+  const router = useRouter();
+  const {
+    isNavigationOpen,
+    toggleNavigation,
+    toggleAboutPanel,
+    toggleContactPanel,
+  } = usePanelStore();
   const { baseColorA } = useMyColorStore();
   return (
     <header className="fixed top-0 left-0  h-32 z-50">
@@ -102,12 +107,22 @@ const Header = () => {
                       key={`text-${item.id}`}
                       className="h-10 flex items-center"
                     >
-                      <Link
-                        href="#"
-                        className="text-black border-b border-gray-400 whitespace-nowrap"
+                      <p
+                        className="text-black border-b border-gray-400 whitespace-nowrap cursor-pointer"
+                        onClick={() => {
+                          if (item.id === "home") {
+                            router.push("/");
+                          }
+                          if (item.id === "about") {
+                            toggleAboutPanel();
+                          }
+                          if (item.id === "contact") {
+                            toggleContactPanel();
+                          }
+                        }}
                       >
                         {item.label}
-                      </Link>
+                      </p>
                     </div>
                   ))}
                 </motion.div>

@@ -9,7 +9,8 @@ import CardCSV from "@/components/feature/card/CardCSV";
 import CardEntropy from "@/components/feature/card/CardEntropy";
 import ColorExtend from "@/components/feature/card/ColorExtend";
 import { useMyColorStore } from "@/store/myColorStore";
-
+import CardCIEDE2000 from "@/components/feature/card/CardCIEDE2000";
+import AboutPanel from "@/components/feature/about/AboutPanel";
 export default function Home() {
   const {
     isShowCardContrastPanel,
@@ -17,6 +18,7 @@ export default function Home() {
     isShowCardCSVPanel,
     isShowCardEntropyPanel,
     isShowColorExtendPanel,
+    isShowCardCIEDE2000Panel,
   } = usePanelStore();
   const { textColorA } = useMyColorStore();
 
@@ -28,12 +30,14 @@ export default function Home() {
       >
         {isShowColorExtendPanel && <ColorExtend />}
         {isShowCardContrastPanel && <CardContrast />}
+        {isShowCardCIEDE2000Panel && <CardCIEDE2000 />}
         {isShowCardEntropyPanel && <CardEntropy />}
         {isShowCardHSVPanel && <CardHSV />}
         {isShowCardCSVPanel && <CardCSV />}
       </main>
       <MyColorButton />
       <MyColorPanel />
+      <AboutPanel />
     </>
   );
 }
