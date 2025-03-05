@@ -1,6 +1,6 @@
 import { motion, AnimatePresence } from "framer-motion";
 import React, { ReactNode } from "react";
-
+import { useMyColorStore } from "@/store/myColorStore";
 interface ModalWrapperProps {
   isOpen: boolean;
   onClose: () => void;
@@ -12,8 +12,9 @@ const ModalWrapper: React.FC<ModalWrapperProps> = ({
   isOpen,
   onClose,
   children,
-  backgroundColor = "white",
+  backgroundColor,
 }) => {
+  const { baseColorA } = useMyColorStore();
   return (
     <AnimatePresence>
       {isOpen && (
@@ -33,7 +34,7 @@ const ModalWrapper: React.FC<ModalWrapperProps> = ({
             transition={{ type: "spring", duration: 0.3 }}
             className="fixed inset-0 m-auto w-[80vw] h-[80vh] rounded-xl shadow-elevation-3 p-6 z-[1000] overflow-y-auto"
             style={{
-              backgroundColor,
+              backgroundColor: backgroundColor || baseColorA,
             }}
           >
             {children}

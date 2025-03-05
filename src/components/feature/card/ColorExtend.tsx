@@ -336,6 +336,7 @@ const ColorExtend = () => {
         generateAllVariations(newColor);
       }
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [
     mainColorA,
     mainColorB,
@@ -348,7 +349,7 @@ const ColorExtend = () => {
   ]);
 
   return (
-    <PanelWrapper title={t.sidebar.colorExtend}>
+    <PanelWrapper title={t.sidebar.colorExtend} helpPanelKey="expend">
       <div className="flex flex-col gap-2">
         <div className="flex flex-col">
           {!(

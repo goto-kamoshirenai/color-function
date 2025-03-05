@@ -62,7 +62,7 @@ const CardCIEDE2000 = () => {
   ];
 
   return (
-    <PanelWrapper title={t.sidebar.ciede2000}>
+    <PanelWrapper title={t.sidebar.ciede2000} helpPanelKey="cie2000">
       <p className="text-sm opacity-50">{t.description.ciede2000}</p>
 
       {/* 色差マトリックス */}

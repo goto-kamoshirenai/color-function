@@ -73,7 +73,7 @@ const CardHSV = () => {
   };
 
   return (
-    <PanelWrapper title={t.sidebar.hsv}>
+    <PanelWrapper title={t.sidebar.hsv} helpPanelKey="hsv">
       <div
         className="flex flex-row flex-wrap gap-2"
         style={{ backgroundColor: getHoverBaseColor() }}

@@ -129,7 +129,7 @@ const CardContrast = () => {
   } = useMyColorStore();
 
   return (
-    <PanelWrapper title={t.sidebar.contrast}>
+    <PanelWrapper title={t.sidebar.contrast} helpPanelKey="contrast">
       <p className="text-sm opacity-50">
         [AAA]:7.0以上 [AA]:4.5以上 [不適合]:3.0未満
       </p>

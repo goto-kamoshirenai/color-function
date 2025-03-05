@@ -10,3 +10,12 @@ declare module "@locales/*/common.json" {
   const content: TranslationType;
   export default content;
 }
+
+export type HelpPanelKey =
+  | null
+  | "expend"
+  | "contrast"
+  | "hsv"
+  | "csv"
+  | "entropy"
+  | "cie2000";

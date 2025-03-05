@@ -34,5 +34,34 @@
     "description7": "This app provides tools for handling color functionally.",
     "description8": "I hope you can use the tools functionally ",
     "description9": "by using the tools that can be rearranged."
+  },
+  "help": {
+    "expend": {
+      "title": "Color Expansion",
+      "description1": "This panel displays colors that are variations of the specified color.",
+      "description2": "Click on a color you like to set it as the reference color."
+    },
+    "contrast": {
+      "title": "WCAG2.2 Contrast",
+      "link": "WCAG2.2 Contrast Standard",
+      "text1": "WCAG2.2 Contrast is a standard for evaluating the contrast between the background color and the text color.",
+      "text2": "It is a standard set by the international standard WCAG.",
+      "text3": "This standard allows objective evaluation of whether content can be read by people with visual impairments.",
+      "text4": "There are three levels of evaluation: AAA, AA, and non-compliant.",
+      "text5": "AAA is an evaluation that has cleared a high standard,",
+      "text6": "AA is an evaluation that has cleared a minimum standard,",
+      "text7": "and non-compliant is an evaluation that has not cleared the standard."
+    },
+    "ciede2000": {
+      "title": "CIEDE2000 Color Difference Analysis",
+      "link": "CIEDE2000 Color Difference Analysis Details",
+      "text1": "CIEDE2000 is an international standard for quantifying the perceptual difference between two colors.",
+      "text2": "This color difference formula scientifically mimics how the human visual system perceives color differences.",
+      "text3": "The larger the CIEDE2000 value, the greater the perceptual difference between two colors.",
+      "text4": "Generally, if the CIEDE2000 value is less than 2.0, the color difference is small and difficult to distinguish for the average observer.",
+      "text5": "If the value is between 2.0 and 5.0, the color difference is recognizable,",
+      "text6": "and if it is 5.0 or more, there is a clear color difference.",
+      "text7": "This metric is very useful when evaluating whether a set of colors is visually distinguishable enough."
+    }
   }
 }

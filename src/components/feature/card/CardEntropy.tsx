@@ -360,7 +360,10 @@ const CardEntropy = () => {
   const analysis = analyzeColorPalette(colors);
 
   return (
-    <PanelWrapper title={t.sidebar.entropy || "配色の情報量分析"}>
+    <PanelWrapper
+      title={t.sidebar.entropy || "配色の情報量分析"}
+      helpPanelKey="entropy"
+    >
       <div
         className="flex flex-col gap-2"
         style={{ backgroundColor: getHoverBaseColor() }}
