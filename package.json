@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@emailjs/browser": "^4.4.1",
     "@types/tinycolor2": "^1.4.6",
     "@uiw/color-convert": "^2.4.1",
     "@uiw/react-color": "^2.4.1",

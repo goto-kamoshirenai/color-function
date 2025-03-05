@@ -11,6 +11,7 @@ import ColorExtend from "@/components/feature/card/ColorExtend";
 import { useMyColorStore } from "@/store/myColorStore";
 import CardCIEDE2000 from "@/components/feature/card/CardCIEDE2000";
 import AboutPanel from "@/components/feature/about/AboutPanel";
+import ContactPanel from "@/components/feature/contact/ContactPanel";
 export default function Home() {
   const {
     isShowCardContrastPanel,
@@ -38,6 +39,7 @@ export default function Home() {
       <MyColorButton />
       <MyColorPanel />
       <AboutPanel />
+      <ContactPanel />
     </>
   );
 }

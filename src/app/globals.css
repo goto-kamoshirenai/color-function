@@ -90,3 +90,14 @@ input[type="file"]::file-selector-button:hover {
   background-color: var(--file-button-hover-bg);
   color: var(--file-button-hover-color);
 }
+
+/* オートフィル時の背景色を制御 */
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: var(--text-color-a) !important;
+  transition: background-color 5000s ease-in-out 0s;
+  box-shadow: 0 0 0px 1000px var(--base-color-b) inset !important;
+}
