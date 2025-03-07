@@ -17,7 +17,9 @@ import HelpContrast from "@/components/feature/help/HelpContrast";
 import HelpCIEDE2000 from "@/components/feature/help/HelpCIEDE2000";
 import HelpHSV from "@/components/feature/help/HelpHSV";
 import HelpEntropy from "@/components/feature/help/HelpEntropy";
+import HelpPreview from "@/components/feature/help/HelpPreview";
 import { useHelpPanelStore } from "@/store/helpPanelStore";
+import CardPreviewSVG from "@/components/feature/card/CardPreviewSVG";
 
 export default function Home() {
   const {
@@ -27,6 +29,7 @@ export default function Home() {
     isShowCardEntropyPanel,
     isShowColorExtendPanel,
     isShowCardCIEDE2000Panel,
+    isShowCardPreviewSVGPanel,
   } = usePanelStore();
   const { textColorA } = useMyColorStore();
   const { helpPanelKey } = useHelpPanelStore();
@@ -44,6 +47,8 @@ export default function Home() {
         return <HelpHSV />;
       case "entropy":
         return <HelpEntropy />;
+      case "preview":
+        return <HelpPreview />;
       default:
         return null;
     }
@@ -56,6 +61,7 @@ export default function Home() {
         style={{ color: textColorA }}
       >
         {isShowColorExtendPanel && <ColorExtend />}
+        {isShowCardPreviewSVGPanel && <CardPreviewSVG />}
         {isShowCardContrastPanel && <CardContrast />}
         {isShowCardCIEDE2000Panel && <CardCIEDE2000 />}
         {isShowCardEntropyPanel && <CardEntropy />}

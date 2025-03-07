@@ -1,0 +1,92 @@
+import React from "react";
+
+interface PreviewArtSVGProps {
+  mainColorA: string;
+  mainColorB?: string;
+  baseColorA: string;
+  baseColorB?: string;
+  accentColorA: string;
+  accentColorB?: string;
+  textColorA: string;
+  textColorB?: string;
+}
+
+const PreviewArtSVG: React.FC<PreviewArtSVGProps> = ({
+  mainColorA,
+  mainColorB,
+  baseColorA,
+  baseColorB,
+  accentColorA,
+  accentColorB,
+  textColorA,
+  textColorB,
+}) => {
+  // Bの色がない場合はAの色を使用
+  const mainB = mainColorB || mainColorA;
+  const baseB = baseColorB || baseColorA;
+  const accentB = accentColorB || accentColorA;
+  const textB = textColorB || textColorA;
+
+  return (
+    <svg
+      width="100%"
+      height="100%"
+      viewBox="0 0 500 300"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <g clipPath="url(#clip0_104_894)">
+        <rect width="500" height="300" fill="white" />
+        <rect x="-2" width="250" height="300" fill={baseColorA} />
+        <rect x="248" width="252" height="300" fill={baseB} />
+        <rect x="34" y="25" width="243" height="87" fill={mainColorA} />
+        <rect x="315" y="131" width="126" height="149" fill={mainB} />
+        <rect x="97" y="62" width="10" height="14" fill={textColorA} />
+        <rect x="110" y="62" width="10" height="14" fill={textColorA} />
+        <rect x="123" y="62" width="10" height="14" fill={textColorA} />
+        <rect x="136" y="62" width="10" height="14" fill={textColorA} />
+        <rect x="151" y="62" width="10" height="14" fill={textColorA} />
+        <rect x="259" y="62" width="10" height="14" fill={textColorA} />
+        <rect x="164" y="62" width="10" height="14" fill={textColorA} />
+        <rect x="272" y="62" width="10" height="14" fill={textColorA} />
+        <rect x="179" y="62" width="10" height="14" fill={textColorA} />
+        <rect x="285" y="62" width="10" height="14" fill={textColorA} />
+        <rect x="192" y="62" width="10" height="14" fill={textColorA} />
+        <rect x="205" y="62" width="10" height="14" fill={textColorA} />
+        <rect x="218" y="62" width="10" height="14" fill={textColorA} />
+        <rect x="231" y="62" width="10" height="14" fill={textColorA} />
+        <rect x="244" y="62" width="10" height="14" fill={textColorA} />
+        <rect x="203" y="235" width="10" height="14" fill={textB} />
+        <rect x="216" y="235" width="10" height="14" fill={textB} />
+        <rect x="229" y="235" width="10" height="14" fill={textB} />
+        <rect x="242" y="235" width="10" height="14" fill={textB} />
+        <rect x="257" y="235" width="10" height="14" fill={textB} />
+        <rect x="365" y="235" width="10" height="14" fill={textB} />
+        <rect x="270" y="235" width="10" height="14" fill={textB} />
+        <rect x="378" y="235" width="10" height="14" fill={textB} />
+        <rect x="285" y="235" width="10" height="14" fill={textB} />
+        <rect x="391" y="235" width="10" height="14" fill={textB} />
+        <rect x="298" y="235" width="10" height="14" fill={textB} />
+        <rect x="311" y="235" width="10" height="14" fill={textB} />
+        <rect x="324" y="235" width="10" height="14" fill={textB} />
+        <rect x="337" y="235" width="10" height="14" fill={textB} />
+        <rect x="350" y="235" width="10" height="14" fill={textB} />
+        <circle cx="435.5" cy="56.5" r="39.5" fill={accentColorA} />
+        <circle cx="114.5" cy="205.5" r="62.5" fill={accentB} />
+        <rect x="39" y="174" width="10" height="14" fill="white" />
+        <rect x="52" y="174" width="10" height="14" fill="white" />
+        <rect x="65" y="174" width="10" height="14" fill="white" />
+        <rect x="303" y="143" width="10" height="14" fill="white" />
+        <rect x="316" y="143" width="10" height="14" fill="white" />
+        <rect x="329" y="143" width="10" height="14" fill="white" />
+      </g>
+      <defs>
+        <clipPath id="clip0_104_894">
+          <rect width="500" height="300" fill="white" />
+        </clipPath>
+      </defs>
+    </svg>
+  );
+};
+
+export default PreviewArtSVG;

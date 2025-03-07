@@ -14,7 +14,8 @@
     "csv": "CSV 出力 / 入力",
     "entropy": "分布分析",
     "colorExtend": "基準色から色を展開",
-    "ciede2000": "CIEDE2000 色差分析"
+    "ciede2000": "CIEDE2000 色差分析",
+    "preview": "配色プレビュー"
   },
   "csv": {
     "import": "CSVファイルをインポート",

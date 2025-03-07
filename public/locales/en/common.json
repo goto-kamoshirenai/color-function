@@ -14,7 +14,8 @@
     "csv": "CSV Export/Import",
     "entropy": "Distribution Analysis",
     "colorExtend": "Color Extension",
-    "ciede2000": "CIEDE2000 Color Difference Analysis"
+    "ciede2000": "CIEDE2000 Color Difference Analysis",
+    "preview": "Color Preview"
   },
   "csv": {
     "import": "Import CSV File",

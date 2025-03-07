@@ -9,13 +9,13 @@ import {
   MdFitbit,
   MdPalette,
   MdOutlineFilterBAndW,
+  MdPreview,
 } from "react-icons/md";
 import { IconType } from "react-icons";
 import { useMyColorStore } from "@/store/myColorStore";
 import { useTranslation } from "@/contexts/TranslationContext";
 
 interface SidebarButtonProps {
-  baseColorA: string;
   isActive: boolean;
   onClick: () => void;
   Icon: IconType;
@@ -23,13 +23,13 @@ interface SidebarButtonProps {
 }
 
 const SidebarButton: React.FC<SidebarButtonProps> = ({
-  baseColorA,
   isActive,
   onClick,
   Icon,
   label,
 }) => {
   const [isHovered, setIsHovered] = useState(false);
+  const { baseColorA } = useMyColorStore();
 
   return (
     <button
@@ -80,56 +80,56 @@ const Sidebar = () => {
     isShowCardEntropyPanel,
     isShowColorExtendPanel,
     isShowCardCIEDE2000Panel,
+    isShowCardPreviewSVGPanel,
     toggleCardContrastPanel,
     toggleCardHSVPanel,
     toggleCardCSVPanel,
     toggleCardEntropyPanel,
     toggleColorExtendPanel,
     toggleCardCIEDE2000Panel,
+    toggleCardPreviewSVGPanel,
   } = usePanelStore();
-  const { baseColorA } = useMyColorStore();
   const { t } = useTranslation();
 
   return (
     <div className="fixed left-0 h-screen flex flex-col gap-3 p-3 z-40 justify-center">
       <SidebarButton
-        baseColorA={baseColorA}
         isActive={isShowColorExtendPanel}
         onClick={toggleColorExtendPanel}
         Icon={MdPalette}
         label={t.sidebar.colorExtend}
       />
       <SidebarButton
-        baseColorA={baseColorA}
+        isActive={isShowCardPreviewSVGPanel}
+        onClick={toggleCardPreviewSVGPanel}
+        Icon={MdPreview}
+        label={t.sidebar.preview}
+      />
+      <SidebarButton
         isActive={isShowCardContrastPanel}
         onClick={toggleCardContrastPanel}
         Icon={MdBrightness6}
         label={t.sidebar.contrast}
       />
       <SidebarButton
-        baseColorA={baseColorA}
         isActive={isShowCardCIEDE2000Panel}
         onClick={toggleCardCIEDE2000Panel}
         Icon={MdOutlineFilterBAndW}
         label={t.sidebar.ciede2000}
       />
       <SidebarButton
-        baseColorA={baseColorA}
         isActive={isShowCardEntropyPanel}
         onClick={toggleCardEntropyPanel}
         Icon={MdFitbit}
         label={t.sidebar.entropy}
       />
       <SidebarButton
-        baseColorA={baseColorA}
         isActive={isShowCardHSVPanel}
         onClick={toggleCardHSVPanel}
         Icon={MdEqualizer}
         label={t.sidebar.hsv}
       />
-
       <SidebarButton
-        baseColorA={baseColorA}
         isActive={isShowCardCSVPanel}
         onClick={toggleCardCSVPanel}
         Icon={MdTextSnippet}
