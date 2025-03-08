@@ -10,6 +10,7 @@ import {
   MdPalette,
   MdOutlineFilterBAndW,
   MdPreview,
+  MdLightbulb,
 } from "react-icons/md";
 import { IconType } from "react-icons";
 import { useMyColorStore } from "@/store/myColorStore";
@@ -36,12 +37,13 @@ const SidebarButton: React.FC<SidebarButtonProps> = ({
       onClick={onClick}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
-      className="relative flex items-center rounded-full overflow-hidden transition-all duration-300 ease-in-out h-9 group"
+      className="relative flex items-center rounded-full overflow-hidden transition-all duration-300 ease-in-out h-9 group mb-1"
       style={{
         color: isActive ? baseColorA : "black",
         backgroundColor: isActive ? "black" : baseColorA,
         width: isHovered ? "auto" : "36px",
         paddingRight: isHovered ? "1rem" : "0",
+        flexShrink: 0,
       }}
     >
       <div className="w-9 h-9 flex items-center justify-center shrink-0">
@@ -81,6 +83,7 @@ const Sidebar = () => {
     isShowColorExtendPanel,
     isShowCardCIEDE2000Panel,
     isShowCardPreviewSVGPanel,
+    isShowCardRelativeLuminancePanel,
     toggleCardContrastPanel,
     toggleCardHSVPanel,
     toggleCardCSVPanel,
@@ -88,53 +91,76 @@ const Sidebar = () => {
     toggleColorExtendPanel,
     toggleCardCIEDE2000Panel,
     toggleCardPreviewSVGPanel,
+    toggleCardRelativeLuminancePanel,
   } = usePanelStore();
   const { t } = useTranslation();
 
   return (
-    <div className="fixed left-0 h-screen flex flex-col gap-3 p-3 z-40 justify-center">
-      <SidebarButton
-        isActive={isShowColorExtendPanel}
-        onClick={toggleColorExtendPanel}
-        Icon={MdPalette}
-        label={t.sidebar.colorExtend}
-      />
-      <SidebarButton
-        isActive={isShowCardPreviewSVGPanel}
-        onClick={toggleCardPreviewSVGPanel}
-        Icon={MdPreview}
-        label={t.sidebar.preview}
-      />
-      <SidebarButton
-        isActive={isShowCardContrastPanel}
-        onClick={toggleCardContrastPanel}
-        Icon={MdBrightness6}
-        label={t.sidebar.contrast}
-      />
-      <SidebarButton
-        isActive={isShowCardCIEDE2000Panel}
-        onClick={toggleCardCIEDE2000Panel}
-        Icon={MdOutlineFilterBAndW}
-        label={t.sidebar.ciede2000}
-      />
-      <SidebarButton
-        isActive={isShowCardEntropyPanel}
-        onClick={toggleCardEntropyPanel}
-        Icon={MdFitbit}
-        label={t.sidebar.entropy}
-      />
-      <SidebarButton
-        isActive={isShowCardHSVPanel}
-        onClick={toggleCardHSVPanel}
-        Icon={MdEqualizer}
-        label={t.sidebar.hsv}
-      />
-      <SidebarButton
-        isActive={isShowCardCSVPanel}
-        onClick={toggleCardCSVPanel}
-        Icon={MdTextSnippet}
-        label={t.sidebar.csv}
-      />
+    <div
+      className="fixed left-0 top-1/2 -translate-y-1/2 flex flex-col p-3 z-40"
+      style={{
+        height: "50vh",
+        maxHeight: "50vh",
+        overflowY: "auto",
+        overflowX: "hidden",
+        direction: "rtl",
+        paddingLeft: "12px",
+        paddingRight: "6px",
+      }}
+    >
+      <div
+        className="flex flex-col gap-3 justify-center"
+        style={{ direction: "ltr" }}
+      >
+        <SidebarButton
+          isActive={isShowColorExtendPanel}
+          onClick={toggleColorExtendPanel}
+          Icon={MdPalette}
+          label={t.sidebar.colorExtend}
+        />
+        <SidebarButton
+          isActive={isShowCardPreviewSVGPanel}
+          onClick={toggleCardPreviewSVGPanel}
+          Icon={MdPreview}
+          label={t.sidebar.preview}
+        />
+        <SidebarButton
+          isActive={isShowCardContrastPanel}
+          onClick={toggleCardContrastPanel}
+          Icon={MdBrightness6}
+          label={t.sidebar.contrast}
+        />
+        <SidebarButton
+          isActive={isShowCardRelativeLuminancePanel}
+          onClick={toggleCardRelativeLuminancePanel}
+          Icon={MdLightbulb}
+          label={t.sidebar.luminance}
+        />
+        <SidebarButton
+          isActive={isShowCardCIEDE2000Panel}
+          onClick={toggleCardCIEDE2000Panel}
+          Icon={MdOutlineFilterBAndW}
+          label={t.sidebar.ciede2000}
+        />
+        <SidebarButton
+          isActive={isShowCardEntropyPanel}
+          onClick={toggleCardEntropyPanel}
+          Icon={MdFitbit}
+          label={t.sidebar.entropy}
+        />
+        <SidebarButton
+          isActive={isShowCardHSVPanel}
+          onClick={toggleCardHSVPanel}
+          Icon={MdEqualizer}
+          label={t.sidebar.hsv}
+        />
+        <SidebarButton
+          isActive={isShowCardCSVPanel}
+          onClick={toggleCardCSVPanel}
+          Icon={MdTextSnippet}
+          label={t.sidebar.csv}
+        />
+      </div>
     </div>
   );
 };

@@ -15,6 +15,7 @@ interface PanelState {
   isShowColorExtendPanel: boolean;
   isShowCardCIEDE2000Panel: boolean;
   isShowCardPreviewSVGPanel: boolean;
+  isShowCardRelativeLuminancePanel: boolean;
 
   // アクション
   toggleMyColorPanel: () => void;
@@ -29,6 +30,7 @@ interface PanelState {
   toggleColorExtendPanel: () => void;
   toggleCardCIEDE2000Panel: () => void;
   toggleCardPreviewSVGPanel: () => void;
+  toggleCardRelativeLuminancePanel: () => void;
   // 全てのパネルを閉じる
   closeAllPanels: () => void;
 }
@@ -47,6 +49,7 @@ export const usePanelStore = create<PanelState>()(
     isShowColorExtendPanel: true,
     isShowCardCIEDE2000Panel: true,
     isShowCardPreviewSVGPanel: true,
+    isShowCardRelativeLuminancePanel: false,
 
     toggleMyColorPanel: () =>
       set((state) => ({
@@ -109,6 +112,12 @@ export const usePanelStore = create<PanelState>()(
         isShowCardPreviewSVGPanel: !state.isShowCardPreviewSVGPanel,
       })),
 
+    toggleCardRelativeLuminancePanel: () =>
+      set((state) => ({
+        isShowCardRelativeLuminancePanel:
+          !state.isShowCardRelativeLuminancePanel,
+      })),
+
     closeAllPanels: () =>
       set({
         isShowCardContrastPanel: false,
@@ -118,6 +127,7 @@ export const usePanelStore = create<PanelState>()(
         isShowColorExtendPanel: false,
         isShowCardCIEDE2000Panel: false,
         isShowCardPreviewSVGPanel: false,
+        isShowCardRelativeLuminancePanel: false,
         isMyColorPanelOpen: false,
         isAboutPanelOpen: false,
         isContactPanelOpen: false,

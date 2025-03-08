@@ -18,8 +18,10 @@ import HelpCIEDE2000 from "@/components/feature/help/HelpCIEDE2000";
 import HelpHSV from "@/components/feature/help/HelpHSV";
 import HelpEntropy from "@/components/feature/help/HelpEntropy";
 import HelpPreview from "@/components/feature/help/HelpPreview";
+import HelpLuminance from "@/components/feature/help/HelpLuminance";
 import { useHelpPanelStore } from "@/store/helpPanelStore";
 import CardPreviewSVG from "@/components/feature/card/CardPreviewSVG";
+import CardRelativeLuminance from "@/components/feature/card/CardRelativeLuminance";
 
 export default function Home() {
   const {
@@ -30,6 +32,7 @@ export default function Home() {
     isShowColorExtendPanel,
     isShowCardCIEDE2000Panel,
     isShowCardPreviewSVGPanel,
+    isShowCardRelativeLuminancePanel,
   } = usePanelStore();
   const { textColorA } = useMyColorStore();
   const { helpPanelKey } = useHelpPanelStore();
@@ -49,6 +52,8 @@ export default function Home() {
         return <HelpEntropy />;
       case "preview":
         return <HelpPreview />;
+      case "luminance":
+        return <HelpLuminance />;
       default:
         return null;
     }
@@ -63,6 +68,7 @@ export default function Home() {
         {isShowColorExtendPanel && <ColorExtend />}
         {isShowCardPreviewSVGPanel && <CardPreviewSVG />}
         {isShowCardContrastPanel && <CardContrast />}
+        {isShowCardRelativeLuminancePanel && <CardRelativeLuminance />}
         {isShowCardCIEDE2000Panel && <CardCIEDE2000 />}
         {isShowCardEntropyPanel && <CardEntropy />}
         {isShowCardHSVPanel && <CardHSV />}

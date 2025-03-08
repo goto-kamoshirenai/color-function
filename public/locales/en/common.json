@@ -15,7 +15,8 @@
     "entropy": "Distribution Analysis",
     "colorExtend": "Color Extension",
     "ciede2000": "CIEDE2000 Color Difference Analysis",
-    "preview": "Color Preview"
+    "preview": "Color Preview",
+    "luminance": "Relative Luminance"
   },
   "csv": {
     "import": "Import CSV File",

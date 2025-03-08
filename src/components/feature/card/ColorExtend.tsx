@@ -366,32 +366,28 @@ const ColorExtend = () => {
               <div
                 key={option.label}
                 onClick={() => handleColorSelect(option.label, option.color)}
-                className={`relative cursor-pointer p-2 rounded-md`}
+                className={`relative cursor-pointer p-1 rounded-md`}
                 style={{
                   transition: "all 0.3s ease",
                   border:
                     selectedColor.label === option.label
-                      ? `2px solid ${mainColorA}`
+                      ? `2px solid ${accentColorA}`
                       : `1px solid ${textColorA}`,
                 }}
                 onMouseEnter={(e) => {
                   e.currentTarget.style.border =
                     selectedColor.label === option.label
-                      ? `2px solid ${mainColorA}`
-                      : `1px solid ${mainColorA}`;
+                      ? `2px solid ${accentColorA}`
+                      : `2px solid ${mainColorA}`;
                 }}
                 onMouseLeave={(e) => {
                   e.currentTarget.style.border =
                     selectedColor.label === option.label
-                      ? `2px solid ${mainColorA}`
+                      ? `2px solid ${accentColorA}`
                       : `1px solid ${textColorA}`;
                 }}
               >
-                <ColorChip
-                  color={option.color}
-                  label={option.label}
-                  size="md"
-                />
+                <ColorChip color={option.color} label={option.label} />
               </div>
             ))}
           </div>
@@ -405,15 +401,15 @@ const ColorExtend = () => {
               !selectedColor.label ? "hidden" : ""
             }`}
           >
-            <p>パレットを展開</p>
-            <MdExpandMore size={20} />
+            <p className="text-sm">パレットを展開</p>
+            <MdExpandMore size={16} />
           </CommonButton>
         </div>
 
         {(extendedColors.length > 0 ||
           saturationColors.length > 0 ||
           hueColors.length > 0) && (
-          <div className="flex flex-col gap-2">
+          <div className="flex flex-col gap-1">
             {hueColors.length > 0 && (
               <ColorVariationRow
                 title="色相バリエーション"

@@ -198,7 +198,7 @@ const CardPreviewSVG: React.FC = () => {
       <div
         className="flex overflow-hidden"
         style={{
-          height: `calc(100% - 5vh - 4rem)`,
+          height: `calc(100% - 5vh - 4.25rem)`,
         }}
       >
         <div

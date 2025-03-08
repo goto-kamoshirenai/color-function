@@ -23,7 +23,7 @@ const ColorVariationRow: React.FC<ColorVariationRowProps> = ({
 }) => {
   const { textColorA } = useMyColorStore();
   return (
-    <div className="flex flex-col gap-2">
+    <div className="flex flex-col">
       <p className="text-sm font-medium">{title}</p>
       <div className="flex gap-2">
         {colors.map((item, index) => (

@@ -19,4 +19,5 @@ export type HelpPanelKey =
   | "csv"
   | "entropy"
   | "cie2000"
-  | "preview";
+  | "preview"
+  | "luminance";
