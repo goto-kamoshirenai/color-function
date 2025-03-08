@@ -116,11 +116,6 @@ const Sidebar = () => {
       const newIsScrollable = contentHeight > containerHeight;
 
       if (newIsScrollable !== isScrollable) {
-        console.log(
-          `スクロール状態が変更: ${
-            newIsScrollable ? "必要" : "不要"
-          } (コンテナ: ${containerHeight}px, コンテンツ: ${contentHeight}px)`
-        );
         setIsScrollable(newIsScrollable);
       }
     }
