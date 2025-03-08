@@ -1,6 +1,12 @@
 "use client";
 
-import React, { useState } from "react";
+import React, {
+  useState,
+  useRef,
+  useEffect,
+  useLayoutEffect,
+  useCallback,
+} from "react";
 import { usePanelStore } from "@/store/panelStore";
 import {
   MdBrightness6,
@@ -94,21 +100,119 @@ const Sidebar = () => {
     toggleCardRelativeLuminancePanel,
   } = usePanelStore();
   const { t } = useTranslation();
+  const { baseColorA } = useMyColorStore();
+
+  // スクロールが必要かどうかを検出するための参照
+  const containerRef = useRef<HTMLDivElement>(null);
+  const contentRef = useRef<HTMLDivElement>(null);
+  const [isScrollable, setIsScrollable] = useState(false);
+  const [isInitialCheckDone, setIsInitialCheckDone] = useState(false);
+
+  // スクロール状態をチェックする関数
+  const checkIfScrollable = useCallback(() => {
+    if (containerRef.current && contentRef.current) {
+      const containerHeight = containerRef.current.clientHeight;
+      const contentHeight = contentRef.current.scrollHeight;
+      const newIsScrollable = contentHeight > containerHeight;
+
+      if (newIsScrollable !== isScrollable) {
+        console.log(
+          `スクロール状態が変更: ${
+            newIsScrollable ? "必要" : "不要"
+          } (コンテナ: ${containerHeight}px, コンテンツ: ${contentHeight}px)`
+        );
+        setIsScrollable(newIsScrollable);
+      }
+    }
+  }, [isScrollable]);
+
+  // レイアウト計算後すぐにチェック（初期レンダリング時）
+  useLayoutEffect(() => {
+    checkIfScrollable();
+  }, [checkIfScrollable]);
+
+  // コンポーネントがマウントされた後とウィンドウサイズが変更されたときにスクロール状態を確認
+  useEffect(() => {
+    // マウント直後のチェック
+    checkIfScrollable();
+
+    // 画像やフォントの読み込みが完了した後に再チェック
+    window.addEventListener("load", checkIfScrollable);
+
+    // 少し遅延させて再チェック（レンダリングが完全に終わった後）
+    const initialCheckTimeout = setTimeout(() => {
+      checkIfScrollable();
+      setIsInitialCheckDone(true);
+    }, 300);
+
+    // ウィンドウサイズ変更時にチェック
+    window.addEventListener("resize", checkIfScrollable);
+
+    // スクロール時にもチェック
+    const container = containerRef.current;
+    if (container) {
+      container.addEventListener("scroll", checkIfScrollable);
+    }
+
+    // MutationObserverを使用してコンテンツの変更を監視
+    const observer = new MutationObserver(checkIfScrollable);
+    if (contentRef.current) {
+      observer.observe(contentRef.current, {
+        childList: true,
+        subtree: true,
+        attributes: true,
+        characterData: true,
+      });
+    }
+
+    return () => {
+      clearTimeout(initialCheckTimeout);
+      window.removeEventListener("load", checkIfScrollable);
+      window.removeEventListener("resize", checkIfScrollable);
+      if (container) {
+        container.removeEventListener("scroll", checkIfScrollable);
+      }
+      observer.disconnect();
+    };
+  }, [checkIfScrollable]);
+
+  // 初期チェック完了後に再度チェック（念のため）
+  useEffect(() => {
+    if (isInitialCheckDone) {
+      checkIfScrollable();
+    }
+  }, [isInitialCheckDone, checkIfScrollable]);
 
   return (
     <div
-      className="fixed left-0 top-1/2 -translate-y-1/2 flex flex-col p-3 z-40"
+      ref={containerRef}
+      className={`fixed left-0 top-1/2 -translate-y-1/2 flex flex-col z-40 ${
+        isScrollable ? "scrollable-container" : ""
+      }`}
       style={{
         height: "50vh",
         maxHeight: "50vh",
         overflowY: "auto",
         overflowX: "hidden",
         direction: "rtl",
-        paddingLeft: "12px",
-        paddingRight: "6px",
+        paddingLeft: isScrollable ? "6px" : "16px",
+        transition: "padding-left 0.3s ease-in-out",
+        // スクロールバーのスタイルはグローバルCSSで定義されているため、ここでは制御しない
       }}
     >
+      {/* スクロール可能な場合に表示するインジケーター */}
+      {isScrollable && (
+        <div
+          className="absolute left-1 top-0 bottom-0 w-1 z-50"
+          style={{
+            backgroundColor: baseColorA,
+            opacity: 0.5,
+            borderRadius: "3px",
+          }}
+        />
+      )}
       <div
+        ref={contentRef}
         className="flex flex-col gap-3 justify-center"
         style={{ direction: "ltr" }}
       >
