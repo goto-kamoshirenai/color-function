@@ -73,6 +73,7 @@ const MyColorPanel = () => {
         text: !!textColorB,
       });
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isMyColorPanelOpen]);
 
   // 一時的な色を更新する関数

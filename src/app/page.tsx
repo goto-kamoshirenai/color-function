@@ -22,6 +22,7 @@ import HelpLuminance from "@/components/feature/help/HelpLuminance";
 import { useHelpPanelStore } from "@/store/helpPanelStore";
 import CardPreviewSVG from "@/components/feature/card/CardPreviewSVG";
 import CardRelativeLuminance from "@/components/feature/card/CardRelativeLuminance";
+import CardTemplate from "@/components/feature/card/CardTemplate";
 
 export default function Home() {
   const {
@@ -33,6 +34,7 @@ export default function Home() {
     isShowCardCIEDE2000Panel,
     isShowCardPreviewSVGPanel,
     isShowCardRelativeLuminancePanel,
+    isShowCardTemplatePanel,
   } = usePanelStore();
   const { textColorA } = useMyColorStore();
   const { helpPanelKey } = useHelpPanelStore();
@@ -65,7 +67,9 @@ export default function Home() {
         className="flex flex-wrap gap-2  p-8 ml-8 "
         style={{ color: textColorA }}
       >
+        {isShowCardTemplatePanel && <CardTemplate />}
         {isShowColorExtendPanel && <ColorExtend />}
+
         {isShowCardPreviewSVGPanel && <CardPreviewSVG />}
         {isShowCardContrastPanel && <CardContrast />}
         {isShowCardRelativeLuminancePanel && <CardRelativeLuminance />}

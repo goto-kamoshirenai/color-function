@@ -16,7 +16,8 @@
     "colorExtend": "Color Extension",
     "ciede2000": "CIEDE2000 Color Difference Analysis",
     "preview": "Color Preview",
-    "luminance": "Relative Luminance"
+    "luminance": "Relative Luminance",
+    "template": "Color Template"
   },
   "csv": {
     "import": "Import CSV File",

@@ -17,6 +17,7 @@ import {
   MdOutlineFilterBAndW,
   MdPreview,
   MdLightbulb,
+  MdStyle,
 } from "react-icons/md";
 import { IconType } from "react-icons";
 import { useMyColorStore } from "@/store/myColorStore";
@@ -90,6 +91,7 @@ const Sidebar = () => {
     isShowCardCIEDE2000Panel,
     isShowCardPreviewSVGPanel,
     isShowCardRelativeLuminancePanel,
+    isShowCardTemplatePanel,
     toggleCardContrastPanel,
     toggleCardHSVPanel,
     toggleCardCSVPanel,
@@ -98,6 +100,7 @@ const Sidebar = () => {
     toggleCardCIEDE2000Panel,
     toggleCardPreviewSVGPanel,
     toggleCardRelativeLuminancePanel,
+    toggleCardTemplatePanel,
   } = usePanelStore();
   const { t } = useTranslation();
   const { baseColorA } = useMyColorStore();
@@ -211,6 +214,12 @@ const Sidebar = () => {
         className="flex flex-col gap-3 justify-center"
         style={{ direction: "ltr" }}
       >
+        <SidebarButton
+          isActive={isShowCardTemplatePanel}
+          onClick={toggleCardTemplatePanel}
+          Icon={MdStyle}
+          label={t.sidebar.template}
+        />
         <SidebarButton
           isActive={isShowColorExtendPanel}
           onClick={toggleColorExtendPanel}
