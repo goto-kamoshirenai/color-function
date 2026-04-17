@@ -6,13 +6,6 @@ interface HSV {
   v: number; // 明度 (0-100)
 }
 
-export interface ColorMetrics {
-  hueEntropy: number;
-  saturationEntropy: number;
-  lightnessEntropy: number;
-  colorDistance: number;
-}
-
 export interface ColorAnalysis {
   entropy: number;
   hueVariety: number;
@@ -36,7 +29,7 @@ export const hexToRgb = (
 };
 
 // RGBからHSVに変換
-export const rgbToHsv = (r: number, g: number, b: number): HSV => {
+const rgbToHsv = (r: number, g: number, b: number): HSV => {
   r /= 255;
   g /= 255;
   b /= 255;
@@ -67,75 +60,6 @@ export const hexToHsv = (hex: string): HSV | null => {
   const rgb = hexToRgb(hex);
   if (!rgb) return null;
   return rgbToHsv(rgb.r, rgb.g, rgb.b);
-};
-
-// HSVの値を比較しやすい文字列に変換
-export const formatHsv = (hsv: HSV): string => {
-  return `H:${hsv.h}° S:${hsv.s}% V:${hsv.v}%`;
-};
-
-// エントロピー計算
-export const calculateEntropy = (
-  values: number[],
-  maxValue: number
-): number => {
-  const normalizedValues = values.map((v) => v / maxValue);
-  const sum = normalizedValues.reduce((a, b) => a + b, 0);
-  return -normalizedValues
-    .filter((v) => v > 0)
-    .reduce((acc, val) => acc + (val / sum) * Math.log2(val / sum), 0);
-};
-
-// 色間の距離計算
-export const calculateColorDistance = (colors: string[]): number => {
-  let totalDistance = 0;
-  for (let i = 0; i < colors.length; i++) {
-    for (let j = i + 1; j < colors.length; j++) {
-      totalDistance += chroma.distance(colors[i], colors[j]);
-    }
-  }
-  return totalDistance / ((colors.length * (colors.length - 1)) / 2);
-};
-
-// 色のメトリクス計算
-export const calculateColorMetrics = (colors: string[]): ColorMetrics => {
-  const hslValues = colors.map((color) => chroma(color).hsl());
-
-  const hues = hslValues.map((hsl) => hsl[0]);
-  const hueEntropy = calculateEntropy(hues, 360);
-
-  const saturations = hslValues.map((hsl) => hsl[1]);
-  const saturationEntropy = calculateEntropy(saturations, 1);
-
-  const lightness = hslValues.map((hsl) => hsl[2]);
-  const lightnessEntropy = calculateEntropy(lightness, 1);
-
-  const colorDistance = calculateColorDistance(colors);
-
-  return {
-    hueEntropy,
-    saturationEntropy,
-    lightnessEntropy,
-    colorDistance,
-  };
-};
-
-// 配色の評価テキスト取得
-export const getColorEvaluationText = (metrics: ColorMetrics): string => {
-  const totalScore =
-    (metrics.hueEntropy +
-      metrics.saturationEntropy +
-      metrics.lightnessEntropy +
-      metrics.colorDistance) /
-    4;
-
-  if (totalScore > 0.7) {
-    return "カラフルで活発な配色です。アクセントとして効果的ですが、長時間の視聴には注意が必要かもしれません。";
-  } else if (totalScore > 0.4) {
-    return "バランスの取れた配色です。視認性と美しさを両立しています。";
-  } else {
-    return "統一感のある落ち着いた配色です。長時間の閲覧に適しています。";
-  }
 };
 
 // 色相の多様性を計算

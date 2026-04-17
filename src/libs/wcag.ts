@@ -1,13 +1,5 @@
 import { hexToRgb } from "./colorUtils";
-
-// 相対輝度の計算
-const getLuminance = (r: number, g: number, b: number): number => {
-  const [rs, gs, bs] = [r, g, b].map((c) => {
-    const s = c / 255;
-    return s <= 0.03928 ? s / 12.92 : Math.pow((s + 0.055) / 1.055, 2.4);
-  });
-  return 0.2126 * rs + 0.7152 * gs + 0.0722 * bs;
-};
+import { getLuminance } from "./relativeLuminance";
 
 // コントラスト比の計算
 export const getContrastRatio = (color1: string, color2: string): number => {
