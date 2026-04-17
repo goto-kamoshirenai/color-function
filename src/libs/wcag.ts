@@ -32,15 +32,11 @@ export const getWCAGLevel = (
   ratio: number,
   isLargeText: boolean = false
 ): ContrastLevel => {
-  if (isLargeText) {
-    if (ratio >= 7.0) return "AAA(適合)";
-    if (ratio >= 4.5) return "AA(適合)";
-    return "不適合";
-  } else {
-    if (ratio >= 4.5) return "AAA(適合)";
-    if (ratio >= 3.0) return "AA(適合)";
-    return "不適合";
-  }
+  const aaaThreshold = isLargeText ? 4.5 : 7.0;
+  const aaThreshold = isLargeText ? 3.0 : 4.5;
+  if (ratio >= aaaThreshold) return "AAA(適合)";
+  if (ratio >= aaThreshold) return "AA(適合)";
+  return "不適合";
 };
 
 // コントラスト比のフォーマット
