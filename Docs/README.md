@@ -15,6 +15,7 @@
 | [personas.md](./personas.md) | 想定ユーザー像（ペルソナ）と機能フィット分析、プロダクト見直しの論点 |
 | [requirements.md](./requirements.md) | 4 つのコア価値に基づく必要機能の洗い出しと優先度付きロードマップ |
 | [ui-redesign-discussion.md](./ui-redesign-discussion.md) | UI 再設計の議論ベース。論点 A〜M の選択肢とトレードオフを整理 |
+| [ui-design.md](./ui-design.md) | UI 設計の確定事項と派生論点。Web 開発メイン動線 + パネル組み替えの方針 |
 
 ## アプリ概要
 
