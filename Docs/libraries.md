@@ -4,30 +4,24 @@
 
 ### colorUtils.ts
 
-色変換と配色パレット分析のユーティリティ群。
+色変換と配色パレット分析のユーティリティ群。詳細は [calculations.md](./calculations.md) 参照。
 
 | 関数 | 概要 |
 |---|---|
-| `hexToRgb(hex)` | HEX → `{ r, g, b }` |
-| `rgbToHsv(r, g, b)` | RGB → `{ h, s, v }` |
-| `hexToHsv(hex)` | HEX → HSV 直変換 |
-| `formatHsv(hsv)` | `"H:0° S:0% V:0%"` 形式 |
-| `calculateEntropy(values, maxValue)` | 値の分布エントロピー |
-| `calculateColorDistance(colors)` | chroma-js の色距離の平均 |
-| `calculateColorMetrics(colors)` | 色相・彩度・明度のエントロピー |
-| `getColorEvaluationText(metrics)` | スコアから評価文を生成 |
-| `analyzeColorPalette(colors)` | 多様性・統一性・バランス・総合エントロピーを返し、「統一感 / バランス / カラフル」等のカテゴリに分類 |
+| `hexToRgb(hex)` | HEX → `{ r, g, b }`。6 桁 HEX のみ対応 |
+| `hexToHsv(hex)` | HEX → `{ h, s, v }`（`CardHSV` で使用） |
+| `analyzeColorPalette(colors)` | hueVariety / saturationUnity / lightnessBalance / entropy を返し、「統一感 / バランス / カラフル」にカテゴリ分類（`CardEntropy` で使用） |
 
-`CardEntropy` / `CardHSV` から主に使用されます。
+内部ヘルパー `rgbToHsv` / `calculateHueVariety` / `average` / `calculateStandardDeviation` は非公開。
 
 ### relativeLuminance.ts
 
-WCAG 2.0 の相対輝度計算。
+WCAG 2.0 の相対輝度計算。詳細は [wcag.md](./wcag.md) 参照。
 
 | 関数 | 概要 |
 |---|---|
 | `calculateRelativeLuminance(color)` | HEX → 相対輝度（0〜1） |
-| `getLuminance(r, g, b)` | RGB 版 |
+| `getLuminance(r, g, b)` | RGB 版（`wcag.ts` からも利用） |
 | `formatLuminance(luminance)` | 小数 3 桁文字列 |
 | `getLuminanceLevel(luminance)` | 5 段階レベル判定 |
 | `getLuminanceBackgroundColor(luminance)` | バッジ用 Tailwind クラスを返す |
