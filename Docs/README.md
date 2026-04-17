@@ -12,6 +12,7 @@
 | [libraries.md](./libraries.md) | ユーティリティ関数、定数、型定義、多言語対応 |
 | [wcag.md](./wcag.md) | WCAG コントラスト比 / 相対輝度 / CIEDE2000 の計算式としきい値 |
 | [calculations.md](./calculations.md) | WCAG 以外の計算仕様（HSV 変換、配色分析、色展開、CSV/Tailwind 等の入出力） |
+| [personas.md](./personas.md) | 想定ユーザー像（ペルソナ）と機能フィット分析、プロダクト見直しの論点 |
 
 ## アプリ概要
 
