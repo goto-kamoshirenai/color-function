@@ -37,30 +37,30 @@
 ### 4. Contrast（WCAG コントラスト）
 
 - **ファイル**: [CardContrast.tsx](../src/components/feature/card/CardContrast.tsx)
-- **計算ロジック**: [src/libs/wcag.ts](../src/libs/wcag.ts)
+- **計算ロジック**: [src/libs/wcag.ts](../src/libs/wcag.ts) — 詳細は [wcag.md](./wcag.md) 参照
 - **機能**:
-  - `color-contrast-checker` でコントラスト比を計算
-  - WCAG 2.2 の基準（AAA / AA / 不適合）を文字サイズ別に判定
-  - 8 色の組合せをマトリクス表示
+  - 相対輝度からコントラスト比 `(L1+0.05)/(L2+0.05)` を算出
+  - WCAG 2.1 / 2.2 の基準（AAA ≥ 7.0 / AA ≥ 4.5 / 不適合）で判定
+  - Text × (Main/Base/Accent) の A/B 組合せをマトリクス表示
 - **ヘルプキー**: `"contrast"`
 
 ### 5. RelativeLuminance（相対輝度）
 
 - **ファイル**: [CardRelativeLuminance.tsx](../src/components/feature/card/CardRelativeLuminance.tsx)
-- **計算ロジック**: [src/libs/relativeLuminance.ts](../src/libs/relativeLuminance.ts)
+- **計算ロジック**: [src/libs/relativeLuminance.ts](../src/libs/relativeLuminance.ts) — 詳細は [wcag.md](./wcag.md) 参照
 - **機能**:
   - WCAG 2.0 定義の相対輝度（0-1）を算出
-  - 5 段階（`getLuminanceLevel`）でレベル判定し、`getLuminanceBackgroundColor` で Tailwind クラスを返してバッジ表示
+  - 5 段階（非常に明るい / 明るい / 中程度 / 暗い / 非常に暗い）でレベル判定し、`bg-blue-100`〜`bg-blue-500` のバッジで表示
   - 各色ごとに値とレベルを一覧
 - **ヘルプキー**: `"luminance"`
 
 ### 6. CIEDE2000（色差マトリクス）
 
 - **ファイル**: [CardCIEDE2000.tsx](../src/components/feature/card/CardCIEDE2000.tsx)
-- **計算**: `chroma-js` の `deltaE`（CIEDE2000）を使用
+- **計算**: `chroma-js` の `deltaE`（CIEDE2000）を使用 — しきい値詳細は [wcag.md](./wcag.md) 参照
 - **機能**:
   - 8 色の総当たり色差をマトリクスで表示
-  - 色差の大きさに応じてセル背景をレベル別に色分け（`getLevelColor`）
+  - ΔE₀₀ ≥ 5.0 「明確な差」 / ≥ 2.0 「認識可能」 / < 2.0 「差が小さい」の 3 段階バッジ
 - **ヘルプキー**: `"cie2000"`
 
 ### 7. Entropy（分布分析）

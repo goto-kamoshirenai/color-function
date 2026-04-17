@@ -10,6 +10,7 @@
 | [architecture.md](./architecture.md) | 技術スタック、ディレクトリ構成、ルーティング、状態管理 |
 | [features.md](./features.md) | 9 種類の機能カード、モーダルパネル、共通 UI の仕様 |
 | [libraries.md](./libraries.md) | ユーティリティ関数、定数、型定義、多言語対応 |
+| [wcag.md](./wcag.md) | WCAG コントラスト比 / 相対輝度 / CIEDE2000 の計算式としきい値 |
 
 ## アプリ概要
 
