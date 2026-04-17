@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import clsx from "clsx";
 import PanelWrapper from "@/components/elements/PanelWrapper";
 import { useMyColorStore } from "@/store/myColorStore";
 import ColorChip from "@/components/elements/ColorChip";
@@ -397,9 +398,10 @@ const ColorExtend = () => {
             onClick={() =>
               selectedColor && generateAllVariations(selectedColor.color)
             }
-            className={`flex-col items-center justify-center ${
-              !selectedColor.label ? "hidden" : ""
-            }`}
+            className={clsx(
+              "flex-col items-center justify-center",
+              !selectedColor.label && "hidden",
+            )}
           >
             <p className="text-sm">パレットを展開</p>
             <MdExpandMore size={16} />

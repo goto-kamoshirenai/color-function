@@ -1,4 +1,5 @@
 import React from "react";
+import clsx from "clsx";
 import PanelWrapper from "@/components/elements/PanelWrapper";
 import { useMyColorStore } from "@/store/myColorStore";
 import ColorChip from "@/components/elements/ColorChip";
@@ -32,7 +33,10 @@ const LuminanceResult: React.FC<LuminanceResultProps> = ({ color, label }) => {
         <div className="text-sm w-16">相対輝度:</div>
         <div className="font-bold text-lg w-16">{formattedLuminance}</div>
         <div
-          className={`${bgColorClass} px-3 py-1 rounded-full text-sm font-medium `}
+          className={clsx(
+            bgColorClass,
+            "px-3 py-1 rounded-full text-sm font-medium",
+          )}
           style={{ color: textColorA }}
         >
           {level}

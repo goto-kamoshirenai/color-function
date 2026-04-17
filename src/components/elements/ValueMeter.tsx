@@ -1,3 +1,4 @@
+import clsx from "clsx";
 import { useMyColorStore } from "@/store/myColorStore";
 
 interface ValueMeterProps {
@@ -22,11 +23,10 @@ const ValueMeter = ({ value, label, height = 100 }: ValueMeterProps) => {
         {Array.from({ length: 101 }).map((_, i) => (
           <div
             key={i}
-            className={`absolute left-0 ${
-              i % 10 === 0
-                ? "w-3 h-[1px] bg-gray-400"
-                : "w-1.5 h-[1px] bg-gray-200"
-            }`}
+            className={clsx(
+              "absolute left-0 h-[1px]",
+              i % 10 === 0 ? "w-3 bg-gray-400" : "w-1.5 bg-gray-200",
+            )}
             style={{
               top: `${i}%`,
               transform: "translateY(-50%)",

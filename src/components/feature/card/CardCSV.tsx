@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState, useCallback } from "react";
+import clsx from "clsx";
 import PanelWrapper from "@/components/elements/PanelWrapper";
 import { useTranslation } from "@/contexts/TranslationContext";
 import { useMyColorStore } from "@/store/myColorStore";
@@ -157,9 +158,10 @@ const CardCSV = () => {
               </button>
             </div>
             <div
-              className={`flex-1 h-[38px] flex items-center justify-center rounded-lg transition-all duration-200 p-2 ${
-                isDragging ? "ring-2 ring-offset-2" : ""
-              }`}
+              className={clsx(
+                "flex-1 h-[38px] flex items-center justify-center rounded-lg transition-all duration-200 p-2",
+                isDragging && "ring-2 ring-offset-2",
+              )}
               style={{
                 backgroundColor: baseColorA,
                 borderColor: accentColorA,

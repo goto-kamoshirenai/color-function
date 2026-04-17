@@ -7,6 +7,7 @@ import React, {
   useLayoutEffect,
   useCallback,
 } from "react";
+import clsx from "clsx";
 import { usePanelStore } from "@/store/panelStore";
 import {
   MdBrightness6,
@@ -184,9 +185,10 @@ const Sidebar = () => {
   return (
     <div
       ref={containerRef}
-      className={`fixed left-0 top-1/2 -translate-y-1/2 flex flex-col z-40 ${
-        isScrollable ? "scrollable-container" : ""
-      }`}
+      className={clsx(
+        "fixed left-0 top-1/2 -translate-y-1/2 flex flex-col z-40",
+        isScrollable && "scrollable-container",
+      )}
       style={{
         height: "50vh",
         maxHeight: "50vh",

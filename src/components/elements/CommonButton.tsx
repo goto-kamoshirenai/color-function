@@ -1,4 +1,5 @@
 import React from "react";
+import clsx from "clsx";
 import { useMyColorStore } from "@/store/myColorStore";
 
 interface CommonButtonProps {
@@ -11,7 +12,7 @@ interface CommonButtonProps {
 const CommonButton: React.FC<CommonButtonProps> = ({
   children,
   onClick,
-  className = "",
+  className,
   disabled = false,
 }) => {
   const { mainColorA, mainColorB, baseColorA, accentColorA, textColorA } =
@@ -19,7 +20,10 @@ const CommonButton: React.FC<CommonButtonProps> = ({
 
   return (
     <button
-      className={`flex items-center justify-center px-6 py-2 rounded-lg font-bold ${className}`}
+      className={clsx(
+        "flex items-center justify-center px-6 py-2 rounded-lg font-bold",
+        className,
+      )}
       style={{
         backgroundColor: disabled ? "#cccccc" : mainColorA,
         color: baseColorA,

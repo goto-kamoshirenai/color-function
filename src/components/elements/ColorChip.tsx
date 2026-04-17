@@ -1,5 +1,6 @@
 import { useMyColorStore } from "@/store/myColorStore";
 import React from "react";
+import clsx from "clsx";
 
 interface ColorChipProps {
   color: string;
@@ -19,7 +20,7 @@ const ColorChip: React.FC<ColorChipProps> = ({
   return (
     <div className="flex items-center gap-1">
       <div
-        className={`rounded-full ${size === "sm" ? "w-4 h-4" : "w-6 h-6"}`}
+        className={clsx("rounded-full", size === "sm" ? "w-4 h-4" : "w-6 h-6")}
         style={{
           backgroundColor: color,
           border:
@@ -31,7 +32,7 @@ const ColorChip: React.FC<ColorChipProps> = ({
         }}
       />
       <p
-        className={`block ${size === "sm" ? "text-sm" : "text-base"}`}
+        className={clsx("block", size === "sm" ? "text-sm" : "text-base")}
         style={{
           width: styleType === "equal" ? "3rem" : "none",
         }}

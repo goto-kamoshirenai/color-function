@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
+import clsx from "clsx";
 import "./globals.css";
 import Layout from "@/components/layout/Layout";
 
@@ -26,7 +27,7 @@ export default function RootLayout({
   return (
     <html lang="ja">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={clsx(geistSans.variable, geistMono.variable, "antialiased")}
       >
         <Layout>{children}</Layout>
       </body>
