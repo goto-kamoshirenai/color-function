@@ -97,7 +97,7 @@ describe('contrastRatio', () => {
 
 - **作業単位** = [11 §6](./11_implementation_plan.md) のスプリント内の「1カード」「1関数群」「1ストアアクション」程度の粒度。
 - **コミット方針**（[memory: 自動コミット方針]）: 作業（緑のサイクル）が一区切りしたら**確認なしで自動コミット、push はしない**。
-- メッセージは日本語、prefix（`ADD`/`FIX`/`TEST`/`REFACTOR`/`DOCS`）＋要点。
+- メッセージは [13 コミット規約](./13_commit_convention.md)（Conventional Commits 準拠）に従う: `<type>(<scope>): <要約>`。
 - 1コミットは「テスト＋それを通す実装」をまとめてよい（Red単独コミットはしない）。
 
 ---

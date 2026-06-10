@@ -24,8 +24,11 @@
 4. **アーキテクチャ規律** — 色の正準は **sRGB**。`core/color/*` は**純粋・フレームワーク非依存**。UIは状態を持たず、palette変更は **`apply()` 一本**（[docs/05](./docs/05_data_model_and_card_contract.md)/[docs/11](./docs/11_implementation_plan.md)）。
 5. **自身がアクセシブルであること** — a11y を評価するツール自体が a11y であること。`@axe-core/playwright` を一級のテストとして扱う。
 6. **DBを持たない** — 永続化なし。共有は URL ハッシュ（`#p=hex,hex`）、一時保存は localStorage（[docs/02](./docs/02_constraints.md)/[docs/10 §3](./docs/10_design_reference.md)）。
-7. **コミット** — 作業（緑のサイクル）が一区切りしたら**確認なしで自動コミット、push はしない**。メッセージは日本語、prefix（`ADD`/`FIX`/`TEST`/`REFACTOR`/`DOCS`）。
-8. **言語** — ドキュメント・コミットメッセージ・テスト記述は日本語可。コード識別子は英語。
+7. **コミット** — 詳細は [docs/13 コミット規約](./docs/13_commit_convention.md)（Conventional Commits 準拠）。
+   - 作業は**常に適切な粒度でコミット**する（1コミット＝1つの論理的変更）。緑のサイクルが一区切りしたら確認なしで自動コミット。
+   - **メッセージは規約に従う**: `<type>(<scope>): <要約>`（type=`feat`/`fix`/`docs`/`test`/`refactor`/`chore` 等）。
+   - **push は禁止、コミットまで**で止める。
+8. **言語** — ドキュメント・コミットメッセージ（要約）・テスト記述は日本語可。コード識別子は英語。
 
 ---
 

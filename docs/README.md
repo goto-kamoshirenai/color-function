@@ -19,6 +19,7 @@
 | 10 | [デザインリファレンス](./10_design_reference.md) | 確定モック(`Color Follows Function.html`)から抽出した実装基準・トークン・差分 | ドラフト |
 | 11 | [実装ロードマップ＆モジュール設計](./11_implementation_plan.md) | core/color署名・ストア・カードレジストリ・アセットローダ・スプリント計画(DoD) | ドラフト |
 | 12 | [TDD 開発手順書](./12_tdd_workflow.md) | Red-Green-Refactor・レイヤ別テスト戦略・規約・スプリント別着手点 | ドラフト |
+| 13 | [コミット規約](./13_commit_convention.md) | Conventional Commits 準拠・粒度・push禁止 | 確定 |
 
 > リポジトリ直下の **[AGENTS.md](../AGENTS.md)** がエージェントの入口（開発の鉄則・必読ドキュメント・コマンド）。実装着手前に必読。
 
