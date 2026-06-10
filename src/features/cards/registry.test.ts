@@ -16,8 +16,9 @@ describe("カードレジストリ / filterCards", () => {
     ]);
   });
 
-  it("ペア×検証は該当なし（S4で追加）", () => {
-    expect(filterCards(CARD_REGISTRY, "pair", "verify")).toHaveLength(0);
+  it("ペア×検証で3カード（WCAGコントラスト/色差ΔE/色覚シミュレーション）", () => {
+    const keys = filterCards(CARD_REGISTRY, "pair", "verify").map((c) => c.key);
+    expect(keys).toEqual(["wcag-contrast", "delta-e", "cvd"]);
   });
 
   it("全カードが既知の helpKey を持つ", () => {

@@ -9,6 +9,17 @@ export function useSelectedColor(): Color | null {
   );
 }
 
+/** ペアの前景/背景色（fgId/bgId、無ければ先頭/末尾にフォールバック）。 */
+export function usePairColors(): { fg: Color; bg: Color } | null {
+  const palette = useColorStore((s) => s.palette);
+  const fgId = useColorStore((s) => s.fgId);
+  const bgId = useColorStore((s) => s.bgId);
+  if (palette.length < 2) return null;
+  const fg = palette.find((c) => c.id === fgId) ?? palette[0];
+  const bg = palette.find((c) => c.id === bgId) ?? palette[palette.length - 1];
+  return { fg, bg };
+}
+
 /** クリップボードコピー＋トースト。 */
 export function useCopy(): (text: string) => void {
   const showToast = useColorStore((s) => s.showToast);

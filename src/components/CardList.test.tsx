@@ -29,8 +29,19 @@ describe("CardList（単色×検証）", () => {
     expect(useColorStore.getState().toast).toContain("#2D6CDF");
   });
 
-  it("ペア×検証ではカード未実装の案内", () => {
+  it("ペア×検証では WCAG コントラスト等のペアカードを表示", () => {
     act(() => useColorStore.getState().setUnit("pair"));
+    render(<CardList />);
+    expect(
+      screen.getByRole("heading", { name: "WCAG コントラスト比" }),
+    ).toBeInTheDocument();
+    expect(
+      screen.getByRole("heading", { name: "色覚シミュレーション" }),
+    ).toBeInTheDocument();
+  });
+
+  it("設計ビューではカード未実装の案内（S6で追加）", () => {
+    act(() => useColorStore.getState().setView("design"));
     render(<CardList />);
     expect(screen.getByText(/順次追加されます/)).toBeInTheDocument();
   });

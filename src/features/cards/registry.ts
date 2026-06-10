@@ -4,8 +4,12 @@ import { CardHsv } from "./cards/CardHsv";
 import { CardLuminance } from "./cards/CardLuminance";
 import { CardHueWheel } from "./cards/CardHueWheel";
 import { CardNearestName } from "./cards/CardNearestName";
+import { CardWcagContrast } from "./cards/CardWcagContrast";
+import { CardDeltaE } from "./cards/CardDeltaE";
+import { CardCvd } from "./cards/CardCvd";
 
 const SINGLE_VERIFY = [{ unit: "single", view: "verify" }] as const;
+const PAIR_VERIFY = [{ unit: "pair", view: "verify" }] as const;
 
 /** カードレジストリ（docs/10 §4 / docs/11 §4）。スプリント毎に追加していく。 */
 export const CARD_REGISTRY: CardDef[] = [
@@ -48,5 +52,29 @@ export const CARD_REGISTRY: CardDef[] = [
     appliesTo: [...SINGLE_VERIFY],
     helpKey: "name",
     Component: CardNearestName,
+  },
+  {
+    key: "wcag-contrast",
+    title: "WCAG コントラスト比",
+    category: "contrast",
+    appliesTo: [...PAIR_VERIFY],
+    helpKey: "contrast",
+    Component: CardWcagContrast,
+  },
+  {
+    key: "delta-e",
+    title: "色差 ΔE",
+    category: "difference",
+    appliesTo: [...PAIR_VERIFY],
+    helpKey: "deltae",
+    Component: CardDeltaE,
+  },
+  {
+    key: "cvd",
+    title: "色覚シミュレーション",
+    category: "cvd",
+    appliesTo: [...PAIR_VERIFY],
+    helpKey: "cvd",
+    Component: CardCvd,
   },
 ];
