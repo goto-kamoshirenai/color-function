@@ -2,6 +2,12 @@ import type { Metadata } from "next";
 import { Archivo, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { ThemeToggle } from "@/components/ThemeToggle";
+import { ShareButton } from "@/components/ShareButton";
+import { PaletteBar } from "@/components/PaletteBar";
+import { StoreSync } from "@/components/StoreSync";
+import { ColorPicker } from "@/components/ColorPicker";
+import { ConfirmDialog } from "@/components/ConfirmDialog";
+import { Toast } from "@/components/Toast";
 
 const archivo = Archivo({
   variable: "--font-archivo",
@@ -36,7 +42,8 @@ export default function RootLayout({
       <head>
         <script dangerouslySetInnerHTML={{ __html: themeInit }} />
       </head>
-      <body className="bg-bg text-text flex min-h-full flex-col">
+      <body className="bg-bg text-text flex h-dvh flex-col">
+        <StoreSync />
         <header className="border-border flex items-center justify-between border-b px-4 py-2">
           <div className="flex items-baseline gap-2">
             <span className="text-text font-mono text-sm tracking-widest">
@@ -44,22 +51,19 @@ export default function RootLayout({
             </span>
             <span className="text-text-2 text-sm">Color Follows Function</span>
           </div>
-          <ThemeToggle />
+          <div className="flex items-center gap-2">
+            <ShareButton />
+            <ThemeToggle />
+          </div>
         </header>
 
         <main className="cff-scroll flex-1 overflow-y-auto">{children}</main>
 
-        {/* 配色パレットバー（常設）。S2 で実装。S0 は器のみ。 */}
-        <footer className="border-border border-t px-4 py-3">
-          <div className="text-text-3 flex items-center gap-2 text-xs">
-            <span className="font-mono">PALETTE</span>
-            <span
-              className="bg-accent inline-block size-4 rounded-sm"
-              aria-hidden
-            />
-            <span>パレットバー（S2 で実装）</span>
-          </div>
-        </footer>
+        <PaletteBar />
+
+        <ColorPicker />
+        <ConfirmDialog />
+        <Toast />
       </body>
     </html>
   );
