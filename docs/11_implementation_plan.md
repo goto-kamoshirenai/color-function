@@ -81,6 +81,11 @@ export function hueDistribution(palette: RGB[]): number[];  // 0–360 上の位
 
 // name.ts
 export function nearestName(rgb: RGB, dict: ColorNameEntry[]): { entry: ColorNameEntry; deltaE: number } | null;
+
+// accent.ts （アクセント色の a11y 補正 [10 §1.1]）
+// accent を bg の上で最低コントラスト minRatio に届くよう OKLCH の明度を調整して返す。
+// 装飾用途では補正せず原色を使う（呼び出し側が usage を指定）。
+export function ensureReadableAccent(accent: RGB, bg: RGB, minRatio: number): RGB;
 ```
 
 - 丸めは**しない**（[07 §1](./07_card_calculation_specs.md)）。表示丸めは UI/カード側。
@@ -102,6 +107,7 @@ type State = {
   palette: Color[];
   selectedId: string | null;
   fgId: string | null; bgId: string | null;
+  accentId: string | null;                   // アクセント指定色 [10 §1.1]。既定=palette[0]
   picker: { open: boolean; targetId: string | null; isNew: boolean; h: number; s: number; v: number; hexInput: string };
   confirmOpen: boolean;
   help: { open: boolean; key: string | null };
@@ -112,6 +118,7 @@ type Actions = {
   toggleTheme(): void;
   setUnit(u): void; setView(v): void;
   selectColor(id): void;                      // pair時は fg/bg 入替ロジック [10 §2]
+  setAccent(id): void;                        // アクセント指定 [10 §1.1]
   apply(intent: ColorChangeIntent): void;     // 中央アクション [05 §7]
   openPicker(targetId | 'new'): void; closePicker(): void; commitPicker(): void;
   askClear(): void; clear(): void;            // 確認ダイアログ経由
@@ -119,6 +126,11 @@ type Actions = {
   showToast(msg): void;
 };
 ```
+
+### アクセント注入（[10 §1.1]）
+- `accentId` の色を取得 → `ensureReadableAccent` で a11y 補正 → `--accent` CSS変数をルート（`<html>`）に注入。
+- `palette` 変更で `accentId` が消えたら `palette[0]` にフォールバック（全削除時は中立 `--text-2` 相当）。
+- スウォッチにアクセント指定の導線（例: 長押し/メニュー）を持たせる（[10 §1.2] の連番表示と両立）。
 
 - **id生成**: `crypto.randomUUID()`（ブラウザ標準）。
 - **`apply`** が唯一の palette 変更経路。破壊的 intent（`replaceAll`/全削除）は `askClear`→確認後に実行。
@@ -187,9 +199,9 @@ export const NamesSchema, StandardsSchema, HarmonyRulesSchema, CvdSchema;  // zo
 
 | S | 内容 | 主な成果物 | DoD（完了条件） |
 |---|------|-----------|----------------|
-| **S0** | 基盤scaffold | Next＋Tailwindトークン＋フォント(Archivo/Geist Mono)＋テーマ切替＋ESLint/Prettier/Husky/CI | light/dark でアプリシェルが表示。CI(lint/型/test/build)が緑 |
-| **S1** | `core/color`＋テスト | convert/contrast/difference(ΔE2000)/cvd/harmony/stats/name | [07 §10](./07_card_calculation_specs.md) の参照値で vitest 通過。CIEDE2000 は Sharma 34組で照合 |
-| **S2** | ストア＋パレットバー | Zustand＋スウォッチ＋2軸トグル＋ピッカー(追加/編集/削除)＋URLハッシュ同期＋コピー/トースト | パレットを編集でき、共有URLで復元。確認ダイアログで全消去 |
+| **S0** | 基盤scaffold | Next＋Tailwindトークン(v2 [10 §1])＋`--accent`機構の器＋フォント(Archivo/Geist Mono)＋テーマ切替＋ESLint/Prettier/Husky/CI | light/dark でアプリシェルが表示。CI(lint/型/test/build)が緑 |
+| **S1** | `core/color`＋テスト | convert/contrast/difference(ΔE2000)/cvd/harmony/stats/name/accent | [07 §10](./07_card_calculation_specs.md) の参照値で vitest 通過。CIEDE2000 は Sharma 34組で照合。`ensureReadableAccent` のテスト |
+| **S2** | ストア＋パレットバー＋アクセント | Zustand＋スウォッチ＋2軸トグル＋ピッカー(追加/編集/削除)＋アクセント指定＋`--accent`注入＋URLハッシュ同期＋コピー/トースト | パレットを編集でき、共有URLで復元。アクセント指定がアプリ全体に反映＋a11y補正。確認ダイアログで全消去 |
 | **S3** | 単色×検証カード | 色値/HSV/相対輝度/色相環/最寄り色名（names アセット投入） | 5カードが描画・リアルタイム更新・ヘルプ動作 |
 | **S4** | ペア×検証カード | WCAGコントラスト(+テキストプレビュー)/色差ΔE/色覚シミュ（wcag・cvd アセット投入） | 3カード動作。判定が wcag.json 基準と一致 |
 | **S5** | パレット×検証カード | コントラスト比マトリクス/色差ΔEマトリクス/色相分布 | 3カード動作。2色未満は空状態表示 |

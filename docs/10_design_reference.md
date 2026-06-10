@@ -5,36 +5,61 @@
 
 ## 0. 位置づけ
 
-リポジトリ直下の **`Color Follows Function.html`** が確定デザインモック（自己展開バンドル、ブラウザで直接閲覧可）。
-これは設計ドキュメント 01–09 の内容をほぼ網羅した**完動プロトタイプ**であり、以降の実装は**これを視覚・挙動の基準（source of truth）**とする。
+リポジトリ直下の **`Color Follows Function v2.html`** が**現行の確定デザインモック**（自己展開バンドル、ブラウザで直接閲覧可）。
+`Color Follows Function.html`（v1）は旧版で、トークン・アクセント機構・編集的ディテールが v2 で刷新された。
+以降の実装は **v2 を視覚・挙動の基準（source of truth）**とする。
 本書はモックから抽出した確定仕様と、既存ドキュメント（特に 05/06/07）との**差分・要判断点**をまとめる。
 
 > モックは React 風の単一コンポーネント（`DCLogic`）で、色計算・状態・全カード・ピッカー・確認・ヘルプを内包する。
+> **v2 はビジュアル刷新が主**で、色計算・カード構成・状態・インタラクションは v1 と同一（[§6](#6-既存ドキュメントとの差分要判断点)の計算決定は不変）。
 
 ---
 
-## 1. デザイントークン（確定）
+## 1. デザイントークン（v2・確定）
 
-そのまま Tailwind テーマ（CSS変数）に移植する。無彩色中心で「UIクロムは中立」（[09 §2](./09_design_brief.md)）を満たす。
+そのまま Tailwind テーマ（CSS変数）に移植する。**無彩色（モノクロ）ベース**で「UIクロムは中立」（[09 §2](./09_design_brief.md)）を満たし、
+彩度のある色は **`--accent` の1点のみ**（[§1.1](#11-アクセント色システム)）。
 
 ```css
 [data-theme="light"] {
-  --bg:#FAFAF9; --surface:#FFFFFF; --surface-2:#F3F3F1; --surface-3:#ECECEA;
-  --border:#E4E3E0; --border-strong:#C8C7C3;
-  --text:#1A1A18; --text-2:#6C6B66; --text-3:#9C9B95; --ring:#1A1A18;
+  --bg:#EDEDEE; --surface:#FFFFFF; --surface-2:#F1F1F2; --surface-3:#E6E6E8;
+  --border:#DEDEE0; --border-strong:#BFBFC3;
+  --text:#16161A; --text-2:#6A6A70; --text-3:#A0A0A6; --ring:#16161A;
 }
 [data-theme="dark"] {
-  --bg:#151513; --surface:#1D1D1B; --surface-2:#262623; --surface-3:#2F2F2B;
-  --border:#33332F; --border-strong:#4A4A44;
-  --text:#F3F2EE; --text-2:#A2A19A; --text-3:#6F6E68; --ring:#F3F2EE;
+  --bg:#0C0C0D; --surface:#161618; --surface-2:#1E1E21; --surface-3:#27272B;
+  --border:#2A2A2E; --border-strong:#43434A;
+  --text:#F4F4F2; --text-2:#9A9AA2; --text-3:#5E5E66; --ring:#F4F4F2;
 }
+/* --accent はユーザーのパレットから動的供給（§1.1） */
 ```
 
 - **フォント**: UI＝**Archivo**（sans）/ 数値・HEX＝**Geist Mono**（mono）。数値はモノで計測器的トーンを出す。
 - **角丸**: 主に 6–10px（カード/ボタン）、小要素 3–5px、モーダル 20px。
-- **フォーカス**: `outline:2px solid var(--ring); outline-offset:2px`（キーボード可視・[09 §2-2]）。
+- **フォーカス**: `outline:2px solid var(--accent); outline-offset:2px`（v2でアクセント化・キーボード可視 [09 §2-2]）。
 - **アニメーション**: `cffIn`（出現: opacity+translateY 6px）、`cffToast`（トースト）。控えめ。
-- **選択色**: `::selection { background:var(--text); color:var(--bg); }`。
+- **選択色**: `::selection { background:var(--accent); color:#fff; }`（v2でアクセント化）。
+
+### 1.1 アクセント色システム（v2新設・確定方針）
+
+**モノクロのUIに対し、彩度のある色見はすべて単一の `--accent` 変数に集約**し、これを**ユーザーのパレット色から動的供給**する。
+
+- **供給源**: パレットの1色を**「アクセント」として明示指定**（既定=先頭色 `palette[0]`）。指定は選択状態とは独立。
+- **適用範囲（アプリ全体）**: フォーカスリング / 選択(::selection) / モードトグルのアクティブ下線(`tick`) / 強調の差し色など、`--accent` を参照する全箇所。
+- **a11y自動補正**: アクセントを**テキストや背景として使う箇所**でコントラストが不足する場合、`--accent` の明度を自動調整して可読性（最低コントラスト）を確保する。
+  純粋な装飾（点・境界など可読性に無関係な箇所）では原色のまま使う。アクセシビリティを評価するツール自身が非アクセシブルにならないための措置。
+- モックでは `accent` は静的 prop（既定 `#E2552B`、`なし`時 `var(--text-2)`）。**実装ではこれを「指定アクセント色 → a11y補正 → `--accent` 注入」**に置き換える。
+
+> これにより「モノクロベース＋ユーザー指定色がアプリ全体のアクセントに反映される」体験を実現する。
+
+### 1.2 編集的ディテール（v2新設）
+
+計測器・エディトリアルなトーンを補強する装飾要素。挙動には影響しない。
+
+- **モードラベル**: `modeWord`（SINGLE / CONTRAST / PALETTE / SCHEME）、`modeSub`（例 `PAIR / VERIFY`）、`figTag`（CFF·01〜04）。
+- **縦書きラベル**: `.vlabel { writing-mode: vertical-rl }`。
+- **モードトグルのアクティブ下線**: `tick = 2px solid var(--accent)`（アクセント参照）。
+- **スウォッチ連番**: `01`〜 のゼロ詰めインデックス表示。
 
 ---
 
