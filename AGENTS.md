@@ -72,7 +72,7 @@ docs/             # 設計ドキュメント（正）
 
 ## 現在地
 
-- フェーズ: **S0–S4 完了**（基盤／`core/color`／ストア＋パレットバー／単色5＋ペア3カード、91テスト緑）。次は **S5（パレット×検証: コントラスト比マトリクス／色差ΔEマトリクス／色相分布）**（[docs/11 §6](./docs/11_implementation_plan.md)）。
+- フェーズ: **S0–S7 完了 = MVP一式**（基盤／`core/color`／ストア＋パレットバー／全6モード13カード／E2E+axe）。ユニット100＋E2E9（axe重大違反ゼロ）。残: [docs/11 §9] の未決（mode のURL反映・テンプレ適用カード等）と仕上げ拡張。
 - ブランチ: `feature/planning`。
 - カード追加手順: `core/color` に計算 → `features/cards/cards/CardX.tsx` → `registry.ts` に `appliesTo` 付きで登録（レイアウト不変）。
 - モック: `Color Follows Function v2.html`（現行・自己展開バンドル、ブラウザで閲覧可）。v1 は削除済み。
