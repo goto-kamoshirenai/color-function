@@ -72,6 +72,6 @@ docs/             # 設計ドキュメント（正）
 
 ## 現在地
 
-- フェーズ: **S0・S1 完了**（基盤＋`core/color` 計算レイヤ、53テスト緑）。次は **S2（ストア＋パレットバー＋アクセント）**（[docs/11 §6](./docs/11_implementation_plan.md)）。
+- フェーズ: **S0・S1・S2 完了**（基盤＋`core/color`＋ストア/パレットバー/アクセント、74テスト緑、MVP体験が一周）。次は **S3（単色×検証カード）**（[docs/11 §6](./docs/11_implementation_plan.md)）。
 - ブランチ: `feature/planning`。
 - モック: `Color Follows Function v2.html`（現行・自己展開バンドル、ブラウザで閲覧可）。v1 は削除済み。
