@@ -11,7 +11,7 @@ test("起動: 既定パレットとペア×検証カードが表示される", a
   await expect(
     page.getByRole("heading", { name: "WCAG コントラスト比" }),
   ).toBeVisible();
-  await expect(page.getByText(/: 1/).first()).toBeVisible();
+  await expect(page.getByText(":1", { exact: true }).first()).toBeVisible();
   // 既定5色のスウォッチ
   await expect(page.getByRole("button", { name: /を選択$/ })).toHaveCount(5);
 });
@@ -62,7 +62,7 @@ test("全消去は確認ダイアログを経由する", async ({ page }) => {
   await page.getByRole("button", { name: "すべて消去" }).click();
   await expect(page.getByRole("alertdialog")).toBeVisible();
   await page.getByRole("button", { name: "消去する" }).click();
-  await expect(page.getByText(/色がありません/)).toBeVisible();
+  await expect(page.getByText(/NO SWATCHES/)).toBeVisible();
 });
 
 test.describe("アクセシビリティ (axe)", () => {
@@ -83,6 +83,8 @@ test.describe("アクセシビリティ (axe)", () => {
   ] as const) {
     test(`${label} で重大違反ゼロ`, async ({ page }) => {
       await page.goto("/");
+      // ハイドレーション完了（アクセント注入）を待ってから解析する
+      await expect(page.getByRole("radio", { name: "検証" })).toBeVisible();
       await setup(page);
       const results = await new AxeBuilder({ page }).analyze();
       const serious = results.violations.filter(

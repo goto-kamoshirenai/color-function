@@ -28,10 +28,10 @@ export function StoreSync() {
       if (!accent) return;
       const bgVar = getComputedStyle(root).getPropertyValue("--bg").trim();
       const bg = parseHex(bgVar) ?? { r: 255, g: 255, b: 255 };
-      // UI部品としてのアクセントは 3:1 を最低基準に補正。
+      // アクセントは小さなテキスト（カード連番等）にも使うため AA 4.5:1 を基準に補正。
       root.style.setProperty(
         "--accent",
-        toHex(ensureReadableAccent(accent, bg, 3)),
+        toHex(ensureReadableAccent(accent, bg, 4.5)),
       );
     };
 

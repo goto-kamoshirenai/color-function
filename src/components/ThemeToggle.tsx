@@ -46,7 +46,7 @@ export function ThemeToggle() {
       aria-label={
         theme === "light" ? "ダークモードに切替" : "ライトモードに切替"
       }
-      className="border-border text-text-2 hover:text-text rounded-md border px-2 py-1 transition-colors"
+      className="border-border-strong hover:bg-surface-2 inline-flex size-9 items-center justify-center rounded-[2px] border bg-transparent font-mono text-[13px]"
     >
       {theme === "light" ? "☾" : "☀"}
     </button>

@@ -14,21 +14,21 @@ describe("パレット×検証カード", () => {
 
   describe("CardContrastMatrix", () => {
     it("3色で 3×3、対角は —、黒×白セルは 21.00", () => {
-      render(<CardContrastMatrix />);
+      render(<CardContrastMatrix number="01" />);
       expect(screen.getAllByText("—")).toHaveLength(3);
       expect(screen.getAllByText("21.00")).toHaveLength(2); // 対称ペア
     });
 
     it("1色のみでは案内を表示", () => {
       resetColorStore(["#000000"]);
-      render(<CardContrastMatrix />);
+      render(<CardContrastMatrix number="01" />);
       expect(screen.getByText(/2色以上が必要/)).toBeInTheDocument();
     });
   });
 
   describe("CardDeltaMatrix", () => {
     it("対角は — で、非対角に ΔE 値を表示", () => {
-      render(<CardDeltaMatrix />);
+      render(<CardDeltaMatrix number="01" />);
       expect(screen.getAllByText("—")).toHaveLength(3);
       // 黒×白 ΔE00 ≈ 100（丸め表示）
       expect(screen.getAllByText("100").length).toBeGreaterThanOrEqual(2);
@@ -37,13 +37,13 @@ describe("パレット×検証カード", () => {
 
   describe("CardHueDistribution", () => {
     it("エントロピーを表示", () => {
-      render(<CardHueDistribution />);
+      render(<CardHueDistribution number="01" />);
       expect(screen.getByText(/色相エントロピー/)).toBeInTheDocument();
     });
 
     it("空パレットでは案内を表示", () => {
       resetColorStore([]);
-      render(<CardHueDistribution />);
+      render(<CardHueDistribution number="01" />);
       expect(screen.getByText(/色がありません/)).toBeInTheDocument();
     });
   });

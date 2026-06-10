@@ -5,8 +5,7 @@ import { ModeToggle } from "./ModeToggle";
 import { Swatch } from "./Swatch";
 
 /**
- * 常設の配色パレットバー（下部, docs/03 / docs/10）。
- * グローバル配色の保持・選択・モード切替・追加・アクセント指定の拠点。
+ * 常設の配色パレットバー（v2: 上段スウォッチ列／下段モード切替＋CLEAR ALL）。
  */
 export function PaletteBar() {
   const palette = useColorStore((s) => s.palette);
@@ -25,46 +24,31 @@ export function PaletteBar() {
   const askClear = useColorStore((s) => s.askClear);
 
   return (
-    <footer className="border-border bg-surface border-t px-4 py-2">
-      <div className="mb-2 flex items-center justify-between gap-3">
-        <ModeToggle />
-        <div className="text-text-3 flex items-center gap-3 text-xs">
-          <span className="font-mono">{palette.length} 色</span>
-          {palette.length > 0 ? (
-            <button
-              type="button"
-              onClick={askClear}
-              className="border-border hover:text-text rounded border px-2 py-1"
-            >
-              すべて消去
-            </button>
-          ) : null}
-        </div>
-      </div>
-
-      <div className="flex items-center gap-2">
+    <footer className="border-border-strong bg-surface z-5 flex-none border-t">
+      {/* 上段: スウォッチ列 */}
+      <div className="cff-scroll flex items-start gap-[15px] overflow-x-auto px-[22px] pt-[13px] pb-2.5">
         {palette.length === 0 ? (
-          <p className="text-text-3 text-xs">色がありません — ＋ で追加</p>
+          <div className="flex h-[66px] items-center gap-3 pl-0.5">
+            <span className="text-text-3 font-mono text-xs">
+              NO SWATCHES — ＋ で追加
+            </span>
+          </div>
         ) : (
           palette.map((color, i) => {
-            const badge: "FG" | "BG" | "" =
-              unit === "pair" && color.id === fgId
-                ? "FG"
-                : unit === "pair" && color.id === bgId
-                  ? "BG"
-                  : "";
-            const selected =
-              (unit === "single" && color.id === selectedId) ||
-              (unit === "pair" && (color.id === fgId || color.id === bgId)) ||
-              unit === "palette" ||
-              view === "design";
+            const isFg = unit === "pair" && color.id === fgId;
+            const isBg = unit === "pair" && color.id === bgId;
+            const selSingle = unit === "single" && color.id === selectedId;
+            const highlighted = selSingle || isFg || isBg;
+            const active =
+              highlighted || unit === "palette" || view === "design";
             return (
               <Swatch
                 key={color.id}
                 color={color}
                 index={i}
-                badge={badge}
-                selected={selected}
+                badge={isFg ? "FG" : isBg ? "BG" : ""}
+                highlighted={highlighted}
+                dimmed={!active}
                 isAccent={color.id === accentId}
                 onSelect={() => selectSwatch(color.id)}
                 onEdit={() => openEdit(color.id)}
@@ -74,15 +58,35 @@ export function PaletteBar() {
             );
           })
         )}
-
         <button
           type="button"
           onClick={openAdd}
           aria-label="色を追加"
-          className="border-border-strong text-text-2 hover:text-text flex h-12 w-12 items-center justify-center rounded-md border border-dashed text-lg"
+          title="色を追加"
+          className="border-border-strong text-text-2 hover:border-accent hover:text-accent mt-[15px] flex size-[50px] flex-none items-center justify-center rounded-[3px] border-[1.5px] border-dashed bg-transparent text-[22px] leading-none"
         >
-          ＋
+          +
         </button>
+      </div>
+
+      {/* 下段: モード切替＋カウント＋CLEAR ALL */}
+      <div className="border-border flex flex-wrap items-center justify-between gap-[18px] border-t px-[22px] pt-[9px] pb-3">
+        <ModeToggle />
+        <div className="flex items-center gap-2.5">
+          <span className="text-text-3 font-mono text-[10px]">
+            {palette.length} 色
+          </span>
+          {palette.length > 0 ? (
+            <button
+              type="button"
+              onClick={askClear}
+              aria-label="すべて消去"
+              className="border-border-strong text-text-2 hover:bg-surface-2 hover:text-text rounded-[2px] border bg-transparent px-3 py-[7px] font-mono text-[11px] tracking-[0.04em] whitespace-nowrap"
+            >
+              CLEAR ALL
+            </button>
+          ) : null}
+        </div>
       </div>
     </footer>
   );

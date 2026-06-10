@@ -49,6 +49,6 @@ describe("PaletteBar", () => {
   it("空状態では案内を表示する", () => {
     resetColorStore([]);
     renderBar();
-    expect(screen.getByText(/色がありません/)).toBeInTheDocument();
+    expect(screen.getByText(/NO SWATCHES/)).toBeInTheDocument();
   });
 });

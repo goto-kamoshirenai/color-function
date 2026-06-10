@@ -20,14 +20,14 @@ describe("CardNearestName", () => {
   afterEach(() => __resetColorNamesForTest());
 
   it("選択色に最も近い色名と ΔE を表示", () => {
-    render(<CardNearestName />);
+    render(<CardNearestName number="01" />);
     expect(screen.getByText("Red")).toBeInTheDocument();
     expect(screen.getByText(/ΔE/)).toBeInTheDocument();
   });
 
   it("辞書が空なら読み込み中表示（fetchは発生させない）", () => {
     __setColorNamesForTest([]);
-    render(<CardNearestName />);
+    render(<CardNearestName number="01" />);
     expect(screen.getByText(/読み込み中/)).toBeInTheDocument();
   });
 });

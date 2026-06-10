@@ -33,9 +33,16 @@
   --ring: #f4f4f2;
 }
 
-:root {
-  /* アクセント（S2 でパレット指定色に置換される器。a11y 補正後の値が入る） */
-  --accent: #2d6cdf;
+/*
+ * アクセントのフォールバック（ハイドレーション前に見える値）。
+ * JS（StoreSync）がパレット指定色を a11y 補正して上書きする。
+ * フォールバック自体も各テーマの --bg に対して AA(4.5:1) を満たす値にする。
+ */
+[data-theme="light"] {
+  --accent: #2a63cc; /* vs #EDEDEE = 4.78:1 */
+}
+[data-theme="dark"] {
+  --accent: #4d82e8; /* vs #0C0C0D = 5.28:1 */
 }
 
 /* トークンを Tailwind ユーティリティに公開（bg-surface, text-text-2 等） */
@@ -52,7 +59,7 @@
   --color-ring: var(--ring);
   --color-accent: var(--accent);
 
-  --font-sans: var(--font-archivo);
+  --font-sans: var(--font-archivo), var(--font-noto-jp);
   --font-mono: var(--font-geist-mono);
 }
 

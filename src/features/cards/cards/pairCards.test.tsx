@@ -15,26 +15,26 @@ describe("ペア×検証カード", () => {
 
   describe("CardWcagContrast", () => {
     it("黒×白で 21.00 と AAA 準拠を表示", () => {
-      render(<CardWcagContrast />);
+      render(<CardWcagContrast number="01" />);
       expect(screen.getByText("21.00")).toBeInTheDocument();
       expect(screen.getByText("AAA 準拠")).toBeInTheDocument();
     });
 
     it("プレビューに本文サンプルを表示", () => {
-      render(<CardWcagContrast />);
+      render(<CardWcagContrast number="01" />);
       expect(screen.getByText(/通常の本文テキスト/)).toBeInTheDocument();
     });
 
     it("1色のみでは案内を表示", () => {
       resetColorStore(["#000000"]);
-      render(<CardWcagContrast />);
+      render(<CardWcagContrast number="01" />);
       expect(screen.getByText(/2色以上が必要/)).toBeInTheDocument();
     });
   });
 
   describe("CardDeltaE", () => {
     it("黒×白の ΔE00 は 100 付近・最大ラベル", () => {
-      render(<CardDeltaE />);
+      render(<CardDeltaE number="01" />);
       // deltaE2000(black, white) ≈ 100（S1 テストで >95 を確認済み）
       const value = screen.getByText(/^\d+\.\d{2}$/);
       expect(Number(value.textContent)).toBeGreaterThan(95);
@@ -44,7 +44,7 @@ describe("ペア×検証カード", () => {
 
   describe("CardCvd", () => {
     it("P/D/T 型の行とコントラスト比を表示", () => {
-      render(<CardCvd />);
+      render(<CardCvd number="01" />);
       expect(screen.getByText("P型 (1型)")).toBeInTheDocument();
       expect(screen.getByText("D型 (2型)")).toBeInTheDocument();
       expect(screen.getByText("T型 (3型)")).toBeInTheDocument();

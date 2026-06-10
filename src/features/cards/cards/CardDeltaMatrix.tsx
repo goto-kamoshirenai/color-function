@@ -1,78 +1,80 @@
 "use client";
 
+import { Fragment } from "react";
 import { parseHex, rgbToLab, deltaE2000 } from "@/core/color";
+import { CardFrame } from "@/components/Card";
 import { useColorStore } from "@/store/useColorStore";
+import type { CardProps } from "../types";
 
-/** パレット全色ペアの CIEDE2000 色差。小さい値=紛らわしいペア（強調表示）。 */
-export function CardDeltaMatrix() {
+/** 色差 ΔE マトリクス（v2: 16px スウォッチ＋11px セル。太字=紛らわしい近さ）。 */
+export function CardDeltaMatrix({ number }: CardProps) {
   const palette = useColorStore((s) => s.palette);
-  if (palette.length < 2)
-    return (
-      <p className="text-text-3 text-xs">マトリクスには2色以上が必要です</p>
-    );
-
   const labs = palette.map((c) =>
     rgbToLab(parseHex(c.hex) ?? { r: 0, g: 0, b: 0 }),
   );
 
   return (
-    <div className="cff-scroll overflow-x-auto">
-      <table className="w-full border-separate border-spacing-0.5">
-        <thead>
-          <tr>
-            <th aria-label="色差マトリクス" />
+    <CardFrame number={number} title="色差 ΔE マトリクス" helpKey="dmatrix">
+      {palette.length < 2 ? (
+        <div className="text-text-3 p-10 text-center font-mono text-xs">
+          マトリクスには2色以上が必要です
+        </div>
+      ) : (
+        <div className="cff-scroll overflow-x-auto">
+          <div
+            className="bg-border border-border inline-grid gap-px border"
+            style={{
+              gridTemplateColumns: `30px repeat(${palette.length}, minmax(36px, 1fr))`,
+            }}
+          >
+            <div className="bg-surface min-w-[30px]" />
             {palette.map((c) => (
-              <th key={c.id} className="p-1">
+              <div key={c.id} className="bg-surface flex justify-center p-1.5">
                 <span
-                  className="border-border mx-auto block size-4 rounded-sm border"
+                  className="border-border-strong size-4 rounded-[2px] border"
                   style={{ backgroundColor: c.hex }}
                   title={c.hex}
                 />
-              </th>
+              </div>
             ))}
-          </tr>
-        </thead>
-        <tbody>
-          {palette.map((row, ri) => (
-            <tr key={row.id}>
-              <th className="p-1">
-                <span
-                  className="border-border block size-4 rounded-sm border"
-                  style={{ backgroundColor: row.hex }}
-                  title={row.hex}
-                />
-              </th>
-              {palette.map((col, ci) => {
-                if (ri === ci)
+            {palette.map((row, ri) => (
+              <Fragment key={row.id}>
+                <div className="bg-surface flex justify-center p-1.5">
+                  <span
+                    className="border-border-strong size-4 rounded-[2px] border"
+                    style={{ backgroundColor: row.hex }}
+                    title={row.hex}
+                  />
+                </div>
+                {palette.map((col, ci) => {
+                  if (ri === ci)
+                    return (
+                      <div
+                        key={col.id}
+                        className="bg-surface-2 text-text-3 min-w-[36px] px-1 py-2 text-center font-mono text-[11px]"
+                      >
+                        —
+                      </div>
+                    );
+                  const de = deltaE2000(labs[ri], labs[ci]);
+                  const close = de < 10; // CIEDE2000: 10未満は紛らわしい近さ
                   return (
-                    <td
+                    <div
                       key={col.id}
-                      className="bg-surface-2 text-text-3 p-1 text-center font-mono text-[10px]"
+                      className={
+                        "bg-surface min-w-[36px] px-1 py-2 text-center font-mono text-[11px] " +
+                        (close ? "font-bold" : "text-text-3")
+                      }
                     >
-                      —
-                    </td>
+                      {Math.round(de)}
+                    </div>
                   );
-                const de = deltaE2000(labs[ri], labs[ci]);
-                const close = de < 10; // CIEDE2000: 10未満は紛らわしい近さ
-                return (
-                  <td
-                    key={col.id}
-                    className={
-                      "p-1 text-center font-mono text-[10px] " +
-                      (close ? "text-text font-bold" : "text-text-3")
-                    }
-                  >
-                    {Math.round(de)}
-                  </td>
-                );
-              })}
-            </tr>
-          ))}
-        </tbody>
-      </table>
-      <p className="text-text-3 mt-2 text-[10px]">
-        太字 = 紛らわしい近さ (ΔE &lt; 10)
-      </p>
-    </div>
+                })}
+              </Fragment>
+            ))}
+          </div>
+        </div>
+      )}
+    </CardFrame>
   );
 }

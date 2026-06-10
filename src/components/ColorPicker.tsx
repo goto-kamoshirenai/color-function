@@ -18,24 +18,28 @@ function Slider({
   onChange: (v: number) => void;
 }) {
   return (
-    <label className="text-text-2 flex items-center gap-2 text-xs">
-      <span className="w-16 font-mono">{label}</span>
+    <div>
+      <div className="mb-[5px] flex justify-between">
+        <span className="text-text-2 font-mono text-[11px]">{label}</span>
+        <span className="font-mono text-xs font-medium">
+          {Math.round(value)}
+          {unit}
+        </span>
+      </div>
       <input
         type="range"
         min={0}
         max={max}
         value={Math.round(value)}
         onChange={(e) => onChange(Number(e.target.value))}
-        className="accent-accent flex-1"
+        aria-label={label}
+        className="w-full accent-(--accent)"
       />
-      <span className="text-text w-12 text-right font-mono">
-        {Math.round(value)}
-        {unit}
-      </span>
-    </label>
+    </div>
   );
 }
 
+/** カラーピッカー（v2: 380px パネル・84px プレビュー・HEX＋HSVスライダー）。 */
 export function ColorPicker() {
   const picker = useColorStore((s) => s.picker);
   const closePicker = useColorStore((s) => s.closePicker);
@@ -53,83 +57,98 @@ export function ColorPicker() {
         if (!open) closePicker();
       }}
       isDismissable
-      className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 p-4"
+      className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 p-6"
     >
-      <Modal className="border-border bg-surface w-full max-w-sm rounded-2xl border p-5 shadow-xl">
+      <Modal className="border-border-strong bg-surface w-[380px] max-w-full overflow-hidden rounded-[3px] border shadow-[0_24px_64px_rgba(0,0,0,0.32)]">
         <Dialog className="outline-none">
-          <Heading slot="title" className="text-text text-sm font-semibold">
-            {picker.isNew ? "色を追加" : "色を編集"}
-          </Heading>
+          <div className="border-border flex items-center justify-between border-b px-[18px] py-3.5">
+            <div className="flex items-baseline gap-[9px]">
+              <span className="text-accent font-mono text-[10px] tracking-[0.1em]">
+                ●
+              </span>
+              <Heading slot="title" className="text-sm font-bold">
+                {picker.isNew ? "色を追加" : "色を編集"}
+              </Heading>
+            </div>
+            <button
+              type="button"
+              onClick={closePicker}
+              aria-label="閉じる"
+              className="border-border-strong text-text-2 hover:bg-surface-2 size-[26px] rounded-[2px] border bg-transparent text-sm leading-none"
+            >
+              ×
+            </button>
+          </div>
 
-          <div className="mt-4 flex items-center gap-3">
+          <div className="p-[18px]">
             <div
-              className="border-border size-14 rounded-lg border"
+              className="border-border-strong mb-4 h-[84px] rounded-[2px] border"
               style={{ backgroundColor: preview }}
               aria-hidden
             />
-            <label className="text-text-2 flex flex-1 flex-col gap-1 text-xs">
-              <span className="font-mono">HEX</span>
+            <div className="mb-4 flex items-center gap-[9px]">
+              <span className="text-text-3 font-mono text-[10px] tracking-[0.12em] uppercase">
+                HEX
+              </span>
               <input
                 type="text"
                 value={picker.hexInput}
                 onChange={(e) => setPickerHex(e.target.value)}
                 spellCheck={false}
-                className="border-border bg-bg text-text rounded-md border px-2 py-1 font-mono"
+                aria-label="HEX 値"
+                className="border-border-strong bg-bg flex-1 rounded-[2px] border px-[11px] py-2 font-mono text-[15px] tracking-[0.02em]"
               />
-            </label>
-          </div>
+            </div>
 
-          <div className="mt-4 space-y-2">
-            <Slider
-              label="H 色相"
-              value={picker.h}
-              max={360}
-              unit="°"
-              onChange={(h) => setPickerHsv({ h })}
-            />
-            <Slider
-              label="S 彩度"
-              value={picker.s}
-              max={100}
-              unit="%"
-              onChange={(s) => setPickerHsv({ s })}
-            />
-            <Slider
-              label="V 明度"
-              value={picker.v}
-              max={100}
-              unit="%"
-              onChange={(v) => setPickerHsv({ v })}
-            />
-          </div>
+            <div className="mb-5 flex flex-col gap-3.5">
+              <Slider
+                label="H 色相"
+                value={picker.h}
+                max={360}
+                unit="°"
+                onChange={(h) => setPickerHsv({ h })}
+              />
+              <Slider
+                label="S 彩度"
+                value={picker.s}
+                max={100}
+                unit="%"
+                onChange={(s) => setPickerHsv({ s })}
+              />
+              <Slider
+                label="V 明度"
+                value={picker.v}
+                max={100}
+                unit="%"
+                onChange={(v) => setPickerHsv({ v })}
+              />
+            </div>
 
-          <div className="mt-5 flex items-center justify-between">
-            {!picker.isNew && picker.targetId ? (
-              <button
-                type="button"
-                onClick={() => {
-                  apply({ kind: "remove", id: picker.targetId! });
-                  closePicker();
-                }}
-                className="text-text-3 hover:text-text text-xs"
-              >
-                削除
-              </button>
-            ) : (
-              <span />
-            )}
-            <div className="flex gap-2">
+            <div className="flex items-center gap-[9px]">
+              {!picker.isNew && picker.targetId ? (
+                <button
+                  type="button"
+                  onClick={() => {
+                    apply({ kind: "remove", id: picker.targetId! });
+                    closePicker();
+                  }}
+                  className="border-border-strong text-text-2 hover:bg-surface-2 hover:text-text rounded-[2px] border bg-transparent px-[13px] py-[9px] text-[12.5px]"
+                >
+                  削除
+                </button>
+              ) : null}
+              <div className="flex-1" />
               <button
                 type="button"
                 onClick={closePicker}
-                className="border-border text-text-2 hover:text-text rounded-md border px-3 py-1.5 text-xs"
+                className="border-border-strong hover:bg-surface-2 rounded-[2px] border bg-transparent px-[15px] py-[9px] text-[12.5px]"
               >
                 キャンセル
               </button>
               <button
                 type="button"
                 onClick={commitPicker}
-                className="bg-text text-bg rounded-md px-3 py-1.5 text-xs font-medium"
+                className="rounded-[2px] border border-(--text) bg-(--text) px-[17px] py-[9px] text-[12.5px] font-semibold text-(--bg)"
               >
                 {picker.isNew ? "追加" : "適用"}
               </button>

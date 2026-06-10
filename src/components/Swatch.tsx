@@ -1,22 +1,13 @@
 "use client";
 
-import { parseHex, contrastRatio } from "@/core/color";
 import type { Color } from "@/store/useColorStore";
-
-function labelColor(hex: string): string {
-  const rgb = parseHex(hex) ?? { r: 0, g: 0, b: 0 };
-  const white = { r: 255, g: 255, b: 255 };
-  const black = { r: 0, g: 0, b: 0 };
-  return contrastRatio(rgb, white) >= contrastRatio(rgb, black)
-    ? "#fff"
-    : "#000";
-}
 
 type Props = {
   color: Color;
   index: number;
   badge: "FG" | "BG" | "";
-  selected: boolean;
+  highlighted: boolean;
+  dimmed: boolean;
   isAccent: boolean;
   onSelect: () => void;
   onEdit: () => void;
@@ -24,83 +15,86 @@ type Props = {
   onSetAccent: () => void;
 };
 
+/** v2 スウォッチ: 連番上・50px色面・FG/BGバッジ・×削除・HEXラベル=編集。 */
 export function Swatch({
   color,
   index,
   badge,
-  selected,
+  highlighted,
+  dimmed,
   isAccent,
   onSelect,
   onEdit,
   onRemove,
   onSetAccent,
 }: Props) {
-  const fg = labelColor(color.hex);
   return (
-    <div className="group relative">
-      <button
-        type="button"
-        onClick={onSelect}
-        onDoubleClick={onEdit}
-        aria-label={`色 ${index + 1} ${color.hex}${badge ? ` (${badge})` : ""} を選択`}
-        aria-pressed={selected}
-        className="ring-offset-surface relative flex h-12 w-12 flex-col items-center justify-between rounded-md p-1 ring-offset-1"
-        style={{
-          backgroundColor: color.hex,
-          boxShadow: selected
-            ? "0 0 0 2px var(--surface), 0 0 0 4px var(--ring)"
-            : "none",
-        }}
-      >
-        <span
-          className="self-start font-mono text-[9px] leading-none"
-          style={{ color: fg }}
-        >
-          {String(index + 1).padStart(2, "0")}
-        </span>
+    <div className="relative flex flex-none flex-col items-center gap-[5px]">
+      <span className="text-text-3 font-mono text-[8.5px] tracking-[0.1em]">
+        {String(index + 1).padStart(2, "0")}
+      </span>
+      <div className="relative">
+        <button
+          type="button"
+          onClick={onSelect}
+          aria-label={`色 ${index + 1} ${color.hex}${badge ? ` (${badge})` : ""} を選択`}
+          aria-pressed={highlighted}
+          title="選択 / 役割割当"
+          className="border-border-strong block size-[50px] rounded-[3px] border p-0"
+          style={{
+            backgroundColor: color.hex,
+            // 非アクティブの減光は色面のみ（ラベルの可読性を保つ・a11y）
+            opacity: dimmed ? 0.5 : 1,
+            boxShadow: highlighted
+              ? "0 0 0 2px var(--surface),0 0 0 4px var(--ring)"
+              : "none",
+          }}
+        />
         {badge ? (
-          <span
-            className="self-end font-mono text-[9px] leading-none font-bold"
-            style={{ color: fg }}
-          >
+          <span className="absolute -top-[7px] -left-1.5 rounded-[2px] bg-(--text) px-[5px] py-px font-mono text-[9px] font-semibold tracking-[0.05em] text-(--bg)">
             {badge}
           </span>
         ) : null}
-        {isAccent ? (
-          <span
-            className="bg-accent absolute inset-x-1 bottom-1 h-0.5 rounded"
-            aria-hidden
-          />
-        ) : null}
-      </button>
-
-      <div className="pointer-events-none absolute -top-2 -right-2 flex gap-0.5 opacity-0 transition-opacity group-focus-within:pointer-events-auto group-focus-within:opacity-100 group-hover:pointer-events-auto group-hover:opacity-100">
+        <button
+          type="button"
+          onClick={onRemove}
+          aria-label={`色 ${index + 1} を削除`}
+          title="削除"
+          className="border-border-strong bg-surface text-text-2 hover:bg-surface-3 hover:text-text absolute -top-[7px] -right-[7px] flex size-[17px] items-center justify-center rounded-full border p-0 text-[11px] leading-none"
+        >
+          ×
+        </button>
         <button
           type="button"
           onClick={onSetAccent}
           aria-label={`色 ${index + 1} をアクセントに設定`}
           aria-pressed={isAccent}
-          className="border-border bg-surface text-text-2 hover:text-text flex size-4 items-center justify-center rounded-full border text-[9px]"
+          title="アクセントに設定"
+          className={
+            "absolute -right-[7px] -bottom-[7px] flex size-[17px] items-center justify-center rounded-full border p-0 text-[9px] leading-none " +
+            (isAccent
+              ? "border-accent text-accent bg-surface"
+              : "border-border-strong bg-surface text-text-3 hover:text-text")
+          }
         >
           ◎
         </button>
-        <button
-          type="button"
-          onClick={onEdit}
-          aria-label={`色 ${index + 1} を編集`}
-          className="border-border bg-surface text-text-2 hover:text-text flex size-4 items-center justify-center rounded-full border text-[9px]"
-        >
-          ✎
-        </button>
-        <button
-          type="button"
-          onClick={onRemove}
-          aria-label={`色 ${index + 1} を削除`}
-          className="border-border bg-surface text-text-2 hover:text-text flex size-4 items-center justify-center rounded-full border text-[9px]"
-        >
-          ×
-        </button>
+        {isAccent ? (
+          <span
+            className="bg-accent absolute inset-x-1 -bottom-[3px] h-0.5 rounded"
+            aria-hidden
+          />
+        ) : null}
       </div>
+      <button
+        type="button"
+        onClick={onEdit}
+        aria-label={`色 ${index + 1} を編集`}
+        title="編集"
+        className="text-text-2 hover:text-text bg-transparent p-0 font-mono text-[10px] tracking-[0.02em]"
+      >
+        {color.hex}
+      </button>
     </div>
   );
 }

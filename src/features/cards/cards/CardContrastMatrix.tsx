@@ -1,76 +1,92 @@
 "use client";
 
+import { Fragment } from "react";
 import { parseHex, contrastRatio } from "@/core/color";
+import { CardFrame } from "@/components/Card";
 import { useColorStore } from "@/store/useColorStore";
+import type { CardProps } from "../types";
 
-/** パレット全色の総当たりコントラスト比（docs/10 §4）。太字=AA(4.5)合格。 */
-export function CardContrastMatrix() {
+/** コントラスト比マトリクス（v2: inline-grid・太字＋インセット枠=AA合格）。 */
+export function CardContrastMatrix({ number }: CardProps) {
   const palette = useColorStore((s) => s.palette);
-  if (palette.length < 2)
-    return (
-      <p className="text-text-3 text-xs">マトリクスには2色以上が必要です</p>
-    );
-
   const rgbs = palette.map((c) => parseHex(c.hex) ?? { r: 0, g: 0, b: 0 });
 
   return (
-    <div className="cff-scroll overflow-x-auto">
-      <table className="w-full border-separate border-spacing-0.5">
-        <thead>
-          <tr>
-            <th aria-label="行=前景 / 列=背景" />
+    <CardFrame
+      number={number}
+      title="コントラスト比マトリクス"
+      helpKey="cmatrix"
+      rightSlot={
+        <span className="text-text-3 font-mono text-[9.5px] tracking-[0.04em]">
+          BOLD = AA (≥4.5)
+        </span>
+      }
+    >
+      {palette.length < 2 ? (
+        <div className="text-text-3 p-10 text-center font-mono text-xs">
+          マトリクスには2色以上が必要です
+        </div>
+      ) : (
+        <div className="cff-scroll overflow-x-auto">
+          <div
+            className="bg-border border-border inline-grid min-w-full gap-px border"
+            style={{
+              gridTemplateColumns: `54px repeat(${palette.length}, minmax(54px, 1fr))`,
+            }}
+          >
+            <div className="bg-surface min-w-[54px]" />
             {palette.map((c) => (
-              <th key={c.id} className="p-1">
+              <div
+                key={c.id}
+                className="bg-surface flex justify-center px-1.5 py-2"
+              >
                 <span
-                  className="border-border mx-auto block size-4 rounded-sm border"
+                  className="border-border-strong size-5 rounded-[2px] border"
                   style={{ backgroundColor: c.hex }}
                   title={c.hex}
                 />
-              </th>
+              </div>
             ))}
-          </tr>
-        </thead>
-        <tbody>
-          {palette.map((row, ri) => (
-            <tr key={row.id}>
-              <th className="p-1">
-                <span
-                  className="border-border block size-4 rounded-sm border"
-                  style={{ backgroundColor: row.hex }}
-                  title={row.hex}
-                />
-              </th>
-              {palette.map((col, ci) => {
-                if (ri === ci)
+            {palette.map((row, ri) => (
+              <Fragment key={row.id}>
+                <div className="bg-surface flex items-center justify-center px-1.5 py-2">
+                  <span
+                    className="border-border-strong size-5 rounded-[2px] border"
+                    style={{ backgroundColor: row.hex }}
+                    title={row.hex}
+                  />
+                </div>
+                {palette.map((col, ci) => {
+                  if (ri === ci)
+                    return (
+                      <div
+                        key={col.id}
+                        className="bg-surface-2 text-text-3 min-w-[54px] px-1 py-2.5 text-center font-mono text-xs"
+                      >
+                        —
+                      </div>
+                    );
+                  const ratio = contrastRatio(rgbs[ri], rgbs[ci]);
+                  const pass = ratio >= 4.5;
                   return (
-                    <td
+                    <div
                       key={col.id}
-                      className="bg-surface-2 text-text-3 p-1 text-center font-mono text-[10px]"
+                      className={
+                        "bg-surface min-w-[54px] px-1 py-2.5 text-center font-mono text-xs " +
+                        (pass
+                          ? "font-bold shadow-[inset_0_0_0_1.5px_var(--text)]"
+                          : "text-text-3 font-normal")
+                      }
                     >
-                      —
-                    </td>
+                      {ratio.toFixed(2)}
+                    </div>
                   );
-                const ratio = contrastRatio(rgbs[ri], rgbs[ci]);
-                const pass = ratio >= 4.5;
-                return (
-                  <td
-                    key={col.id}
-                    className={
-                      "p-1 text-center font-mono text-[10px] " +
-                      (pass
-                        ? "text-text font-bold shadow-[inset_0_0_0_1.5px_var(--text)]"
-                        : "text-text-3")
-                    }
-                  >
-                    {ratio.toFixed(2)}
-                  </td>
-                );
-              })}
-            </tr>
-          ))}
-        </tbody>
-      </table>
-      <p className="text-text-3 mt-2 text-[10px]">太字 = AA 合格 (≥4.5)</p>
-    </div>
+                })}
+              </Fragment>
+            ))}
+          </div>
+        </div>
+      )}
+    </CardFrame>
   );
 }

@@ -3,10 +3,47 @@
 import { ToggleButtonGroup, ToggleButton } from "react-aria-components";
 import { useColorStore, type Unit, type View } from "@/store/useColorStore";
 
+/** v2 セグメント: 枠付き・アクティブ=反転＋上辺2pxアクセントティック。 */
 const segClass =
-  "px-2.5 py-1 text-xs font-medium text-text-2 border-b-2 border-transparent " +
-  "data-[selected]:text-text data-[selected]:border-accent " +
-  "hover:text-text focus-visible:outline-2 focus-visible:outline-accent";
+  "border-border-strong border-r border-t-2 border-t-transparent bg-transparent px-3.5 py-1.5 " +
+  "text-[12.5px] font-medium text-text-2 last:border-r-0 " +
+  "data-[selected]:border-t-accent data-[selected]:bg-(--text) data-[selected]:font-semibold data-[selected]:text-(--bg)";
+
+function Segmented<T extends string>({
+  label,
+  value,
+  options,
+  onChange,
+}: {
+  label: string;
+  value: T;
+  options: { key: T; label: string }[];
+  onChange: (v: T) => void;
+}) {
+  return (
+    <div className="flex items-center gap-[9px]">
+      <span className="text-text-3 font-mono text-[9px] tracking-[0.16em] uppercase">
+        {label}
+      </span>
+      <ToggleButtonGroup
+        selectionMode="single"
+        disallowEmptySelection
+        selectedKeys={[value]}
+        onSelectionChange={(keys) => {
+          const next = [...keys][0] as T | undefined;
+          if (next) onChange(next);
+        }}
+        className="border-border-strong inline-flex overflow-hidden rounded-[2px] border"
+      >
+        {options.map((o) => (
+          <ToggleButton key={o.key} id={o.key} className={segClass}>
+            {o.label}
+          </ToggleButton>
+        ))}
+      </ToggleButtonGroup>
+    </div>
+  );
+}
 
 export function ModeToggle() {
   const unit = useColorStore((s) => s.unit);
@@ -15,55 +52,26 @@ export function ModeToggle() {
   const setView = useColorStore((s) => s.setView);
 
   return (
-    <div className="flex flex-wrap items-center gap-x-4 gap-y-1">
-      <div className="flex items-center gap-2">
-        <span className="text-text-3 font-mono text-[10px] tracking-widest">
-          単位
-        </span>
-        <ToggleButtonGroup
-          selectionMode="single"
-          disallowEmptySelection
-          selectedKeys={[unit]}
-          onSelectionChange={(keys) => {
-            const next = [...keys][0] as Unit | undefined;
-            if (next) setUnit(next);
-          }}
-          className="flex"
-        >
-          <ToggleButton id="single" className={segClass}>
-            単色
-          </ToggleButton>
-          <ToggleButton id="pair" className={segClass}>
-            ペア
-          </ToggleButton>
-          <ToggleButton id="palette" className={segClass}>
-            パレット
-          </ToggleButton>
-        </ToggleButtonGroup>
-      </div>
-
-      <div className="flex items-center gap-2">
-        <span className="text-text-3 font-mono text-[10px] tracking-widest">
-          観点
-        </span>
-        <ToggleButtonGroup
-          selectionMode="single"
-          disallowEmptySelection
-          selectedKeys={[view]}
-          onSelectionChange={(keys) => {
-            const next = [...keys][0] as View | undefined;
-            if (next) setView(next);
-          }}
-          className="flex"
-        >
-          <ToggleButton id="verify" className={segClass}>
-            検証
-          </ToggleButton>
-          <ToggleButton id="design" className={segClass}>
-            設計
-          </ToggleButton>
-        </ToggleButtonGroup>
-      </div>
+    <div className="flex flex-wrap items-center gap-x-[22px] gap-y-2">
+      <Segmented<Unit>
+        label="単位 / Unit"
+        value={unit}
+        options={[
+          { key: "single", label: "単色" },
+          { key: "pair", label: "ペア" },
+          { key: "palette", label: "パレット" },
+        ]}
+        onChange={setUnit}
+      />
+      <Segmented<View>
+        label="観点 / View"
+        value={view}
+        options={[
+          { key: "verify", label: "検証" },
+          { key: "design", label: "設計" },
+        ]}
+        onChange={setView}
+      />
     </div>
   );
 }

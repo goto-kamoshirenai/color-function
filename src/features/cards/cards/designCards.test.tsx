@@ -28,7 +28,7 @@ describe("設計カード", () => {
 
   describe("CardHarmony", () => {
     it("ルールごとにスキームを表示", () => {
-      render(<CardHarmony />);
+      render(<CardHarmony number="01" />);
       expect(screen.getByText("補色")).toBeInTheDocument();
       expect(screen.getByText("トライアド")).toBeInTheDocument();
       // 補色2 + トライアド3 = 5チップ
@@ -38,7 +38,7 @@ describe("設計カード", () => {
     });
 
     it("チップをクリックするとパレットに追加される", () => {
-      render(<CardHarmony />);
+      render(<CardHarmony number="01" />);
       const chips = screen.getAllByRole("button", { name: /をパレットに追加/ });
       fireEvent.click(chips[1]); // 補色の相手色
       expect(useColorStore.getState().palette).toHaveLength(2);
@@ -47,7 +47,7 @@ describe("設計カード", () => {
 
   describe("CardTone", () => {
     it("5段階のトーンを表示し、クリックで追加", () => {
-      render(<CardTone />);
+      render(<CardTone number="01" />);
       const chips = screen.getAllByRole("button", {
         name: /トーン .* をパレットに追加/,
       });

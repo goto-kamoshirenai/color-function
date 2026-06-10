@@ -1,26 +1,34 @@
 "use client";
 
 import { parseHex, rgbToHsv } from "@/core/color";
+import { CardFrame } from "@/components/Card";
 import { useColorStore } from "@/store/useColorStore";
+import type { CardProps } from "../types";
 
-const HUE_GRADIENT =
-  "conic-gradient(from 0deg, hsl(0 90% 55%), hsl(60 90% 55%), hsl(120 90% 55%), hsl(180 90% 55%), hsl(240 90% 55%), hsl(300 90% 55%), hsl(360 90% 55%))";
+const WHEEL =
+  "conic-gradient(from -90deg,hsl(0 72% 55%),hsl(60 72% 55%),hsl(120 72% 55%),hsl(180 72% 55%),hsl(240 72% 55%),hsl(300 72% 55%),hsl(360 72% 55%))";
 
-export function CardHueWheel() {
+/** 色相環カード（v2: 208px ホイール＋パレットマーカー）。 */
+export function CardHueWheel({ number }: CardProps) {
   const palette = useColorStore((s) => s.palette);
   const selectedId = useColorStore((s) => s.selectedId);
 
   return (
-    <div className="flex flex-col items-center gap-2">
+    <CardFrame
+      number={number}
+      title="色相環"
+      enLabel="Hue Wheel"
+      helpKey="wheel"
+    >
       <div
-        className="relative size-44 rounded-full"
-        style={{ background: HUE_GRADIENT }}
+        className="border-border relative mx-auto mt-0.5 mb-2 size-[208px] rounded-full border"
+        style={{ background: WHEEL }}
       >
         <div
           className="absolute inset-0 rounded-full"
           style={{
             background:
-              "radial-gradient(circle, var(--surface) 8%, transparent 62%)",
+              "radial-gradient(circle,var(--surface) 10%,transparent 64%)",
           }}
           aria-hidden
         />
@@ -28,28 +36,28 @@ export function CardHueWheel() {
           const v = rgbToHsv(parseHex(c.hex) ?? { r: 0, g: 0, b: 0 });
           const ang = ((v.h - 90) * Math.PI) / 180;
           const rad = (v.s / 100) * 42;
-          const left = 50 + Math.cos(ang) * rad;
-          const top = 50 + Math.sin(ang) * rad;
           const sel = c.id === selectedId;
           return (
-            <span
+            <div
               key={c.id}
-              className="border-surface absolute -translate-x-1/2 -translate-y-1/2 rounded-full border-2"
+              className="absolute -translate-x-1/2 -translate-y-1/2 rounded-full"
               style={{
-                left: `${left}%`,
-                top: `${top}%`,
+                left: `${(50 + Math.cos(ang) * rad).toFixed(1)}%`,
+                top: `${(50 + Math.sin(ang) * rad).toFixed(1)}%`,
                 width: sel ? 18 : 12,
                 height: sel ? 18 : 12,
                 backgroundColor: c.hex,
-                boxShadow: sel ? "0 0 0 2px var(--ring)" : "none",
+                boxShadow: sel
+                  ? "0 0 0 2px var(--surface),0 0 0 4px var(--ring)"
+                  : "0 0 0 1.5px var(--surface)",
               }}
             />
           );
         })}
       </div>
-      <p className="text-text-3 font-mono text-[10px]">
-        角度 = 色相 / 中心からの距離 = 彩度
+      <p className="text-text-3 text-center font-mono text-[9.5px] tracking-[0.04em]">
+        ANGLE = HUE / RADIUS = SATURATION
       </p>
-    </div>
+    </CardFrame>
   );
 }
