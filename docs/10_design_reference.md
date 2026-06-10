@@ -6,6 +6,8 @@
 ## 0. 位置づけ
 
 リポジトリ直下の **`Color Follows Function v2.html`** が**現行の確定デザインモック**（自己展開バンドル、ブラウザで直接閲覧可）。
+スプラッシュは **`CFF Wordmark Drafting.html`** を基準とする（製図シート上で GRID▸GUIDES▸CONSTRUCTION▸STROKE-ON▸DIMENSIONS▸TITLE BLOCK が約5.6sで進行）。
+実装はセッション初回のみ・クリック/Esc/SKIPでスキップ可・prefers-reduced-motionでは非表示（Motionで実装）。
 （v1 `Color Follows Function.html` は役目を終え削除済み。トークン・アクセント機構・編集的ディテールは v2 で刷新された。）
 以降の実装は **v2 を視覚・挙動の基準（source of truth）**とする。
 本書はモックから抽出した確定仕様と、既存ドキュメント（特に 05/06/07）との**差分・要判断点**をまとめる。

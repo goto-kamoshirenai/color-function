@@ -17,6 +17,7 @@
   /* v2モックは #A0A0A6 だがAA不適合(2.6:1)のため補正。最悪地 #EDEDEE 上でも 4.66:1 */
   --text-3: #69696f;
   --ring: #16161a;
+  --grid: #d7d7db; /* 製図グリッド線（スプラッシュ） */
 }
 
 [data-theme="dark"] {
@@ -31,6 +32,7 @@
   /* v2モックは #5E5E66 だが暗サーフェス上でAA不適合のため補正（5.56:1） */
   --text-3: #8e8e97;
   --ring: #f4f4f2;
+  --grid: #1b1c22; /* 製図グリッド線（スプラッシュ） */
 }
 
 /*
@@ -92,6 +94,24 @@ a:focus-visible,
 [tabindex]:focus-visible {
   outline: 2px solid var(--accent);
   outline-offset: 2px;
+}
+
+/*
+ * スプラッシュのプリカバー。ペイント前スクリプトが data-splash="1" を立てた
+ * ときだけ表示し、React マウント前の「アプリが一瞬見える」のを防ぐ。
+ */
+.cff-splash-precover {
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: 99;
+  background:
+    linear-gradient(var(--grid) 1px, transparent 1px) 0 0 / 40px 40px,
+    linear-gradient(90deg, var(--grid) 1px, transparent 1px) 0 0 / 40px 40px,
+    var(--surface);
+}
+[data-splash="1"] .cff-splash-precover {
+  display: block;
 }
 
 /* タップ時のダブルタップズーム抑止（操作の即応性） */

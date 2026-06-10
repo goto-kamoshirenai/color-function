@@ -8,6 +8,7 @@ import { StoreSync } from "@/components/StoreSync";
 import { ColorPicker } from "@/components/ColorPicker";
 import { ConfirmDialog } from "@/components/ConfirmDialog";
 import { Toast } from "@/components/Toast";
+import { SplashScreen } from "@/components/SplashScreen";
 
 const archivo = Archivo({ variable: "--font-archivo", subsets: ["latin"] });
 const geistMono = Geist_Mono({
@@ -26,8 +27,9 @@ export const metadata: Metadata = {
     "配色を感覚でなく数値で扱う、配色の検証・設計支援ツール。コントラスト比・色差・色覚シミュレーションなどで定量的に可視化する。",
 };
 
-// data-theme をペイント前に確定し、テーマ切替時のちらつきを防ぐ。
-const themeInit = `(function(){try{var t=localStorage.getItem('cff-theme');document.documentElement.dataset.theme=(t==='dark'||t==='light')?t:'light';}catch(e){document.documentElement.dataset.theme='light';}})();`;
+// ペイント前に data-theme を確定（ちらつき防止）し、スプラッシュの表示可否も決める。
+// スプラッシュは「このセッション初回」かつ「モーション低減でない」ときだけ。
+const themeInit = `(function(){try{var t=localStorage.getItem('cff-theme');document.documentElement.dataset.theme=(t==='dark'||t==='light')?t:'light';}catch(e){document.documentElement.dataset.theme='light';}try{var rm=window.matchMedia('(prefers-reduced-motion: reduce)').matches;if(!rm&&!sessionStorage.getItem('cff-splash-shown')){document.documentElement.dataset.splash='1';}}catch(e){}})();`;
 
 export default function RootLayout({
   children,
@@ -84,6 +86,7 @@ export default function RootLayout({
         <ColorPicker />
         <ConfirmDialog />
         <Toast />
+        <SplashScreen />
       </body>
     </html>
   );

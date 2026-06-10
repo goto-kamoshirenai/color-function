@@ -4,7 +4,18 @@ import AxeBuilder from "@axe-core/playwright";
 /**
  * 主要フロー（docs/12 §3）: 色を入れる → 検証 → 共有URL復元。
  * ＋ axe による a11y 検査（docs/02 §4「自身がアクセシブル」）。
+ * スプラッシュは本ファイルでは抑止する（専用テストは splash.spec.ts）。
  */
+
+test.beforeEach(async ({ page }) => {
+  await page.addInitScript(() => {
+    try {
+      sessionStorage.setItem("cff-splash-shown", "1");
+    } catch {
+      // 無視
+    }
+  });
+});
 
 test("起動: 既定パレットとペア×検証カードが表示される", async ({ page }) => {
   await page.goto("/");
