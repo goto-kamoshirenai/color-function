@@ -1,0 +1,7 @@
+{
+  "schemaVersion": "1.0.0",
+  "assets": {
+    "names.css": { "path": "names/css.json", "version": "1.0.0", "lazy": true },
+    "names.wa": { "path": "names/wa.json", "version": "1.0.0", "lazy": true }
+  }
+}

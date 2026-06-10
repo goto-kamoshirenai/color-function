@@ -1,0 +1,144 @@
+{
+  "schemaVersion": "1.0.0",
+  "version": "1.0.0",
+  "kind": "names",
+  "source": "和の伝統色（一般に公知の慣用色名・近似値）",
+  "data": {
+    "system": "wa",
+    "locale": "ja",
+    "colors": [
+      {
+        "id": "wa-shu",
+        "name": "朱色",
+        "hex": "#EB6101",
+        "reading": "しゅいろ"
+      },
+      {
+        "id": "wa-akane",
+        "name": "茜色",
+        "hex": "#B7282E",
+        "reading": "あかねいろ"
+      },
+      {
+        "id": "wa-enji",
+        "name": "臙脂",
+        "hex": "#B94047",
+        "reading": "えんじ"
+      },
+      {
+        "id": "wa-kurenai",
+        "name": "紅",
+        "hex": "#D7003A",
+        "reading": "くれない"
+      },
+      {
+        "id": "wa-sakura",
+        "name": "桜色",
+        "hex": "#FEF4F4",
+        "reading": "さくらいろ"
+      },
+      {
+        "id": "wa-momo",
+        "name": "桃色",
+        "hex": "#F09199",
+        "reading": "ももいろ"
+      },
+      {
+        "id": "wa-daidai",
+        "name": "橙",
+        "hex": "#EE7800",
+        "reading": "だいだい"
+      },
+      {
+        "id": "wa-yamabuki",
+        "name": "山吹色",
+        "hex": "#F8B500",
+        "reading": "やまぶきいろ"
+      },
+      {
+        "id": "wa-kihada",
+        "name": "黄檗",
+        "hex": "#FEF263",
+        "reading": "きはだ"
+      },
+      {
+        "id": "wa-uguisu",
+        "name": "鶯色",
+        "hex": "#928C36",
+        "reading": "うぐいすいろ"
+      },
+      {
+        "id": "wa-matcha",
+        "name": "抹茶色",
+        "hex": "#C5C56A",
+        "reading": "まっちゃいろ"
+      },
+      {
+        "id": "wa-wakaba",
+        "name": "若葉色",
+        "hex": "#B9D08B",
+        "reading": "わかばいろ"
+      },
+      {
+        "id": "wa-tokiwa",
+        "name": "常磐色",
+        "hex": "#007B43",
+        "reading": "ときわいろ"
+      },
+      {
+        "id": "wa-asagi",
+        "name": "浅葱色",
+        "hex": "#00A3AF",
+        "reading": "あさぎいろ"
+      },
+      {
+        "id": "wa-mizu",
+        "name": "水色",
+        "hex": "#BCE2E8",
+        "reading": "みずいろ"
+      },
+      {
+        "id": "wa-ai",
+        "name": "藍色",
+        "hex": "#165E83",
+        "reading": "あいいろ"
+      },
+      {
+        "id": "wa-rurikon",
+        "name": "瑠璃紺",
+        "hex": "#19448E",
+        "reading": "るりこん"
+      },
+      {
+        "id": "wa-fuji",
+        "name": "藤色",
+        "hex": "#8B81C3",
+        "reading": "ふじいろ"
+      },
+      {
+        "id": "wa-murasaki",
+        "name": "紫",
+        "hex": "#884898",
+        "reading": "むらさき"
+      },
+      {
+        "id": "wa-kurocha",
+        "name": "黒茶",
+        "hex": "#252321",
+        "reading": "くろちゃ"
+      },
+      {
+        "id": "wa-nezumi",
+        "name": "鼠色",
+        "hex": "#949495",
+        "reading": "ねずみいろ"
+      },
+      {
+        "id": "wa-cha",
+        "name": "茶色",
+        "hex": "#965042",
+        "reading": "ちゃいろ"
+      }
+    ]
+  }
+}

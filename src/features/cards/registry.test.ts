@@ -3,11 +3,17 @@ import { CARD_REGISTRY } from "./registry";
 import { filterCards } from "./types";
 
 describe("カードレジストリ / filterCards", () => {
-  it("単色×検証で4カード（色値/HSV/相対輝度/色相環）", () => {
+  it("単色×検証で5カード（色値/HSV/相対輝度/色相環/最寄り色名）", () => {
     const keys = filterCards(CARD_REGISTRY, "single", "verify").map(
       (c) => c.key,
     );
-    expect(keys).toEqual(["value", "hsv", "luminance", "hue-wheel"]);
+    expect(keys).toEqual([
+      "value",
+      "hsv",
+      "luminance",
+      "hue-wheel",
+      "nearest-name",
+    ]);
   });
 
   it("ペア×検証は該当なし（S4で追加）", () => {

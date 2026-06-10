@@ -2,11 +2,13 @@ import { describe, it, expect, beforeEach } from "vitest";
 import { render, screen, fireEvent } from "@testing-library/react";
 import { CardList } from "./CardList";
 import { useColorStore, resetColorStore } from "@/store/useColorStore";
+import { __setColorNamesForTest } from "@/lib/useColorNames";
 import { act } from "react";
 
 describe("CardList（単色×検証）", () => {
   beforeEach(() => {
     resetColorStore(["#2D6CDF", "#E4572E"]);
+    __setColorNamesForTest([{ name: "Blue", hex: "#0000FF" }]);
     act(() => {
       useColorStore.getState().setUnit("single");
       useColorStore.getState().setView("verify");

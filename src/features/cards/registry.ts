@@ -3,6 +3,7 @@ import { CardValue } from "./cards/CardValue";
 import { CardHsv } from "./cards/CardHsv";
 import { CardLuminance } from "./cards/CardLuminance";
 import { CardHueWheel } from "./cards/CardHueWheel";
+import { CardNearestName } from "./cards/CardNearestName";
 
 const SINGLE_VERIFY = [{ unit: "single", view: "verify" }] as const;
 
@@ -39,5 +40,13 @@ export const CARD_REGISTRY: CardDef[] = [
     appliesTo: [...SINGLE_VERIFY],
     helpKey: "wheel",
     Component: CardHueWheel,
+  },
+  {
+    key: "nearest-name",
+    title: "最寄り色名",
+    category: "naming",
+    appliesTo: [...SINGLE_VERIFY],
+    helpKey: "name",
+    Component: CardNearestName,
   },
 ];

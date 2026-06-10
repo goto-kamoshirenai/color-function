@@ -1,0 +1,38 @@
+{
+  "schemaVersion": "1.0.0",
+  "version": "1.0.0",
+  "kind": "names",
+  "source": "CSS Color Module（公開標準の名前付き色）",
+  "data": {
+    "system": "css",
+    "locale": "en",
+    "colors": [
+      { "id": "css-black", "name": "Black", "hex": "#000000" },
+      { "id": "css-white", "name": "White", "hex": "#FFFFFF" },
+      { "id": "css-gray", "name": "Gray", "hex": "#808080" },
+      { "id": "css-silver", "name": "Silver", "hex": "#C0C0C0" },
+      { "id": "css-red", "name": "Red", "hex": "#FF0000" },
+      { "id": "css-maroon", "name": "Maroon", "hex": "#800000" },
+      { "id": "css-orange", "name": "Orange", "hex": "#FFA500" },
+      { "id": "css-tomato", "name": "Tomato", "hex": "#FF6347" },
+      { "id": "css-gold", "name": "Gold", "hex": "#FFD700" },
+      { "id": "css-yellow", "name": "Yellow", "hex": "#FFFF00" },
+      { "id": "css-olive", "name": "Olive", "hex": "#808000" },
+      { "id": "css-lime", "name": "Lime", "hex": "#00FF00" },
+      { "id": "css-green", "name": "Green", "hex": "#008000" },
+      { "id": "css-teal", "name": "Teal", "hex": "#008080" },
+      { "id": "css-cyan", "name": "Cyan", "hex": "#00FFFF" },
+      { "id": "css-skyblue", "name": "Sky Blue", "hex": "#87CEEB" },
+      { "id": "css-dodgerblue", "name": "Dodger Blue", "hex": "#1E90FF" },
+      { "id": "css-blue", "name": "Blue", "hex": "#0000FF" },
+      { "id": "css-navy", "name": "Navy", "hex": "#000080" },
+      { "id": "css-indigo", "name": "Indigo", "hex": "#4B0082" },
+      { "id": "css-purple", "name": "Purple", "hex": "#800080" },
+      { "id": "css-magenta", "name": "Magenta", "hex": "#FF00FF" },
+      { "id": "css-violet", "name": "Violet", "hex": "#EE82EE" },
+      { "id": "css-pink", "name": "Pink", "hex": "#FFC0CB" },
+      { "id": "css-brown", "name": "Brown", "hex": "#A52A2A" },
+      { "id": "css-beige", "name": "Beige", "hex": "#F5F5DC" }
+    ]
+  }
+}
