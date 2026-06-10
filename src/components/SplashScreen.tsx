@@ -163,13 +163,7 @@ export function SplashScreen() {
               opacity: 0,
               transition: { duration: 0.35, ease: "easeOut" },
             }}
-            className="fixed inset-0 z-[100] flex cursor-pointer items-center justify-center"
-            style={{
-              background:
-                "linear-gradient(var(--grid) 1px,transparent 1px) 0 0/40px 40px," +
-                "linear-gradient(90deg,var(--grid) 1px,transparent 1px) 0 0/40px 40px," +
-                "var(--surface)",
-            }}
+            className="bg-surface fixed inset-0 z-[100] flex cursor-pointer items-center justify-center"
           >
             {/* 図面ヘッダー（左上） */}
             <motion.div

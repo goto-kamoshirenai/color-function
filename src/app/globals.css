@@ -105,10 +105,7 @@ a:focus-visible,
   position: fixed;
   inset: 0;
   z-index: 99;
-  background:
-    linear-gradient(var(--grid) 1px, transparent 1px) 0 0 / 40px 40px,
-    linear-gradient(90deg, var(--grid) 1px, transparent 1px) 0 0 / 40px 40px,
-    var(--surface);
+  background: var(--surface);
 }
 [data-splash="1"] .cff-splash-precover {
   display: block;
