@@ -36,10 +36,48 @@ const ManifestSchema = z.object({
   ),
 });
 
+/** 調和ルールアセットのスキーマ（docs/06 §4.1）。 */
+const HarmonyRulesSchema = z.object({
+  schemaVersion: z.string(),
+  version: z.string(),
+  kind: z.literal("harmony-rules"),
+  source: z.string().optional(),
+  data: z.object({
+    rules: z.array(
+      z.object({
+        id: z.string(),
+        label: z.string(),
+        sub: z.string().optional(),
+        hueOffsets: z.array(z.number()),
+      }),
+    ),
+  }),
+});
+
+export type HarmonyRule = z.infer<
+  typeof HarmonyRulesSchema
+>["data"]["rules"][number];
+
 /** 名前辞書アセット(JSON)を検証して name/hex の配列に変換。不正なら例外。 */
 export function parseNamesAsset(json: unknown): ColorNameEntry[] {
   const parsed = NamesAssetSchema.parse(json);
   return parsed.data.colors.map((c) => ({ name: c.name, hex: c.hex }));
+}
+
+/** 調和ルールアセット(JSON)を検証してルール配列に変換。不正なら例外。 */
+export function parseHarmonyRulesAsset(json: unknown): HarmonyRule[] {
+  return HarmonyRulesSchema.parse(json).data.rules;
+}
+
+/** 調和ルールを読み込み（docs/06 §1）。失敗時は空配列。 */
+export async function loadHarmonyRules(base = "/data"): Promise<HarmonyRule[]> {
+  try {
+    return parseHarmonyRulesAsset(
+      await fetchJson(`${base}/harmony/rules.json`),
+    );
+  } catch {
+    return [];
+  }
 }
 
 async function fetchJson(url: string): Promise<unknown> {

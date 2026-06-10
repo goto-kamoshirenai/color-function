@@ -10,10 +10,18 @@ import { CardCvd } from "./cards/CardCvd";
 import { CardContrastMatrix } from "./cards/CardContrastMatrix";
 import { CardDeltaMatrix } from "./cards/CardDeltaMatrix";
 import { CardHueDistribution } from "./cards/CardHueDistribution";
+import { CardHarmony } from "./cards/CardHarmony";
+import { CardTone } from "./cards/CardTone";
 
 const SINGLE_VERIFY = [{ unit: "single", view: "verify" }] as const;
 const PAIR_VERIFY = [{ unit: "pair", view: "verify" }] as const;
 const PALETTE_VERIFY = [{ unit: "palette", view: "verify" }] as const;
+// 設計ビューは単位を問わず同じカード群（docs/10 §4「設計（単位共通）」）
+const ALL_DESIGN = [
+  { unit: "single", view: "design" },
+  { unit: "pair", view: "design" },
+  { unit: "palette", view: "design" },
+] as const;
 
 /** カードレジストリ（docs/10 §4 / docs/11 §4）。スプリント毎に追加していく。 */
 export const CARD_REGISTRY: CardDef[] = [
@@ -104,5 +112,21 @@ export const CARD_REGISTRY: CardDef[] = [
     appliesTo: [...PALETTE_VERIFY],
     helpKey: "huedist",
     Component: CardHueDistribution,
+  },
+  {
+    key: "harmony",
+    title: "調和スキーム生成",
+    category: "harmony",
+    appliesTo: [...ALL_DESIGN],
+    helpKey: "harmony",
+    Component: CardHarmony,
+  },
+  {
+    key: "tone",
+    title: "トーン展開",
+    category: "generate",
+    appliesTo: [...ALL_DESIGN],
+    helpKey: "tone",
+    Component: CardTone,
   },
 ];

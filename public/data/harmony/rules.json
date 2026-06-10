@@ -1,0 +1,39 @@
+{
+  "schemaVersion": "1.0.0",
+  "version": "1.0.0",
+  "kind": "harmony-rules",
+  "data": {
+    "rules": [
+      {
+        "id": "complementary",
+        "label": "補色",
+        "sub": "Complementary",
+        "hueOffsets": [0, 180]
+      },
+      {
+        "id": "analogous",
+        "label": "類似色",
+        "sub": "Analogous",
+        "hueOffsets": [-30, 0, 30]
+      },
+      {
+        "id": "triadic",
+        "label": "トライアド",
+        "sub": "Triadic",
+        "hueOffsets": [0, 120, 240]
+      },
+      {
+        "id": "split-complementary",
+        "label": "スプリット補色",
+        "sub": "Split-Complementary",
+        "hueOffsets": [0, 150, 210]
+      },
+      {
+        "id": "tetradic",
+        "label": "テトラード",
+        "sub": "Tetradic",
+        "hueOffsets": [0, 90, 180, 270]
+      }
+    ]
+  }
+}

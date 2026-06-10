@@ -3,12 +3,16 @@ import { render, screen, fireEvent } from "@testing-library/react";
 import { CardList } from "./CardList";
 import { useColorStore, resetColorStore } from "@/store/useColorStore";
 import { __setColorNamesForTest } from "@/lib/useColorNames";
+import { __setHarmonyRulesForTest } from "@/lib/useHarmonyRules";
 import { act } from "react";
 
 describe("CardList（単色×検証）", () => {
   beforeEach(() => {
     resetColorStore(["#2D6CDF", "#E4572E"]);
     __setColorNamesForTest([{ name: "Blue", hex: "#0000FF" }]);
+    __setHarmonyRulesForTest([
+      { id: "complementary", label: "補色", hueOffsets: [0, 180] },
+    ]);
     act(() => {
       useColorStore.getState().setUnit("single");
       useColorStore.getState().setView("verify");
@@ -40,9 +44,14 @@ describe("CardList（単色×検証）", () => {
     ).toBeInTheDocument();
   });
 
-  it("設計ビューではカード未実装の案内（S6で追加）", () => {
+  it("設計ビューでは調和スキーム生成とトーン展開を表示", () => {
     act(() => useColorStore.getState().setView("design"));
     render(<CardList />);
-    expect(screen.getByText(/順次追加されます/)).toBeInTheDocument();
+    expect(
+      screen.getByRole("heading", { name: "調和スキーム生成" }),
+    ).toBeInTheDocument();
+    expect(
+      screen.getByRole("heading", { name: "トーン展開" }),
+    ).toBeInTheDocument();
   });
 });
