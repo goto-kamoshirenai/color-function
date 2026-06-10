@@ -48,7 +48,7 @@ export default function RootLayout({
       <body className="bg-bg text-text flex h-dvh flex-col overflow-hidden text-[14px] leading-[1.45]">
         <StoreSync />
 
-        {/* ヘッダー（v2: 56px・ロゴブロック・REVラベル・ONLINE・SHARE） */}
+        {/* ヘッダー（v2: 56px・ロゴブロック・SHARE・テーマ切替） */}
         <header className="border-border-strong bg-surface z-5 flex h-14 flex-none items-center justify-between border-b pr-[18px]">
           <div className="flex h-full items-stretch">
             <div className="border-border flex items-center gap-[11px] border-r px-5">
@@ -61,7 +61,7 @@ export default function RootLayout({
                 Color Follows Function
               </span>
               <span className="text-text-3 font-mono text-[9px] tracking-[0.14em] uppercase">
-                色彩定量解析 / REV 2.4
+                色彩定量解析
               </span>
             </div>
           </div>
