@@ -72,6 +72,6 @@ docs/             # 設計ドキュメント（正）
 
 ## 現在地
 
-- フェーズ: **設計完了 → 実装着手前**。次は **S0（基盤scaffold）**（[docs/11 §6](./docs/11_implementation_plan.md)）。
+- フェーズ: **S0（基盤scaffold）完了**。次は **S1（`core/color` の計算レイヤ）**（[docs/11 §6](./docs/11_implementation_plan.md)）。
 - ブランチ: `feature/planning`。
 - モック: `Color Follows Function v2.html`（現行・自己展開バンドル、ブラウザで閲覧可）。v1 は削除済み。
