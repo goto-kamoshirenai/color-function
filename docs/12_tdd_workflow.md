@@ -22,7 +22,7 @@
 
 ```
 1. Red      失敗するテストを1つ書く（期待値は仕様/参照値から）
-            → `npm run test:watch` で赤を確認
+            → `pnpm test:watch` で赤を確認
 2. Green    そのテストだけを通す最小コードを書く
             → 緑を確認
 3. Refactor 重複除去・命名整理・抽出。挙動は変えない
@@ -37,12 +37,12 @@
 
 ## 3. レイヤ別テスト戦略
 
-| レイヤ | 道具 | TDDの濃さ | 何をテストするか |
-|--------|------|----------|----------------|
-| `core/color`（計算） | Vitest | **完全TDD** | 変換・コントラスト・ΔE2000・CVD・調和・アクセント補正。[07 §10]の参照値・CIEDE2000 Sharma34組 |
-| `store`（Zustand） | Vitest | **完全TDD** | `apply` 一本化、`selectColor`のペア挙動、`setAccent`、選択補正、URL同期の入出力 |
-| `features/cards`・`components` | Vitest + Testing Library + happy-dom | 振る舞いをTDD | 描画・コピー・ヘルプ開閉・モード別表示。スナップショット偏重にしない |
-| フロー / a11y | Playwright + @axe-core/playwright | シナリオ後追い可 | 「色を入れる→検証→共有URL復元」、キーボード操作、axe 違反ゼロ |
+| レイヤ                         | 道具                                 | TDDの濃さ        | 何をテストするか                                                                              |
+| ------------------------------ | ------------------------------------ | ---------------- | --------------------------------------------------------------------------------------------- |
+| `core/color`（計算）           | Vitest                               | **完全TDD**      | 変換・コントラスト・ΔE2000・CVD・調和・アクセント補正。[07 §10]の参照値・CIEDE2000 Sharma34組 |
+| `store`（Zustand）             | Vitest                               | **完全TDD**      | `apply` 一本化、`selectColor`のペア挙動、`setAccent`、選択補正、URL同期の入出力               |
+| `features/cards`・`components` | Vitest + Testing Library + happy-dom | 振る舞いをTDD    | 描画・コピー・ヘルプ開閉・モード別表示。スナップショット偏重にしない                          |
+| フロー / a11y                  | Playwright + @axe-core/playwright    | シナリオ後追い可 | 「色を入れる→検証→共有URL復元」、キーボード操作、axe 違反ゼロ                                 |
 
 - **計算とストアは純粋ロジック**なので最も TDD に向く。ここを厚く。
 - UI は「ユーザーに見える振る舞い」をテストする（実装詳細・クラス名に依存しない）。
@@ -55,16 +55,16 @@
 > スクリプトは S0（[11 §6](./11_implementation_plan.md)）で `package.json` に定義する。以下は確定予定の名前。
 
 ```bash
-npm run test:watch     # Vitest ウォッチ（TDDの主戦場）
-npm run test           # 一括実行（CI相当）
-npm run test:cov       # カバレッジ（core/color の網羅確認）
-npm run e2e            # Playwright（フロー/a11y）
-npm run lint           # ESLint + Prettier 検査
-npm run typecheck      # tsc --noEmit
-npm run dev            # 開発サーバ（Turbopack）
+pnpm test:watch     # Vitest ウォッチ（TDDの主戦場）
+pnpm test           # 一括実行（CI相当）
+pnpm test:cov       # カバレッジ（core/color の網羅確認）
+pnpm e2e            # Playwright（フロー/a11y）
+pnpm lint           # ESLint
+pnpm typecheck      # tsc --noEmit
+pnpm dev            # 開発サーバ（Turbopack）
 ```
 
-1コミット前のローカル確認: `npm run lint && npm run typecheck && npm run test`（Husky/lint-staged が pre-commit でも担保）。
+1コミット前のローカル確認: `pnpm lint && pnpm typecheck && pnpm test`（Husky/lint-staged が pre-commit でも担保）。
 
 ---
 
@@ -78,14 +78,17 @@ npm run dev            # 開発サーバ（Turbopack）
 - **fixture**: CIEDE2000 標準34組などは `core/color/__fixtures__/` に表として置き、ループで照合。
 
 例:
+
 ```ts
 // core/color/contrast.test.ts
-describe('contrastRatio', () => {
-  it('黒×白は 21.00（WCAG 既知値）', () => {
-    expect(contrastRatio(parseHex('#000000')!, parseHex('#ffffff')!)).toBeCloseTo(21, 2);
+describe("contrastRatio", () => {
+  it("黒×白は 21.00（WCAG 既知値）", () => {
+    expect(
+      contrastRatio(parseHex("#000000")!, parseHex("#ffffff")!),
+    ).toBeCloseTo(21, 2);
   });
-  it('同色は 1.00', () => {
-    const c = parseHex('#777777')!;
+  it("同色は 1.00", () => {
+    const c = parseHex("#777777")!;
     expect(contrastRatio(c, c)).toBeCloseTo(1, 5);
   });
 });
@@ -116,13 +119,13 @@ describe('contrastRatio', () => {
 
 [11 §6](./11_implementation_plan.md) と対応。
 
-| S | TDDで最初に書くテスト |
-|---|----------------------|
-| S0 | `npm run test` が動く最小テスト（scaffold疎通）。トークン適用のスモーク |
-| S1 | `core/color`：parseHex/toHex → relativeLuminance/contrastRatio → rgbToHsl/Hsv → rgbToLab → deltaE2000(Sharma34) → cvd → harmony(OKLCH) → ensureReadableAccent |
-| S2 | `store`：apply(set/add/remove/reorder/replaceAll)、selectColor(ペア入替)、setAccent、URL encode/decode |
-| S3–S6 | 各カード：モード別表示条件、算出値の表示、コピー、ヘルプ開閉 |
-| S7 | Playwright：主要フロー＋axe 違反ゼロ |
+| S     | TDDで最初に書くテスト                                                                                                                                         |
+| ----- | ------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| S0    | `pnpm test` が動く最小テスト（scaffold疎通）。トークン適用のスモーク                                                                                          |
+| S1    | `core/color`：parseHex/toHex → relativeLuminance/contrastRatio → rgbToHsl/Hsv → rgbToLab → deltaE2000(Sharma34) → cvd → harmony(OKLCH) → ensureReadableAccent |
+| S2    | `store`：apply(set/add/remove/reorder/replaceAll)、selectColor(ペア入替)、setAccent、URL encode/decode                                                        |
+| S3–S6 | 各カード：モード別表示条件、算出値の表示、コピー、ヘルプ開閉                                                                                                  |
+| S7    | Playwright：主要フロー＋axe 違反ゼロ                                                                                                                          |
 
 > **S1 の core/color から TDD を始める**のが本プロジェクトの出発点。純粋関数かつ参照値があり、TDD が最も効く。
 

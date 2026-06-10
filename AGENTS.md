@@ -39,18 +39,18 @@ culori(色計算エンジン) / zod(検証) / nuqs(URL) / lucide-react /
 Vitest + Testing Library + happy-dom(単体·コンポーネント) / Playwright + @axe-core/playwright(E2E·a11y) /
 Turbopack / Vercel。詳細は [docs/08](./docs/08_tech_stack.md)。
 
-### コマンド（S0 scaffold 後に有効）
+### コマンド（パッケージマネージャは **pnpm**）
 
 ```bash
-npm run dev          # 開発サーバ
-npm run test:watch   # Vitest ウォッチ（TDDの主戦場）
-npm run test         # 一括実行
-npm run e2e          # Playwright（フロー/a11y）
-npm run lint         # ESLint + Prettier
-npm run typecheck    # tsc --noEmit
+pnpm dev          # 開発サーバ
+pnpm test:watch   # Vitest ウォッチ（TDDの主戦場）
+pnpm test         # 一括実行
+pnpm e2e          # Playwright（フロー/a11y）
+pnpm lint         # ESLint
+pnpm typecheck    # tsc --noEmit
 ```
 
-コミット前: `npm run lint && npm run typecheck && npm run test`（Husky/lint-staged でも担保）。
+コミット前: `pnpm lint && pnpm typecheck && pnpm test`（Husky/lint-staged でも担保）。
 
 ---
 

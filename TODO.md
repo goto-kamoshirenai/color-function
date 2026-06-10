@@ -1,0 +1,2 @@
+- [x] npm to pnpm
+- [ ] add dependa bot

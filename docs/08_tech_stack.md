@@ -11,17 +11,17 @@
 
 ## 1. 確定スタック
 
-| 領域 | 採用 | 役割 |
-|------|------|------|
-| フレームワーク | **Next.js**（App Router） | 画面・ルーティング・静的アセット配信 |
-| 状態管理 | **Zustand** | グローバル `palette / selection / mode`（[05 §2](./05_data_model_and_card_contract.md)） |
-| スタイリング | **Tailwind CSS** | UI スタイル |
-| 単体テスト | **Vitest** | `core/color` の計算・ロジック（[07 §10](./07_card_calculation_specs.md) の参照値） |
-| バンドラ | **Turbopack** | 開発・ビルド |
-| E2E | **Playwright** | 主要フローの結合テスト |
-| ホスティング | **Vercel** | デプロイ・CDN |
+| 領域           | 採用                      | 役割                                                                                     |
+| -------------- | ------------------------- | ---------------------------------------------------------------------------------------- |
+| フレームワーク | **Next.js**（App Router） | 画面・ルーティング・静的アセット配信                                                     |
+| 状態管理       | **Zustand**               | グローバル `palette / selection / mode`（[05 §2](./05_data_model_and_card_contract.md)） |
+| スタイリング   | **Tailwind CSS**          | UI スタイル                                                                              |
+| 単体テスト     | **Vitest**                | `core/color` の計算・ロジック（[07 §10](./07_card_calculation_specs.md) の参照値）       |
+| バンドラ       | **Turbopack**             | 開発・ビルド                                                                             |
+| E2E            | **Playwright**            | 主要フローの結合テスト                                                                   |
+| ホスティング   | **Vercel**                | デプロイ・CDN                                                                            |
 
-> パッケージマネージャは既存 `package-lock.json` に従い **npm**（pnpm への移行は任意）。
+> パッケージマネージャは **pnpm**（`packageManager` 固定・`pnpm-lock.yaml`）。
 
 ---
 
@@ -29,19 +29,19 @@
 
 これらが無いと MVP（[05 §8](./05_data_model_and_card_contract.md)）の品質・実装速度に直接効く。
 
-| ツール | 用途 | 理由 |
-|--------|------|------|
-| **culori** | 色計算エンジン（変換/ΔE/OKLCH 等） | tree-shakeable・OKLCH/広色域対応。式は[07](./07_card_calculation_specs.md)で固定済みなので、`core/color` の薄いラッパ越しに使い、[07 §10]の参照値で検算。将来差し替え可 |
-| **zod** | 静的アセット・URL状態のバリデーション | [06](./06_static_assets_schema.md)のJSONを読み込み時に検証、URLデコード（[05 §4](./05_data_model_and_card_contract.md)）を安全に。スキーマ崩れを早期検出 |
-| **nuqs** | URL検索パラメータの型安全な同期 | `palette / mode` のURL状態（[05 §4]）を Next.js で宣言的に。共有リンクの中核 |
-| **react-aria-components**（Adobe） | アクセシブルなUI部品 | Dialog/Modal（確認ダイアログ [03 §6]）/ ToggleButtonGroup（2軸モード [03 §3]）/ Tooltip・Popover（指標ヘルプ）/ Slider（HSVピッカー）。WAI-ARIA 準拠の挙動・キーボード操作・フォーカス管理を内包し、スタイルは Tailwind で自前に当てる（headless）。**自身がアクセシブルであること**（[02 §4]）の土台 |
-| カラーピッカー（react-aria-components 同梱） | 色の入力UI | react-aria-components の `ColorArea`/`ColorSlider`/`ColorField`/`ColorSwatch` を採用（a11y一貫・依存削減）。どこからでも編集（[03 §6]）の入力UI。代替候補に react-colorful（[§7-5] で判断） |
-| **lucide-react** | アイコン | 軽量・一貫したアイコンセット |
-| **@testing-library/react** + **happy-dom** | コンポーネントテスト | Vitest 上でカード描画をテスト |
-| **@axe-core/playwright** | アクセシビリティ自動検査 | アクセシビリティを評価するアプリ自身のa11yをCIで担保（[02 §4]） |
-| **Prettier** + **prettier-plugin-tailwindcss** | 整形・クラス並べ替え | Tailwind クラス順を自動正規化。差分ノイズ低減 |
-| **Husky** + **lint-staged** | pre-commit ゲート | コミット時に整形・型・lint を通す |
-| **GitHub Actions** | CI | lint / typecheck / vitest / playwright / build を自動化 |
+| ツール                                         | 用途                                  | 理由                                                                                                                                                                                                                                                                                                  |
+| ---------------------------------------------- | ------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **culori**                                     | 色計算エンジン（変換/ΔE/OKLCH 等）    | tree-shakeable・OKLCH/広色域対応。式は[07](./07_card_calculation_specs.md)で固定済みなので、`core/color` の薄いラッパ越しに使い、[07 §10]の参照値で検算。将来差し替え可                                                                                                                               |
+| **zod**                                        | 静的アセット・URL状態のバリデーション | [06](./06_static_assets_schema.md)のJSONを読み込み時に検証、URLデコード（[05 §4](./05_data_model_and_card_contract.md)）を安全に。スキーマ崩れを早期検出                                                                                                                                              |
+| **nuqs**                                       | URL検索パラメータの型安全な同期       | `palette / mode` のURL状態（[05 §4]）を Next.js で宣言的に。共有リンクの中核                                                                                                                                                                                                                          |
+| **react-aria-components**（Adobe）             | アクセシブルなUI部品                  | Dialog/Modal（確認ダイアログ [03 §6]）/ ToggleButtonGroup（2軸モード [03 §3]）/ Tooltip・Popover（指標ヘルプ）/ Slider（HSVピッカー）。WAI-ARIA 準拠の挙動・キーボード操作・フォーカス管理を内包し、スタイルは Tailwind で自前に当てる（headless）。**自身がアクセシブルであること**（[02 §4]）の土台 |
+| カラーピッカー（react-aria-components 同梱）   | 色の入力UI                            | react-aria-components の `ColorArea`/`ColorSlider`/`ColorField`/`ColorSwatch` を採用（a11y一貫・依存削減）。どこからでも編集（[03 §6]）の入力UI。代替候補に react-colorful（[§7-5] で判断）                                                                                                           |
+| **lucide-react**                               | アイコン                              | 軽量・一貫したアイコンセット                                                                                                                                                                                                                                                                          |
+| **@testing-library/react** + **happy-dom**     | コンポーネントテスト                  | Vitest 上でカード描画をテスト                                                                                                                                                                                                                                                                         |
+| **@axe-core/playwright**                       | アクセシビリティ自動検査              | アクセシビリティを評価するアプリ自身のa11yをCIで担保（[02 §4]）                                                                                                                                                                                                                                       |
+| **Prettier** + **prettier-plugin-tailwindcss** | 整形・クラス並べ替え                  | Tailwind クラス順を自動正規化。差分ノイズ低減                                                                                                                                                                                                                                                         |
+| **Husky** + **lint-staged**                    | pre-commit ゲート                     | コミット時に整形・型・lint を通す                                                                                                                                                                                                                                                                     |
+| **GitHub Actions**                             | CI                                    | lint / typecheck / vitest / playwright / build を自動化                                                                                                                                                                                                                                               |
 
 ---
 
@@ -49,24 +49,24 @@
 
 あると開発体験・品質が上がるが、MVP直後でも可。
 
-| ツール | 用途 | 補足 |
-|--------|------|------|
-| **Storybook** | カードの単独開発・カタログ化 | カード＝独立部品（[05 §6](./05_data_model_and_card_contract.md)）と相性良。視覚回帰の足場にも |
-| **@vitest/coverage-v8** | カバレッジ | `core/color` の網羅性を可視化 |
-| **TypeScript（tsc）型検査をCIに** | 型ゲート | Next 既定の型に加え、CIで `tsc --noEmit` |
-| **Vercel Speed Insights / Analytics** | 軽量メトリクス | Cookieレス・プライバシー配慮（[02 §4]と整合）。導入は任意 |
+| ツール                                | 用途                         | 補足                                                                                          |
+| ------------------------------------- | ---------------------------- | --------------------------------------------------------------------------------------------- |
+| **Storybook**                         | カードの単独開発・カタログ化 | カード＝独立部品（[05 §6](./05_data_model_and_card_contract.md)）と相性良。視覚回帰の足場にも |
+| **@vitest/coverage-v8**               | カバレッジ                   | `core/color` の網羅性を可視化                                                                 |
+| **TypeScript（tsc）型検査をCIに**     | 型ゲート                     | Next 既定の型に加え、CIで `tsc --noEmit`                                                      |
+| **Vercel Speed Insights / Analytics** | 軽量メトリクス               | Cookieレス・プライバシー配慮（[02 §4]と整合）。導入は任意                                     |
 
 ---
 
 ## 4. 追加提案 ── 任意 / 将来
 
-| ツール | 用途 | 備考 |
-|--------|------|------|
-| **Framer Motion (motion)** | モード切替・カード出現のアニメ | 仕上げ段階。過度な演出は避ける |
-| **Serwist**（または next-pwa） | オフライン/PWA化 | [02 §4]の「オフライン耐性」を将来実現。静的アセット中心なので相性良 |
-| **next-intl** | 多言語化 | 旧版に en/ja があった。表示ラベルは状態と分離済み（[05 §2]）なので後付け可能 |
-| **colorjs.io** | 高精度色計算の検算用 | culori の結果照合や、未対応指標の参照実装に |
-| **@bjornlu/colorblind 等** | 色覚シミュレーション参照 | [06 §5]の行列を自前実装する際の照合用 |
+| ツール                         | 用途                           | 備考                                                                         |
+| ------------------------------ | ------------------------------ | ---------------------------------------------------------------------------- |
+| **Framer Motion (motion)**     | モード切替・カード出現のアニメ | 仕上げ段階。過度な演出は避ける                                               |
+| **Serwist**（または next-pwa） | オフライン/PWA化               | [02 §4]の「オフライン耐性」を将来実現。静的アセット中心なので相性良          |
+| **next-intl**                  | 多言語化                       | 旧版に en/ja があった。表示ラベルは状態と分離済み（[05 §2]）なので後付け可能 |
+| **colorjs.io**                 | 高精度色計算の検算用           | culori の結果照合や、未対応指標の参照実装に                                  |
+| **@bjornlu/colorblind 等**     | 色覚シミュレーション参照       | [06 §5]の行列を自前実装する際の照合用                                        |
 
 ---
 
