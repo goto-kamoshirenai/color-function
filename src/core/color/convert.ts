@@ -1,4 +1,4 @@
-import { converter } from "culori";
+import { converter, clampChroma } from "culori";
 import type { HSL, HSV, LAB, OKLCH, RGB } from "./types";
 
 const clamp = (v: number, a: number, b: number) => Math.max(a, Math.min(b, v));
@@ -142,7 +142,9 @@ export function rgbToOklch({ r, g, b }: RGB): OKLCH {
 }
 
 export function oklchToRgb({ l, c, h }: OKLCH): RGB {
-  const rgb = toRgb({ mode: "oklch", l, c, h });
+  // sRGB 域外は色相を保ったまま彩度を落としてガマットマッピング（単純クランプは色相を歪める）。
+  const inGamut = clampChroma({ mode: "oklch", l, c, h }, "oklch");
+  const rgb = toRgb(inGamut);
   return {
     r: clamp(rgb.r, 0, 1) * 255,
     g: clamp(rgb.g, 0, 1) * 255,
