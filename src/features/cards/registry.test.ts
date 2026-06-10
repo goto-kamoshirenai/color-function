@@ -21,6 +21,17 @@ describe("カードレジストリ / filterCards", () => {
     expect(keys).toEqual(["wcag-contrast", "delta-e", "cvd"]);
   });
 
+  it("パレット×検証で3カード（コントラスト比/色差ΔEマトリクス/色相分布）", () => {
+    const keys = filterCards(CARD_REGISTRY, "palette", "verify").map(
+      (c) => c.key,
+    );
+    expect(keys).toEqual([
+      "contrast-matrix",
+      "delta-matrix",
+      "hue-distribution",
+    ]);
+  });
+
   it("全カードが既知の helpKey を持つ", () => {
     for (const c of CARD_REGISTRY) {
       expect(typeof c.helpKey).toBe("string");

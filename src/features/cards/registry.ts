@@ -7,9 +7,13 @@ import { CardNearestName } from "./cards/CardNearestName";
 import { CardWcagContrast } from "./cards/CardWcagContrast";
 import { CardDeltaE } from "./cards/CardDeltaE";
 import { CardCvd } from "./cards/CardCvd";
+import { CardContrastMatrix } from "./cards/CardContrastMatrix";
+import { CardDeltaMatrix } from "./cards/CardDeltaMatrix";
+import { CardHueDistribution } from "./cards/CardHueDistribution";
 
 const SINGLE_VERIFY = [{ unit: "single", view: "verify" }] as const;
 const PAIR_VERIFY = [{ unit: "pair", view: "verify" }] as const;
+const PALETTE_VERIFY = [{ unit: "palette", view: "verify" }] as const;
 
 /** カードレジストリ（docs/10 §4 / docs/11 §4）。スプリント毎に追加していく。 */
 export const CARD_REGISTRY: CardDef[] = [
@@ -76,5 +80,29 @@ export const CARD_REGISTRY: CardDef[] = [
     appliesTo: [...PAIR_VERIFY],
     helpKey: "cvd",
     Component: CardCvd,
+  },
+  {
+    key: "contrast-matrix",
+    title: "コントラスト比マトリクス",
+    category: "contrast",
+    appliesTo: [...PALETTE_VERIFY],
+    helpKey: "cmatrix",
+    Component: CardContrastMatrix,
+  },
+  {
+    key: "delta-matrix",
+    title: "色差 ΔE マトリクス",
+    category: "difference",
+    appliesTo: [...PALETTE_VERIFY],
+    helpKey: "dmatrix",
+    Component: CardDeltaMatrix,
+  },
+  {
+    key: "hue-distribution",
+    title: "色相分布",
+    category: "stats",
+    appliesTo: [...PALETTE_VERIFY],
+    helpKey: "huedist",
+    Component: CardHueDistribution,
   },
 ];
