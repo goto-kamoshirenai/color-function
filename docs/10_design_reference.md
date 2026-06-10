@@ -155,7 +155,7 @@ state = {
 | state（§2） | Zustand ストア（id ベース化） |
 | URL同期（§3） | `lib/`（ハッシュ `#p=` 同期） |
 | カード（§4） | `features/cards/`（CardDef レジストリ＋ appliesTo） |
-| ピッカー/確認/ヘルプ/トースト | `components/`（Radix Dialog/Tooltip ベース） |
+| ピッカー/確認/ヘルプ/トースト | `components/`（react-aria-components の Dialog/Tooltip/ColorSlider ベース） |
 | 色名18件 等 | `public/data/`（[06](./06_static_assets_schema.md) のJSONへ外部化） |
 
 ---

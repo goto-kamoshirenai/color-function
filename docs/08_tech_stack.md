@@ -34,8 +34,8 @@
 | **culori** | 色計算エンジン（変換/ΔE/OKLCH 等） | tree-shakeable・OKLCH/広色域対応。式は[07](./07_card_calculation_specs.md)で固定済みなので、`core/color` の薄いラッパ越しに使い、[07 §10]の参照値で検算。将来差し替え可 |
 | **zod** | 静的アセット・URL状態のバリデーション | [06](./06_static_assets_schema.md)のJSONを読み込み時に検証、URLデコード（[05 §4](./05_data_model_and_card_contract.md)）を安全に。スキーマ崩れを早期検出 |
 | **nuqs** | URL検索パラメータの型安全な同期 | `palette / mode` のURL状態（[05 §4]）を Next.js で宣言的に。共有リンクの中核 |
-| **Radix UI Primitives**（または shadcn/ui） | アクセシブルなUI部品 | Dialog（確認ダイアログ [03 §6]）/ ToggleGroup（2軸モード [03 §3]）/ Tooltip・Popover（指標ヘルプ）。**自身がアクセシブルであること**（[02 §4]）の土台。shadcn/ui なら Radix+Tailwind で所有コードとして導入 |
-| **react-colorful** | カラーピッカー | 約2.8kB・依存なし。どこからでも編集（[03 §6]）の入力UI |
+| **react-aria-components**（Adobe） | アクセシブルなUI部品 | Dialog/Modal（確認ダイアログ [03 §6]）/ ToggleButtonGroup（2軸モード [03 §3]）/ Tooltip・Popover（指標ヘルプ）/ Slider（HSVピッカー）。WAI-ARIA 準拠の挙動・キーボード操作・フォーカス管理を内包し、スタイルは Tailwind で自前に当てる（headless）。**自身がアクセシブルであること**（[02 §4]）の土台 |
+| カラーピッカー（react-aria-components 同梱） | 色の入力UI | react-aria-components の `ColorArea`/`ColorSlider`/`ColorField`/`ColorSwatch` を採用（a11y一貫・依存削減）。どこからでも編集（[03 §6]）の入力UI。代替候補に react-colorful（[§7-5] で判断） |
 | **lucide-react** | アイコン | 軽量・一貫したアイコンセット |
 | **@testing-library/react** + **happy-dom** | コンポーネントテスト | Vitest 上でカード描画をテスト |
 | **@axe-core/playwright** | アクセシビリティ自動検査 | アクセシビリティを評価するアプリ自身のa11yをCIで担保（[02 §4]） |
@@ -74,7 +74,7 @@
 
 - **culori を「エンジン」に、`core/color` を「契約」に**: 計算式は[07](./07_card_calculation_specs.md)で固定済み。ライブラリは内部実装にすぎず、参照値テストで挙動を保証 → 後から自前実装やcolorjs.ioに差し替え可能。
 - **nuqs + zod で URL状態を堅牢に**: DBレスの共有手段（[02 §2.3]）はURLが生命線。型安全なエンコード/デコードとバリデーションで壊れにくくする。
-- **Radix/shadcn + axe で「アクセシブルなアクセシビリティツール」**: 矛盾を作らないため、UI部品とCI検査の両面でa11yを担保。
+- **react-aria-components + axe で「アクセシブルなアクセシビリティツール」**: 矛盾を作らないため、UI部品（ARIA挙動内包）とCI検査の両面でa11yを担保。Tailwind でスタイルは自前管理。
 - **計算とUIの分離をテストで固定**: Vitest（[07 §10]の参照値）でロジックを、Playwright+axeでフローとa11yを守る。
 
 ---
@@ -87,7 +87,7 @@ src/
   core/color/          # 計算レイヤ（フレームワーク非依存・culoriラッパ＋自前ロジック）
   store/               # Zustand ストア（palette/selection/mode）
   features/cards/      # カード群（CardDef レジストリ＋各カード）
-  components/          # 共通UI（パレットバー・ピッカー・ダイアログ・shadcn部品）
+  components/          # 共通UI（パレットバー・ピッカー・ダイアログ。react-aria-components ベース）
   lib/                 # URL同期(nuqs)・アセット読み込み(zod検証)・ユーティリティ
 public/data/           # 静的アセット（[06]のスキーマ）
 ```
@@ -96,7 +96,8 @@ public/data/           # 静的アセット（[06]のスキーマ）
 
 ## 7. 未決事項（次に詰める）
 
-1. **shadcn/ui 採用の可否**（Radix 直叩き vs shadcn のコード所有モデル）。
+1. ~~UIコンポーネントライブラリ~~ → **確定: react-aria-components**（Adobe・headless）。スタイルは Tailwind で自前。
 2. **culori 採用の最終確認**（自前実装に振る範囲：[07]の式をどこまで自前にするか）。
 3. CIワークフローの具体ジョブ構成（並列・キャッシュ・Playwright のブラウザ）。
 4. Storybook 導入タイミング（スプリント1から or 後）。
+5. カラーピッカーの実装手段（react-aria-components の `ColorPicker`/`ColorSlider` を使うか、[08 §2] の react-colorful を使うか）。
