@@ -1,5 +1,6 @@
 "use client";
 
+import { Xmark, FillColor } from "iconoir-react";
 import type { Color } from "@/store/useColorStore";
 
 type Props = {
@@ -61,9 +62,9 @@ export function Swatch({
           onClick={onRemove}
           aria-label={`色 ${index + 1} を削除`}
           title="削除"
-          className="border-border-strong bg-surface text-text-2 hover:bg-surface-3 hover:text-text absolute -top-[7px] -right-[7px] flex size-[17px] items-center justify-center rounded-full border p-0 text-[11px] leading-none before:absolute before:-inset-1.5 before:content-['']"
+          className="border-border-strong bg-surface text-text-2 hover:bg-surface-3 hover:text-text absolute -top-[7px] -right-[7px] flex size-[17px] items-center justify-center rounded-full border p-0 before:absolute before:-inset-1.5 before:content-['']"
         >
-          ×
+          <Xmark width={11} height={11} strokeWidth={2} aria-hidden />
         </button>
         <button
           type="button"
@@ -72,13 +73,13 @@ export function Swatch({
           aria-pressed={isAccent}
           title="アクセントに設定（画面の差し色に反映）"
           className={
-            "absolute -right-[7px] -bottom-[7px] flex size-[17px] items-center justify-center rounded-full border p-0 text-[9px] leading-none before:absolute before:-inset-1.5 before:content-[''] " +
+            "absolute -right-[7px] -bottom-[7px] flex size-[17px] items-center justify-center rounded-full border p-0 before:absolute before:-inset-1.5 before:content-[''] " +
             (isAccent
               ? "border-accent text-accent bg-surface"
               : "border-border-strong bg-surface text-text-3 hover:text-text")
           }
         >
-          ◎
+          <FillColor width={11} height={11} strokeWidth={2} aria-hidden />
         </button>
         {isAccent ? (
           <span

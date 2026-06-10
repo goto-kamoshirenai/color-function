@@ -1,5 +1,6 @@
 "use client";
 
+import { ArrowUpRight } from "iconoir-react";
 import { useColorStore } from "@/store/useColorStore";
 
 /** 現在の配色（URLハッシュに同期済み）を共有リンクとしてコピー（v2: ↗ SHARE）。 */
@@ -22,7 +23,8 @@ export function ShareButton() {
       aria-label="共有リンクをコピー"
       className="border-border-strong hover:bg-surface-2 inline-flex items-center gap-[7px] rounded-[2px] border bg-transparent px-[13px] py-2 font-mono text-[11px] tracking-[0.06em] whitespace-nowrap"
     >
-      ↗ SHARE
+      <ArrowUpRight width={13} height={13} strokeWidth={2} aria-hidden />
+      SHARE
     </button>
   );
 }

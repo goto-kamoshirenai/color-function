@@ -35,7 +35,7 @@
 ## 技術スタック
 
 Next.js(App Router) / TypeScript / Zustand / Tailwind CSS / **react-aria-components**(UI部品·headless) /
-culori(色計算エンジン) / zod(検証) / nuqs(URL) / lucide-react /
+culori(色計算エンジン) / zod(検証) / nuqs(URL) / iconoir-react(アイコン) / motion(アニメーション) /
 Vitest + Testing Library + happy-dom(単体·コンポーネント) / Playwright + @axe-core/playwright(E2E·a11y) /
 Turbopack / Vercel。詳細は [docs/08](./docs/08_tech_stack.md)。
 

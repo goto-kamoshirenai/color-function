@@ -1,5 +1,6 @@
 "use client";
 
+import { Plus } from "iconoir-react";
 import { useColorStore } from "@/store/useColorStore";
 import { ModeToggle } from "./ModeToggle";
 import { Swatch } from "./Swatch";
@@ -74,9 +75,9 @@ export function PaletteBar() {
           onClick={openAdd}
           aria-label="色を追加"
           title="色を追加"
-          className="border-border-strong text-text-2 hover:border-accent hover:text-accent mt-[15px] flex size-[50px] flex-none items-center justify-center rounded-[3px] border-[1.5px] border-dashed bg-transparent text-[22px] leading-none"
+          className="border-border-strong text-text-2 hover:border-accent hover:text-accent mt-[15px] flex size-[50px] flex-none items-center justify-center rounded-[3px] border-[1.5px] border-dashed bg-transparent"
         >
-          +
+          <Plus width={20} height={20} aria-hidden />
         </button>
       </div>
 

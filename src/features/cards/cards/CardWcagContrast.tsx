@@ -1,5 +1,6 @@
 "use client";
 
+import { Check, Xmark, Copy, DataTransferBoth } from "iconoir-react";
 import { parseHex, contrastRatio, judgeWcag } from "@/core/color";
 import { CardFrame } from "@/components/Card";
 import { useColorStore } from "@/store/useColorStore";
@@ -49,8 +50,9 @@ export function CardWcagContrast({ number }: CardProps) {
             onClick={() =>
               copy(`${pair.fg.hex} on ${pair.bg.hex} — ${ratio.toFixed(2)}:1`)
             }
-            className="border-border-strong text-text-2 hover:bg-surface-2 rounded-[2px] border bg-transparent px-2.5 py-1.5 font-mono text-[10px] tracking-[0.06em] whitespace-nowrap"
+            className="border-border-strong text-text-2 hover:bg-surface-2 inline-flex items-center gap-1 rounded-[2px] border bg-transparent px-2.5 py-1.5 font-mono text-[10px] tracking-[0.06em] whitespace-nowrap"
           >
+            <Copy width={11} height={11} aria-hidden />
             COPY
           </button>
         ) : undefined
@@ -99,7 +101,21 @@ export function CardWcagContrast({ number }: CardProps) {
                       color: b.pass ? "var(--bg)" : "var(--text-3)",
                     }}
                   >
-                    {b.pass ? "✓" : "✕"}
+                    {b.pass ? (
+                      <Check
+                        width={14}
+                        height={14}
+                        strokeWidth={2.5}
+                        aria-hidden
+                      />
+                    ) : (
+                      <Xmark
+                        width={14}
+                        height={14}
+                        strokeWidth={2}
+                        aria-hidden
+                      />
+                    )}
                   </span>
                   <div>
                     <div className="text-xs font-semibold">{b.label}</div>
@@ -135,9 +151,15 @@ export function CardWcagContrast({ number }: CardProps) {
                 <button
                   type="button"
                   onClick={() => selectSwatch(pair.bg.id)}
-                  className="border-border-strong hover:bg-surface-3 rounded-[2px] border bg-transparent px-[9px] py-1 text-[11px]"
+                  className="border-border-strong hover:bg-surface-3 inline-flex items-center gap-1 rounded-[2px] border bg-transparent px-[9px] py-1 text-[11px]"
                 >
-                  ⇄ 入替
+                  <DataTransferBoth
+                    width={12}
+                    height={12}
+                    className="rotate-90"
+                    aria-hidden
+                  />
+                  入替
                 </button>
               </div>
             </div>

@@ -1,6 +1,7 @@
 "use client";
 
 import { ModalOverlay, Modal, Dialog, Heading } from "react-aria-components";
+import { Xmark } from "iconoir-react";
 import { useColorStore } from "@/store/useColorStore";
 import { hsvToRgb, toHex, parseHex } from "@/core/color";
 
@@ -76,9 +77,9 @@ export function ColorPicker() {
               type="button"
               onClick={closePicker}
               aria-label="閉じる"
-              className="border-border-strong text-text-2 hover:bg-surface-2 size-[26px] rounded-[2px] border bg-transparent text-sm leading-none"
+              className="border-border-strong text-text-2 hover:bg-surface-2 flex size-[26px] items-center justify-center rounded-[2px] border bg-transparent"
             >
-              ×
+              <Xmark width={14} height={14} aria-hidden />
             </button>
           </div>
 

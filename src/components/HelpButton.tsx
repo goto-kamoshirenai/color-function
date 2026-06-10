@@ -7,6 +7,7 @@ import {
   Dialog,
   Heading,
 } from "react-aria-components";
+import { QuestionMark } from "iconoir-react";
 import { HELP } from "@/features/cards/help";
 
 /** 指標ヘルプ（v2 パネル意匠の Popover）。 */
@@ -17,16 +18,20 @@ export function HelpButton({ helpKey }: { helpKey: string }) {
     <DialogTrigger>
       <Button
         aria-label={`${help.title} の説明`}
-        className="border-border-strong text-text-2 hover:bg-surface-2 flex size-[17px] items-center justify-center rounded-full border bg-transparent p-0 font-mono text-[10px] leading-none"
+        className="border-border-strong text-text-2 hover:bg-surface-2 flex size-[17px] items-center justify-center rounded-full border bg-transparent p-0"
       >
-        ?
+        <QuestionMark width={10} height={10} strokeWidth={2.2} aria-hidden />
       </Button>
       <Popover className="border-border-strong bg-surface w-[400px] max-w-[90vw] rounded-[3px] border shadow-[0_24px_64px_rgba(0,0,0,0.32)]">
         <Dialog className="outline-none">
           <div className="border-border flex items-center gap-[9px] border-b px-[18px] py-3.5">
-            <span className="text-accent font-mono text-[10px] tracking-[0.1em]">
-              ?
-            </span>
+            <QuestionMark
+              width={12}
+              height={12}
+              strokeWidth={2.2}
+              className="text-accent"
+              aria-hidden
+            />
             <Heading slot="title" className="text-sm font-bold">
               {help.title}
             </Heading>

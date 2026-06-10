@@ -1,6 +1,7 @@
 "use client";
 
 import { useCallback, useSyncExternalStore } from "react";
+import { HalfMoon, SunLight } from "iconoir-react";
 
 type Theme = "light" | "dark";
 
@@ -48,7 +49,11 @@ export function ThemeToggle() {
       }
       className="border-border-strong hover:bg-surface-2 inline-flex size-9 items-center justify-center rounded-[2px] border bg-transparent font-mono text-[13px]"
     >
-      {theme === "light" ? "☾" : "☀"}
+      {theme === "light" ? (
+        <HalfMoon width={16} height={16} aria-hidden />
+      ) : (
+        <SunLight width={16} height={16} aria-hidden />
+      )}
     </button>
   );
 }
