@@ -66,12 +66,6 @@ export default function RootLayout({
             </div>
           </div>
           <div className="flex items-center gap-3.5">
-            <div className="hidden items-center gap-[7px] sm:flex">
-              <span className="bg-accent size-[7px] rounded-full" aria-hidden />
-              <span className="text-text-2 font-mono text-[10px] tracking-[0.14em]">
-                ONLINE
-              </span>
-            </div>
             <ShareButton />
             <ThemeToggle />
           </div>
