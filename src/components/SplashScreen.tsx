@@ -352,7 +352,7 @@ export function SplashScreen() {
                   ))}
                 </motion.div>
 
-                {/* ── P5: 引出線＋タイトルブロック ── */}
+                {/* ── P5: 引出線（タイトルブロックはユーザー判断で不採用） ── */}
                 <motion.div {...fade(T.callouts, 0.6)}>
                   <div className="absolute top-[200px] left-[454px] w-[74px] border-t border-(--text-2)" />
                   <span className="bg-accent absolute top-[197px] left-[454px] size-1.5 -translate-x-1/2 -translate-y-1/2 rounded-full" />
@@ -367,52 +367,6 @@ export function SplashScreen() {
                   <span className="text-text-2 absolute top-[268px] left-[286px] font-mono text-[9px]">
                     TERMINAL
                   </span>
-
-                  {/* タイトルブロック */}
-                  <div className="border-border-strong bg-surface absolute right-[18px] bottom-[18px] w-[196px] border font-mono">
-                    <div className="border-border bg-surface-2 flex items-center justify-between border-b px-[9px] py-[5px]">
-                      <span className="font-sans text-[11px] font-semibold tracking-[-0.01em]">
-                        CFF WORDMARK
-                      </span>
-                      <span
-                        className="border-accent size-[9px] rotate-45 border-[1.5px]"
-                        aria-hidden
-                      />
-                    </div>
-                    <div className="border-border flex border-b">
-                      <div className="border-border flex-1 border-r px-[9px] py-1">
-                        <span className="text-text-3 text-[7px] tracking-[0.1em]">
-                          SHEET
-                        </span>
-                        <div className="text-[10px]">01 / 01</div>
-                      </div>
-                      <div className="flex-1 px-[9px] py-1">
-                        <span className="text-text-3 text-[7px] tracking-[0.1em]">
-                          SCALE
-                        </span>
-                        <div className="text-[10px]">1 : 1</div>
-                      </div>
-                    </div>
-                    <div className="border-border flex border-b">
-                      <div className="border-border flex-1 border-r px-[9px] py-1">
-                        <span className="text-text-3 text-[7px] tracking-[0.1em]">
-                          UNIT
-                        </span>
-                        <div className="text-[10px]">px</div>
-                      </div>
-                      <div className="flex-1 px-[9px] py-1">
-                        <span className="text-text-3 text-[7px] tracking-[0.1em]">
-                          REV
-                        </span>
-                        <div className="text-[10px]">2.4</div>
-                      </div>
-                    </div>
-                    <div className="px-[9px] py-[5px]">
-                      <span className="text-text-2 text-[8px] tracking-[0.12em]">
-                        FORM FOLLOWS FUNCTION
-                      </span>
-                    </div>
-                  </div>
                 </motion.div>
               </div>
             </div>
@@ -424,7 +378,7 @@ export function SplashScreen() {
             >
               <span className="text-text-3 hidden font-mono text-[9.5px] tracking-[0.08em] sm:inline">
                 PHASES — GRID ▸ GUIDES ▸ CONSTRUCTION ▸ STROKE-ON ▸ DIMENSIONS ▸
-                TITLE BLOCK
+                CALLOUTS
               </span>
               <button
                 type="button"
