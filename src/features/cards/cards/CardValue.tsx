@@ -66,7 +66,7 @@ export function CardValue({ number }: CardProps) {
                   onClick={() => copy(cell.copyText)}
                   className="bg-surface hover:bg-surface-2 px-3.5 py-[11px] text-left"
                 >
-                  <div className="text-text-3 mb-1 font-mono text-[9px] tracking-[0.14em] uppercase">
+                  <div className="text-text-3 mb-1 font-mono text-[11px] tracking-[0.14em] uppercase">
                     {cell.label}
                   </div>
                   <div className="font-mono text-lg font-medium tracking-[0.01em]">
@@ -76,7 +76,7 @@ export function CardValue({ number }: CardProps) {
               ))}
             </div>
           </div>
-          <p className="text-text-3 mt-[11px] font-mono text-[9.5px] tracking-[0.04em]">
+          <p className="text-text-3 mt-[11px] font-mono text-[11px] tracking-[0.04em]">
             CLICK TO COPY — 値をクリックでコピー
           </p>
         </>

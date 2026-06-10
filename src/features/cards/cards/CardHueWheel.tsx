@@ -57,7 +57,7 @@ export function CardHueWheel({ number }: CardProps) {
           );
         })}
       </div>
-      <p className="text-text-3 text-center font-mono text-[9.5px] tracking-[0.04em]">
+      <p className="text-text-3 text-center font-mono text-[11px] tracking-[0.04em]">
         ANGLE = HUE / RADIUS = SATURATION
       </p>
     </CardFrame>

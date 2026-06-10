@@ -21,7 +21,7 @@ function Slider({
   return (
     <div>
       <div className="mb-[5px] flex justify-between">
-        <span className="text-text-2 font-mono text-[11px]">{label}</span>
+        <span className="text-text-2 font-mono text-[12px]">{label}</span>
         <span className="font-mono text-xs font-medium">
           {Math.round(value)}
           {unit}
@@ -66,7 +66,7 @@ export function ColorPicker() {
         <Dialog className="outline-none">
           <div className="border-border flex items-center justify-between border-b px-[18px] py-3.5">
             <div className="flex items-baseline gap-[9px]">
-              <span className="text-accent font-mono text-[10px] tracking-[0.1em]">
+              <span className="text-accent font-mono text-[11px] tracking-[0.1em]">
                 ●
               </span>
               <Heading slot="title" className="text-sm font-bold">
@@ -91,7 +91,7 @@ export function ColorPicker() {
             />
             <div className="mb-4">
               <div className="flex items-center gap-[9px]">
-                <span className="text-text-3 font-mono text-[10px] tracking-[0.12em] uppercase">
+                <span className="text-text-3 font-mono text-[11px] tracking-[0.12em] uppercase">
                   HEX
                 </span>
                 <input
@@ -111,7 +111,7 @@ export function ColorPicker() {
                 <p
                   id="hex-error"
                   role="status"
-                  className="text-text-2 mt-1.5 pl-[37px] font-mono text-[10px]"
+                  className="text-text-2 mt-1.5 pl-[37px] font-mono text-[11px]"
                 >
                   #RRGGBB 形式（6桁の16進数）で入力してください
                 </p>

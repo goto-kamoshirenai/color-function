@@ -58,12 +58,12 @@ export function CardFrame({
 
       <header className="border-border mb-4 flex items-end justify-between border-b pb-[13px]">
         <div className="flex items-baseline gap-[11px]">
-          <span className="text-accent font-mono text-[10px] tracking-[0.1em]">
+          <span className="text-accent font-mono text-[11px] tracking-[0.1em]">
             {number}
           </span>
           <h2 className="text-[15px] font-bold">{title}</h2>
           {enLabel ? (
-            <span className="text-text-3 font-mono text-[10px] tracking-[0.14em] uppercase">
+            <span className="text-text-3 font-mono text-[11px] tracking-[0.14em] uppercase">
               {enLabel}
             </span>
           ) : null}

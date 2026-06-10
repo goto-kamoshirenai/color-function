@@ -86,7 +86,7 @@ export function PaletteBar() {
         <ModeToggle />
         <div className="flex items-center gap-2.5">
           <HelpButton helpKey="usage" />
-          <span className="text-text-3 font-mono text-[10px]">
+          <span className="text-text-3 font-mono text-[11px]">
             {palette.length} 色
           </span>
           {palette.length > 0 ? (
@@ -94,7 +94,7 @@ export function PaletteBar() {
               type="button"
               onClick={askClear}
               aria-label="すべて消去"
-              className="border-border-strong text-text-2 hover:bg-surface-2 hover:text-text rounded-[2px] border bg-transparent px-3 py-[7px] font-mono text-[11px] tracking-[0.04em] whitespace-nowrap"
+              className="border-border-strong text-text-2 hover:bg-surface-2 hover:text-text rounded-[2px] border bg-transparent px-3 py-[7px] font-mono text-[12px] tracking-[0.04em] whitespace-nowrap"
             >
               CLEAR ALL
             </button>

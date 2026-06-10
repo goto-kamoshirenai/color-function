@@ -50,9 +50,9 @@ export function CardWcagContrast({ number }: CardProps) {
             onClick={() =>
               copy(`${pair.fg.hex} on ${pair.bg.hex} — ${ratio.toFixed(2)}:1`)
             }
-            className="border-border-strong text-text-2 hover:bg-surface-2 inline-flex items-center gap-1 rounded-[2px] border bg-transparent px-2.5 py-1.5 font-mono text-[10px] tracking-[0.06em] whitespace-nowrap"
+            className="border-border-strong text-text-2 hover:bg-surface-2 inline-flex items-center gap-1 rounded-[2px] border bg-transparent px-2.5 py-1.5 font-mono text-[12px] tracking-[0.06em] whitespace-nowrap"
           >
-            <Copy width={11} height={11} aria-hidden />
+            <Copy width={12} height={12} aria-hidden />
             COPY
           </button>
         ) : undefined
@@ -119,7 +119,7 @@ export function CardWcagContrast({ number }: CardProps) {
                   </span>
                   <div>
                     <div className="text-xs font-semibold">{b.label}</div>
-                    <div className="text-text-3 font-mono text-[9.5px]">
+                    <div className="text-text-3 font-mono text-[11px]">
                       ≥ {b.sub}
                     </div>
                   </div>
@@ -130,7 +130,7 @@ export function CardWcagContrast({ number }: CardProps) {
 
           <div className="border-border mt-5 overflow-hidden rounded-[2px] border">
             <div className="bg-surface-2 border-border flex flex-wrap items-center justify-between gap-2 border-b px-[13px] py-2">
-              <span className="text-text-2 font-mono text-[9.5px] tracking-[0.14em] uppercase">
+              <span className="text-text-2 font-mono text-[11px] tracking-[0.14em] uppercase">
                 テキスト可読性プレビュー / Preview
               </span>
               <div className="text-text-2 flex items-center gap-[9px] font-mono text-[11px]">
@@ -151,7 +151,7 @@ export function CardWcagContrast({ number }: CardProps) {
                 <button
                   type="button"
                   onClick={() => selectSwatch(pair.bg.id)}
-                  className="border-border-strong hover:bg-surface-3 inline-flex items-center gap-1 rounded-[2px] border bg-transparent px-[9px] py-1 text-[11px]"
+                  className="border-border-strong hover:bg-surface-3 inline-flex items-center gap-1 rounded-[2px] border bg-transparent px-[9px] py-1 text-[12px]"
                 >
                   <DataTransferBoth
                     width={12}

@@ -42,7 +42,7 @@ export function CardDeltaE({ number }: CardProps) {
               style={{ width: `${Math.min(100, de).toFixed(0)}%` }}
             />
           </div>
-          <div className="text-text-3 mt-[5px] flex justify-between font-mono text-[9px]">
+          <div className="text-text-3 mt-[5px] flex justify-between font-mono text-[11px]">
             <span>0</span>
             <span>100+</span>
           </div>

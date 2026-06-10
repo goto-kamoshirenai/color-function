@@ -22,7 +22,7 @@ function Segmented<T extends string>({
 }) {
   return (
     <div className="flex items-center gap-[9px]">
-      <span className="text-text-3 font-mono text-[9px] tracking-[0.16em] uppercase">
+      <span className="text-text-3 font-mono text-[11px] tracking-[0.16em] uppercase">
         {label}
       </span>
       <ToggleButtonGroup

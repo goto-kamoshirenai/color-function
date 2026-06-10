@@ -25,7 +25,7 @@ export function CardLuminance({ number }: CardProps) {
           <div className="font-mono text-[42px] leading-none font-medium tracking-[-0.03em]">
             {lum.toFixed(4)}
           </div>
-          <div className="text-text-3 mt-1.5 mb-3.5 font-mono text-[10px] tracking-[0.04em]">
+          <div className="text-text-3 mt-1.5 mb-3.5 font-mono text-[11px] tracking-[0.04em]">
             0.0000 – 1.0000
           </div>
           <div className="border-border-strong relative mb-4 h-[7px] border bg-gradient-to-r from-black to-white">
@@ -45,7 +45,7 @@ export function CardLuminance({ number }: CardProps) {
               ] as const
             ).map(([label, ratio]) => (
               <div key={label} className="bg-surface px-2.5 py-2">
-                <div className="text-text-3 mb-0.5 font-mono text-[9px] tracking-[0.1em] uppercase">
+                <div className="text-text-3 mb-0.5 font-mono text-[11px] tracking-[0.1em] uppercase">
                   {label}
                 </div>
                 <div className="font-mono text-sm font-medium">

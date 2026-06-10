@@ -47,7 +47,7 @@ export function CardHueDistribution({ number }: CardProps) {
               );
             })}
           </div>
-          <div className="text-text-3 mt-[9px] flex justify-between font-mono text-[9px]">
+          <div className="text-text-3 mt-[9px] flex justify-between font-mono text-[11px]">
             <span>0°</span>
             <span>120°</span>
             <span>240°</span>

@@ -17,7 +17,7 @@ export function CardContrastMatrix({ number }: CardProps) {
       title="コントラスト比マトリクス"
       helpKey="cmatrix"
       rightSlot={
-        <span className="text-text-3 font-mono text-[9.5px] tracking-[0.04em]">
+        <span className="text-text-3 font-mono text-[11px] tracking-[0.04em]">
           BOLD = AA (≥4.5)
         </span>
       }

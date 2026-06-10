@@ -31,7 +31,7 @@ export function Swatch({
 }: Props) {
   return (
     <div className="relative flex flex-none flex-col items-center gap-[5px]">
-      <span className="text-text-3 font-mono text-[8.5px] tracking-[0.1em]">
+      <span className="text-text-3 font-mono text-[11px] tracking-[0.1em]">
         {String(index + 1).padStart(2, "0")}
       </span>
       <div className="relative">
@@ -53,7 +53,7 @@ export function Swatch({
           }}
         />
         {badge ? (
-          <span className="absolute -top-[7px] -left-1.5 rounded-[2px] bg-(--text) px-[5px] py-px font-mono text-[9px] font-semibold tracking-[0.05em] text-(--bg)">
+          <span className="absolute -top-[7px] -left-1.5 rounded-[2px] bg-(--text) px-[5px] py-px font-mono text-[11px] font-semibold tracking-[0.05em] text-(--bg)">
             {badge}
           </span>
         ) : null}
@@ -62,9 +62,9 @@ export function Swatch({
           onClick={onRemove}
           aria-label={`色 ${index + 1} を削除`}
           title="削除"
-          className="border-border-strong bg-surface text-text-2 hover:bg-surface-3 hover:text-text absolute -top-[7px] -right-[7px] flex size-[17px] items-center justify-center rounded-full border p-0 before:absolute before:-inset-1.5 before:content-['']"
+          className="border-border-strong bg-surface text-text-2 hover:bg-surface-3 hover:text-text absolute -top-[7px] -right-[7px] flex size-[18px] items-center justify-center rounded-full border p-0 before:absolute before:-inset-1.5 before:content-['']"
         >
-          <Xmark width={11} height={11} strokeWidth={2} aria-hidden />
+          <Xmark width={12} height={12} strokeWidth={2} aria-hidden />
         </button>
         <button
           type="button"
@@ -73,13 +73,13 @@ export function Swatch({
           aria-pressed={isAccent}
           title="アクセントに設定（画面の差し色に反映）"
           className={
-            "absolute -right-[7px] -bottom-[7px] flex size-[17px] items-center justify-center rounded-full border p-0 before:absolute before:-inset-1.5 before:content-[''] " +
+            "absolute -right-[7px] -bottom-[7px] flex size-[18px] items-center justify-center rounded-full border p-0 before:absolute before:-inset-1.5 before:content-[''] " +
             (isAccent
               ? "border-accent text-accent bg-surface"
               : "border-border-strong bg-surface text-text-3 hover:text-text")
           }
         >
-          <FillColor width={11} height={11} strokeWidth={2} aria-hidden />
+          <FillColor width={12} height={12} strokeWidth={2} aria-hidden />
         </button>
         {isAccent ? (
           <span
@@ -93,7 +93,7 @@ export function Swatch({
         onClick={onEdit}
         aria-label={`色 ${index + 1} を編集`}
         title="クリックで編集"
-        className="text-text-2 hover:text-text decoration-border-strong bg-transparent p-0 font-mono text-[10px] tracking-[0.02em] underline-offset-2 hover:underline"
+        className="text-text-2 hover:text-text decoration-border-strong bg-transparent p-0 font-mono text-[12px] tracking-[0.02em] underline-offset-2 hover:underline"
       >
         {color.hex}
       </button>

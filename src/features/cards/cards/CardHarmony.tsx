@@ -43,7 +43,7 @@ export function CardHarmony({ number }: CardProps) {
         <p className="text-text-3 font-mono text-xs">調和ルールを読み込み中…</p>
       ) : (
         <>
-          <p className="text-text-3 mt-[5px] mb-[18px] font-mono text-[9.5px] tracking-[0.03em]">
+          <p className="text-text-3 mt-[5px] mb-[18px] font-mono text-[11px] tracking-[0.03em]">
             BASE {color.hex} — クリックでパレットに追加
           </p>
           <div className="flex flex-col gap-[13px]">
@@ -57,7 +57,7 @@ export function CardHarmony({ number }: CardProps) {
                   <div className="w-[148px] flex-none">
                     <div className="text-[13px] font-bold">{rule.label}</div>
                     {rule.sub ? (
-                      <div className="text-text-3 font-mono text-[9px] tracking-[0.08em] uppercase">
+                      <div className="text-text-3 font-mono text-[11px] tracking-[0.08em] uppercase">
                         {rule.sub}
                       </div>
                     ) : null}
@@ -75,7 +75,7 @@ export function CardHarmony({ number }: CardProps) {
                           style={{ backgroundColor: hex }}
                         >
                           <span
-                            className="rounded-[2px] px-[5px] py-0.5 font-mono text-[9px]"
+                            className="rounded-[2px] px-[5px] py-0.5 font-mono text-[11px]"
                             style={{ background: chip.bg, color: chip.fg }}
                           >
                             {hex}

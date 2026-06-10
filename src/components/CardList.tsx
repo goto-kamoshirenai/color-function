@@ -86,11 +86,11 @@ export function CardList() {
         <div className="relative z-1 flex items-end justify-between gap-[18px]">
           <div>
             <div className="mb-[9px] flex items-center gap-2.5">
-              <span className="text-accent font-mono text-[10px] tracking-[0.14em]">
+              <span className="text-accent font-mono text-[11px] tracking-[0.14em]">
                 {figTag}
               </span>
               <span className="bg-border-strong h-px w-[22px]" aria-hidden />
-              <span className="text-text-3 font-mono text-[10px] tracking-[0.14em]">
+              <span className="text-text-3 font-mono text-[11px] tracking-[0.14em]">
                 {modeSub}
               </span>
             </div>
@@ -98,7 +98,7 @@ export function CardList() {
               {UNIT_LABEL[unit]} × {VIEW_LABEL[view]}
             </h1>
           </div>
-          <div className="text-text-3 text-right font-mono text-[10px] leading-[1.9] tracking-[0.08em] whitespace-nowrap">
+          <div className="text-text-3 text-right font-mono text-[11px] leading-[1.9] tracking-[0.08em] whitespace-nowrap">
             <div>CARDS — {cards.length}</div>
             <div>SWATCHES — {paletteCount}</div>
           </div>

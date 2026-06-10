@@ -39,7 +39,7 @@ export function CardCvd({ number }: CardProps) {
               <div key={type} className="flex items-center gap-[13px]">
                 <div className="w-[120px] flex-none">
                   <div className="text-[12.5px] font-semibold">{name}</div>
-                  <div className="text-text-3 font-mono text-[9px]">{sub}</div>
+                  <div className="text-text-3 font-mono text-[11px]">{sub}</div>
                 </div>
                 <div
                   className="border-border-strong flex h-[38px] flex-1 items-center rounded-[2px] border px-[13px] text-[13px] font-bold"

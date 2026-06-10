@@ -18,9 +18,9 @@ export function HelpButton({ helpKey }: { helpKey: string }) {
     <DialogTrigger>
       <Button
         aria-label={`${help.title} の説明`}
-        className="border-border-strong text-text-2 hover:bg-surface-2 flex size-[17px] items-center justify-center rounded-full border bg-transparent p-0"
+        className="border-border-strong text-text-2 hover:bg-surface-2 relative flex size-[18px] items-center justify-center rounded-full border bg-transparent p-0 before:absolute before:-inset-1 before:content-['']"
       >
-        <QuestionMark width={10} height={10} strokeWidth={2.2} aria-hidden />
+        <QuestionMark width={12} height={12} strokeWidth={2.2} aria-hidden />
       </Button>
       <Popover className="border-border-strong bg-surface w-[400px] max-w-[90vw] rounded-[3px] border shadow-[0_24px_64px_rgba(0,0,0,0.32)]">
         <Dialog className="outline-none">
@@ -39,7 +39,7 @@ export function HelpButton({ helpKey }: { helpKey: string }) {
           <div className="p-[18px]">
             <p className="mb-4 text-[13.5px] leading-[1.65]">{help.body}</p>
             <div className="bg-surface-2 border-accent rounded-[2px] border-l-[3px] px-3.5 py-3">
-              <p className="text-text-3 mb-[5px] font-mono text-[9px] tracking-[0.14em] uppercase">
+              <p className="text-text-3 mb-[5px] font-mono text-[11px] tracking-[0.14em] uppercase">
                 目安 / Guide
               </p>
               <p className="font-mono text-[12.5px]">{help.guide}</p>

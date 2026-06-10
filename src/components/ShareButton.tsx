@@ -21,9 +21,9 @@ export function ShareButton() {
       type="button"
       onClick={share}
       aria-label="共有リンクをコピー"
-      className="border-border-strong hover:bg-surface-2 inline-flex items-center gap-[7px] rounded-[2px] border bg-transparent px-[13px] py-2 font-mono text-[11px] tracking-[0.06em] whitespace-nowrap"
+      className="border-border-strong hover:bg-surface-2 inline-flex items-center gap-[7px] rounded-[2px] border bg-transparent px-[13px] py-2 font-mono text-[12px] tracking-[0.06em] whitespace-nowrap"
     >
-      <ArrowUpRight width={13} height={13} strokeWidth={2} aria-hidden />
+      <ArrowUpRight width={14} height={14} strokeWidth={2} aria-hidden />
       SHARE
     </button>
   );

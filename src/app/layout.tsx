@@ -57,10 +57,10 @@ export default function RootLayout({
               </span>
             </div>
             <div className="flex flex-col justify-center gap-px px-[18px]">
-              <span className="font-mono text-[10px] tracking-[0.18em] uppercase">
+              <span className="font-mono text-[11px] tracking-[0.18em] uppercase">
                 Color Follows Function
               </span>
-              <span className="text-text-3 font-mono text-[9px] tracking-[0.14em] uppercase">
+              <span className="text-text-3 font-mono text-[11px] tracking-[0.14em] uppercase">
                 色彩定量解析
               </span>
             </div>

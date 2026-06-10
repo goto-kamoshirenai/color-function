@@ -41,7 +41,7 @@ export function CardTone({ number }: CardProps) {
                 className="border-border-strong flex-1 overflow-hidden rounded-[2px] border bg-transparent p-0 transition-transform hover:-translate-y-0.5"
               >
                 <div className="h-16" style={{ backgroundColor: hex }} />
-                <div className="bg-surface text-text-2 px-1 py-1.5 text-center font-mono text-[9.5px]">
+                <div className="bg-surface text-text-2 px-1 py-1.5 text-center font-mono text-[11px]">
                   {hex}
                 </div>
               </button>
