@@ -2,6 +2,14 @@
 export type HelpEntry = { title: string; body: string; guide: string };
 
 export const HELP: Record<string, HelpEntry> = {
+  usage: {
+    title: "パレットバーの使い方",
+    body:
+      "スウォッチをクリックで選択します（ペアでは前景 FG に。背景 BG をクリックすると FG/BG が入れ替わります）。" +
+      "色の下の HEX ラベルかダブルクリックで編集、右上の × で削除、右下の ◎ でその色を画面の差し色（アクセント）に指定できます。" +
+      "下段の「単位」はどの粒度で見るか（単色 / ペア / パレット）、「観点」は目的（検証 = 診断 / 設計 = 配色づくり）を切り替え、組み合わせで表示カードが決まります。",
+    guide: "FG=前景 / BG=背景 / ◎=アクセント指定",
+  },
   value: {
     title: "色値",
     body: "同じ色を RGB・HEX・HSL・HSV など複数の数値表現で表したものです。用途に応じて使い分けます。",

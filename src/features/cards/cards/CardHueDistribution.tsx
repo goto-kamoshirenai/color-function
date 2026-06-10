@@ -19,10 +19,14 @@ export function CardHueDistribution({ number }: CardProps) {
   return (
     <CardFrame number={number} title="色相分布" helpKey="huedist">
       {palette.length === 0 ? (
-        <p className="text-text-3 font-mono text-xs">色がありません</p>
+        <p className="text-text-3 font-mono text-xs">
+          色がありません — 下の ＋ から追加してください
+        </p>
       ) : (
         <>
           <div
+            role="img"
+            aria-label="色相分布。0°から360°の色相帯の上にパレット各色の位置をマーカーで示す"
             className="border-border relative h-[46px] rounded-[2px] border"
             style={{ background: HUE_BAR }}
           >

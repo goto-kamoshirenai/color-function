@@ -17,7 +17,9 @@ export function CardLuminance({ number }: CardProps) {
   return (
     <CardFrame number={number} title="相対輝度" helpKey="luminance">
       {!color ? (
-        <p className="text-text-3 font-mono text-xs">色がありません</p>
+        <p className="text-text-3 font-mono text-xs">
+          色がありません — 下の ＋ から追加してください
+        </p>
       ) : (
         <div className="flex h-full flex-col">
           <div className="font-mono text-[42px] leading-none font-medium tracking-[-0.03em]">

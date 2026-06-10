@@ -37,9 +37,10 @@ export function Swatch({
         <button
           type="button"
           onClick={onSelect}
+          onDoubleClick={onEdit}
           aria-label={`色 ${index + 1} ${color.hex}${badge ? ` (${badge})` : ""} を選択`}
           aria-pressed={highlighted}
-          title="選択 / 役割割当"
+          title="クリックで選択 / ダブルクリックで編集"
           className="border-border-strong block size-[50px] rounded-[3px] border p-0"
           style={{
             backgroundColor: color.hex,
@@ -60,7 +61,7 @@ export function Swatch({
           onClick={onRemove}
           aria-label={`色 ${index + 1} を削除`}
           title="削除"
-          className="border-border-strong bg-surface text-text-2 hover:bg-surface-3 hover:text-text absolute -top-[7px] -right-[7px] flex size-[17px] items-center justify-center rounded-full border p-0 text-[11px] leading-none"
+          className="border-border-strong bg-surface text-text-2 hover:bg-surface-3 hover:text-text absolute -top-[7px] -right-[7px] flex size-[17px] items-center justify-center rounded-full border p-0 text-[11px] leading-none before:absolute before:-inset-1.5 before:content-['']"
         >
           ×
         </button>
@@ -69,9 +70,9 @@ export function Swatch({
           onClick={onSetAccent}
           aria-label={`色 ${index + 1} をアクセントに設定`}
           aria-pressed={isAccent}
-          title="アクセントに設定"
+          title="アクセントに設定（画面の差し色に反映）"
           className={
-            "absolute -right-[7px] -bottom-[7px] flex size-[17px] items-center justify-center rounded-full border p-0 text-[9px] leading-none " +
+            "absolute -right-[7px] -bottom-[7px] flex size-[17px] items-center justify-center rounded-full border p-0 text-[9px] leading-none before:absolute before:-inset-1.5 before:content-[''] " +
             (isAccent
               ? "border-accent text-accent bg-surface"
               : "border-border-strong bg-surface text-text-3 hover:text-text")
@@ -90,8 +91,8 @@ export function Swatch({
         type="button"
         onClick={onEdit}
         aria-label={`色 ${index + 1} を編集`}
-        title="編集"
-        className="text-text-2 hover:text-text bg-transparent p-0 font-mono text-[10px] tracking-[0.02em]"
+        title="クリックで編集"
+        className="text-text-2 hover:text-text decoration-border-strong bg-transparent p-0 font-mono text-[10px] tracking-[0.02em] underline-offset-2 hover:underline"
       >
         {color.hex}
       </button>

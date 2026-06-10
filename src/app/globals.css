@@ -40,9 +40,11 @@
  */
 [data-theme="light"] {
   --accent: #2a63cc; /* vs #EDEDEE = 4.78:1 */
+  color-scheme: light;
 }
 [data-theme="dark"] {
   --accent: #4d82e8; /* vs #0C0C0D = 5.28:1 */
+  color-scheme: dark;
 }
 
 /* トークンを Tailwind ユーティリティに公開（bg-surface, text-text-2 等） */
@@ -90,6 +92,29 @@ a:focus-visible,
 [tabindex]:focus-visible {
   outline: 2px solid var(--accent);
   outline-offset: 2px;
+}
+
+/* タップ時のダブルタップズーム抑止（操作の即応性） */
+button,
+[role="button"],
+input[type="range"] {
+  touch-action: manipulation;
+}
+
+/* スクロール領域の慣性が外側に波及しないように */
+.cff-scroll {
+  overscroll-behavior: contain;
+}
+
+/* モーション低減設定の尊重 */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
 }
 
 /* 中立なスクロールバー（docs/10 §1） */

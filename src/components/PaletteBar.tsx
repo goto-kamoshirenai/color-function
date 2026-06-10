@@ -3,6 +3,7 @@
 import { useColorStore } from "@/store/useColorStore";
 import { ModeToggle } from "./ModeToggle";
 import { Swatch } from "./Swatch";
+import { HelpButton } from "./HelpButton";
 
 /**
  * 常設の配色パレットバー（v2: 上段スウォッチ列／下段モード切替＋CLEAR ALL）。
@@ -22,6 +23,16 @@ export function PaletteBar() {
   const apply = useColorStore((s) => s.apply);
   const setAccent = useColorStore((s) => s.setAccent);
   const askClear = useColorStore((s) => s.askClear);
+  const showToast = useColorStore((s) => s.showToast);
+
+  const removeWithToast = (id: string, hex: string) => {
+    apply({ kind: "remove", id });
+    showToast("削除: " + hex);
+  };
+  const setAccentWithToast = (id: string, hex: string) => {
+    setAccent(id);
+    showToast("アクセントに設定: " + hex);
+  };
 
   return (
     <footer className="border-border-strong bg-surface z-5 flex-none border-t">
@@ -52,8 +63,8 @@ export function PaletteBar() {
                 isAccent={color.id === accentId}
                 onSelect={() => selectSwatch(color.id)}
                 onEdit={() => openEdit(color.id)}
-                onRemove={() => apply({ kind: "remove", id: color.id })}
-                onSetAccent={() => setAccent(color.id)}
+                onRemove={() => removeWithToast(color.id, color.hex)}
+                onSetAccent={() => setAccentWithToast(color.id, color.hex)}
               />
             );
           })
@@ -73,6 +84,7 @@ export function PaletteBar() {
       <div className="border-border flex flex-wrap items-center justify-between gap-[18px] border-t px-[22px] pt-[9px] pb-3">
         <ModeToggle />
         <div className="flex items-center gap-2.5">
+          <HelpButton helpKey="usage" />
           <span className="text-text-3 font-mono text-[10px]">
             {palette.length} 色
           </span>

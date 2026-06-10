@@ -36,7 +36,9 @@ export function CardHarmony({ number }: CardProps) {
       helpKey="harmony"
     >
       {!color ? (
-        <p className="text-text-3 font-mono text-xs">色がありません</p>
+        <p className="text-text-3 font-mono text-xs">
+          色がありません — 下の ＋ から追加してください
+        </p>
       ) : rules.length === 0 ? (
         <p className="text-text-3 font-mono text-xs">調和ルールを読み込み中…</p>
       ) : (

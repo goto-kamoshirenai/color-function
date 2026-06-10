@@ -17,10 +17,13 @@ export function CardDeltaMatrix({ number }: CardProps) {
     <CardFrame number={number} title="色差 ΔE マトリクス" helpKey="dmatrix">
       {palette.length < 2 ? (
         <div className="text-text-3 p-10 text-center font-mono text-xs">
-          マトリクスには2色以上が必要です
+          マトリクスには2色以上が必要です — 下の ＋ から色を追加
         </div>
       ) : (
         <div className="cff-scroll overflow-x-auto">
+          <p className="sr-only">
+            パレット全色の総当たり色差(CIEDE2000)の表。値が10未満のペアは紛らわしい近さとして太字で強調されます。
+          </p>
           <div
             className="bg-border border-border inline-grid gap-px border"
             style={{

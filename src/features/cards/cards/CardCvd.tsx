@@ -25,7 +25,7 @@ export function CardCvd({ number }: CardProps) {
     <CardFrame number={number} title="色覚シミュレーション" helpKey="cvd">
       {!pair ? (
         <p className="text-text-3 font-mono text-xs">
-          ペアには2色以上が必要です
+          ペアには2色以上が必要です — 下の ＋ から色を追加
         </p>
       ) : (
         <div className="flex flex-col gap-[9px]">

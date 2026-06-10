@@ -24,10 +24,13 @@ export function CardContrastMatrix({ number }: CardProps) {
     >
       {palette.length < 2 ? (
         <div className="text-text-3 p-10 text-center font-mono text-xs">
-          マトリクスには2色以上が必要です
+          マトリクスには2色以上が必要です — 下の ＋ から色を追加
         </div>
       ) : (
         <div className="cff-scroll overflow-x-auto">
+          <p className="sr-only">
+            パレット全色の総当たりコントラスト比の表。行と列の交点が2色の比で、4.5以上はAA合格として太字で強調されます。
+          </p>
           <div
             className="bg-border border-border inline-grid min-w-full gap-px border"
             style={{

@@ -50,10 +50,6 @@ export default function RootLayout({
         <header className="border-border-strong bg-surface z-5 flex h-14 flex-none items-center justify-between border-b pr-[18px]">
           <div className="flex h-full items-stretch">
             <div className="border-border flex items-center gap-[11px] border-r px-5">
-              <span
-                className="inline-block size-[13px] rotate-45 border-2 border-(--text)"
-                aria-hidden
-              />
               <span className="text-[19px] font-black tracking-[-0.04em]">
                 CFF
               </span>

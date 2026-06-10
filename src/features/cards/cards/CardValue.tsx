@@ -47,7 +47,9 @@ export function CardValue({ number }: CardProps) {
       helpKey="value"
     >
       {!color ? (
-        <p className="text-text-3 font-mono text-xs">色がありません</p>
+        <p className="text-text-3 font-mono text-xs">
+          色がありません — 下の ＋ から追加してください
+        </p>
       ) : (
         <>
           <div className="flex items-stretch gap-5">

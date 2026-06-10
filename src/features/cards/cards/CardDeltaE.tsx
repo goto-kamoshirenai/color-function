@@ -28,7 +28,7 @@ export function CardDeltaE({ number }: CardProps) {
     <CardFrame number={number} title="色差 ΔE" helpKey="deltae">
       {!pair ? (
         <p className="text-text-3 font-mono text-xs">
-          ペアには2色以上が必要です
+          ペアには2色以上が必要です — 下の ＋ から色を追加
         </p>
       ) : (
         <div className="flex h-full flex-col">

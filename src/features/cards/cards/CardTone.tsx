@@ -25,7 +25,9 @@ export function CardTone({ number }: CardProps) {
       helpKey="tone"
     >
       {!color ? (
-        <p className="text-text-3 font-mono text-xs">色がありません</p>
+        <p className="text-text-3 font-mono text-xs">
+          色がありません — 下の ＋ から追加してください
+        </p>
       ) : (
         <div className="flex gap-[7px]">
           {generateTones(parseHex(color.hex) ?? { r: 0, g: 0, b: 0 })

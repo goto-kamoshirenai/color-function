@@ -222,10 +222,15 @@ export const useColorStore = create<ColorStore>((set, get) => ({
     }),
 
   commitPicker: () => {
-    const { picker, apply, closePicker } = get();
+    const { picker, apply, closePicker, showToast } = get();
     const hex = draftHex(picker.h, picker.s, picker.v);
-    if (picker.isNew) apply({ kind: "add", hex });
-    else if (picker.targetId) apply({ kind: "set", id: picker.targetId, hex });
+    if (picker.isNew) {
+      apply({ kind: "add", hex });
+      showToast("追加: " + hex.toUpperCase());
+    } else if (picker.targetId) {
+      apply({ kind: "set", id: picker.targetId, hex });
+      showToast("更新: " + hex.toUpperCase());
+    }
     closePicker();
   },
 
@@ -234,6 +239,7 @@ export const useColorStore = create<ColorStore>((set, get) => ({
   clearAll: () => {
     get().apply({ kind: "replaceAll", hexes: [] });
     set({ confirmOpen: false });
+    get().showToast("すべての色を消去しました");
   },
 
   showToast: (msg) => {

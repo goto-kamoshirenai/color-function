@@ -21,6 +21,8 @@ export function CardHueWheel({ number }: CardProps) {
       helpKey="wheel"
     >
       <div
+        role="img"
+        aria-label="色相環。角度が色相、中心からの距離が彩度を表し、パレット各色の位置をマーカーで示す"
         className="border-border relative mx-auto mt-0.5 mb-2 size-[208px] rounded-full border"
         style={{ background: WHEEL }}
       >

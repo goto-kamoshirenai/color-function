@@ -28,6 +28,7 @@ function Segmented<T extends string>({
       <ToggleButtonGroup
         selectionMode="single"
         disallowEmptySelection
+        aria-label={label}
         selectedKeys={[value]}
         onSelectionChange={(keys) => {
           const next = [...keys][0] as T | undefined;

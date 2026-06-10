@@ -2,7 +2,7 @@
 
 import { ModalOverlay, Modal, Dialog, Heading } from "react-aria-components";
 import { useColorStore } from "@/store/useColorStore";
-import { hsvToRgb, toHex } from "@/core/color";
+import { hsvToRgb, toHex, parseHex } from "@/core/color";
 
 function Slider({
   label,
@@ -49,6 +49,8 @@ export function ColorPicker() {
   const apply = useColorStore((s) => s.apply);
 
   const preview = toHex(hsvToRgb({ h: picker.h, s: picker.s, v: picker.v }));
+  const hexInvalid =
+    picker.hexInput.trim() !== "" && parseHex(picker.hexInput) === null;
 
   return (
     <ModalOverlay
@@ -86,18 +88,33 @@ export function ColorPicker() {
               style={{ backgroundColor: preview }}
               aria-hidden
             />
-            <div className="mb-4 flex items-center gap-[9px]">
-              <span className="text-text-3 font-mono text-[10px] tracking-[0.12em] uppercase">
-                HEX
-              </span>
-              <input
-                type="text"
-                value={picker.hexInput}
-                onChange={(e) => setPickerHex(e.target.value)}
-                spellCheck={false}
-                aria-label="HEX 値"
-                className="border-border-strong bg-bg flex-1 rounded-[2px] border px-[11px] py-2 font-mono text-[15px] tracking-[0.02em]"
-              />
+            <div className="mb-4">
+              <div className="flex items-center gap-[9px]">
+                <span className="text-text-3 font-mono text-[10px] tracking-[0.12em] uppercase">
+                  HEX
+                </span>
+                <input
+                  type="text"
+                  value={picker.hexInput}
+                  onChange={(e) => setPickerHex(e.target.value)}
+                  spellCheck={false}
+                  autoComplete="off"
+                  maxLength={7}
+                  aria-label="HEX 値"
+                  aria-invalid={hexInvalid}
+                  aria-describedby={hexInvalid ? "hex-error" : undefined}
+                  className="border-border-strong bg-bg flex-1 rounded-[2px] border px-[11px] py-2 font-mono text-[15px] tracking-[0.02em] aria-invalid:border-(--text)"
+                />
+              </div>
+              {hexInvalid ? (
+                <p
+                  id="hex-error"
+                  role="status"
+                  className="text-text-2 mt-1.5 pl-[37px] font-mono text-[10px]"
+                >
+                  #RRGGBB 形式（6桁の16進数）で入力してください
+                </p>
+              ) : null}
             </div>
 
             <div className="mb-5 flex flex-col gap-3.5">
