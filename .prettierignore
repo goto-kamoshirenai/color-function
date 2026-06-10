@@ -1,0 +1,9 @@
+node_modules
+.next
+out
+coverage
+playwright-report
+test-results
+package-lock.json
+# デザインモック（巨大な自己展開バンドル。整形対象外）
+Color Follows Function*.html
