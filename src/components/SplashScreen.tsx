@@ -306,26 +306,6 @@ export function SplashScreen() {
                     BASE LINE
                   </span>
                 </motion.div>
-                <motion.div
-                  className="absolute top-[60px] bottom-[84px] left-[160px] origin-top border-l border-dashed border-(--grid)"
-                  initial={{ scaleY: 0 }}
-                  animate={{ scaleY: 1 }}
-                  transition={{
-                    delay: T.guides + 0.2,
-                    duration: 0.5,
-                    ease: EASE,
-                  }}
-                />
-                <motion.div
-                  className="absolute top-[60px] bottom-[84px] left-[478px] origin-top border-l border-dashed border-(--grid)"
-                  initial={{ scaleY: 0 }}
-                  animate={{ scaleY: 1 }}
-                  transition={{
-                    delay: T.guides + 0.3,
-                    duration: 0.5,
-                    ease: EASE,
-                  }}
-                />
 
                 {/* ── P3: 作図補助（中心十字・C ボウル円・目盛） ── */}
                 <motion.div {...fade(T.construction, 0.55)}>
