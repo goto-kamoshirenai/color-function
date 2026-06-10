@@ -1,0 +1,34 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npm view:*)",
+      "Bash(npm install:*)",
+      "Bash(npx next:*)",
+      "Bash(npm run build:*)",
+      "Bash(pnpm --version:*)",
+      "Bash(pnpm install:*)",
+      "Bash(pnpm build:*)",
+      "Bash(pnpm add:*)",
+      "Bash(pnpm knip:*)",
+      "Bash(pnpm ls:*)",
+      "Bash(node --version:*)",
+      "Bash(nvm:*)",
+      "WebFetch(domain:github.com)",
+      "Bash(where node *)",
+      "Bash(git mv:*)",
+      "Bash(git add:*)",
+      "Bash(git commit:*)",
+      "Bash(.*\\\\$\\\\{)",
+      "Bash(grep -E \"\\\\?|`.*\\\\$\\\\{)",
+      "Bash(\\\\+)",
+      "Bash(join\" | head -50)",
+      "Bash(grep -rn \"className\" /c/Github/color-function/src --include=\"*.tsx\" --include=\"*.ts\")",
+      "Read(//tmp/**)",
+      "Bash(grep -rn 'className={`' /c/Github/color-function/src --include=\"*.tsx\" --include=\"*.ts\")",
+      "Bash(grep '\\\\$')",
+      "Bash(grep -B2 -A2 'className=.*\\\\$' /c/Github/color-function/src/components/feature/card/ValueMeter.tsx)",
+      "Bash(find *)",
+      "Bash(grep *)"
+    ]
+  }
+}
