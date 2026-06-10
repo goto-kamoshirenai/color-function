@@ -40,6 +40,7 @@ Vitest + Testing Library + happy-dom(単体·コンポーネント) / Playwright
 Turbopack / Vercel。詳細は [docs/08](./docs/08_tech_stack.md)。
 
 ### コマンド（S0 scaffold 後に有効）
+
 ```bash
 npm run dev          # 開発サーバ
 npm run test:watch   # Vitest ウォッチ（TDDの主戦場）
@@ -48,6 +49,7 @@ npm run e2e          # Playwright（フロー/a11y）
 npm run lint         # ESLint + Prettier
 npm run typecheck    # tsc --noEmit
 ```
+
 コミット前: `npm run lint && npm run typecheck && npm run test`（Husky/lint-staged でも担保）。
 
 ---
@@ -72,4 +74,4 @@ docs/             # 設計ドキュメント（正）
 
 - フェーズ: **設計完了 → 実装着手前**。次は **S0（基盤scaffold）**（[docs/11 §6](./docs/11_implementation_plan.md)）。
 - ブランチ: `feature/planning`。
-- モック: `Color Follows Function v2.html`（現行・自己展開バンドル、ブラウザで閲覧可）。`Color Follows Function.html` は旧版(v1)。
+- モック: `Color Follows Function v2.html`（現行・自己展開バンドル、ブラウザで閲覧可）。v1 は削除済み。
