@@ -9,7 +9,7 @@ test("初回訪問でスプラッシュが表示され、SKIP でアプリに入
 
   const splash = page.getByRole("dialog", { name: /起動アニメーション/ });
   await expect(splash).toBeVisible();
-  await expect(page.getByText("DWG. CFF-LOGO-02")).toBeVisible();
+  await expect(splash.getByText("MARK “#FFF”")).toBeVisible();
 
   await page
     .getByRole("button", { name: "起動アニメーションをスキップ" })
