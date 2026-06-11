@@ -2,12 +2,13 @@
 
 import type { ReactNode } from "react";
 import { HelpButton } from "./HelpButton";
+import { ReferencesButton } from "./ReferencesButton";
 import { useLocale } from "@/lib/i18n/locale";
 
 /**
- * v2 カード枠: 連番(accent) + 太字タイトル + EN小ラベル + ?ヘルプ。
+ * v2 カード枠: 連番(accent) + 太字タイトル + EN小ラベル + 参考資料 + ?ヘルプ。
  * hero はコーナーブラケット付き（WCAG ヒーローカード）。
- * rightSlot 指定時はヘルプをタイトル行内に移す（v2 のレイアウト規則）。
+ * rightSlot 指定時はボタン群をタイトル行内に移す（v2 のレイアウト規則）。
  * EN小ラベルは英語 UI ではタイトルと重複するため表示しない。
  */
 export function CardFrame({
@@ -28,7 +29,13 @@ export function CardFrame({
   children: ReactNode;
 }) {
   const locale = useLocale();
-  const help = <HelpButton helpKey={helpKey} />;
+  // 参考資料（本）＋ヘルプ（?）。資料がない指標では本ボタンは描画されない
+  const help = (
+    <div className="flex items-center gap-1.5">
+      <ReferencesButton helpKey={helpKey} />
+      <HelpButton helpKey={helpKey} />
+    </div>
+  );
   const showEnLabel = locale === "ja" && !!enLabel;
   return (
     <section

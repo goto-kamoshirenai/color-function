@@ -79,6 +79,11 @@ const JA = {
   "help.aria": "{title} の説明",
   "help.guide": "目安 / Guide",
 
+  // 参考資料
+  "refs.aria": "{title} の参考資料",
+  "refs.title": "参考資料",
+  "refs.note": "リンクは外部サイトを新しいタブで開きます",
+
   // カード共通の案内
   "card.empty": "色がありません — 下の ＋ から追加してください",
   "card.needPair": "ペアには2色以上が必要です — 下の ＋ から色を追加",
@@ -242,6 +247,10 @@ const EN: Record<MessageKey, string> = {
 
   "help.aria": "About {title}",
   "help.guide": "Guide",
+
+  "refs.aria": "References for {title}",
+  "refs.title": "References",
+  "refs.note": "Links open external sites in a new tab",
 
   "card.empty": "No colors — use ＋ below to add one",
   "card.needPair": "A pair needs at least 2 colors — add more with ＋ below",
