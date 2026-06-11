@@ -12,3 +12,8 @@ export * from "./harmony";
 export * from "./stats";
 export * from "./name";
 export * from "./accent";
+export * from "./perception";
+export * from "./apca";
+export * from "./blend";
+export * from "./analyze";
+export * from "./suggest";

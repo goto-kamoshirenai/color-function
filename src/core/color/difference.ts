@@ -85,3 +85,46 @@ export function deltaE2000(c1: LAB, c2: LAB): number {
 export function deltaE76(c1: LAB, c2: LAB): number {
   return Math.hypot(c1.L - c2.L, c1.a - c2.a, c1.b - c2.b);
 }
+
+/** ΔE94（graphic arts 定数 kL=1, K1=0.045, K2=0.015）。参考・教育用。 */
+export function deltaE94(c1: LAB, c2: LAB): number {
+  const dL = c1.L - c2.L;
+  const C1 = Math.hypot(c1.a, c1.b);
+  const C2 = Math.hypot(c2.a, c2.b);
+  const dC = C1 - C2;
+  const da = c1.a - c2.a;
+  const db = c1.b - c2.b;
+  const dH2 = Math.max(0, da * da + db * db - dC * dC);
+  const sC = 1 + 0.045 * C1;
+  const sH = 1 + 0.015 * C1;
+  return Math.sqrt(dL * dL + (dC / sC) ** 2 + dH2 / (sH * sH));
+}
+
+/** OKLab ユークリッド距離（×100 スケールで ΔE と桁を揃える）。 */
+export function okLabDistance(
+  a: { l: number; a: number; b: number },
+  b: { l: number; a: number; b: number },
+): number {
+  return Math.hypot(a.l - b.l, a.a - b.a, a.b - b.b) * 100;
+}
+
+export type DeltaComponents = {
+  /** 明度差 ΔL*（CIELAB） */
+  dL: number;
+  /** 彩度差 ΔC*（CIELAB クロマ） */
+  dC: number;
+  /** 色相角差 Δh（度・-180〜180） */
+  dHdeg: number;
+};
+
+/** 成分ごとの差分内訳（CIELAB / LCH ベース）。 */
+export function deltaComponents(c1: LAB, c2: LAB): DeltaComponents {
+  const C1 = Math.hypot(c1.a, c1.b);
+  const C2 = Math.hypot(c2.a, c2.b);
+  const h1 = (Math.atan2(c1.b, c1.a) * 180) / Math.PI;
+  const h2 = (Math.atan2(c2.b, c2.a) * 180) / Math.PI;
+  let dH = h2 - h1;
+  if (dH > 180) dH -= 360;
+  if (dH < -180) dH += 360;
+  return { dL: c2.L - c1.L, dC: C2 - C1, dHdeg: C1 < 1 || C2 < 1 ? 0 : dH };
+}

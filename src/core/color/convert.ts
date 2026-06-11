@@ -1,5 +1,16 @@
 import { converter, clampChroma } from "culori";
-import type { HSL, HSV, LAB, OKLCH, RGB } from "./types";
+import type {
+  CMYK,
+  HSL,
+  HSV,
+  HWB,
+  LAB,
+  LCH,
+  OKLAB,
+  OKLCH,
+  RGB,
+  XYZ,
+} from "./types";
 
 const clamp = (v: number, a: number, b: number) => Math.max(a, Math.min(b, v));
 
@@ -152,16 +163,30 @@ export function oklchToRgb({ l, c, h }: OKLCH): RGB {
   };
 }
 
-// ---------- CIELAB（D65, docs/07 §7.1–7.2） ----------
+// ---------- CIE XYZ（D65・sRGB 行列） ----------
 
-export function rgbToLab({ r, g, b }: RGB): LAB {
+export function rgbToXyz({ r, g, b }: RGB): XYZ {
   const R = srgbToLinear(r / 255);
   const G = srgbToLinear(g / 255);
   const B = srgbToLinear(b / 255);
+  return {
+    x: R * 0.4124564 + G * 0.3575761 + B * 0.1804375,
+    y: R * 0.2126729 + G * 0.7151522 + B * 0.072175,
+    z: R * 0.0193339 + G * 0.119192 + B * 0.9503041,
+  };
+}
 
-  const x = R * 0.4124564 + G * 0.3575761 + B * 0.1804375;
-  const y = R * 0.2126729 + G * 0.7151522 + B * 0.072175;
-  const z = R * 0.0193339 + G * 0.119192 + B * 0.9503041;
+/** CIE 1931 xy 色度座標。黒（X=Y=Z=0）は D65 白色点を返す。 */
+export function xyzToXy({ x, y, z }: XYZ): { x: number; y: number } {
+  const sum = x + y + z;
+  if (sum === 0) return { x: 0.3127, y: 0.329 };
+  return { x: x / sum, y: y / sum };
+}
+
+// ---------- CIELAB（D65, docs/07 §7.1–7.2） ----------
+
+export function rgbToLab(rgb: RGB): LAB {
+  const { x, y, z } = rgbToXyz(rgb);
 
   const xn = 0.95047;
   const yn = 1.0;
@@ -173,4 +198,45 @@ export function rgbToLab({ r, g, b }: RGB): LAB {
   const fz = f(z / zn);
 
   return { L: 116 * fy - 16, a: 500 * (fx - fy), b: 200 * (fy - fz) };
+}
+
+/** CIELCH（LAB の極座標）。実質無彩色（C<0.05）のとき色相は 0。 */
+export function labToLch({ L, a, b }: LAB): LCH {
+  const c = Math.hypot(a, b);
+  let h = (Math.atan2(b, a) * 180) / Math.PI;
+  if (h < 0) h += 360;
+  return { L, c, h: c < 0.05 ? 0 : h };
+}
+
+// ---------- OKLab（culori 経由） ----------
+
+const toOklab = converter("oklab");
+
+export function rgbToOklab({ r, g, b }: RGB): OKLAB {
+  const o = toOklab({ mode: "rgb", r: r / 255, g: g / 255, b: b / 255 });
+  return { l: o.l, a: o.a, b: o.b };
+}
+
+// ---------- HWB / CMYK（CSS Color 4 / ナイーブ近似） ----------
+
+export function rgbToHwb(rgb: RGB): HWB {
+  const { h } = rgbToHsv(rgb);
+  const w = Math.min(rgb.r, rgb.g, rgb.b) / 255;
+  const b = 1 - Math.max(rgb.r, rgb.g, rgb.b) / 255;
+  return { h, w: w * 100, b: b * 100 };
+}
+
+/** ナイーブ CMYK 近似（ICC プロファイル無し・印刷の参考値）。 */
+export function rgbToCmyk({ r, g, b }: RGB): CMYK {
+  const R = r / 255;
+  const G = g / 255;
+  const B = b / 255;
+  const k = 1 - Math.max(R, G, B);
+  if (k >= 1) return { c: 0, m: 0, y: 0, k: 100 };
+  return {
+    c: ((1 - R - k) / (1 - k)) * 100,
+    m: ((1 - G - k) / (1 - k)) * 100,
+    y: ((1 - B - k) / (1 - k)) * 100,
+    k: k * 100,
+  };
 }
