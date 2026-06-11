@@ -40,7 +40,9 @@ export function CardHueWheel({ number }: CardProps) {
         {palette.map((c) => {
           const v = rgbToHsv(parseHex(c.hex) ?? { r: 0, g: 0, b: 0 });
           const ang = ((v.h - 90) * Math.PI) / 180;
-          const rad = (v.s / 100) * 42;
+          // 半径は HSV 円錐モデルの彩度（S×V）。S 単独だと暗い色の鮮やかさを
+          // 過大評価し、黒に近い色が外周寄りに打点されてしまう
+          const rad = (v.s / 100) * (v.v / 100) * 42;
           const sel = c.id === selectedId;
           return (
             <div
@@ -61,7 +63,7 @@ export function CardHueWheel({ number }: CardProps) {
         })}
       </div>
       <p className="text-text-3 text-meta text-center font-mono tracking-[0.04em]">
-        ANGLE = HUE / RADIUS = SATURATION
+        ANGLE = HUE / RADIUS = CHROMA
       </p>
     </CardFrame>
   );

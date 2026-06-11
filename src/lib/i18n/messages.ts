@@ -105,7 +105,7 @@ const JA = {
   // カード: 色相環
   "card.wheel.title": "色相環",
   "card.wheel.aria":
-    "色相環。角度が色相、中心からの距離が彩度を表し、パレット各色の位置をマーカーで示す",
+    "色相環。角度が色相、中心からの距離が鮮やかさ（彩度×明度）を表し、パレット各色の位置をマーカーで示す",
 
   // カード: 最寄り色名
   "card.name.title": "最寄り色名",
@@ -267,7 +267,7 @@ const EN: Record<MessageKey, string> = {
 
   "card.wheel.title": "Hue Wheel",
   "card.wheel.aria":
-    "Hue wheel. Angle is hue, distance from center is saturation; markers show each palette color.",
+    "Hue wheel. Angle is hue, distance from center is chroma (saturation × value); markers show each palette color.",
 
   "card.name.title": "Nearest Color Name",
   "card.name.loading": "Loading dictionary…",

@@ -29,8 +29,8 @@ const HELP_JA = {
   },
   wheel: {
     title: "色相環",
-    body: "色相を円環状に配置した図。中心からの距離が彩度を表し、パレット各色の色相関係を一目で把握できます。",
-    guide: "角度=色相 / 距離=彩度",
+    body: "色相を円環状に配置した図。中心からの距離が鮮やかさ（彩度×明度）を表し、パレット各色の色相関係を一目で把握できます。黒・白・グレーは中心に集まります。",
+    guide: "角度=色相 / 距離=鮮やかさ",
   },
   name: {
     title: "最寄り色名",
@@ -112,8 +112,8 @@ const HELP_EN: Record<HelpKey, HelpEntry> = {
   },
   wheel: {
     title: "Hue Wheel",
-    body: "Hues arranged in a circle. Distance from the center shows saturation, giving an at-a-glance view of hue relationships in the palette.",
-    guide: "angle=hue / radius=saturation",
+    body: "Hues arranged in a circle. Distance from the center shows chroma (saturation × value), giving an at-a-glance view of hue relationships in the palette. Black, white, and grays gather at the center.",
+    guide: "angle=hue / radius=chroma",
   },
   name: {
     title: "Nearest Color Name",
