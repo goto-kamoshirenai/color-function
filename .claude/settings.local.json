@@ -63,7 +63,13 @@
       "Bash(node -e \"const m=require\\('motion'\\);console.log\\('MotionGlobalConfig:',typeof m.MotionGlobalConfig\\)\")",
       "Bash(node scripts/bump-min-sizes.mjs)",
       "Bash(rm scripts/bump-min-sizes.mjs)",
-      "Bash(rmdir scripts *)"
+      "Bash(rmdir scripts *)",
+      "PowerShell(pnpm typecheck *)",
+      "PowerShell(pnpm *)",
+      "PowerShell(npx playwright test --reporter=list)",
+      "PowerShell(npx playwright install chromium)",
+      "PowerShell(git *)",
+      "PowerShell(node C:\\\\dev\\\\GitHub\\\\color-function\\\\e2e\\\\__shot.mjs)"
     ]
   }
 }
