@@ -56,9 +56,11 @@ test("手動切替は localStorage に保持され、再訪時の初期値にな
   await page.addInitScript(skipSplash);
   await page.goto("/");
 
-  // ja → en へ切替
-  await page.getByRole("button", { name: "Switch to English" }).click();
+  // ja → en へ切替（設定メニュー経由）
+  await page.getByRole("button", { name: "設定", exact: true }).click();
+  await page.getByRole("radio", { name: "English" }).click();
   await expect(page.locator("html")).toHaveAttribute("lang", "en");
+  await page.keyboard.press("Escape");
   await expect(
     page.getByRole("heading", { name: "WCAG Contrast Ratio" }),
   ).toBeVisible();
@@ -71,7 +73,9 @@ test("手動切替は localStorage に保持され、再訪時の初期値にな
   ).toBeVisible();
 
   // en → ja へ戻す
-  await page.getByRole("button", { name: "日本語に切り替え" }).click();
+  await page.getByRole("button", { name: "Settings" }).click();
+  await page.getByRole("radio", { name: "日本語" }).click();
+  await page.keyboard.press("Escape");
   await expect(
     page.getByRole("heading", { name: "WCAG コントラスト比" }),
   ).toBeVisible();

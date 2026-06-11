@@ -13,8 +13,14 @@ const JA = {
 
   // ヘッダー
   "app.tagline": "色彩定量解析",
-  "theme.toDark": "ダークモードに切替",
-  "theme.toLight": "ライトモードに切替",
+
+  // 設定メニュー
+  "settings.open": "設定",
+  "settings.title": "設定",
+  "settings.theme": "テーマ",
+  "settings.light": "ライト",
+  "settings.dark": "ダーク",
+  "settings.language": "言語",
 
   // カラーコード表示形式・コピー
   "format.label": "カラーコードの表示形式",
@@ -85,9 +91,9 @@ const JA = {
   "refs.note": "リンクは外部サイトを新しいタブで開きます",
   "refs.viewAll": "すべての資料を見る",
 
-  // 座学・ベンチツール（/learn）
-  "learn.open": "座学・ベンチツールを開く",
-  "learn.title": "座学・ベンチツール",
+  // 学習コンテンツ（/learn）
+  "learn.open": "学習コンテンツを開く",
+  "learn.title": "学習コンテンツ",
   "learn.lead":
     "色を定量的に扱うための背景知識と、検証に使える外部ツールのコレクション。",
   "learn.back": "ツールに戻る",
@@ -204,8 +210,13 @@ const EN: Record<MessageKey, string> = {
   "common.delete": "Delete",
 
   "app.tagline": "Quantitative Color Analysis",
-  "theme.toDark": "Switch to dark mode",
-  "theme.toLight": "Switch to light mode",
+
+  "settings.open": "Settings",
+  "settings.title": "Settings",
+  "settings.theme": "Theme",
+  "settings.light": "Light",
+  "settings.dark": "Dark",
+  "settings.language": "Language",
 
   "format.label": "Color code format",
   "colorcode.copy": "Click to copy",
@@ -267,8 +278,8 @@ const EN: Record<MessageKey, string> = {
   "refs.note": "Links open external sites in a new tab",
   "refs.viewAll": "View all references",
 
-  "learn.open": "Open learning & bench tools",
-  "learn.title": "Learning & Bench Tools",
+  "learn.open": "Open learning content",
+  "learn.title": "Learning Content",
   "learn.lead":
     "Background knowledge for quantitative color work, plus external tools for verification.",
   "learn.back": "Back to the tool",

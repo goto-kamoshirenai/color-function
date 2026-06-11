@@ -21,16 +21,13 @@ import {
   type HSL,
 } from "@/core/color";
 import { useT } from "@/lib/i18n/locale";
+import { segCompactClass } from "./segmented";
 
 /** スライダーの入力形式。ストアの正準は HSV（RGB/HSL は変換して反映）。 */
 const FORMATS = ["hsv", "rgb", "hsl"] as const;
 type Format = (typeof FORMATS)[number];
 
-/** v2 セグメント（ModeToggle と同意匠の小型版）。 */
-const segClass =
-  "border-border-strong border-r border-t-2 border-t-transparent bg-transparent px-2.5 py-1 " +
-  "font-mono text-[12px] font-medium text-text-2 uppercase last:border-r-0 " +
-  "data-[selected]:border-t-accent data-[selected]:bg-(--text) data-[selected]:font-semibold data-[selected]:text-(--bg)";
+const segClass = `${segCompactClass} uppercase`;
 
 function Slider({
   label,

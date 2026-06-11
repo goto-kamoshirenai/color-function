@@ -3,12 +3,11 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Book } from "iconoir-react";
-import { ThemeToggle } from "./ThemeToggle";
-import { LanguageToggle } from "./LanguageToggle";
 import { ColorFormatSelect } from "./ColorFormatSelect";
+import { SettingsMenu } from "./SettingsMenu";
 import { useT } from "@/lib/i18n/locale";
 
-/** ヘッダー（v2: 56px・ロゴブロック・表示形式・座学・言語切替・テーマ切替）。 */
+/** ヘッダー（v2: 56px・ロゴブロック・表示形式・学習コンテンツ・設定）。 */
 export function AppHeader() {
   const t = useT();
   const onLearn = usePathname() === "/learn";
@@ -32,7 +31,7 @@ export function AppHeader() {
       </div>
       <div className="flex items-center gap-2 sm:gap-3.5">
         <ColorFormatSelect />
-        {/* 座学・ベンチツール（/learn）への導線 */}
+        {/* 学習コンテンツ（/learn）への導線 */}
         <Link
           href="/learn"
           aria-label={t("learn.open")}
@@ -47,8 +46,8 @@ export function AppHeader() {
         >
           <Book width={15} height={15} aria-hidden />
         </Link>
-        <LanguageToggle />
-        <ThemeToggle />
+        {/* テーマ・言語は設定メニューに集約 */}
+        <SettingsMenu />
       </div>
     </header>
   );

@@ -85,12 +85,12 @@ test("設計ビュー: ペア単位のままでもスウォッチ選択が基準
   await expect(page.getByText("BASE #009B4C")).toBeVisible();
 });
 
-test("ヘッダーから座学・ベンチツール画面に遷移できる", async ({ page }) => {
+test("ヘッダーから学習コンテンツ画面に遷移できる", async ({ page }) => {
   await page.goto("/");
-  await page.getByRole("link", { name: "座学・ベンチツールを開く" }).click();
+  await page.getByRole("link", { name: "学習コンテンツを開く" }).click();
 
   await expect(
-    page.getByRole("heading", { name: "座学・ベンチツール" }),
+    page.getByRole("heading", { name: "学習コンテンツ" }),
   ).toBeVisible();
   // 指標別・記事・書籍・ツールの4セクション
   for (const name of [
