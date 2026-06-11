@@ -126,9 +126,9 @@
         "lang": "ja"
       },
       {
-        "title": "色覚多様性",
+        "title": "色覚異常（色覚多様性）",
         "source": "Wikipedia",
-        "url": "https://ja.wikipedia.org/wiki/色覚多様性",
+        "url": "https://ja.wikipedia.org/wiki/色覚異常",
         "lang": "ja"
       },
       {
@@ -202,9 +202,15 @@
     ],
     "tone": [
       {
-        "title": "PCCS（日本色研配色体系）",
-        "source": "日本色研事業",
-        "url": "https://www.sikiken.co.jp/pccs/",
+        "title": "日本色研配色体系（PCCS）",
+        "source": "Wikipedia",
+        "url": "https://ja.wikipedia.org/wiki/日本色研配色体系",
+        "lang": "ja"
+      },
+      {
+        "title": "日本色研事業（PCCS の発行元）",
+        "source": "sikiken.co.jp",
+        "url": "https://www.sikiken.co.jp/",
         "lang": "ja"
       },
       {

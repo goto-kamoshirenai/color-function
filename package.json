@@ -16,6 +16,7 @@
     "e2e": "playwright test",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
+    "links:check": "node scripts/check-links.mjs",
     "prepare": "husky"
   },
   "dependencies": {
