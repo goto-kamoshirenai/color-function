@@ -32,10 +32,20 @@ const LAYOUT: Record<string, { className: string; keys: string[] }[]> = {
     { className: "", keys: ["value"] },
     { className: "md:grid-cols-[1.35fr_1fr]", keys: ["hsv", "luminance"] },
     { className: "md:grid-cols-2", keys: ["hue-wheel", "nearest-name"] },
+    { className: "", keys: ["spaces"] },
+    {
+      className: "md:grid-cols-[1fr_1fr]",
+      keys: ["perception", "alpha"],
+    },
+    { className: "md:grid-cols-2", keys: ["gamut"] },
   ],
   "pair|verify": [
     { className: "", keys: ["wcag-contrast"] },
     { className: "md:grid-cols-[1fr_1.3fr]", keys: ["delta-e", "cvd"] },
+    {
+      className: "md:grid-cols-[1fr_1.3fr]",
+      keys: ["apca", "delta-breakdown"],
+    },
   ],
   "palette|verify": [
     { className: "", keys: ["contrast-matrix"] },
@@ -43,11 +53,27 @@ const LAYOUT: Record<string, { className: string; keys: string[] }[]> = {
       className: "md:grid-cols-[1.4fr_1fr]",
       keys: ["delta-matrix", "hue-distribution"],
     },
+    { className: "md:grid-cols-2", keys: ["ls-distribution", "warm-cool"] },
+    { className: "md:grid-cols-2", keys: ["grayscale", "cvd-matrix"] },
+    { className: "md:grid-cols-2", keys: ["redundancy", "roles"] },
+    {
+      className: "md:grid-cols-[1fr_1.3fr]",
+      keys: ["scheme-match", "ui-preview"],
+    },
+    { className: "md:grid-cols-2", keys: ["svg-preview", "chart-preview"] },
   ],
   design: [
     { className: "", keys: ["harmony"] },
+    { className: "", keys: ["partner"] },
     { className: "", keys: ["tone"] },
     { className: "", keys: ["hue-shift"] },
+    { className: "", keys: ["ls-variations"] },
+    { className: "", keys: ["gradient"] },
+    { className: "md:grid-cols-[1.3fr_1fr]", keys: ["nudge", "mix"] },
+    { className: "md:grid-cols-2", keys: ["cvd-safe", "complement"] },
+    { className: "md:grid-cols-2", keys: ["dark-light", "sort-normalize"] },
+    { className: "md:grid-cols-2", keys: ["semantic-roles", "name-search"] },
+    { className: "md:grid-cols-[1fr_1.3fr]", keys: ["templates", "tokens"] },
   ],
 };
 

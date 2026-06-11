@@ -239,6 +239,424 @@
         "url": "https://oklch.com/",
         "lang": "en"
       }
+    ],
+    "spaces": [
+      {
+        "title": "色空間",
+        "source": "Wikipedia",
+        "url": "https://ja.wikipedia.org/wiki/色空間",
+        "lang": "ja"
+      },
+      {
+        "title": "CIELAB color space",
+        "source": "Wikipedia",
+        "url": "https://en.wikipedia.org/wiki/CIELAB_color_space",
+        "lang": "en"
+      },
+      {
+        "title": "Oklab color space",
+        "source": "Wikipedia",
+        "url": "https://en.wikipedia.org/wiki/Oklab_color_space",
+        "lang": "en"
+      }
+    ],
+    "perception": [
+      {
+        "title": "HSP Color Model — Perceived Brightness",
+        "source": "Darel Rex Finley",
+        "url": "https://alienryderflex.com/hsp.html",
+        "lang": "en"
+      },
+      {
+        "title": "色温度",
+        "source": "Wikipedia",
+        "url": "https://ja.wikipedia.org/wiki/色温度",
+        "lang": "ja"
+      }
+    ],
+    "alpha": [
+      {
+        "title": "Alpha compositing",
+        "source": "Wikipedia",
+        "url": "https://en.wikipedia.org/wiki/Alpha_compositing",
+        "lang": "en"
+      },
+      {
+        "title": "opacity — CSS",
+        "source": "MDN Web Docs",
+        "url": "https://developer.mozilla.org/ja/docs/Web/CSS/opacity",
+        "lang": "ja"
+      }
+    ],
+    "gamut": [
+      {
+        "title": "色域",
+        "source": "Wikipedia",
+        "url": "https://ja.wikipedia.org/wiki/色域",
+        "lang": "ja"
+      },
+      {
+        "title": "Gamut",
+        "source": "Wikipedia",
+        "url": "https://en.wikipedia.org/wiki/Gamut",
+        "lang": "en"
+      },
+      {
+        "title": "Web colors",
+        "source": "Wikipedia",
+        "url": "https://en.wikipedia.org/wiki/Web_colors",
+        "lang": "en"
+      }
+    ],
+    "apca": [
+      {
+        "title": "APCA (SAPC-APCA) リポジトリ",
+        "source": "GitHub / Myndex",
+        "url": "https://github.com/Myndex/SAPC-APCA",
+        "lang": "en"
+      },
+      {
+        "title": "WCAG 3 Introduction",
+        "source": "W3C WAI",
+        "url": "https://www.w3.org/WAI/standards-guidelines/wcag/wcag3-intro/",
+        "lang": "en"
+      }
+    ],
+    "dbreak": [
+      {
+        "title": "色差",
+        "source": "Wikipedia",
+        "url": "https://ja.wikipedia.org/wiki/色差",
+        "lang": "ja"
+      },
+      {
+        "title": "Color difference (ΔE)",
+        "source": "Wikipedia",
+        "url": "https://en.wikipedia.org/wiki/Color_difference",
+        "lang": "en"
+      }
+    ],
+    "lsdist": [
+      {
+        "title": "Lightness",
+        "source": "Wikipedia",
+        "url": "https://en.wikipedia.org/wiki/Lightness",
+        "lang": "en"
+      },
+      {
+        "title": "Colorfulness",
+        "source": "Wikipedia",
+        "url": "https://en.wikipedia.org/wiki/Colorfulness",
+        "lang": "en"
+      }
+    ],
+    "warmcool": [
+      {
+        "title": "色温度",
+        "source": "Wikipedia",
+        "url": "https://ja.wikipedia.org/wiki/色温度",
+        "lang": "ja"
+      },
+      {
+        "title": "Color temperature",
+        "source": "Wikipedia",
+        "url": "https://en.wikipedia.org/wiki/Color_temperature",
+        "lang": "en"
+      }
+    ],
+    "grayscale": [
+      {
+        "title": "グレースケール",
+        "source": "Wikipedia",
+        "url": "https://ja.wikipedia.org/wiki/グレースケール",
+        "lang": "ja"
+      },
+      {
+        "title": "Grayscale",
+        "source": "Wikipedia",
+        "url": "https://en.wikipedia.org/wiki/Grayscale",
+        "lang": "en"
+      }
+    ],
+    "cvdmatrix": [
+      {
+        "title": "カラーユニバーサルデザイン機構（CUDO）",
+        "source": "cudo.jp",
+        "url": "https://cudo.jp/",
+        "lang": "ja"
+      },
+      {
+        "title": "Color blindness",
+        "source": "Wikipedia",
+        "url": "https://en.wikipedia.org/wiki/Color_blindness",
+        "lang": "en"
+      }
+    ],
+    "redundancy": [
+      {
+        "title": "色差",
+        "source": "Wikipedia",
+        "url": "https://ja.wikipedia.org/wiki/色差",
+        "lang": "ja"
+      },
+      {
+        "title": "Color difference (ΔE)",
+        "source": "Wikipedia",
+        "url": "https://en.wikipedia.org/wiki/Color_difference",
+        "lang": "en"
+      }
+    ],
+    "roles": [
+      {
+        "title": "The color system",
+        "source": "Material Design (M2)",
+        "url": "https://m2.material.io/design/color/the-color-system.html",
+        "lang": "en"
+      },
+      {
+        "title": "Color and contrast accessibility",
+        "source": "web.dev (Google)",
+        "url": "https://web.dev/articles/color-and-contrast-accessibility",
+        "lang": "en"
+      }
+    ],
+    "scheme": [
+      {
+        "title": "配色",
+        "source": "Wikipedia",
+        "url": "https://ja.wikipedia.org/wiki/配色",
+        "lang": "ja"
+      },
+      {
+        "title": "Color theory",
+        "source": "Wikipedia",
+        "url": "https://en.wikipedia.org/wiki/Color_theory",
+        "lang": "en"
+      }
+    ],
+    "uipreview": [
+      {
+        "title": "The color system",
+        "source": "Material Design (M2)",
+        "url": "https://m2.material.io/design/color/the-color-system.html",
+        "lang": "en"
+      },
+      {
+        "title": "デジタル庁デザインシステム",
+        "source": "design.digital.go.jp",
+        "url": "https://design.digital.go.jp/",
+        "lang": "ja"
+      }
+    ],
+    "svgpreview": [
+      {
+        "title": "配色",
+        "source": "Wikipedia",
+        "url": "https://ja.wikipedia.org/wiki/配色",
+        "lang": "ja"
+      },
+      {
+        "title": "Color scheme",
+        "source": "Wikipedia",
+        "url": "https://en.wikipedia.org/wiki/Color_scheme",
+        "lang": "en"
+      }
+    ],
+    "chartpreview": [
+      {
+        "title": "ColorBrewer 2.0",
+        "source": "colorbrewer2.org",
+        "url": "https://colorbrewer2.org/",
+        "lang": "en"
+      },
+      {
+        "title": "Viz Palette",
+        "source": "Susie Lu",
+        "url": "https://projects.susielu.com/viz-palette",
+        "lang": "en"
+      }
+    ],
+    "partner": [
+      {
+        "title": "補色",
+        "source": "Wikipedia",
+        "url": "https://ja.wikipedia.org/wiki/補色",
+        "lang": "ja"
+      },
+      {
+        "title": "Adobe Color ホイール",
+        "source": "Adobe Color",
+        "url": "https://color.adobe.com/ja/create/color-wheel",
+        "lang": "ja"
+      }
+    ],
+    "lsvar": [
+      {
+        "title": "HSV色空間",
+        "source": "Wikipedia",
+        "url": "https://ja.wikipedia.org/wiki/HSV色空間",
+        "lang": "ja"
+      },
+      {
+        "title": "HSL and HSV",
+        "source": "Wikipedia",
+        "url": "https://en.wikipedia.org/wiki/HSL_and_HSV",
+        "lang": "en"
+      }
+    ],
+    "gradient": [
+      {
+        "title": "OKLCH in CSS: why we moved from RGB and HSL",
+        "source": "Evil Martians",
+        "url": "https://evilmartians.com/chronicles/oklch-in-css-why-quit-rgb-hsl",
+        "lang": "en"
+      },
+      {
+        "title": "Oklab color space",
+        "source": "Wikipedia",
+        "url": "https://en.wikipedia.org/wiki/Oklab_color_space",
+        "lang": "en"
+      }
+    ],
+    "mix": [
+      {
+        "title": "mix-blend-mode — CSS",
+        "source": "MDN Web Docs",
+        "url": "https://developer.mozilla.org/ja/docs/Web/CSS/mix-blend-mode",
+        "lang": "ja"
+      },
+      {
+        "title": "Blend modes",
+        "source": "Wikipedia",
+        "url": "https://en.wikipedia.org/wiki/Blend_modes",
+        "lang": "en"
+      }
+    ],
+    "nudge": [
+      {
+        "title": "Understanding WCAG Contrast Requirements",
+        "source": "WebAIM",
+        "url": "https://webaim.org/articles/contrast/",
+        "lang": "en"
+      },
+      {
+        "title": "WCAG 2.1 日本語訳",
+        "source": "WAIC",
+        "url": "https://waic.jp/translations/WCAG21/",
+        "lang": "ja"
+      }
+    ],
+    "cvdsafe": [
+      {
+        "title": "カラーユニバーサルデザイン推奨配色セット",
+        "source": "Okabe & Ito",
+        "url": "https://jfly.uni-koeln.de/color/",
+        "lang": "ja"
+      },
+      {
+        "title": "カラーユニバーサルデザイン機構（CUDO）",
+        "source": "cudo.jp",
+        "url": "https://cudo.jp/",
+        "lang": "ja"
+      }
+    ],
+    "complement": [
+      {
+        "title": "配色",
+        "source": "Wikipedia",
+        "url": "https://ja.wikipedia.org/wiki/配色",
+        "lang": "ja"
+      },
+      {
+        "title": "Color wheel",
+        "source": "Wikipedia",
+        "url": "https://en.wikipedia.org/wiki/Color_wheel",
+        "lang": "en"
+      }
+    ],
+    "darklight": [
+      {
+        "title": "prefers-color-scheme",
+        "source": "web.dev (Google)",
+        "url": "https://web.dev/articles/prefers-color-scheme",
+        "lang": "en"
+      },
+      {
+        "title": "Oklab color space",
+        "source": "Wikipedia",
+        "url": "https://en.wikipedia.org/wiki/Oklab_color_space",
+        "lang": "en"
+      }
+    ],
+    "sort": [
+      {
+        "title": "Lightness",
+        "source": "Wikipedia",
+        "url": "https://en.wikipedia.org/wiki/Lightness",
+        "lang": "en"
+      },
+      {
+        "title": "日本色研配色体系（PCCS）",
+        "source": "Wikipedia",
+        "url": "https://ja.wikipedia.org/wiki/日本色研配色体系",
+        "lang": "ja"
+      }
+    ],
+    "semroles": [
+      {
+        "title": "The color system",
+        "source": "Material Design (M2)",
+        "url": "https://m2.material.io/design/color/the-color-system.html",
+        "lang": "en"
+      },
+      {
+        "title": "デジタル庁デザインシステム",
+        "source": "design.digital.go.jp",
+        "url": "https://design.digital.go.jp/",
+        "lang": "ja"
+      }
+    ],
+    "namesearch": [
+      {
+        "title": "和色大辞典",
+        "source": "colordic.org",
+        "url": "https://www.colordic.org/w",
+        "lang": "ja"
+      },
+      {
+        "title": "<named-color> — CSS の色名",
+        "source": "MDN Web Docs",
+        "url": "https://developer.mozilla.org/ja/docs/Web/CSS/named-color",
+        "lang": "ja"
+      }
+    ],
+    "templates": [
+      {
+        "title": "配色",
+        "source": "Wikipedia",
+        "url": "https://ja.wikipedia.org/wiki/配色",
+        "lang": "ja"
+      },
+      {
+        "title": "Color scheme",
+        "source": "Wikipedia",
+        "url": "https://en.wikipedia.org/wiki/Color_scheme",
+        "lang": "en"
+      }
+    ],
+    "tokens": [
+      {
+        "title": "Design Tokens Community Group",
+        "source": "W3C",
+        "url": "https://www.w3.org/community/design-tokens/",
+        "lang": "en"
+      },
+      {
+        "title": "Theme variables — Tailwind CSS",
+        "source": "tailwindcss.com",
+        "url": "https://tailwindcss.com/docs/theme",
+        "lang": "en"
+      }
     ]
   },
   "articles": [

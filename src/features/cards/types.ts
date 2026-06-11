@@ -11,7 +11,8 @@ export type CardCategory =
   | "harmony"
   | "generate"
   | "naming"
-  | "preview";
+  | "preview"
+  | "export";
 
 export type ModeMatch = { unit: Unit; view: View };
 
