@@ -46,12 +46,21 @@ describe("設計カード", () => {
   });
 
   describe("CardTone", () => {
-    it("5段階のトーンを表示し、クリックで追加", () => {
+    it("50〜900 の10段階トーンを表示し、クリックで追加", () => {
       render(<CardTone number="01" />);
       const chips = screen.getAllByRole("button", {
         name: /トーン .* をパレットに追加/,
       });
-      expect(chips).toHaveLength(5);
+      expect(chips).toHaveLength(10);
+      expect(screen.getByText("50")).toBeInTheDocument();
+      expect(screen.getByText("500")).toBeInTheDocument();
+      expect(screen.getByText("900")).toBeInTheDocument();
+      // 500 は基準色そのもの
+      expect(
+        screen.getByRole("button", {
+          name: /トーン 500 #2D6CDF をパレットに追加/,
+        }),
+      ).toBeInTheDocument();
       fireEvent.click(chips[0]);
       expect(useColorStore.getState().palette).toHaveLength(2);
     });
