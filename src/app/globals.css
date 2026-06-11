@@ -65,6 +65,51 @@
   --font-mono: var(--font-geist-mono);
 }
 
+/*
+ * 形状・標高・文字サイズのトークン（v2 で頻出する値の命名）。
+ * rounded-control / rounded-panel / shadow-overlay / shadow-toast /
+ * text-meta / text-control ユーティリティとして使える。
+ */
+@theme {
+  /* 角丸: コントロール（ボタン・セル等）/ パネル（モーダル・スウォッチ等） */
+  --radius-control: 2px;
+  --radius-panel: 3px;
+
+  /* 標高: オーバーレイ（モーダル・ポップオーバー）/ トースト */
+  --shadow-overlay: 0 24px 64px rgba(0, 0, 0, 0.32);
+  --shadow-toast: 0 8px 24px rgba(0, 0, 0, 0.22);
+  /* 選択リング（スウォッチ・色相環マーカー。inline style からは var() で参照） */
+  --shadow-selected: 0 0 0 2px var(--surface), 0 0 0 4px var(--ring);
+
+  /* 文字: メタ情報（モノ11px）/ コントロール文字（ボタン12.5px） */
+  --text-meta: 11px;
+  --text-control: 12.5px;
+}
+
+/*
+ * 複合コントロールスタイル。単機能ユーティリティ（rounded-full,
+ * bg-surface, hover:bg-surface-3 等）を後置すれば部分的に上書きできる。
+ */
+/* 枠付きの基本コントロール（ボタン類） */
+@utility cff-control {
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-control);
+  background: transparent;
+  @media (hover: hover) {
+    &:hover {
+      background: var(--surface-2);
+    }
+  }
+}
+
+/* 反転（強調）コントロール */
+@utility cff-control-primary {
+  border: 1px solid var(--text);
+  border-radius: var(--radius-control);
+  background: var(--text);
+  color: var(--bg);
+}
+
 * {
   box-sizing: border-box;
 }

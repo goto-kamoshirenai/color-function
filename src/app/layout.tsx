@@ -1,8 +1,7 @@
 import type { Metadata } from "next";
 import { Archivo, Geist_Mono, Noto_Sans_JP } from "next/font/google";
 import "./globals.css";
-import { ThemeToggle } from "@/components/ThemeToggle";
-import { ShareButton } from "@/components/ShareButton";
+import { AppHeader } from "@/components/AppHeader";
 import { PaletteBar } from "@/components/PaletteBar";
 import { StoreSync } from "@/components/StoreSync";
 import { ColorPicker } from "@/components/ColorPicker";
@@ -29,7 +28,8 @@ export const metadata: Metadata = {
 
 // ペイント前に data-theme を確定（ちらつき防止）し、スプラッシュの表示可否も決める。
 // スプラッシュは「このセッション初回」かつ「モーション低減でない」ときだけ。
-const themeInit = `(function(){try{var t=localStorage.getItem('cff-theme');document.documentElement.dataset.theme=(t==='dark'||t==='light')?t:'light';}catch(e){document.documentElement.dataset.theme='light';}try{var rm=window.matchMedia('(prefers-reduced-motion: reduce)').matches;if(!rm&&!sessionStorage.getItem('cff-splash-shown')){document.documentElement.dataset.splash='1';}}catch(e){}})();`;
+// 言語も同様に確定: localStorage（手動切替の保持値）→ ブラウザ言語（ja 以外は en）。
+const themeInit = `(function(){try{var t=localStorage.getItem('cff-theme');document.documentElement.dataset.theme=(t==='dark'||t==='light')?t:'light';}catch(e){document.documentElement.dataset.theme='light';}try{var l=null;try{l=localStorage.getItem('cff-lang');}catch(e){}if(l!=='ja'&&l!=='en'){l=((navigator.language||'').toLowerCase().indexOf('ja')===0)?'ja':'en';}document.documentElement.lang=l;}catch(e){}try{var rm=window.matchMedia('(prefers-reduced-motion: reduce)').matches;if(!rm&&!sessionStorage.getItem('cff-splash-shown')){document.documentElement.dataset.splash='1';}}catch(e){}})();`;
 
 export default function RootLayout({
   children,
@@ -41,6 +41,7 @@ export default function RootLayout({
       lang="ja"
       data-theme="light"
       className={`${archivo.variable} ${geistMono.variable} ${notoJp.variable} h-full antialiased`}
+      suppressHydrationWarning
     >
       <head>
         <script dangerouslySetInnerHTML={{ __html: themeInit }} />
@@ -48,28 +49,7 @@ export default function RootLayout({
       <body className="bg-bg text-text flex h-dvh flex-col overflow-hidden text-[14px] leading-[1.45]">
         <StoreSync />
 
-        {/* ヘッダー（v2: 56px・ロゴブロック・SHARE・テーマ切替） */}
-        <header className="border-border-strong bg-surface z-5 flex h-14 flex-none items-center justify-between border-b pr-[18px]">
-          <div className="flex h-full items-stretch">
-            <div className="border-border flex items-center gap-[11px] border-r px-5">
-              <span className="text-[19px] font-black tracking-[-0.04em]">
-                CFF
-              </span>
-            </div>
-            <div className="flex flex-col justify-center gap-px px-[18px]">
-              <span className="font-mono text-[11px] tracking-[0.18em] uppercase">
-                Color Follows Function
-              </span>
-              <span className="text-text-3 font-mono text-[11px] tracking-[0.14em] uppercase">
-                色彩定量解析
-              </span>
-            </div>
-          </div>
-          <div className="flex items-center gap-3.5">
-            <ShareButton />
-            <ThemeToggle />
-          </div>
-        </header>
+        <AppHeader />
 
         <main className="cff-scroll bg-bg min-h-0 min-w-0 flex-1 overflow-x-hidden overflow-y-auto">
           {children}

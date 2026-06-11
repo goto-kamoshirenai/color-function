@@ -3,6 +3,7 @@
 import { parseHex, rgbToHsl, rgbToHsv } from "@/core/color";
 import { CardFrame } from "@/components/Card";
 import { useSelectedColor, useCopy } from "../hooks";
+import { useT } from "@/lib/i18n/locale";
 import type { CardProps } from "../types";
 
 const r0 = (n: number) => Math.round(n);
@@ -11,6 +12,7 @@ const r0 = (n: number) => Math.round(n);
 export function CardValue({ number }: CardProps) {
   const color = useSelectedColor();
   const copy = useCopy();
+  const t = useT();
 
   const rgb = color
     ? (parseHex(color.hex) ?? { r: 0, g: 0, b: 0 })
@@ -42,23 +44,21 @@ export function CardValue({ number }: CardProps) {
   return (
     <CardFrame
       number={number}
-      title="色値"
+      title={t("card.value.title")}
       enLabel="Color Value"
       helpKey="value"
     >
       {!color ? (
-        <p className="text-text-3 font-mono text-xs">
-          色がありません — 下の ＋ から追加してください
-        </p>
+        <p className="text-text-3 font-mono text-xs">{t("card.empty")}</p>
       ) : (
         <>
           <div className="flex items-stretch gap-5">
             <div
-              className="border-border-strong size-[110px] flex-none rounded-[2px] border"
+              className="border-border-strong rounded-control size-[110px] flex-none border"
               style={{ backgroundColor: color.hex }}
               aria-hidden
             />
-            <div className="bg-border border-border grid flex-1 grid-cols-2 gap-px overflow-hidden rounded-[2px] border">
+            <div className="bg-border border-border rounded-control grid flex-1 grid-cols-2 gap-px overflow-hidden border">
               {cells.map((cell) => (
                 <button
                   key={cell.label}
@@ -66,7 +66,7 @@ export function CardValue({ number }: CardProps) {
                   onClick={() => copy(cell.copyText)}
                   className="bg-surface hover:bg-surface-2 px-3.5 py-[11px] text-left"
                 >
-                  <div className="text-text-3 mb-1 font-mono text-[11px] tracking-[0.14em] uppercase">
+                  <div className="text-text-3 text-meta mb-1 font-mono tracking-[0.14em] uppercase">
                     {cell.label}
                   </div>
                   <div className="font-mono text-lg font-medium tracking-[0.01em]">
@@ -76,8 +76,8 @@ export function CardValue({ number }: CardProps) {
               ))}
             </div>
           </div>
-          <p className="text-text-3 mt-[11px] font-mono text-[11px] tracking-[0.04em]">
-            CLICK TO COPY — 値をクリックでコピー
+          <p className="text-text-3 text-meta mt-[11px] font-mono tracking-[0.04em]">
+            {t("card.value.copyHint")}
           </p>
         </>
       )}

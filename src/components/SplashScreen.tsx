@@ -15,6 +15,7 @@ import {
   useTransform,
   animate,
 } from "motion/react";
+import { useT } from "@/lib/i18n/locale";
 
 /**
  * スプラッシュ（モック: CFF Wordmark Drafting.html ベースのリッチ版）。
@@ -115,6 +116,7 @@ export function SplashScreen() {
   const [scale, setScale] = useState(1);
   const reducedMotion = useReducedMotion();
   const done = useRef(false);
+  const t = useT();
 
   const visible = shouldShow && !dismissed && !reducedMotion;
 
@@ -184,7 +186,7 @@ export function SplashScreen() {
           <motion.div
             key="splash"
             role="dialog"
-            aria-label="起動アニメーション（クリックでスキップ）"
+            aria-label={t("splash.aria")}
             onClick={dismiss}
             exit={{
               opacity: 0,
@@ -208,11 +210,11 @@ export function SplashScreen() {
               {...fade(T.grid, 0.5)}
               className="absolute top-4 left-[18px] flex items-center gap-2.5"
             >
-              <span className="text-accent font-mono text-[11px] tracking-[0.14em]">
+              <span className="text-accent text-meta font-mono tracking-[0.14em]">
                 DWG. CFF-LOGO-01
               </span>
               <span className="bg-border-strong h-px w-[22px]" aria-hidden />
-              <span className="text-text-3 font-mono text-[11px] tracking-[0.14em]">
+              <span className="text-text-3 text-meta font-mono tracking-[0.14em]">
                 SCALE 1:1 · UNIT px
               </span>
             </motion.div>
@@ -299,10 +301,10 @@ export function SplashScreen() {
                   }}
                 />
                 <motion.div {...fade(T.guides + 0.35, 0.4)}>
-                  <span className="text-text-2 absolute top-[108px] right-6 font-mono text-[11px] tracking-[0.08em]">
+                  <span className="text-text-2 text-meta absolute top-[108px] right-6 font-mono tracking-[0.08em]">
                     CAP LINE
                   </span>
-                  <span className="text-text-2 absolute top-[288px] right-6 font-mono text-[11px] tracking-[0.08em]">
+                  <span className="text-text-2 text-meta absolute top-[288px] right-6 font-mono tracking-[0.08em]">
                     BASE LINE
                   </span>
                 </motion.div>
@@ -423,7 +425,7 @@ export function SplashScreen() {
                   <span className="bg-accent absolute top-[82px] left-[478px] h-[13px] w-px rotate-45" />
                   <span className="absolute top-[60px] left-[160px] h-7 w-px bg-(--text-3)" />
                   <span className="absolute top-[60px] left-[478px] h-7 w-px bg-(--text-3)" />
-                  <span className="text-accent bg-surface absolute top-[74px] left-[319px] -translate-x-1/2 px-[5px] font-mono text-[11px] font-medium tabular-nums">
+                  <span className="text-accent bg-surface text-meta absolute top-[74px] left-[319px] -translate-x-1/2 px-[5px] font-mono font-medium tabular-nums">
                     <CountUp to={318} delay={T.dims + 0.1} />
                   </span>
 
@@ -432,20 +434,20 @@ export function SplashScreen() {
                   <span className="absolute top-[284px] left-[98px] h-px w-[13px] rotate-45 bg-(--text-2)" />
                   <span className="absolute top-[116px] left-[70px] h-px w-10 bg-(--text-3)" />
                   <span className="absolute top-[284px] left-[70px] h-px w-10 bg-(--text-3)" />
-                  <span className="text-text-2 bg-surface absolute top-[200px] left-[104px] -translate-x-1/2 -translate-y-1/2 -rotate-90 px-[5px] font-mono text-[11px] tabular-nums">
+                  <span className="text-text-2 bg-surface text-meta absolute top-[200px] left-[104px] -translate-x-1/2 -translate-y-1/2 -rotate-90 px-[5px] font-mono tabular-nums">
                     <CountUp to={168} delay={T.dims + 0.2} />
                   </span>
 
                   <div className="absolute top-[312px] left-[160px] w-[114px] border-t border-(--text-3)" />
                   <div className="absolute top-[312px] left-[282px] w-[90px] border-t border-(--text-3)" />
                   <div className="absolute top-[312px] left-[382px] w-24 border-t border-(--text-3)" />
-                  <span className="text-text-2 absolute top-[316px] left-[217px] -translate-x-1/2 font-mono text-[11px]">
+                  <span className="text-text-2 text-meta absolute top-[316px] left-[217px] -translate-x-1/2 font-mono">
                     114
                   </span>
-                  <span className="text-text-2 absolute top-[316px] left-[327px] -translate-x-1/2 font-mono text-[11px]">
+                  <span className="text-text-2 text-meta absolute top-[316px] left-[327px] -translate-x-1/2 font-mono">
                     90
                   </span>
-                  <span className="text-text-2 absolute top-[316px] left-[430px] -translate-x-1/2 font-mono text-[11px]">
+                  <span className="text-text-2 text-meta absolute top-[316px] left-[430px] -translate-x-1/2 font-mono">
                     96
                   </span>
                   {[160, 274, 372, 478].map((x) => (
@@ -461,15 +463,15 @@ export function SplashScreen() {
                 <motion.div {...fade(T.callouts, 0.6)}>
                   <div className="absolute top-[200px] left-[454px] w-[74px] border-t border-(--text-2)" />
                   <span className="bg-accent absolute top-[197px] left-[454px] size-1.5 -translate-x-1/2 -translate-y-1/2 rounded-full" />
-                  <span className="text-text-2 absolute top-[192px] left-[530px] font-mono text-[11px] tracking-[0.04em]">
+                  <span className="text-text-2 text-meta absolute top-[192px] left-[530px] font-mono tracking-[0.04em]">
                     STEM t=28
                   </span>
                   <div className="absolute top-[150px] left-[150px] w-[84px] origin-right -rotate-[32deg] border-t border-(--text-2)" />
-                  <span className="text-text-2 absolute top-[120px] left-24 font-mono text-[11px]">
+                  <span className="text-text-2 text-meta absolute top-[120px] left-24 font-mono">
                     R 86
                   </span>
                   <div className="absolute top-[250px] left-[236px] w-[54px] origin-left rotate-[34deg] border-t border-(--text-2)" />
-                  <span className="text-text-2 absolute top-[268px] left-[286px] font-mono text-[11px]">
+                  <span className="text-text-2 text-meta absolute top-[268px] left-[286px] font-mono">
                     TERMINAL
                   </span>
                 </motion.div>
@@ -481,14 +483,14 @@ export function SplashScreen() {
                   animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
                   transition={{ delay: T.tagline, duration: 0.6, ease: EASE }}
                 >
-                  <span className="text-text-2 font-mono text-[11px] tracking-[0.32em] uppercase">
+                  <span className="text-text-2 text-meta font-mono tracking-[0.32em] uppercase">
                     Color Follows Function
                   </span>
-                  <span className="text-text-3 mx-2.5 font-mono text-[11px]">
+                  <span className="text-text-3 text-meta mx-2.5 font-mono">
                     ·
                   </span>
-                  <span className="text-text-3 font-mono text-[11px] tracking-[0.18em]">
-                    色彩定量解析
+                  <span className="text-text-3 text-meta font-mono tracking-[0.18em]">
+                    {t("app.tagline")}
                   </span>
                 </motion.div>
               </div>
@@ -499,15 +501,15 @@ export function SplashScreen() {
               {...fade(0.2, 0.5)}
               className="absolute right-[18px] bottom-4 left-[18px] flex items-center justify-between gap-4"
             >
-              <span className="text-text-3 hidden font-mono text-[11px] tracking-[0.08em] sm:inline">
+              <span className="text-text-3 text-meta hidden font-mono tracking-[0.08em] sm:inline">
                 PHASES — GRID ▸ GUIDES ▸ CONSTRUCTION ▸ STROKE-ON ▸ DIMENSIONS ▸
                 CALLOUTS
               </span>
               <button
                 type="button"
                 onClick={dismiss}
-                aria-label="起動アニメーションをスキップ"
-                className="border-border-strong text-text-2 hover:bg-surface-2 hover:text-text ml-auto rounded-[2px] border bg-transparent px-3 py-[7px] font-mono text-[12px] tracking-[0.05em]"
+                aria-label={t("splash.skip")}
+                className="cff-control text-text-2 hover:text-text ml-auto px-3 py-[7px] font-mono text-[12px] tracking-[0.05em]"
               >
                 SKIP ▸
               </button>

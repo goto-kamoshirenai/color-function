@@ -1,5 +1,6 @@
 import { create } from "zustand";
 import { parseHex, toHex, rgbToHsv, hsvToRgb } from "@/core/color";
+import { translate, getLocale } from "@/lib/i18n/messages";
 
 export type Color = { id: string; hex: string };
 export type Unit = "single" | "pair" | "palette";
@@ -153,8 +154,10 @@ export const useColorStore = create<ColorStore>((set, get) => ({
   setView: (view) => set({ view }),
 
   selectSwatch: (id) => {
-    const { unit, fgId, bgId } = get();
-    if (unit === "pair") {
+    const { unit, view, fgId, bgId } = get();
+    // 設計ビューは単位を問わず「基準色の選択」（調和・トーンは selectedId を参照）。
+    // FG/BG の入替はペア×検証のときだけ。
+    if (view !== "design" && unit === "pair") {
       if (id === bgId) set({ fgId: bgId, bgId: fgId });
       else set({ fgId: id });
     } else {
@@ -226,10 +229,14 @@ export const useColorStore = create<ColorStore>((set, get) => ({
     const hex = draftHex(picker.h, picker.s, picker.v);
     if (picker.isNew) {
       apply({ kind: "add", hex });
-      showToast("追加: " + hex.toUpperCase());
+      showToast(
+        translate(getLocale(), "toast.add", { hex: hex.toUpperCase() }),
+      );
     } else if (picker.targetId) {
       apply({ kind: "set", id: picker.targetId, hex });
-      showToast("更新: " + hex.toUpperCase());
+      showToast(
+        translate(getLocale(), "toast.update", { hex: hex.toUpperCase() }),
+      );
     }
     closePicker();
   },
@@ -239,7 +246,7 @@ export const useColorStore = create<ColorStore>((set, get) => ({
   clearAll: () => {
     get().apply({ kind: "replaceAll", hexes: [] });
     set({ confirmOpen: false });
-    get().showToast("すべての色を消去しました");
+    get().showToast(translate(getLocale(), "toast.clear"));
   },
 
   showToast: (msg) => {

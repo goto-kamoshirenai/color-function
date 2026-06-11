@@ -5,20 +5,23 @@ import { parseHex, contrastRatio, judgeWcag } from "@/core/color";
 import { CardFrame } from "@/components/Card";
 import { useColorStore } from "@/store/useColorStore";
 import { usePairColors, useCopy } from "../hooks";
+import { useT } from "@/lib/i18n/locale";
+import type { MessageKey } from "@/lib/i18n/messages";
 import type { CardProps } from "../types";
 
-const VERDICT_LABEL = {
-  AAA: "AAA 準拠",
-  AA: "AA 準拠",
-  "AA-large": "大字のみ AA",
-  fail: "不適合",
-} as const;
+const VERDICT_KEY = {
+  AAA: "card.contrast.verdictAAA",
+  AA: "card.contrast.verdictAA",
+  "AA-large": "card.contrast.verdictAALarge",
+  fail: "card.contrast.verdictFail",
+} as const satisfies Record<string, MessageKey>;
 
 /** WCAG コントラスト比カード（v2 ヒーロー: ブラケット・76px比・判定チップ・プレビュー）。 */
 export function CardWcagContrast({ number }: CardProps) {
   const pair = usePairColors();
   const selectSwatch = useColorStore((s) => s.selectSwatch);
   const copy = useCopy();
+  const t = useT();
 
   const fgRgb = pair
     ? (parseHex(pair.fg.hex) ?? { r: 0, g: 0, b: 0 })
@@ -30,16 +33,16 @@ export function CardWcagContrast({ number }: CardProps) {
   const v = judgeWcag(ratio);
 
   const badges = [
-    { label: "通常テキスト AA", sub: "4.5:1", pass: v.aaNormal },
-    { label: "通常テキスト AAA", sub: "7:1", pass: v.aaaNormal },
-    { label: "大きな文字 AA", sub: "3:1", pass: v.aaLarge },
-    { label: "大きな文字 AAA", sub: "4.5:1", pass: v.aaaLarge },
+    { label: t("card.contrast.normalAA"), sub: "4.5:1", pass: v.aaNormal },
+    { label: t("card.contrast.normalAAA"), sub: "7:1", pass: v.aaaNormal },
+    { label: t("card.contrast.largeAA"), sub: "3:1", pass: v.aaLarge },
+    { label: t("card.contrast.largeAAA"), sub: "4.5:1", pass: v.aaaLarge },
   ];
 
   return (
     <CardFrame
       number={number}
-      title="WCAG コントラスト比"
+      title={t("card.contrast.title")}
       enLabel="Contrast Ratio"
       helpKey="contrast"
       hero
@@ -50,7 +53,7 @@ export function CardWcagContrast({ number }: CardProps) {
             onClick={() =>
               copy(`${pair.fg.hex} on ${pair.bg.hex} — ${ratio.toFixed(2)}:1`)
             }
-            className="border-border-strong text-text-2 hover:bg-surface-2 inline-flex items-center gap-1 rounded-[2px] border bg-transparent px-2.5 py-1.5 font-mono text-[12px] tracking-[0.06em] whitespace-nowrap"
+            className="cff-control text-text-2 inline-flex items-center gap-1 px-2.5 py-1.5 font-mono text-[12px] tracking-[0.06em] whitespace-nowrap"
           >
             <Copy width={12} height={12} aria-hidden />
             COPY
@@ -59,9 +62,7 @@ export function CardWcagContrast({ number }: CardProps) {
       }
     >
       {!pair ? (
-        <p className="text-text-3 font-mono text-xs">
-          ペアには2色以上が必要です — 下の ＋ から色を追加
-        </p>
+        <p className="text-text-3 font-mono text-xs">{t("card.needPair")}</p>
       ) : (
         <>
           <div className="grid items-center gap-7 md:grid-cols-[auto_1fr]">
@@ -76,7 +77,7 @@ export function CardWcagContrast({ number }: CardProps) {
               </div>
               <div className="border-accent mt-3.5 inline-flex items-center gap-[9px] rounded-r-[2px] border border-l-[3px] border-(--text) py-1.5 pr-3 pl-[11px]">
                 <span className="text-xs font-bold tracking-[0.02em]">
-                  {VERDICT_LABEL[v.verdict]}
+                  {t(VERDICT_KEY[v.verdict])}
                 </span>
               </div>
             </div>
@@ -84,7 +85,7 @@ export function CardWcagContrast({ number }: CardProps) {
               {badges.map((b) => (
                 <div
                   key={b.label}
-                  className="bg-surface flex items-center gap-[11px] rounded-[2px] border px-3 py-2.5"
+                  className="bg-surface rounded-control flex items-center gap-[11px] border px-3 py-2.5"
                   style={{
                     borderColor: b.pass
                       ? "var(--text)"
@@ -92,7 +93,7 @@ export function CardWcagContrast({ number }: CardProps) {
                   }}
                 >
                   <span
-                    className="inline-flex size-[25px] flex-none items-center justify-center rounded-[2px] border-[1.5px] text-[13px] font-bold"
+                    className="rounded-control inline-flex size-[25px] flex-none items-center justify-center border-[1.5px] text-[13px] font-bold"
                     style={{
                       borderColor: b.pass
                         ? "var(--text)"
@@ -119,7 +120,7 @@ export function CardWcagContrast({ number }: CardProps) {
                   </span>
                   <div>
                     <div className="text-xs font-semibold">{b.label}</div>
-                    <div className="text-text-3 font-mono text-[11px]">
+                    <div className="text-text-3 text-meta font-mono">
                       ≥ {b.sub}
                     </div>
                   </div>
@@ -128,22 +129,22 @@ export function CardWcagContrast({ number }: CardProps) {
             </div>
           </div>
 
-          <div className="border-border mt-5 overflow-hidden rounded-[2px] border">
+          <div className="border-border rounded-control mt-5 overflow-hidden border">
             <div className="bg-surface-2 border-border flex flex-wrap items-center justify-between gap-2 border-b px-[13px] py-2">
-              <span className="text-text-2 font-mono text-[11px] tracking-[0.14em] uppercase">
-                テキスト可読性プレビュー / Preview
+              <span className="text-text-2 text-meta font-mono tracking-[0.14em] uppercase">
+                {t("card.contrast.preview")}
               </span>
-              <div className="text-text-2 flex items-center gap-[9px] font-mono text-[11px]">
+              <div className="text-text-2 text-meta flex items-center gap-[9px] font-mono">
                 <span className="inline-flex items-center gap-[5px]">
                   <span
-                    className="border-border-strong size-[11px] rounded-[2px] border"
+                    className="border-border-strong rounded-control size-[11px] border"
                     style={{ backgroundColor: pair.fg.hex }}
                   />
                   FG {pair.fg.hex}
                 </span>
                 <span className="inline-flex items-center gap-[5px]">
                   <span
-                    className="border-border-strong size-[11px] rounded-[2px] border"
+                    className="border-border-strong rounded-control size-[11px] border"
                     style={{ backgroundColor: pair.bg.hex }}
                   />
                   BG {pair.bg.hex}
@@ -151,7 +152,7 @@ export function CardWcagContrast({ number }: CardProps) {
                 <button
                   type="button"
                   onClick={() => selectSwatch(pair.bg.id)}
-                  className="border-border-strong hover:bg-surface-3 inline-flex items-center gap-1 rounded-[2px] border bg-transparent px-[9px] py-1 text-[12px]"
+                  className="cff-control hover:bg-surface-3 inline-flex items-center gap-1 px-[9px] py-1 text-[12px]"
                 >
                   <DataTransferBoth
                     width={12}
@@ -159,7 +160,7 @@ export function CardWcagContrast({ number }: CardProps) {
                     className="rotate-90"
                     aria-hidden
                   />
-                  入替
+                  {t("card.contrast.swap")}
                 </button>
               </div>
             </div>
@@ -168,14 +169,13 @@ export function CardWcagContrast({ number }: CardProps) {
               style={{ backgroundColor: pair.bg.hex, color: pair.fg.hex }}
             >
               <div className="mb-2 text-[26px] font-extrabold tracking-[-0.01em]">
-                大きな見出しテキスト 24px Bold
+                {t("card.contrast.sampleHeading")}
               </div>
               <div className="mb-1.5 text-[15px]">
-                通常の本文テキストです。コントラスト比 {ratio.toFixed(2)}:1
-                でこの組み合わせが読みやすいかを確認できます。
+                {t("card.contrast.sampleBody", { ratio: ratio.toFixed(2) })}
               </div>
               <div className="text-xs opacity-85">
-                小さな注釈テキスト 12px — 細部の可読性をチェック。
+                {t("card.contrast.sampleCaption")}
               </div>
             </div>
           </div>

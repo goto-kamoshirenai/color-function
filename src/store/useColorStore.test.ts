@@ -70,6 +70,17 @@ describe("useColorStore", () => {
     });
   });
 
+  describe("selectSwatch（design）", () => {
+    it("設計ビューではペア単位でも selectedId（基準色）を更新する", () => {
+      get().setView("design");
+      const fg0 = get().fgId;
+      const mid = get().palette[1].id;
+      get().selectSwatch(mid);
+      expect(get().selectedId).toBe(mid);
+      expect(get().fgId).toBe(fg0); // FG/BG は変化しない
+    });
+  });
+
   it("setAccent でアクセント色を指定", () => {
     const id = get().palette[2].id;
     get().setAccent(id);

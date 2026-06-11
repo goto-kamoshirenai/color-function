@@ -3,6 +3,7 @@
 import { parseHex, rgbToHsv } from "@/core/color";
 import { CardFrame } from "@/components/Card";
 import { useSelectedColor } from "../hooks";
+import { useT } from "@/lib/i18n/locale";
 import type { CardProps } from "../types";
 
 const HUE_BAR =
@@ -11,6 +12,7 @@ const HUE_BAR =
 /** HSV カード（v2: H=色相グラデ＋マーカー、S/V=塗りつぶしバー）。 */
 export function CardHsv({ number }: CardProps) {
   const color = useSelectedColor();
+  const t = useT();
   const hsv = rgbToHsv(
     color
       ? (parseHex(color.hex) ?? { r: 0, g: 0, b: 0 })
@@ -20,20 +22,18 @@ export function CardHsv({ number }: CardProps) {
   return (
     <CardFrame
       number={number}
-      title="HSV"
+      title={t("card.hsv.title")}
       enLabel="Hue · Sat · Value"
       helpKey="hsv"
     >
       {!color ? (
-        <p className="text-text-3 font-mono text-xs">
-          色がありません — 下の ＋ から追加してください
-        </p>
+        <p className="text-text-3 font-mono text-xs">{t("card.empty")}</p>
       ) : (
         <div className="flex flex-col gap-[18px]">
           <div>
             <div className="mb-[7px] flex items-baseline justify-between">
-              <span className="text-text-2 font-mono text-[11px]">
-                H · 色相
+              <span className="text-text-2 text-meta font-mono">
+                {t("card.hsv.h")}
               </span>
               <span className="font-mono text-[17px] font-medium">
                 {Math.round(hsv.h)}°
@@ -51,15 +51,13 @@ export function CardHsv({ number }: CardProps) {
           </div>
           {(
             [
-              ["S · 彩度", hsv.s],
-              ["V · 明度", hsv.v],
+              [t("card.hsv.s"), hsv.s],
+              [t("card.hsv.v"), hsv.v],
             ] as const
           ).map(([label, value]) => (
             <div key={label}>
               <div className="mb-[7px] flex items-baseline justify-between">
-                <span className="text-text-2 font-mono text-[11px]">
-                  {label}
-                </span>
+                <span className="text-text-2 text-meta font-mono">{label}</span>
                 <span className="font-mono text-[17px] font-medium">
                   {Math.round(value)}%
                 </span>

@@ -1,7 +1,9 @@
-/** 指標ヘルプ文言（docs/10 §4・モック helpMap 準拠の13指標）。 */
+import type { Locale } from "@/lib/i18n/messages";
+
+/** 指標ヘルプ文言（docs/10 §4・モック helpMap 準拠の13指標）。ja / en の2言語。 */
 export type HelpEntry = { title: string; body: string; guide: string };
 
-export const HELP: Record<string, HelpEntry> = {
+const HELP_JA = {
   usage: {
     title: "パレットバーの使い方",
     body:
@@ -72,7 +74,90 @@ export const HELP: Record<string, HelpEntry> = {
   },
   tone: {
     title: "トーン展開",
-    body: "基準色の色相・彩度を保ち、明度だけを段階的に変えた濃淡（トーン）の展開です。",
-    guide: "明度を 5 段階で展開",
+    body: "基準色を 500 として、明るい 50 から暗い 900 まで明度を段階変化させた色階調です（MUI 等のカラーパレットの流儀）。",
+    guide: "50=最明 / 500=基準色 / 900=最暗",
   },
+} as const satisfies Record<string, HelpEntry>;
+
+type HelpKey = keyof typeof HELP_JA;
+
+const HELP_EN: Record<HelpKey, HelpEntry> = {
+  usage: {
+    title: "How to Use the Palette Bar",
+    body:
+      "Click a swatch to select it (in Pair mode it becomes the foreground FG; clicking the background BG swaps FG/BG). " +
+      "Edit via the HEX label below a color or by double-clicking, remove with the × at the top right, and use the fill icon at the bottom right to make that color the UI accent. " +
+      "In the bottom row, Unit sets the granularity (Single / Pair / Palette) and View sets the goal (Verify = diagnose / Design = build a scheme); their combination decides which cards are shown.",
+    guide: "FG=foreground / BG=background / fill=set accent",
+  },
+  value: {
+    title: "Color Value",
+    body: "The same color expressed in multiple numeric notations such as RGB, HEX, HSL, and HSV. Use whichever fits the task.",
+    guide: "HEX=#RRGGBB / RGB=0–255 / HSL·HSV=angle and %",
+  },
+  hsv: {
+    title: "HSV (Hue · Saturation · Value)",
+    body: "An intuitive color space: Hue for the color tone, Saturation for vividness, and Value for brightness.",
+    guide: "H 0–360° / S 0–100% / V 0–100%",
+  },
+  luminance: {
+    title: "Relative Luminance",
+    body: "Perceived brightness expressed from 0 (black) to 1 (white). It is the basis of contrast ratio calculations.",
+    guide: "0.0 = black  /  1.0 = white",
+  },
+  wheel: {
+    title: "Hue Wheel",
+    body: "Hues arranged in a circle. Distance from the center shows saturation, giving an at-a-glance view of hue relationships in the palette.",
+    guide: "angle=hue / radius=saturation",
+  },
+  name: {
+    title: "Nearest Color Name",
+    body: "Shows the named color with the smallest color difference (ΔE) from the reference color — a handy way to describe a color in words.",
+    guide: "smaller ΔE = closer to the name",
+  },
+  contrast: {
+    title: "WCAG Contrast Ratio",
+    body: "The ratio of two colors' relative luminance, defined by WCAG as a text readability criterion. Aim for AA 4.5:1 / AAA 7:1 for normal text and AA 3:1 / AAA 4.5:1 for large text.",
+    guide: "1:1 (identical) – 21:1 (black × white)",
+  },
+  deltae: {
+    title: "Color Difference ΔE",
+    body: "The perceptual difference between two colors, computed with CIEDE2000. Smaller means more similar; below about 2 most people cannot tell them apart.",
+    guide: "ΔE<2 nearly identical / >10 clearly different",
+  },
+  cvd: {
+    title: "Color Vision Simulation",
+    body: "Simulates how colors appear with protan, deutan, and tritan color vision, so you can check the scheme stays distinguishable.",
+    guide: "P=red / D=green / T=blue weakness",
+  },
+  cmatrix: {
+    title: "Contrast Ratio Matrix",
+    body: "Pairwise contrast ratios across the whole palette — a quick overview of which color pairs are usable together. Bold means AA pass.",
+    guide: "bold frame & text = 4.5:1 or higher",
+  },
+  dmatrix: {
+    title: "ΔE Difference Matrix",
+    body: "Perceptual color differences for every palette pair. Pairs with small values are confusably similar and hard to distinguish.",
+    guide: "smaller value = more similar pair",
+  },
+  huedist: {
+    title: "Hue Distribution",
+    body: "Each palette color placed on a 0–360° hue axis, showing whether hues are skewed or balanced.",
+    guide: "spread dots=varied / clustered=monotone",
+  },
+  harmony: {
+    title: "Harmony Schemes",
+    body: "Rotates the base color's hue to generate scheme candidates based on color theory: complementary, analogous, triadic, and more.",
+    guide: "complementary=180° / analogous=±30° / triadic=120°",
+  },
+  tone: {
+    title: "Tone Scale",
+    body: "A tonal scale in the style of MUI-like color palettes: the base color sits at 500, stepping lighter to 50 and darker to 900.",
+    guide: "50=lightest / 500=base / 900=darkest",
+  },
+};
+
+export const HELP: Record<Locale, Record<string, HelpEntry>> = {
+  ja: HELP_JA,
+  en: HELP_EN,
 };

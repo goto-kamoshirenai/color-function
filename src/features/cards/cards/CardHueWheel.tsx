@@ -3,6 +3,7 @@
 import { parseHex, rgbToHsv } from "@/core/color";
 import { CardFrame } from "@/components/Card";
 import { useColorStore } from "@/store/useColorStore";
+import { useT } from "@/lib/i18n/locale";
 import type { CardProps } from "../types";
 
 const WHEEL =
@@ -12,17 +13,18 @@ const WHEEL =
 export function CardHueWheel({ number }: CardProps) {
   const palette = useColorStore((s) => s.palette);
   const selectedId = useColorStore((s) => s.selectedId);
+  const t = useT();
 
   return (
     <CardFrame
       number={number}
-      title="色相環"
+      title={t("card.wheel.title")}
       enLabel="Hue Wheel"
       helpKey="wheel"
     >
       <div
         role="img"
-        aria-label="色相環。角度が色相、中心からの距離が彩度を表し、パレット各色の位置をマーカーで示す"
+        aria-label={t("card.wheel.aria")}
         className="border-border relative mx-auto mt-0.5 mb-2 size-[208px] rounded-full border"
         style={{ background: WHEEL }}
       >
@@ -50,14 +52,14 @@ export function CardHueWheel({ number }: CardProps) {
                 height: sel ? 18 : 12,
                 backgroundColor: c.hex,
                 boxShadow: sel
-                  ? "0 0 0 2px var(--surface),0 0 0 4px var(--ring)"
+                  ? "var(--shadow-selected)"
                   : "0 0 0 1.5px var(--surface)",
               }}
             />
           );
         })}
       </div>
-      <p className="text-text-3 text-center font-mono text-[11px] tracking-[0.04em]">
+      <p className="text-text-3 text-meta text-center font-mono tracking-[0.04em]">
         ANGLE = HUE / RADIUS = SATURATION
       </p>
     </CardFrame>

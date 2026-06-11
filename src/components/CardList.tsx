@@ -3,13 +3,18 @@
 import { useColorStore, type Unit, type View } from "@/store/useColorStore";
 import { CARD_REGISTRY } from "@/features/cards/registry";
 import { filterCards } from "@/features/cards/types";
+import { useT } from "@/lib/i18n/locale";
+import type { MessageKey } from "@/lib/i18n/messages";
 
-const UNIT_LABEL = {
-  single: "単色",
-  pair: "ペア",
-  palette: "パレット",
-} as const;
-const VIEW_LABEL = { verify: "検証", design: "設計" } as const;
+const UNIT_KEY = {
+  single: "unit.single",
+  pair: "unit.pair",
+  palette: "unit.palette",
+} as const satisfies Record<Unit, MessageKey>;
+const VIEW_KEY = {
+  verify: "view.verify",
+  design: "view.design",
+} as const satisfies Record<View, MessageKey>;
 const MODE_WORD = {
   single: "SINGLE",
   pair: "CONTRAST",
@@ -54,6 +59,7 @@ export function CardList() {
   const unit = useColorStore((s) => s.unit);
   const view = useColorStore((s) => s.view);
   const paletteCount = useColorStore((s) => s.palette.length);
+  const t = useT();
 
   const cards = filterCards(CARD_REGISTRY, unit, view);
   const byKey = new Map(cards.map((c) => [c.key, c]));
@@ -86,19 +92,19 @@ export function CardList() {
         <div className="relative z-1 flex items-end justify-between gap-[18px]">
           <div>
             <div className="mb-[9px] flex items-center gap-2.5">
-              <span className="text-accent font-mono text-[11px] tracking-[0.14em]">
+              <span className="text-accent text-meta font-mono tracking-[0.14em]">
                 {figTag}
               </span>
               <span className="bg-border-strong h-px w-[22px]" aria-hidden />
-              <span className="text-text-3 font-mono text-[11px] tracking-[0.14em]">
+              <span className="text-text-3 text-meta font-mono tracking-[0.14em]">
                 {modeSub}
               </span>
             </div>
             <h1 className="text-[32px] leading-none font-extrabold tracking-[-0.025em]">
-              {UNIT_LABEL[unit]} × {VIEW_LABEL[view]}
+              {t(UNIT_KEY[unit])} × {t(VIEW_KEY[view])}
             </h1>
           </div>
-          <div className="text-text-3 text-right font-mono text-[11px] leading-[1.9] tracking-[0.08em] whitespace-nowrap">
+          <div className="text-text-3 text-meta text-right font-mono leading-[1.9] tracking-[0.08em] whitespace-nowrap">
             <div>CARDS — {cards.length}</div>
             <div>SWATCHES — {paletteCount}</div>
           </div>

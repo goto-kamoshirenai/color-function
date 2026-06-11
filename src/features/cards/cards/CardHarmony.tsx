@@ -5,6 +5,7 @@ import { CardFrame } from "@/components/Card";
 import { useColorStore } from "@/store/useColorStore";
 import { useSelectedColor } from "../hooks";
 import { useHarmonyRules } from "@/lib/useHarmonyRules";
+import { useLocale, useT } from "@/lib/i18n/locale";
 import type { CardProps } from "../types";
 
 function chipColors(hex: string): { bg: string; fg: string } {
@@ -22,29 +23,31 @@ export function CardHarmony({ number }: CardProps) {
   const rules = useHarmonyRules();
   const apply = useColorStore((s) => s.apply);
   const showToast = useColorStore((s) => s.showToast);
+  const locale = useLocale();
+  const t = useT();
 
   const add = (hex: string) => {
     apply({ kind: "add", hex });
-    showToast("追加: " + hex.toUpperCase());
+    showToast(t("toast.add", { hex: hex.toUpperCase() }));
   };
 
   return (
     <CardFrame
       number={number}
-      title="調和スキーム生成"
+      title={t("card.harmony.title")}
       enLabel="Harmony"
       helpKey="harmony"
     >
       {!color ? (
-        <p className="text-text-3 font-mono text-xs">
-          色がありません — 下の ＋ から追加してください
-        </p>
+        <p className="text-text-3 font-mono text-xs">{t("card.empty")}</p>
       ) : rules.length === 0 ? (
-        <p className="text-text-3 font-mono text-xs">調和ルールを読み込み中…</p>
+        <p className="text-text-3 font-mono text-xs">
+          {t("card.harmony.loading")}
+        </p>
       ) : (
         <>
-          <p className="text-text-3 mt-[5px] mb-[18px] font-mono text-[11px] tracking-[0.03em]">
-            BASE {color.hex} — クリックでパレットに追加
+          <p className="text-text-3 text-meta mt-[5px] mb-[18px] font-mono tracking-[0.03em]">
+            {t("card.harmony.hint", { hex: color.hex })}
           </p>
           <div className="flex flex-col gap-[13px]">
             {rules.map((rule) => {
@@ -52,12 +55,15 @@ export function CardHarmony({ number }: CardProps) {
               const scheme = generateScheme(base, rule.hueOffsets).map((rgb) =>
                 toHex(rgb).toUpperCase(),
               );
+              // ルール名はアセット側が ja(label) / en(sub) を持つ
+              const ruleName =
+                locale === "en" ? (rule.sub ?? rule.label) : rule.label;
               return (
                 <div key={rule.id} className="flex items-center gap-4">
                   <div className="w-[148px] flex-none">
-                    <div className="text-[13px] font-bold">{rule.label}</div>
-                    {rule.sub ? (
-                      <div className="text-text-3 font-mono text-[11px] tracking-[0.08em] uppercase">
+                    <div className="text-[13px] font-bold">{ruleName}</div>
+                    {locale === "ja" && rule.sub ? (
+                      <div className="text-text-3 text-meta font-mono tracking-[0.08em] uppercase">
                         {rule.sub}
                       </div>
                     ) : null}
@@ -70,12 +76,15 @@ export function CardHarmony({ number }: CardProps) {
                           key={`${rule.id}-${i}`}
                           type="button"
                           onClick={() => add(hex)}
-                          aria-label={`${rule.label}の色 ${hex} をパレットに追加`}
-                          className="border-border-strong relative flex h-[52px] flex-1 items-end rounded-[2px] border p-1.5 transition-transform hover:-translate-y-0.5"
+                          aria-label={t("card.harmony.add", {
+                            label: ruleName,
+                            hex,
+                          })}
+                          className="border-border-strong rounded-control relative flex h-[52px] flex-1 items-end border p-1.5 transition-transform hover:-translate-y-0.5"
                           style={{ backgroundColor: hex }}
                         >
                           <span
-                            className="rounded-[2px] px-[5px] py-0.5 font-mono text-[11px]"
+                            className="rounded-control text-meta px-[5px] py-0.5 font-mono"
                             style={{ background: chip.bg, color: chip.fg }}
                           >
                             {hex}

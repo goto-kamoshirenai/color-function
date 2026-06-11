@@ -17,7 +17,7 @@ export function Toast() {
       {toast ? (
         <div
           key={toast}
-          className="border-l-accent rounded-[2px] border-l-[3px] bg-(--text) px-4 py-[9px] font-mono text-xs text-(--bg) shadow-[0_8px_24px_rgba(0,0,0,0.22)]"
+          className="border-l-accent rounded-control shadow-toast border-l-[3px] bg-(--text) px-4 py-[9px] font-mono text-xs text-(--bg)"
           style={{ animation: "cffToast 0.2s ease-out" }}
         >
           {toast}

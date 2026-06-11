@@ -68,6 +68,18 @@ test("設計ビュー: 調和スキームから色を追加できる", async ({ 
   );
 });
 
+test("設計ビュー: ペア単位のままでもスウォッチ選択が基準色に即時反映される", async ({
+  page,
+}) => {
+  await page.goto("/");
+  // 既定単位は「ペア」のまま設計ビューへ
+  await page.getByRole("radio", { name: "設計" }).click();
+  await expect(page.getByText("BASE #1F2933")).toBeVisible();
+
+  await page.getByRole("button", { name: /色 2 #2D6CDF を選択/ }).click();
+  await expect(page.getByText("BASE #2D6CDF")).toBeVisible();
+});
+
 test("全消去は確認ダイアログを経由する", async ({ page }) => {
   await page.goto("/");
   await page.getByRole("button", { name: "すべて消去" }).click();

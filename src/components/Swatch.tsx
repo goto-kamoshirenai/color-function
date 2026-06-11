@@ -2,6 +2,7 @@
 
 import { Xmark, FillColor } from "iconoir-react";
 import type { Color } from "@/store/useColorStore";
+import { useT } from "@/lib/i18n/locale";
 
 type Props = {
   color: Color;
@@ -29,9 +30,11 @@ export function Swatch({
   onRemove,
   onSetAccent,
 }: Props) {
+  const t = useT();
+  const n = index + 1;
   return (
     <div className="relative flex flex-none flex-col items-center gap-[5px]">
-      <span className="text-text-3 font-mono text-[11px] tracking-[0.1em]">
+      <span className="text-text-3 text-meta font-mono tracking-[0.1em]">
         {String(index + 1).padStart(2, "0")}
       </span>
       <div className="relative">
@@ -39,39 +42,41 @@ export function Swatch({
           type="button"
           onClick={onSelect}
           onDoubleClick={onEdit}
-          aria-label={`色 ${index + 1} ${color.hex}${badge ? ` (${badge})` : ""} を選択`}
+          aria-label={t("swatch.select", {
+            n,
+            hex: color.hex,
+            badge: badge ? ` (${badge})` : "",
+          })}
           aria-pressed={highlighted}
-          title="クリックで選択 / ダブルクリックで編集"
-          className="border-border-strong block size-[50px] rounded-[3px] border p-0"
+          title={t("swatch.selectTitle")}
+          className="border-border-strong rounded-panel block size-[50px] border p-0"
           style={{
             backgroundColor: color.hex,
             // 非アクティブの減光は色面のみ（ラベルの可読性を保つ・a11y）
             opacity: dimmed ? 0.5 : 1,
-            boxShadow: highlighted
-              ? "0 0 0 2px var(--surface),0 0 0 4px var(--ring)"
-              : "none",
+            boxShadow: highlighted ? "var(--shadow-selected)" : "none",
           }}
         />
         {badge ? (
-          <span className="absolute -top-[7px] -left-1.5 rounded-[2px] bg-(--text) px-[5px] py-px font-mono text-[11px] font-semibold tracking-[0.05em] text-(--bg)">
+          <span className="rounded-control text-meta absolute -top-[7px] -left-1.5 bg-(--text) px-[5px] py-px font-mono font-semibold tracking-[0.05em] text-(--bg)">
             {badge}
           </span>
         ) : null}
         <button
           type="button"
           onClick={onRemove}
-          aria-label={`色 ${index + 1} を削除`}
-          title="削除"
-          className="border-border-strong bg-surface text-text-2 hover:bg-surface-3 hover:text-text absolute -top-[7px] -right-[7px] flex size-[18px] items-center justify-center rounded-full border p-0 before:absolute before:-inset-1.5 before:content-['']"
+          aria-label={t("swatch.remove", { n })}
+          title={t("common.delete")}
+          className="cff-control bg-surface text-text-2 hover:bg-surface-3 hover:text-text absolute -top-[7px] -right-[7px] flex size-[18px] items-center justify-center rounded-full p-0 before:absolute before:-inset-1.5 before:content-['']"
         >
           <Xmark width={12} height={12} strokeWidth={2} aria-hidden />
         </button>
         <button
           type="button"
           onClick={onSetAccent}
-          aria-label={`色 ${index + 1} をアクセントに設定`}
+          aria-label={t("swatch.accent", { n })}
           aria-pressed={isAccent}
-          title="アクセントに設定（画面の差し色に反映）"
+          title={t("swatch.accentTitle")}
           className={
             "absolute -right-[7px] -bottom-[7px] flex size-[18px] items-center justify-center rounded-full border p-0 before:absolute before:-inset-1.5 before:content-[''] " +
             (isAccent
@@ -91,8 +96,8 @@ export function Swatch({
       <button
         type="button"
         onClick={onEdit}
-        aria-label={`色 ${index + 1} を編集`}
-        title="クリックで編集"
+        aria-label={t("swatch.edit", { n })}
+        title={t("swatch.editTitle")}
         className="text-text-2 hover:text-text decoration-border-strong bg-transparent p-0 font-mono text-[12px] tracking-[0.02em] underline-offset-2 hover:underline"
       >
         {color.hex}

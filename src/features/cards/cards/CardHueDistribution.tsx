@@ -4,6 +4,7 @@ import { Fragment } from "react";
 import { parseHex, hueDistribution, paletteEntropy } from "@/core/color";
 import { CardFrame } from "@/components/Card";
 import { useColorStore } from "@/store/useColorStore";
+import { useT } from "@/lib/i18n/locale";
 import type { CardProps } from "../types";
 
 const HUE_BAR =
@@ -12,22 +13,25 @@ const HUE_BAR =
 /** 色相分布カード（v2: 46px グラデ帯＋縦リング線＋ドット）。 */
 export function CardHueDistribution({ number }: CardProps) {
   const palette = useColorStore((s) => s.palette);
+  const t = useT();
   const rgbs = palette.map((c) => parseHex(c.hex) ?? { r: 0, g: 0, b: 0 });
   const hues = hueDistribution(rgbs);
   const entropy = paletteEntropy(rgbs);
 
   return (
-    <CardFrame number={number} title="色相分布" helpKey="huedist">
+    <CardFrame
+      number={number}
+      title={t("card.huedist.title")}
+      helpKey="huedist"
+    >
       {palette.length === 0 ? (
-        <p className="text-text-3 font-mono text-xs">
-          色がありません — 下の ＋ から追加してください
-        </p>
+        <p className="text-text-3 font-mono text-xs">{t("card.empty")}</p>
       ) : (
         <>
           <div
             role="img"
-            aria-label="色相分布。0°から360°の色相帯の上にパレット各色の位置をマーカーで示す"
-            className="border-border relative h-[46px] rounded-[2px] border"
+            aria-label={t("card.huedist.aria")}
+            className="border-border rounded-control relative h-[46px] border"
             style={{ background: HUE_BAR }}
           >
             {palette.map((c, i) => {
@@ -47,15 +51,15 @@ export function CardHueDistribution({ number }: CardProps) {
               );
             })}
           </div>
-          <div className="text-text-3 mt-[9px] flex justify-between font-mono text-[11px]">
+          <div className="text-text-3 text-meta mt-[9px] flex justify-between font-mono">
             <span>0°</span>
             <span>120°</span>
             <span>240°</span>
             <span>360°</span>
           </div>
           <div className="border-border mt-4 flex items-baseline justify-between border-t pt-3">
-            <span className="text-text-2 font-mono text-[11px]">
-              色相エントロピー
+            <span className="text-text-2 text-meta font-mono">
+              {t("card.huedist.entropy")}
             </span>
             <span className="font-mono text-base font-medium">
               {entropy.toFixed(2)}

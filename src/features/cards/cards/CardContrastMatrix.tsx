@@ -4,33 +4,33 @@ import { Fragment } from "react";
 import { parseHex, contrastRatio } from "@/core/color";
 import { CardFrame } from "@/components/Card";
 import { useColorStore } from "@/store/useColorStore";
+import { useT } from "@/lib/i18n/locale";
 import type { CardProps } from "../types";
 
 /** コントラスト比マトリクス（v2: inline-grid・太字＋インセット枠=AA合格）。 */
 export function CardContrastMatrix({ number }: CardProps) {
   const palette = useColorStore((s) => s.palette);
+  const t = useT();
   const rgbs = palette.map((c) => parseHex(c.hex) ?? { r: 0, g: 0, b: 0 });
 
   return (
     <CardFrame
       number={number}
-      title="コントラスト比マトリクス"
+      title={t("card.cmatrix.title")}
       helpKey="cmatrix"
       rightSlot={
-        <span className="text-text-3 font-mono text-[11px] tracking-[0.04em]">
+        <span className="text-text-3 text-meta font-mono tracking-[0.04em]">
           BOLD = AA (≥4.5)
         </span>
       }
     >
       {palette.length < 2 ? (
         <div className="text-text-3 p-10 text-center font-mono text-xs">
-          マトリクスには2色以上が必要です — 下の ＋ から色を追加
+          {t("card.needMatrix")}
         </div>
       ) : (
         <div className="cff-scroll overflow-x-auto">
-          <p className="sr-only">
-            パレット全色の総当たりコントラスト比の表。行と列の交点が2色の比で、4.5以上はAA合格として太字で強調されます。
-          </p>
+          <p className="sr-only">{t("card.cmatrix.sr")}</p>
           <div
             className="bg-border border-border inline-grid min-w-full gap-px border"
             style={{
@@ -44,7 +44,7 @@ export function CardContrastMatrix({ number }: CardProps) {
                 className="bg-surface flex justify-center px-1.5 py-2"
               >
                 <span
-                  className="border-border-strong size-5 rounded-[2px] border"
+                  className="border-border-strong rounded-control size-5 border"
                   style={{ backgroundColor: c.hex }}
                   title={c.hex}
                 />
@@ -54,7 +54,7 @@ export function CardContrastMatrix({ number }: CardProps) {
               <Fragment key={row.id}>
                 <div className="bg-surface flex items-center justify-center px-1.5 py-2">
                   <span
-                    className="border-border-strong size-5 rounded-[2px] border"
+                    className="border-border-strong rounded-control size-5 border"
                     style={{ backgroundColor: row.hex }}
                     title={row.hex}
                   />

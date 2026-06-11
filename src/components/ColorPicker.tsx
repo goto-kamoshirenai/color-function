@@ -4,6 +4,7 @@ import { ModalOverlay, Modal, Dialog, Heading } from "react-aria-components";
 import { Xmark } from "iconoir-react";
 import { useColorStore } from "@/store/useColorStore";
 import { hsvToRgb, toHex, parseHex } from "@/core/color";
+import { useT } from "@/lib/i18n/locale";
 
 function Slider({
   label,
@@ -48,6 +49,7 @@ export function ColorPicker() {
   const setPickerHex = useColorStore((s) => s.setPickerHex);
   const commitPicker = useColorStore((s) => s.commitPicker);
   const apply = useColorStore((s) => s.apply);
+  const t = useT();
 
   const preview = toHex(hsvToRgb({ h: picker.h, s: picker.s, v: picker.v }));
   const hexInvalid =
@@ -62,22 +64,22 @@ export function ColorPicker() {
       isDismissable
       className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 p-6"
     >
-      <Modal className="border-border-strong bg-surface w-[380px] max-w-full overflow-hidden rounded-[3px] border shadow-[0_24px_64px_rgba(0,0,0,0.32)]">
+      <Modal className="border-border-strong bg-surface rounded-panel shadow-overlay w-[380px] max-w-full overflow-hidden border">
         <Dialog className="outline-none">
           <div className="border-border flex items-center justify-between border-b px-[18px] py-3.5">
             <div className="flex items-baseline gap-[9px]">
-              <span className="text-accent font-mono text-[11px] tracking-[0.1em]">
+              <span className="text-accent text-meta font-mono tracking-[0.1em]">
                 ●
               </span>
               <Heading slot="title" className="text-sm font-bold">
-                {picker.isNew ? "色を追加" : "色を編集"}
+                {picker.isNew ? t("picker.addTitle") : t("picker.editTitle")}
               </Heading>
             </div>
             <button
               type="button"
               onClick={closePicker}
-              aria-label="閉じる"
-              className="border-border-strong text-text-2 hover:bg-surface-2 flex size-[26px] items-center justify-center rounded-[2px] border bg-transparent"
+              aria-label={t("common.close")}
+              className="cff-control text-text-2 flex size-[26px] items-center justify-center"
             >
               <Xmark width={14} height={14} aria-hidden />
             </button>
@@ -85,13 +87,13 @@ export function ColorPicker() {
 
           <div className="p-[18px]">
             <div
-              className="border-border-strong mb-4 h-[84px] rounded-[2px] border"
+              className="border-border-strong rounded-control mb-4 h-[84px] border"
               style={{ backgroundColor: preview }}
               aria-hidden
             />
             <div className="mb-4">
               <div className="flex items-center gap-[9px]">
-                <span className="text-text-3 font-mono text-[11px] tracking-[0.12em] uppercase">
+                <span className="text-text-3 text-meta font-mono tracking-[0.12em] uppercase">
                   HEX
                 </span>
                 <input
@@ -101,40 +103,40 @@ export function ColorPicker() {
                   spellCheck={false}
                   autoComplete="off"
                   maxLength={7}
-                  aria-label="HEX 値"
+                  aria-label={t("picker.hex")}
                   aria-invalid={hexInvalid}
                   aria-describedby={hexInvalid ? "hex-error" : undefined}
-                  className="border-border-strong bg-bg flex-1 rounded-[2px] border px-[11px] py-2 font-mono text-[15px] tracking-[0.02em] aria-invalid:border-(--text)"
+                  className="border-border-strong bg-bg rounded-control flex-1 border px-[11px] py-2 font-mono text-[15px] tracking-[0.02em] aria-invalid:border-(--text)"
                 />
               </div>
               {hexInvalid ? (
                 <p
                   id="hex-error"
                   role="status"
-                  className="text-text-2 mt-1.5 pl-[37px] font-mono text-[11px]"
+                  className="text-text-2 text-meta mt-1.5 pl-[37px] font-mono"
                 >
-                  #RRGGBB 形式（6桁の16進数）で入力してください
+                  {t("picker.hexError")}
                 </p>
               ) : null}
             </div>
 
             <div className="mb-5 flex flex-col gap-3.5">
               <Slider
-                label="H 色相"
+                label={t("picker.hue")}
                 value={picker.h}
                 max={360}
                 unit="°"
                 onChange={(h) => setPickerHsv({ h })}
               />
               <Slider
-                label="S 彩度"
+                label={t("picker.sat")}
                 value={picker.s}
                 max={100}
                 unit="%"
                 onChange={(s) => setPickerHsv({ s })}
               />
               <Slider
-                label="V 明度"
+                label={t("picker.val")}
                 value={picker.v}
                 max={100}
                 unit="%"
@@ -150,25 +152,25 @@ export function ColorPicker() {
                     apply({ kind: "remove", id: picker.targetId! });
                     closePicker();
                   }}
-                  className="border-border-strong text-text-2 hover:bg-surface-2 hover:text-text rounded-[2px] border bg-transparent px-[13px] py-[9px] text-[12.5px]"
+                  className="cff-control text-text-2 hover:text-text text-control px-[13px] py-[9px]"
                 >
-                  削除
+                  {t("common.delete")}
                 </button>
               ) : null}
               <div className="flex-1" />
               <button
                 type="button"
                 onClick={closePicker}
-                className="border-border-strong hover:bg-surface-2 rounded-[2px] border bg-transparent px-[15px] py-[9px] text-[12.5px]"
+                className="cff-control text-control px-[15px] py-[9px]"
               >
-                キャンセル
+                {t("common.cancel")}
               </button>
               <button
                 type="button"
                 onClick={commitPicker}
-                className="rounded-[2px] border border-(--text) bg-(--text) px-[17px] py-[9px] text-[12.5px] font-semibold text-(--bg)"
+                className="cff-control-primary text-control px-[17px] py-[9px] font-semibold"
               >
-                {picker.isNew ? "追加" : "適用"}
+                {picker.isNew ? t("picker.add") : t("picker.apply")}
               </button>
             </div>
           </div>

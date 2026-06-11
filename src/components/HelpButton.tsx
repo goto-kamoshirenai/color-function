@@ -9,20 +9,23 @@ import {
 } from "react-aria-components";
 import { QuestionMark } from "iconoir-react";
 import { HELP } from "@/features/cards/help";
+import { useLocale, useT } from "@/lib/i18n/locale";
 
 /** 指標ヘルプ（v2 パネル意匠の Popover）。 */
 export function HelpButton({ helpKey }: { helpKey: string }) {
-  const help = HELP[helpKey];
+  const locale = useLocale();
+  const t = useT();
+  const help = HELP[locale][helpKey];
   if (!help) return null;
   return (
     <DialogTrigger>
       <Button
-        aria-label={`${help.title} の説明`}
-        className="border-border-strong text-text-2 hover:bg-surface-2 relative flex size-[18px] items-center justify-center rounded-full border bg-transparent p-0 before:absolute before:-inset-1 before:content-['']"
+        aria-label={t("help.aria", { title: help.title })}
+        className="cff-control text-text-2 relative flex size-[18px] items-center justify-center rounded-full p-0 before:absolute before:-inset-1 before:content-['']"
       >
         <QuestionMark width={12} height={12} strokeWidth={2.2} aria-hidden />
       </Button>
-      <Popover className="border-border-strong bg-surface w-[400px] max-w-[90vw] rounded-[3px] border shadow-[0_24px_64px_rgba(0,0,0,0.32)]">
+      <Popover className="border-border-strong bg-surface rounded-panel shadow-overlay w-[400px] max-w-[90vw] border">
         <Dialog className="outline-none">
           <div className="border-border flex items-center gap-[9px] border-b px-[18px] py-3.5">
             <QuestionMark
@@ -38,11 +41,11 @@ export function HelpButton({ helpKey }: { helpKey: string }) {
           </div>
           <div className="p-[18px]">
             <p className="mb-4 text-[13.5px] leading-[1.65]">{help.body}</p>
-            <div className="bg-surface-2 border-accent rounded-[2px] border-l-[3px] px-3.5 py-3">
-              <p className="text-text-3 mb-[5px] font-mono text-[11px] tracking-[0.14em] uppercase">
-                目安 / Guide
+            <div className="bg-surface-2 border-accent rounded-control border-l-[3px] px-3.5 py-3">
+              <p className="text-text-3 text-meta mb-[5px] font-mono tracking-[0.14em] uppercase">
+                {t("help.guide")}
               </p>
-              <p className="font-mono text-[12.5px]">{help.guide}</p>
+              <p className="text-control font-mono">{help.guide}</p>
             </div>
           </div>
         </Dialog>

@@ -2,6 +2,7 @@
 
 import { useCallback, useSyncExternalStore } from "react";
 import { HalfMoon, SunLight } from "iconoir-react";
+import { useT } from "@/lib/i18n/locale";
 
 type Theme = "light" | "dark";
 
@@ -27,6 +28,7 @@ function getServerSnapshot(): Theme {
  */
 export function ThemeToggle() {
   const theme = useSyncExternalStore(subscribe, getSnapshot, getServerSnapshot);
+  const t = useT();
 
   const toggle = useCallback(() => {
     const next: Theme =
@@ -44,10 +46,8 @@ export function ThemeToggle() {
     <button
       type="button"
       onClick={toggle}
-      aria-label={
-        theme === "light" ? "ダークモードに切替" : "ライトモードに切替"
-      }
-      className="border-border-strong hover:bg-surface-2 inline-flex size-9 items-center justify-center rounded-[2px] border bg-transparent font-mono text-[13px]"
+      aria-label={theme === "light" ? t("theme.toDark") : t("theme.toLight")}
+      className="cff-control inline-flex size-9 items-center justify-center font-mono text-[13px]"
     >
       {theme === "light" ? (
         <HalfMoon width={16} height={16} aria-hidden />

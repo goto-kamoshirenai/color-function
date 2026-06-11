@@ -13,6 +13,8 @@ export default defineConfig({
   use: {
     baseURL: "http://localhost:3000",
     trace: "on-first-retry",
+    // 既存スペックは日本語 UI を前提とするため固定（i18n.spec.ts で en を別途検証）
+    locale: "ja-JP",
   },
   projects: [{ name: "chromium", use: { ...devices["Desktop Chrome"] } }],
   webServer: {
