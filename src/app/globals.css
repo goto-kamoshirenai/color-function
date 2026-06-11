@@ -154,6 +154,15 @@ a:focus-visible,
   display: block;
 }
 
+/*
+ * URL ハッシュ（#p=）からのパレット復元待ちの間、SSR の既定5色スウォッチを
+ * 見せないためのカバー。フラグはペイント前スクリプトが立て、StoreSync が
+ * 復元と同時に（ペイント前の useLayoutEffect で）解除する。
+ */
+[data-palette-restore="1"] .cff-palette-strip {
+  visibility: hidden;
+}
+
 /* タップ時のダブルタップズーム抑止（操作の即応性） */
 button,
 [role="button"],

@@ -1,20 +1,29 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, useLayoutEffect } from "react";
 import { useColorStore } from "@/store/useColorStore";
 import { syncPaletteToHash, readPaletteFromHash } from "@/lib/urlState";
 import { parseHex, toHex, ensureReadableAccent } from "@/core/color";
 
+// 復元はペイント前（useLayoutEffect）に行い、既定パレットの一瞬の表示を防ぐ。
+// SSR では useLayoutEffect が警告になるため useEffect に差し替える。
+const useIsomorphicLayoutEffect =
+  typeof window === "undefined" ? useEffect : useLayoutEffect;
+
 /**
  * 副作用同期（Reactステートは持たない）:
- *  - 起動時に URL ハッシュからパレット復元（docs/10 §3）
+ *  - 起動時に URL ハッシュからパレット復元（docs/10 §3）。ハッシュは
+ *    サーバーへ送られず SSR は常に既定5色のため、復元完了までは
+ *    ペイント前スクリプトが立てる data-palette-restore でスウォッチ列を隠す
  *  - パレット変更を URL ハッシュへ反映
  *  - アクセント指定色 → a11y 補正 → `--accent` をルートへ注入（docs/10 §1.1）
  */
 export function StoreSync() {
-  useEffect(() => {
+  useIsomorphicLayoutEffect(() => {
     const restored = readPaletteFromHash();
     if (restored) useColorStore.getState().hydratePalette(restored);
+    // 復元待ちカバーを解除（ハッシュが不正だった場合も含めて必ず）
+    delete document.documentElement.dataset.paletteRestore;
 
     const applyAccent = () => {
       const { palette, accentId } = useColorStore.getState();

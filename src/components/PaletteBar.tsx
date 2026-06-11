@@ -114,7 +114,7 @@ export function PaletteBar() {
     return (
       <footer className="border-border-strong bg-surface relative z-5 flex-none border-t">
         <div className="flex items-center gap-2.5 py-[13px] pr-[60px] pl-[22px]">
-          <div className="cff-scroll flex flex-1 items-center gap-[7px] overflow-x-auto">
+          <div className="cff-scroll cff-palette-strip flex flex-1 items-center gap-[7px] overflow-x-auto">
             {palette.length === 0 ? (
               <span className="text-text-3 font-mono text-xs">
                 {t("palette.empty")}
@@ -166,7 +166,7 @@ export function PaletteBar() {
   return (
     <footer className="border-border-strong bg-surface relative z-5 flex-none border-t">
       {/* 上段: スウォッチ列 */}
-      <div className="cff-scroll flex items-start gap-[15px] overflow-x-auto px-[22px] pt-[13px] pb-2.5">
+      <div className="cff-scroll cff-palette-strip flex items-start gap-[15px] overflow-x-auto px-[22px] pt-[13px] pb-2.5">
         {palette.length === 0 ? (
           <div className="flex h-[66px] items-center gap-3 pl-0.5">
             <span className="text-text-3 font-mono text-xs">
