@@ -1,10 +1,36 @@
 "use client";
 
-import { ModalOverlay, Modal, Dialog, Heading } from "react-aria-components";
+import { useState } from "react";
+import {
+  ModalOverlay,
+  Modal,
+  Dialog,
+  Heading,
+  ToggleButtonGroup,
+  ToggleButton,
+} from "react-aria-components";
 import { Xmark } from "iconoir-react";
 import { useColorStore } from "@/store/useColorStore";
-import { hsvToRgb, toHex, parseHex } from "@/core/color";
+import {
+  hsvToRgb,
+  toHex,
+  parseHex,
+  rgbToHsl,
+  hslToRgb,
+  type RGB,
+  type HSL,
+} from "@/core/color";
 import { useT } from "@/lib/i18n/locale";
+
+/** スライダーの入力形式。ストアの正準は HSV（RGB/HSL は変換して反映）。 */
+const FORMATS = ["hsv", "rgb", "hsl"] as const;
+type Format = (typeof FORMATS)[number];
+
+/** v2 セグメント（ModeToggle と同意匠の小型版）。 */
+const segClass =
+  "border-border-strong border-r border-t-2 border-t-transparent bg-transparent px-2.5 py-1 " +
+  "font-mono text-[12px] font-medium text-text-2 uppercase last:border-r-0 " +
+  "data-[selected]:border-t-accent data-[selected]:bg-(--text) data-[selected]:font-semibold data-[selected]:text-(--bg)";
 
 function Slider({
   label,
@@ -41,7 +67,7 @@ function Slider({
   );
 }
 
-/** カラーピッカー（v2: 380px パネル・84px プレビュー・HEX＋HSVスライダー）。 */
+/** カラーピッカー（v2: 380px パネル・84px プレビュー・HEX＋HSV/RGB/HSL スライダー）。 */
 export function ColorPicker() {
   const picker = useColorStore((s) => s.picker);
   const closePicker = useColorStore((s) => s.closePicker);
@@ -50,10 +76,26 @@ export function ColorPicker() {
   const commitPicker = useColorStore((s) => s.commitPicker);
   const apply = useColorStore((s) => s.apply);
   const t = useT();
+  const [format, setFormat] = useState<Format>("hsv");
 
-  const preview = toHex(hsvToRgb({ h: picker.h, s: picker.s, v: picker.v }));
+  const rgb = hsvToRgb({ h: picker.h, s: picker.s, v: picker.v });
+  const hsl = rgbToHsl(rgb);
+  const preview = toHex(rgb);
   const hexInvalid =
     picker.hexInput.trim() !== "" && parseHex(picker.hexInput) === null;
+
+  // RGB / HSL の操作は hex に変換して反映（ストアが HSV と hexInput を同期する）
+  const setRgb = (partial: Partial<RGB>) =>
+    setPickerHex(
+      toHex({
+        r: Math.round(rgb.r),
+        g: Math.round(rgb.g),
+        b: Math.round(rgb.b),
+        ...partial,
+      }),
+    );
+  const setHsl = (partial: Partial<HSL>) =>
+    setPickerHex(toHex(hslToRgb({ h: hsl.h, s: hsl.s, l: hsl.l, ...partial })));
 
   return (
     <ModalOverlay
@@ -120,28 +162,103 @@ export function ColorPicker() {
               ) : null}
             </div>
 
+            <div className="mb-3 flex items-center justify-between">
+              <span className="text-text-3 text-meta font-mono tracking-[0.12em] uppercase">
+                {t("picker.format")}
+              </span>
+              <ToggleButtonGroup
+                selectionMode="single"
+                disallowEmptySelection
+                aria-label={t("picker.format")}
+                selectedKeys={[format]}
+                onSelectionChange={(keys) => {
+                  const next = [...keys][0] as Format | undefined;
+                  if (next) setFormat(next);
+                }}
+                className="border-border-strong rounded-control inline-flex overflow-hidden border"
+              >
+                {FORMATS.map((f) => (
+                  <ToggleButton key={f} id={f} className={segClass}>
+                    {f.toUpperCase()}
+                  </ToggleButton>
+                ))}
+              </ToggleButtonGroup>
+            </div>
+
             <div className="mb-5 flex flex-col gap-3.5">
-              <Slider
-                label={t("picker.hue")}
-                value={picker.h}
-                max={360}
-                unit="°"
-                onChange={(h) => setPickerHsv({ h })}
-              />
-              <Slider
-                label={t("picker.sat")}
-                value={picker.s}
-                max={100}
-                unit="%"
-                onChange={(s) => setPickerHsv({ s })}
-              />
-              <Slider
-                label={t("picker.val")}
-                value={picker.v}
-                max={100}
-                unit="%"
-                onChange={(v) => setPickerHsv({ v })}
-              />
+              {format === "hsv" ? (
+                <>
+                  <Slider
+                    label={t("picker.hue")}
+                    value={picker.h}
+                    max={360}
+                    unit="°"
+                    onChange={(h) => setPickerHsv({ h })}
+                  />
+                  <Slider
+                    label={t("picker.sat")}
+                    value={picker.s}
+                    max={100}
+                    unit="%"
+                    onChange={(s) => setPickerHsv({ s })}
+                  />
+                  <Slider
+                    label={t("picker.val")}
+                    value={picker.v}
+                    max={100}
+                    unit="%"
+                    onChange={(v) => setPickerHsv({ v })}
+                  />
+                </>
+              ) : format === "rgb" ? (
+                <>
+                  <Slider
+                    label={t("picker.red")}
+                    value={rgb.r}
+                    max={255}
+                    unit=""
+                    onChange={(r) => setRgb({ r })}
+                  />
+                  <Slider
+                    label={t("picker.green")}
+                    value={rgb.g}
+                    max={255}
+                    unit=""
+                    onChange={(g) => setRgb({ g })}
+                  />
+                  <Slider
+                    label={t("picker.blue")}
+                    value={rgb.b}
+                    max={255}
+                    unit=""
+                    onChange={(b) => setRgb({ b })}
+                  />
+                </>
+              ) : (
+                <>
+                  <Slider
+                    label={t("picker.hue")}
+                    value={hsl.h}
+                    max={360}
+                    unit="°"
+                    onChange={(h) => setHsl({ h })}
+                  />
+                  <Slider
+                    label={t("picker.sat")}
+                    value={hsl.s}
+                    max={100}
+                    unit="%"
+                    onChange={(s) => setHsl({ s })}
+                  />
+                  <Slider
+                    label={t("picker.lightness")}
+                    value={hsl.l}
+                    max={100}
+                    unit="%"
+                    onChange={(l) => setHsl({ l })}
+                  />
+                </>
+              )}
             </div>
 
             <div className="flex items-center gap-[9px]">
