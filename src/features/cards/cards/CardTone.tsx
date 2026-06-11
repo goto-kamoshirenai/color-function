@@ -32,7 +32,7 @@ export function CardTone({ number }: CardProps) {
       {!color ? (
         <p className="text-text-3 font-mono text-xs">{t("card.empty")}</p>
       ) : (
-        <div className="grid grid-cols-5 gap-[7px]">
+        <div className="grid grid-cols-3 gap-[7px] sm:grid-cols-5">
           {generateTones(parseHex(color.hex) ?? { r: 0, g: 0, b: 0 }).map(
             ({ step, rgb }) => {
               const hex = toHex(rgb).toUpperCase();

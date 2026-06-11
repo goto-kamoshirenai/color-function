@@ -37,8 +37,8 @@ export function CardFrame({
         // （h-full はヘッダー分を含む高さに解決されて下にはみ出すため使わない）
         "bg-surface rounded-control relative flex flex-col border " +
         (hero
-          ? "border-border-strong px-6 py-[22px]"
-          : "border-border px-[22px] py-[18px]")
+          ? "border-border-strong px-4 py-[18px] sm:px-6 sm:py-[22px]"
+          : "border-border px-4 py-4 sm:px-[22px] sm:py-[18px]")
       }
     >
       {hero ? (

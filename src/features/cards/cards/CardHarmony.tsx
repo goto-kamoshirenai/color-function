@@ -62,8 +62,12 @@ export function CardHarmony({ number }: CardProps) {
               const ruleName =
                 locale === "en" ? (rule.sub ?? rule.label) : rule.label;
               return (
-                <div key={rule.id} className="flex items-center gap-4">
-                  <div className="w-[148px] flex-none">
+                // 小画面はルール名をチップの上に積む（チップ幅の確保）
+                <div
+                  key={rule.id}
+                  className="flex flex-col gap-1.5 sm:flex-row sm:items-center sm:gap-4"
+                >
+                  <div className="flex items-baseline gap-2 sm:block sm:w-[148px] sm:flex-none">
                     <div className="text-[13px] font-bold">{ruleName}</div>
                     {locale === "ja" && rule.sub ? (
                       <div className="text-text-3 text-meta font-mono tracking-[0.08em] uppercase">

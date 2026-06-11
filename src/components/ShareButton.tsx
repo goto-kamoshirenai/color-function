@@ -23,10 +23,11 @@ export function ShareButton() {
       type="button"
       onClick={share}
       aria-label={t("share.copy")}
-      className="cff-control inline-flex items-center gap-[7px] px-[13px] py-2 font-mono text-[12px] tracking-[0.06em] whitespace-nowrap"
+      className="cff-control inline-flex h-9 items-center gap-[7px] px-2.5 font-mono text-[12px] tracking-[0.06em] whitespace-nowrap sm:px-[13px]"
     >
       <ArrowUpRight width={14} height={14} strokeWidth={2} aria-hidden />
-      SHARE
+      {/* ラベルは小画面ではアイコンのみ */}
+      <span className="hidden sm:inline">SHARE</span>
     </button>
   );
 }

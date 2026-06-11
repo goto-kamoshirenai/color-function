@@ -35,7 +35,7 @@ export function CardHueShift({ number }: CardProps) {
       {!color ? (
         <p className="text-text-3 font-mono text-xs">{t("card.empty")}</p>
       ) : (
-        <div className="grid grid-cols-4 gap-[7px] md:grid-cols-6">
+        <div className="grid grid-cols-3 gap-[7px] sm:grid-cols-6">
           {generateHueShifts(parseHex(color.hex) ?? { r: 0, g: 0, b: 0 }).map(
             ({ offset, rgb }) => {
               const hex = toHex(rgb).toUpperCase();

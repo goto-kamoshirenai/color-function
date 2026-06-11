@@ -52,13 +52,14 @@ export function CardValue({ number }: CardProps) {
         <p className="text-text-3 font-mono text-xs">{t("card.empty")}</p>
       ) : (
         <>
-          <div className="flex items-stretch gap-5">
+          {/* 小画面はスウォッチを上に積み、値セルは1列（値の折返し防止） */}
+          <div className="flex flex-col items-stretch gap-4 sm:flex-row sm:gap-5">
             <div
-              className="border-border-strong rounded-control size-[110px] flex-none border"
+              className="border-border-strong rounded-control h-16 flex-none border sm:size-[110px]"
               style={{ backgroundColor: color.hex }}
               aria-hidden
             />
-            <div className="bg-border border-border rounded-control grid flex-1 grid-cols-2 gap-px overflow-hidden border">
+            <div className="bg-border border-border rounded-control grid flex-1 grid-cols-1 gap-px overflow-hidden border sm:grid-cols-2">
               {cells.map((cell) => (
                 <button
                   key={cell.label}

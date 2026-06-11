@@ -37,8 +37,11 @@ export function CardCvd({ number }: CardProps) {
             const simBg = simulateCvd(bg, type, 1);
             const ratio = contrastRatio(simFg, simBg);
             return (
-              <div key={type} className="flex items-center gap-[13px]">
-                <div className="w-[120px] flex-none">
+              <div
+                key={type}
+                className="flex items-center gap-2.5 sm:gap-[13px]"
+              >
+                <div className="w-[96px] flex-none sm:w-[120px]">
                   <div className="text-control font-semibold">{t(nameKey)}</div>
                   <div className="text-text-3 text-meta font-mono">{sub}</div>
                 </div>
