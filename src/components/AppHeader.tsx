@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Book } from "iconoir-react";
+import { BrandMark } from "./BrandMark";
 import { ColorFormatSelect } from "./ColorFormatSelect";
 import { SettingsMenu } from "./SettingsMenu";
 import { useT } from "@/lib/i18n/locale";
@@ -15,7 +16,7 @@ export function AppHeader() {
     <header className="border-border-strong bg-surface z-5 flex h-14 flex-none items-center justify-between border-b pr-3 sm:pr-[18px]">
       <div className="flex h-full items-stretch">
         <div className="border-border flex items-center gap-[7px] border-r px-4 sm:px-5">
-          <span className="text-[19px] font-black tracking-[-0.04em]">CFF</span>
+          <BrandMark className="size-8" role="img" aria-label="CFF" />
           {/* アクセントのインジケータ（指定色がブランドにも乗る） */}
           <span className="bg-accent mt-0.5 size-2 rounded-full" aria-hidden />
         </div>

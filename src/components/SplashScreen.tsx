@@ -4,6 +4,7 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { useSyncExternalStore } from "react";
 import { motion, AnimatePresence, useReducedMotion } from "motion/react";
 import { useT } from "@/lib/i18n/locale";
+import { MARK_PATHS } from "./BrandMark";
 
 /**
  * スプラッシュ（v4: #FFF マークの SVG 描画演出）。
@@ -23,18 +24,7 @@ const T = {
   sweep: 2.45, // マーク内の光沢スイープ
 } as const;
 
-// #FFF マークのパス（public/logo/color-function_logo.svg・viewBox 300×300）。
-// 描画順 = 斜線5本（左→右）→ 上バー → 下バー。
-const MARK_PATHS = [
-  "M124.9 57.4478H144.815L52.315 242.448H32.3999L124.9 57.4478Z",
-  "M155.69 57.4478H175.605L83.1048 242.448H63.1897L155.69 57.4478Z",
-  "M186.349 57.4478H206.264L113.763 242.448H93.8484L186.349 57.4478Z",
-  "M217.007 57.4478H236.923L144.422 242.448H124.507L217.007 57.4478Z",
-  "M247.666 57.4478H267.581L175.081 242.448H155.166L247.666 57.4478Z",
-  "M87.6905 120.075H243.867L237.447 133.177H81.2705L87.6905 120.075Z",
-  "M65.1551 166.457H127.652L121.232 179.559H58.7351L65.1551 166.457Z",
-];
-
+// #FFF マークのパスは BrandMark と共有（描画順 = 斜線5本（左→右）→ 上バー → 下バー）
 const MARK_URL = "/logo/color-function_logo.svg";
 
 // data-splash はペイント前スクリプトが設定する外部状態（変化通知は不要）
