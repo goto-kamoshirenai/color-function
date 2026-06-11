@@ -6,8 +6,9 @@ import { useColorStore } from "@/store/useColorStore";
 import { useT } from "@/lib/i18n/locale";
 import type { CardProps } from "../types";
 
+// conic-gradient は 0deg=真上・時計回り。マーカー座標（h=0 が真上）と一致させる
 const WHEEL =
-  "conic-gradient(from -90deg,hsl(0 72% 55%),hsl(60 72% 55%),hsl(120 72% 55%),hsl(180 72% 55%),hsl(240 72% 55%),hsl(300 72% 55%),hsl(360 72% 55%))";
+  "conic-gradient(hsl(0 72% 55%),hsl(60 72% 55%),hsl(120 72% 55%),hsl(180 72% 55%),hsl(240 72% 55%),hsl(300 72% 55%),hsl(360 72% 55%))";
 
 /** 色相環カード（v2: 208px ホイール＋パレットマーカー）。 */
 export function CardHueWheel({ number }: CardProps) {
