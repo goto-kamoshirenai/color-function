@@ -82,11 +82,12 @@ export function CardList() {
 
   return (
     <div className="mx-auto max-w-[900px] px-4 pb-10 sm:px-[26px] sm:pb-[52px]">
-      {/* マストヘッド（v2: 巨大背景ワード＋figタグ＋タイトル＋カウンタ） */}
+      {/* マストヘッド（v2: 巨大背景ワード＋figタグ＋タイトル＋カウンタ）。
+          透かしの色はテーマ相対の color-mix（surface-2 はライトで bg より明るく潰れるため） */}
       <div className="border-border-strong relative mb-[22px] overflow-hidden border-b pt-[26px] pb-4">
         <div
           aria-hidden
-          className="text-surface-2 pointer-events-none absolute -right-3 -bottom-[18px] z-0 text-[72px] leading-[0.8] font-black tracking-[-0.05em] whitespace-nowrap select-none sm:text-[128px]"
+          className="pointer-events-none absolute -right-3 -bottom-[18px] z-0 text-[72px] leading-[0.8] font-black tracking-[-0.05em] whitespace-nowrap text-[color-mix(in_srgb,var(--text)_7%,var(--bg))] select-none sm:text-[128px]"
         >
           {modeWord}
         </div>

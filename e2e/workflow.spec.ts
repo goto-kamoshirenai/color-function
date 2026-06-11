@@ -23,8 +23,8 @@ test("起動: 既定パレットとペア×検証カードが表示される", a
     page.getByRole("heading", { name: "WCAG コントラスト比" }),
   ).toBeVisible();
   await expect(page.getByText(":1", { exact: true }).first()).toBeVisible();
-  // 既定2色（FG=黒 / BG=アクセント=赤）のスウォッチ
-  await expect(page.getByRole("button", { name: /を選択$/ })).toHaveCount(2);
+  // 既定4色（FG=黒 … BG=アクセント=赤）のスウォッチ
+  await expect(page.getByRole("button", { name: /を選択$/ })).toHaveCount(4);
 });
 
 test("色を追加すると URL ハッシュとカードに即時反映される", async ({
@@ -35,7 +35,7 @@ test("色を追加すると URL ハッシュとカードに即時反映される
   await page.getByRole("textbox").fill("#ABCDEF");
   await page.getByRole("button", { name: "追加", exact: true }).click();
 
-  await expect(page.getByRole("button", { name: /を選択$/ })).toHaveCount(3);
+  await expect(page.getByRole("button", { name: /を選択$/ })).toHaveCount(5);
   await expect(page).toHaveURL(/#p=.*ABCDEF/);
 });
 
@@ -81,8 +81,8 @@ test("設計ビュー: ペア単位のままでもスウォッチ選択が基準
   await page.getByRole("radio", { name: "設計" }).click();
   await expect(page.getByText("BASE #080808")).toBeVisible();
 
-  await page.getByRole("button", { name: /色 2 #E83015 を選択/ }).click();
-  await expect(page.getByText("BASE #E83015")).toBeVisible();
+  await page.getByRole("button", { name: /色 2 #009B4C を選択/ }).click();
+  await expect(page.getByText("BASE #009B4C")).toBeVisible();
 });
 
 test("全消去は確認ダイアログを経由する", async ({ page }) => {

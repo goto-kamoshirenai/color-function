@@ -60,7 +60,7 @@ export type ColorStore = {
 
 // 既定パレット（2026-06-11 ユーザー指定）: FG = #080808、BG = アクセント = #E83015。
 // FG=先頭・BG=末尾・アクセント=末尾の規則にそのまま一致する並び。
-const DEFAULT_HEXES = ["#080808", "#E83015"];
+const DEFAULT_HEXES = ["#080808", "#009B4C", "#576FFF", "#E83015"];
 
 const uid = (): string => crypto.randomUUID();
 
