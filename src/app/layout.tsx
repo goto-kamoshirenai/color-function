@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Archivo, Geist_Mono, Noto_Sans_JP } from "next/font/google";
 import "./globals.css";
 import { AppHeader } from "@/components/AppHeader";
@@ -24,6 +24,17 @@ export const metadata: Metadata = {
   title: "Color Follows Function",
   description:
     "配色を感覚でなく数値で扱う、配色の検証・設計支援ツール。コントラスト比・色差・色覚シミュレーションなどで定量的に可視化する。",
+  applicationName: "Color Follows Function",
+  // ホーム画面追加時の表示（マニフェストは app/manifest.ts）
+  appleWebApp: { capable: true, title: "CFF", statusBarStyle: "default" },
+};
+
+export const viewport: Viewport = {
+  // アプリのテーマは data-theme 切替のため、OS 設定に応じた近似値を返す
+  themeColor: [
+    { media: "(prefers-color-scheme: light)", color: "#ffffff" },
+    { media: "(prefers-color-scheme: dark)", color: "#161618" },
+  ],
 };
 
 // ペイント前に data-theme を確定（ちらつき防止）し、スプラッシュの表示可否も決める。
