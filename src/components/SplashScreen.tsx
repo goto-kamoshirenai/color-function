@@ -18,37 +18,44 @@ import {
 import { useT } from "@/lib/i18n/locale";
 
 /**
- * スプラッシュ（モック: CFF Wordmark Drafting.html ベースのリッチ版）。
- * 製図シート上で CFF ワードマークが段階的に作図される演出:
- *   GRID ▸ GUIDES ▸ CONSTRUCTION ▸ STROKE-ON(文字ごと) ▸ DIMENSIONS(カウントアップ) ▸ CALLOUTS ▸ TAGLINE
+ * スプラッシュ（v3: #FFF マーク版。public/logo/color-function_logo.svg 基準）。
+ * 製図シート上で「#FFF」マーク（# = HEX 記法 / FF = Follows Function）が
+ * 段階的に作図される演出:
+ *   GRID ▸ GUIDES ▸ STROKE-ON(斜線→バー) ▸ DIMENSIONS(カウントアップ) ▸ CALLOUTS ▸ TAGLINE
  * - セッション初回のみ（sessionStorage）。表示判定はペイント前スクリプト（data-splash）。
  * - クリック / Esc / SKIP でいつでもスキップ。prefers-reduced-motion では表示しない。
  */
 
-const TOTAL_MS = 6600; // 演出 ~5.8s + ホールド
+const TOTAL_MS = 6000; // 演出 ~5.2s + ホールド
 const EASE: [number, number, number, number] = [0.4, 0, 0.2, 1];
 
 // フェーズ開始時刻（秒）
 const T = {
   grid: 0,
-  guides: 0.55,
-  construction: 1.1,
-  stroke: 1.7, // C → F → F を 0.45s 間隔でステップ描画
-  fill: 3.1,
-  sweep: 3.95, // ベースラインのアクセントスイープ
-  dims: 3.95,
-  callouts: 4.55,
-  tagline: 4.9,
+  guides: 0.5,
+  stroke: 1.0, // 斜線5本を 0.18s 間隔で下からワイプ
+  bars: 2.1, // 横バー2本を左からワイプ
+  sweep: 2.8, // ベースラインのアクセントスイープ
+  dims: 2.95,
+  callouts: 3.6,
+  tagline: 4.05,
 } as const;
 
-const LETTERS = ["C", "F", "F"] as const;
-const LETTER_DELAYS = [T.stroke, T.stroke + 0.45, T.stroke + 0.9];
+// #FFF マークのパス（public/logo/color-function_logo.svg・viewBox 300×300）
+const DIAGONALS = [
+  "M124.9 57.4478H144.815L52.315 242.448H32.3999L124.9 57.4478Z",
+  "M155.69 57.4478H175.605L83.1048 242.448H63.1897L155.69 57.4478Z",
+  "M186.349 57.4478H206.264L113.763 242.448H93.8484L186.349 57.4478Z",
+  "M217.007 57.4478H236.923L144.422 242.448H124.507L217.007 57.4478Z",
+  "M247.666 57.4478H267.581L175.081 242.448H155.166L247.666 57.4478Z",
+];
+const BARS = [
+  "M87.6905 120.075H243.867L237.447 133.177H81.2705L87.6905 120.075Z", // 上バー（長）
+  "M65.1551 166.457H127.652L121.232 179.559H58.7351L65.1551 166.457Z", // 下バー（短）
+];
 
-const fade = (delay: number, duration = 0.5) => ({
-  initial: { opacity: 0 },
-  animate: { opacity: 1 },
-  transition: { delay, duration, ease: EASE },
-});
+// シート(640×400)内のマーク配置。コンテンツは x202–438 / y107–292 に収まる
+const MARK = { x: 170, y: 50, size: 300 } as const;
 
 const mono = "var(--font-geist-mono), monospace";
 
@@ -99,6 +106,40 @@ function CountUp({ to, delay }: { to: number; delay: number }) {
     return () => controls.stop();
   }, [value, to, delay]);
   return <motion.span>{text}</motion.span>;
+}
+
+/** マークの1ストローク（クリップワイプで作図される）。 */
+function MarkStroke({
+  d,
+  delay,
+  wipe,
+}: {
+  d: string;
+  delay: number;
+  wipe: "up" | "right";
+}) {
+  return (
+    <motion.div
+      aria-hidden
+      className="pointer-events-none absolute"
+      style={{
+        left: MARK.x,
+        top: MARK.y,
+        width: MARK.size,
+        height: MARK.size,
+      }}
+      initial={{
+        clipPath:
+          wipe === "up" ? "inset(100% 0% 0% 0%)" : "inset(0% 100% 0% 0%)",
+      }}
+      animate={{ clipPath: "inset(0% 0% 0% 0%)" }}
+      transition={{ delay, duration: wipe === "up" ? 0.45 : 0.35, ease: EASE }}
+    >
+      <svg viewBox="0 0 300 300" width="100%" height="100%">
+        <path d={d} fill="var(--text)" />
+      </svg>
+    </motion.div>
+  );
 }
 
 // data-splash はペイント前スクリプトが設定する外部状態（変化通知は不要）
@@ -196,7 +237,11 @@ export function SplashScreen() {
           >
             {/* ごく淡いスポットライト（奥行き） */}
             <motion.div
-              {...fade(0, 1.2)}
+              {...{
+                initial: { opacity: 0 },
+                animate: { opacity: 1 },
+                transition: { delay: 0, duration: 1.2, ease: EASE },
+              }}
               aria-hidden
               className="pointer-events-none absolute inset-0"
               style={{
@@ -207,15 +252,17 @@ export function SplashScreen() {
 
             {/* 図面ヘッダー（左上） */}
             <motion.div
-              {...fade(T.grid, 0.5)}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: T.grid, duration: 0.5, ease: EASE }}
               className="absolute top-4 left-[18px] flex items-center gap-2.5"
             >
               <span className="text-accent text-meta font-mono tracking-[0.14em]">
-                DWG. CFF-LOGO-01
+                DWG. CFF-LOGO-02
               </span>
               <span className="bg-border-strong h-px w-[22px]" aria-hidden />
               <span className="text-text-3 text-meta font-mono tracking-[0.14em]">
-                SCALE 1:1 · UNIT px
+                MARK “#FFF” · SCALE 1:1
               </span>
             </motion.div>
 
@@ -236,10 +283,16 @@ export function SplashScreen() {
               >
                 {/* ── P1: 外枠＋レジストレーション十字 ── */}
                 <motion.div
-                  {...fade(T.grid, 0.5)}
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  transition={{ delay: T.grid, duration: 0.5, ease: EASE }}
                   className="border-border absolute inset-0 border"
                 />
-                <motion.div {...fade(T.grid, 0.5)}>
+                <motion.div
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  transition={{ delay: T.grid, duration: 0.5, ease: EASE }}
+                >
                   {(
                     [
                       [
@@ -285,13 +338,13 @@ export function SplashScreen() {
 
                 {/* ── P2: ガイド（CAP/BASE は左から線が伸びる） ── */}
                 <motion.div
-                  className="absolute top-[116px] right-[60px] left-[70px] origin-left border-t border-dashed border-(--text-3)"
+                  className="absolute top-[107px] right-[60px] left-[70px] origin-left border-t border-dashed border-(--text-3)"
                   initial={{ scaleX: 0, opacity: 0 }}
                   animate={{ scaleX: 1, opacity: 1 }}
                   transition={{ delay: T.guides, duration: 0.55, ease: EASE }}
                 />
                 <motion.div
-                  className="absolute top-[284px] right-[60px] left-[70px] origin-left border-t border-dashed border-(--text-3)"
+                  className="absolute top-[292px] right-[60px] left-[70px] origin-left border-t border-dashed border-(--text-3)"
                   initial={{ scaleX: 0, opacity: 0 }}
                   animate={{ scaleX: 1, opacity: 1 }}
                   transition={{
@@ -300,114 +353,76 @@ export function SplashScreen() {
                     ease: EASE,
                   }}
                 />
-                <motion.div {...fade(T.guides + 0.35, 0.4)}>
-                  <span className="text-text-2 text-meta absolute top-[108px] right-6 font-mono tracking-[0.08em]">
+                <motion.div
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  transition={{
+                    delay: T.guides + 0.35,
+                    duration: 0.4,
+                    ease: EASE,
+                  }}
+                >
+                  <span className="text-text-2 text-meta absolute top-[99px] right-6 font-mono tracking-[0.08em]">
                     CAP LINE
                   </span>
-                  <span className="text-text-2 text-meta absolute top-[288px] right-6 font-mono tracking-[0.08em]">
+                  <span className="text-text-2 text-meta absolute top-[296px] right-6 font-mono tracking-[0.08em]">
                     BASE LINE
                   </span>
                 </motion.div>
 
-                {/* ── P3: 作図補助（中心十字・C ボウル円・目盛） ── */}
-                <motion.div {...fade(T.construction, 0.55)}>
-                  <span className="bg-accent absolute top-[200px] left-[320px] h-px w-[18px] -translate-x-1/2 -translate-y-1/2" />
-                  <span className="bg-accent absolute top-[200px] left-[320px] h-[18px] w-px -translate-x-1/2 -translate-y-1/2" />
-                  <span className="border-accent absolute top-[200px] left-[228px] size-[7px] -translate-x-1/2 -translate-y-1/2 rounded-full border" />
-                  <Ticks />
-                </motion.div>
+                {/* ── P3: 作図補助（中心十字・目盛） ── */}
                 <motion.div
-                  className="absolute top-[114px] left-[142px] size-[172px] rounded-full border border-dashed border-(--text-3)"
-                  initial={{ opacity: 0, scale: 0.85, rotate: -40 }}
-                  animate={{ opacity: 0.7, scale: 1, rotate: 0 }}
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
                   transition={{
-                    delay: T.construction + 0.1,
-                    duration: 0.6,
+                    delay: T.guides + 0.25,
+                    duration: 0.55,
                     ease: EASE,
                   }}
-                />
+                >
+                  <span className="bg-accent absolute top-[200px] left-[320px] h-px w-[18px] -translate-x-1/2 -translate-y-1/2" />
+                  <span className="bg-accent absolute top-[200px] left-[320px] h-[18px] w-px -translate-x-1/2 -translate-y-1/2" />
+                  <Ticks />
+                </motion.div>
 
-                {/* ── STROKE-ON: 文字ごとの輪郭ワイプ（C → F → F） ── */}
-                <div className="absolute inset-0 flex items-center justify-center">
-                  <div
-                    className="relative flex h-[172px] leading-none font-black tracking-[-0.05em]"
-                    style={{ fontSize: 172 }}
-                  >
-                    {LETTERS.map((ch, i) => (
-                      <motion.span
-                        key={`stroke-${i}`}
-                        className="relative inline-block text-transparent"
-                        style={{ WebkitTextStroke: "1.6px var(--text)" }}
-                        initial={{
-                          clipPath: "inset(-10% 100% -10% 0)",
-                          y: 10,
-                          filter: "blur(3px)",
-                        }}
-                        animate={{
-                          clipPath: "inset(-10% 0% -10% 0)",
-                          y: 0,
-                          filter: "blur(0px)",
-                        }}
-                        transition={{
-                          delay: LETTER_DELAYS[i],
-                          duration: 0.42,
-                          ease: EASE,
-                        }}
-                      >
-                        {ch}
-                      </motion.span>
-                    ))}
-                    {/* 塗りレイヤ（同じ3スパン構造でワイプ） */}
-                    <div className="absolute top-0 left-0 flex">
-                      {LETTERS.map((ch, i) => (
-                        <motion.span
-                          key={`fill-${i}`}
-                          className="inline-block text-(--text)"
-                          initial={{
-                            clipPath: "inset(-10% 100% -10% 0)",
-                            opacity: 0,
-                          }}
-                          animate={{
-                            clipPath: "inset(-10% 0% -10% 0)",
-                            opacity: 1,
-                          }}
-                          transition={{
-                            delay: T.fill + i * 0.16,
-                            duration: 0.5,
-                            ease: EASE,
-                            opacity: {
-                              delay: T.fill + i * 0.16,
-                              duration: 0.01,
-                            },
-                          }}
-                        >
-                          {ch}
-                        </motion.span>
-                      ))}
-                    </div>
-                  </div>
-                </div>
+                {/* ── STROKE-ON: 斜線5本（下からワイプ）→ 横バー2本（左からワイプ） ── */}
+                {DIAGONALS.map((d, i) => (
+                  <MarkStroke
+                    key={`diag-${i}`}
+                    d={d}
+                    delay={T.stroke + i * 0.18}
+                    wipe="up"
+                  />
+                ))}
+                {BARS.map((d, i) => (
+                  <MarkStroke
+                    key={`bar-${i}`}
+                    d={d}
+                    delay={T.bars + i * 0.2}
+                    wipe="right"
+                  />
+                ))}
 
-                {/* プロッタヘッド（文字境界で停留しながら掃引） */}
+                {/* プロッタヘッド（ストローク描画に合わせて掃引） */}
                 <motion.div
-                  className="bg-accent absolute top-[104px] h-[192px] w-0.5"
+                  className="bg-accent absolute top-[95px] h-[207px] w-0.5"
                   style={{ boxShadow: "0 0 12px 1px var(--accent)" }}
-                  initial={{ left: 158, opacity: 0 }}
+                  initial={{ left: 198, opacity: 0 }}
                   animate={{
-                    left: [158, 276, 276, 374, 374, 480, 480],
-                    opacity: [0, 1, 1, 1, 1, 1, 0],
+                    left: [198, 260, 320, 380, 442],
+                    opacity: [0, 1, 1, 1, 0],
                   }}
                   transition={{
                     delay: T.stroke,
-                    duration: 1.55,
-                    times: [0, 0.26, 0.3, 0.55, 0.6, 0.92, 1],
+                    duration: 1.5,
+                    times: [0, 0.3, 0.55, 0.8, 1],
                     ease: EASE,
                   }}
                 />
 
-                {/* 塗り完了後のベースライン・アクセントスイープ */}
+                {/* バー描画後のベースライン・アクセントスイープ */}
                 <motion.div
-                  className="bg-accent absolute top-[290px] left-[160px] h-0.5 w-[318px] origin-left"
+                  className="bg-accent absolute top-[292px] left-[202px] h-0.5 w-[236px] origin-left"
                   initial={{ scaleX: 0, opacity: 0 }}
                   animate={{ scaleX: [0, 1, 1], opacity: [1, 1, 0] }}
                   transition={{
@@ -418,61 +433,59 @@ export function SplashScreen() {
                   }}
                 />
 
-                {/* ── P4: 寸法（318・168 はカウントアップ） ── */}
-                <motion.div {...fade(T.dims, 0.6)}>
-                  <div className="border-t-accent absolute top-[88px] left-[160px] w-[318px] border-t-[1.5px]" />
-                  <span className="bg-accent absolute top-[82px] left-[160px] h-[13px] w-px rotate-45" />
-                  <span className="bg-accent absolute top-[82px] left-[478px] h-[13px] w-px rotate-45" />
-                  <span className="absolute top-[60px] left-[160px] h-7 w-px bg-(--text-3)" />
-                  <span className="absolute top-[60px] left-[478px] h-7 w-px bg-(--text-3)" />
-                  <span className="text-accent bg-surface text-meta absolute top-[74px] left-[319px] -translate-x-1/2 px-[5px] font-mono font-medium tabular-nums">
-                    <CountUp to={318} delay={T.dims + 0.1} />
+                {/* ── P4: 寸法（235・185 はカウントアップ） ── */}
+                <motion.div
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  transition={{ delay: T.dims, duration: 0.6, ease: EASE }}
+                >
+                  <div className="border-t-accent absolute top-[88px] left-[202px] w-[236px] border-t-[1.5px]" />
+                  <span className="bg-accent absolute top-[82px] left-[202px] h-[13px] w-px rotate-45" />
+                  <span className="bg-accent absolute top-[82px] left-[438px] h-[13px] w-px rotate-45" />
+                  <span className="absolute top-[60px] left-[202px] h-7 w-px bg-(--text-3)" />
+                  <span className="absolute top-[60px] left-[438px] h-7 w-px bg-(--text-3)" />
+                  <span className="text-accent bg-surface text-meta absolute top-[74px] left-[320px] -translate-x-1/2 px-[5px] font-mono font-medium tabular-nums">
+                    <CountUp to={235} delay={T.dims + 0.1} />
                   </span>
 
-                  <div className="absolute top-[116px] left-[104px] h-[168px] border-l-[1.5px] border-(--text-2)" />
-                  <span className="absolute top-[116px] left-[98px] h-px w-[13px] rotate-45 bg-(--text-2)" />
-                  <span className="absolute top-[284px] left-[98px] h-px w-[13px] rotate-45 bg-(--text-2)" />
-                  <span className="absolute top-[116px] left-[70px] h-px w-10 bg-(--text-3)" />
-                  <span className="absolute top-[284px] left-[70px] h-px w-10 bg-(--text-3)" />
-                  <span className="text-text-2 bg-surface text-meta absolute top-[200px] left-[104px] -translate-x-1/2 -translate-y-1/2 -rotate-90 px-[5px] font-mono tabular-nums">
-                    <CountUp to={168} delay={T.dims + 0.2} />
+                  <div className="absolute top-[107px] left-[180px] h-[185px] border-l-[1.5px] border-(--text-2)" />
+                  <span className="absolute top-[107px] left-[174px] h-px w-[13px] rotate-45 bg-(--text-2)" />
+                  <span className="absolute top-[292px] left-[174px] h-px w-[13px] rotate-45 bg-(--text-2)" />
+                  <span className="absolute top-[107px] left-[146px] h-px w-10 bg-(--text-3)" />
+                  <span className="absolute top-[292px] left-[146px] h-px w-10 bg-(--text-3)" />
+                  <span className="text-text-2 bg-surface text-meta absolute top-[200px] left-[180px] -translate-x-1/2 -translate-y-1/2 -rotate-90 px-[5px] font-mono tabular-nums">
+                    <CountUp to={185} delay={T.dims + 0.2} />
                   </span>
 
-                  <div className="absolute top-[312px] left-[160px] w-[114px] border-t border-(--text-3)" />
-                  <div className="absolute top-[312px] left-[282px] w-[90px] border-t border-(--text-3)" />
-                  <div className="absolute top-[312px] left-[382px] w-24 border-t border-(--text-3)" />
-                  <span className="text-text-2 text-meta absolute top-[316px] left-[217px] -translate-x-1/2 font-mono">
-                    114
-                  </span>
-                  <span className="text-text-2 text-meta absolute top-[316px] left-[327px] -translate-x-1/2 font-mono">
-                    90
-                  </span>
-                  <span className="text-text-2 text-meta absolute top-[316px] left-[430px] -translate-x-1/2 font-mono">
-                    96
-                  </span>
-                  {[160, 274, 372, 478].map((x) => (
+                  {/* 斜線ピッチ（30.7 TYP.） */}
+                  <div className="absolute top-[306px] left-[202px] w-[123px] border-t border-(--text-3)" />
+                  {[202, 233, 264, 294, 325].map((x) => (
                     <span
                       key={x}
-                      className="absolute top-[308px] h-[9px] w-px bg-(--text-3)"
+                      className="absolute top-[302px] h-[9px] w-px bg-(--text-3)"
                       style={{ left: x }}
                     />
                   ))}
+                  <span className="text-text-2 text-meta absolute top-[310px] left-[263px] -translate-x-1/2 font-mono">
+                    30.7 TYP.
+                  </span>
                 </motion.div>
 
-                {/* ── P5: 引出線 ── */}
-                <motion.div {...fade(T.callouts, 0.6)}>
-                  <div className="absolute top-[200px] left-[454px] w-[74px] border-t border-(--text-2)" />
-                  <span className="bg-accent absolute top-[197px] left-[454px] size-1.5 -translate-x-1/2 -translate-y-1/2 rounded-full" />
-                  <span className="text-text-2 text-meta absolute top-[192px] left-[530px] font-mono tracking-[0.04em]">
-                    STEM t=28
+                {/* ── P5: 引出線（マークの意味） ── */}
+                <motion.div
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  transition={{ delay: T.callouts, duration: 0.6, ease: EASE }}
+                >
+                  <div className="absolute top-[177px] left-[414px] w-[56px] border-t border-(--text-2)" />
+                  <span className="bg-accent absolute top-[177px] left-[414px] size-1.5 -translate-x-1/2 -translate-y-1/2 rounded-full" />
+                  <span className="text-text-2 text-meta absolute top-[170px] left-[476px] font-mono tracking-[0.04em]">
+                    “#” = HEX
                   </span>
-                  <div className="absolute top-[150px] left-[150px] w-[84px] origin-right -rotate-[32deg] border-t border-(--text-2)" />
-                  <span className="text-text-2 text-meta absolute top-[120px] left-24 font-mono">
-                    R 86
-                  </span>
-                  <div className="absolute top-[250px] left-[236px] w-[54px] origin-left rotate-[34deg] border-t border-(--text-2)" />
-                  <span className="text-text-2 text-meta absolute top-[268px] left-[286px] font-mono">
-                    TERMINAL
+                  <div className="absolute top-[296px] left-[338px] w-[46px] origin-left rotate-[30deg] border-t border-(--text-2)" />
+                  <span className="bg-accent absolute top-[296px] left-[338px] size-1.5 -translate-x-1/2 -translate-y-1/2 rounded-full" />
+                  <span className="text-text-2 text-meta absolute top-[316px] left-[384px] font-mono tracking-[0.04em]">
+                    “FF” = FOLLOWS FUNCTION
                   </span>
                 </motion.div>
 
@@ -498,12 +511,13 @@ export function SplashScreen() {
 
             {/* フッター: フェーズ表記＋SKIP */}
             <motion.div
-              {...fade(0.2, 0.5)}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 0.2, duration: 0.5, ease: EASE }}
               className="absolute right-[18px] bottom-4 left-[18px] flex items-center justify-between gap-4"
             >
               <span className="text-text-3 text-meta hidden font-mono tracking-[0.08em] sm:inline">
-                PHASES — GRID ▸ GUIDES ▸ CONSTRUCTION ▸ STROKE-ON ▸ DIMENSIONS ▸
-                CALLOUTS
+                PHASES — GRID ▸ GUIDES ▸ STROKE-ON ▸ DIMENSIONS ▸ CALLOUTS
               </span>
               <button
                 type="button"

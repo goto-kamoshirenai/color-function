@@ -1,47 +1,28 @@
 import { chromium } from "@playwright/test";
-import { writeFileSync, mkdirSync } from "node:fs";
+import { writeFileSync, readFileSync, mkdirSync } from "node:fs";
 
-// CFF ロゴタイル: ダーク地 + Archivo Black ワードマーク + アクセントベースライン
-// + レジストレーション十字（製図モチーフ）。maskable はセーフゾーンへ縮小。
+// CFF アイコンタイル: ダーク地 + #FFF マーク（public/logo/color-function_logo.svg）。
+// マークは「#」(HEX 記法) と「FF」(Follows Function) を兼ねたブランドシンボル。
+// maskable はセーフゾーン（中心 80% 円）に収まるよう縮小する。
+const MARK_SVG = readFileSync("public/logo/color-function_logo.svg", "utf8")
+  .replace(/fill="black"/g, 'fill="#f4f4f2"')
+  .replace('width="300" height="300"', 'width="100%" height="100%"');
+
 const html = (size, safe) => `<!doctype html><html><head>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@900&display=block" rel="stylesheet">
 <style>
   * { margin: 0; }
   body { width: ${size}px; height: ${size}px; overflow: hidden; }
   .tile {
-    position: relative; width: 100%; height: 100%;
+    width: 100%; height: 100%;
     background: #16161a;
     display: flex; align-items: center; justify-content: center;
   }
-  .inner {
-    position: relative;
-    display: flex; flex-direction: column; align-items: center;
-    transform: scale(${safe ? 0.74 : 1});
+  .mark {
+    width: 100%; height: 100%;
+    transform: scale(${safe ? 0.8 : 1});
   }
-  .word {
-    font-family: 'Archivo', sans-serif; font-weight: 900;
-    color: #f4f4f2; font-size: ${size * 0.34}px;
-    letter-spacing: -0.04em; line-height: 1;
-  }
-  .base {
-    width: ${size * 0.58}px; height: ${Math.max(1, size * 0.05)}px;
-    background: #4d82e8; margin-top: ${size * 0.06}px;
-  }
-  .cross { position: absolute; background: #43434a; }
-  .cross.h { width: ${size * 0.07}px; height: ${Math.max(1, size * 0.008)}px; }
-  .cross.v { width: ${Math.max(1, size * 0.008)}px; height: ${size * 0.07}px; }
-  .tr.h { top: ${size * 0.085}px; right: ${size * 0.055}px; }
-  .tr.v { top: ${size * 0.055}px; right: ${size * 0.085}px; }
-  .bl.h { bottom: ${size * 0.085}px; left: ${size * 0.055}px; }
-  .bl.v { bottom: ${size * 0.055}px; left: ${size * 0.085}px; }
 </style></head><body>
-<div class="tile">
-  <span class="cross h tr"></span><span class="cross v tr"></span>
-  <span class="cross h bl"></span><span class="cross v bl"></span>
-  <div class="inner"><div class="word">CFF</div><div class="base"></div></div>
-</div>
+<div class="tile"><div class="mark">${MARK_SVG}</div></div>
 </body></html>`;
 
 /** PNG 群を PNG 埋め込み形式の ICO に束ねる（Vista+ / 全モダンブラウザ対応）。 */
@@ -75,10 +56,6 @@ async function render(size, safe) {
     viewport: { width: size, height: size },
   });
   await page.setContent(html(size, safe), { waitUntil: "networkidle" });
-  await page.evaluate(async () => {
-    await document.fonts.load("900 100px Archivo");
-    await document.fonts.ready;
-  });
   const buf = await page.screenshot({ type: "png" });
   await page.close();
   return buf;
