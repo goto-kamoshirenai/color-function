@@ -90,10 +90,30 @@ export function PaletteBar() {
     return { isFg, isBg, highlighted, active };
   };
 
+  // 開閉トグルは状態に依らずフッター右下の同一座標に絶対配置する
+  // （フッターは画面下端固定のため、下端基準なら画面上の位置が一致する）。
+  // 各行は中身の中心がトグル中心（下端から25px）と揃う余白にする。
+  const toggle = (
+    <button
+      type="button"
+      onClick={toggleCollapsed}
+      aria-label={collapsed ? t("palette.expand") : t("palette.collapse")}
+      aria-expanded={!collapsed}
+      title={collapsed ? t("palette.expand") : t("palette.collapse")}
+      className="cff-control text-text-2 hover:text-text absolute right-[22px] bottom-[11px] flex size-7 items-center justify-center"
+    >
+      {collapsed ? (
+        <NavArrowUp width={14} height={14} aria-hidden />
+      ) : (
+        <NavArrowDown width={14} height={14} aria-hidden />
+      )}
+    </button>
+  );
+
   if (collapsed) {
     return (
-      <footer className="border-border-strong bg-surface z-5 flex-none border-t">
-        <div className="flex items-center gap-2.5 px-[22px] py-2">
+      <footer className="border-border-strong bg-surface relative z-5 flex-none border-t">
+        <div className="flex items-center gap-2.5 py-[13px] pr-[60px] pl-[22px]">
           <div className="cff-scroll flex flex-1 items-center gap-[7px] overflow-x-auto">
             {palette.length === 0 ? (
               <span className="text-text-3 font-mono text-xs">
@@ -137,23 +157,14 @@ export function PaletteBar() {
               <Plus width={14} height={14} aria-hidden />
             </button>
           </div>
-          <button
-            type="button"
-            onClick={toggleCollapsed}
-            aria-label={t("palette.expand")}
-            aria-expanded={false}
-            title={t("palette.expand")}
-            className="cff-control text-text-2 hover:text-text flex size-7 flex-none items-center justify-center"
-          >
-            <NavArrowUp width={14} height={14} aria-hidden />
-          </button>
         </div>
+        {toggle}
       </footer>
     );
   }
 
   return (
-    <footer className="border-border-strong bg-surface z-5 flex-none border-t">
+    <footer className="border-border-strong bg-surface relative z-5 flex-none border-t">
       {/* 上段: スウォッチ列 */}
       <div className="cff-scroll flex items-start gap-[15px] overflow-x-auto px-[22px] pt-[13px] pb-2.5">
         {palette.length === 0 ? (
@@ -193,8 +204,8 @@ export function PaletteBar() {
         </button>
       </div>
 
-      {/* 下段: モード切替＋カウント＋CLEAR ALL＋折りたたみ */}
-      <div className="border-border flex flex-wrap items-center justify-between gap-x-[18px] gap-y-2 border-t px-[22px] pt-[9px] pb-3">
+      {/* 下段: モード切替＋カウント＋CLEAR ALL（折りたたみトグルは絶対配置） */}
+      <div className="border-border flex flex-wrap items-center justify-between gap-x-[18px] gap-y-2 border-t pt-[9px] pr-[60px] pb-2.5 pl-[22px]">
         <ModeToggle />
         <div className="flex items-center gap-2.5">
           <HelpButton helpKey="usage" />
@@ -211,18 +222,9 @@ export function PaletteBar() {
               CLEAR ALL
             </button>
           ) : null}
-          <button
-            type="button"
-            onClick={toggleCollapsed}
-            aria-label={t("palette.collapse")}
-            aria-expanded
-            title={t("palette.collapse")}
-            className="cff-control text-text-2 hover:text-text flex size-7 flex-none items-center justify-center"
-          >
-            <NavArrowDown width={14} height={14} aria-hidden />
-          </button>
         </div>
       </div>
+      {toggle}
     </footer>
   );
 }
