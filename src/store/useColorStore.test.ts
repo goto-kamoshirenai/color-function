@@ -6,14 +6,14 @@ const get = () => useColorStore.getState();
 describe("useColorStore", () => {
   beforeEach(() => resetColorStore(["#1F2933", "#2D6CDF", "#E4572E"]));
 
-  it("既定状態（pair × verify, 参照IDが実在）", () => {
+  it("既定状態（pair × verify, 参照IDが実在・アクセントは末尾色）", () => {
     const s = get();
     expect(s.unit).toBe("pair");
     expect(s.view).toBe("verify");
     expect(s.palette).toHaveLength(3);
     expect(s.fgId).toBe(s.palette[0].id);
     expect(s.bgId).toBe(s.palette[2].id);
-    expect(s.accentId).toBe(s.palette[0].id);
+    expect(s.accentId).toBe(s.palette[2].id);
   });
 
   describe("apply", () => {

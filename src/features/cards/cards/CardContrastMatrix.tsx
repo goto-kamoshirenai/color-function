@@ -75,7 +75,7 @@ export function CardContrastMatrix({ number }: CardProps) {
                         className={
                           "bg-surface min-w-[54px] px-1 py-2.5 text-center font-mono text-xs " +
                           (pass
-                            ? "font-bold shadow-[inset_0_0_0_1.5px_var(--text)]"
+                            ? "font-bold shadow-[inset_0_0_0_1.5px_var(--accent)]"
                             : "text-text-3 font-normal")
                         }
                       >

@@ -58,7 +58,9 @@ export type ColorStore = {
   showToast: (msg: string) => void;
 };
 
-const DEFAULT_HEXES = ["#1F2933", "#2D6CDF", "#E4572E", "#1B998B", "#E8C547"];
+// 既定パレット（2026-06-11 ユーザー指定）: FG/BG = #080808、アクセント = #E83015。
+// FG=先頭・BG=末尾の規則に合わせ、黒2点の間に赤を置く並びにする。
+const DEFAULT_HEXES = ["#080808", "#E83015", "#080808"];
 
 const uid = (): string => crypto.randomUUID();
 
@@ -96,12 +98,14 @@ function reconcile(
 
 function initialState(hexes: string[] = DEFAULT_HEXES) {
   const palette = makeColors(hexes);
+  // 既定パレットではアクセント = 中央の赤 #E83015。任意パレットでは末尾。
+  const accentIndex = hexes === DEFAULT_HEXES ? 1 : palette.length - 1;
   return {
     palette,
     selectedId: palette[0]?.id ?? null,
     fgId: palette[0]?.id ?? null,
     bgId: palette[palette.length - 1]?.id ?? null,
-    accentId: palette[0]?.id ?? null,
+    accentId: palette[accentIndex]?.id ?? null,
     unit: "pair" as Unit,
     view: "verify" as View,
     picker: {
@@ -176,7 +180,7 @@ export const useColorStore = create<ColorStore>((set, get) => ({
       selectedId: palette[0]?.id ?? null,
       fgId: palette[0]?.id ?? null,
       bgId: palette[palette.length - 1]?.id ?? palette[0]?.id ?? null,
-      accentId: palette[0]?.id ?? null,
+      accentId: palette[palette.length - 1]?.id ?? null,
     });
   },
 

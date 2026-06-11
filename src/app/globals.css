@@ -16,7 +16,8 @@
   --text-2: #6a6a70;
   /* v2モックは #A0A0A6 だがAA不適合(2.6:1)のため補正。最悪地 #EDEDEE 上でも 4.66:1 */
   --text-3: #69696f;
-  --ring: #16161a;
+  /* 選択リングはアクセント連動（ユーザー指定色がアプリ全体に行き渡るように） */
+  --ring: var(--accent);
 }
 
 [data-theme="dark"] {
@@ -30,7 +31,7 @@
   --text-2: #9a9aa2;
   /* v2モックは #5E5E66 だが暗サーフェス上でAA不適合のため補正（5.56:1） */
   --text-3: #8e8e97;
-  --ring: #f4f4f2;
+  --ring: var(--accent);
 }
 
 /*
@@ -39,11 +40,11 @@
  * フォールバック自体も各テーマの --bg に対して AA(4.5:1) を満たす値にする。
  */
 [data-theme="light"] {
-  --accent: #2a63cc; /* vs #EDEDEE = 4.78:1 */
+  --accent: #b9400f; /* 赤橙・vs #EDEDEE = 4.72:1 */
   color-scheme: light;
 }
 [data-theme="dark"] {
-  --accent: #4d82e8; /* vs #0C0C0D = 5.28:1 */
+  --accent: #f97316; /* 赤橙・vs #0C0C0D = 6.98:1 */
   color-scheme: dark;
 }
 

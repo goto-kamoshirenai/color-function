@@ -96,7 +96,7 @@ export function CardList() {
               <span className="text-accent text-meta font-mono tracking-[0.14em]">
                 {figTag}
               </span>
-              <span className="bg-border-strong h-px w-[22px]" aria-hidden />
+              <span className="bg-accent h-px w-[22px]" aria-hidden />
               <span className="text-text-3 text-meta font-mono tracking-[0.14em]">
                 {modeSub}
               </span>

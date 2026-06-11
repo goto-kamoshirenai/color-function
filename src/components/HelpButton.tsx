@@ -21,7 +21,7 @@ export function HelpButton({ helpKey }: { helpKey: string }) {
     <DialogTrigger>
       <Button
         aria-label={t("help.aria", { title: help.title })}
-        className="cff-control text-text-2 relative flex size-[18px] items-center justify-center rounded-full p-0 before:absolute before:-inset-1 before:content-['']"
+        className="cff-control text-text-2 hover:border-accent hover:text-accent relative flex size-[18px] items-center justify-center rounded-full p-0 before:absolute before:-inset-1 before:content-['']"
       >
         <QuestionMark width={12} height={12} strokeWidth={2.2} aria-hidden />
       </Button>

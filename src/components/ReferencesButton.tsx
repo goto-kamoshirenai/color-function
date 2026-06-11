@@ -27,7 +27,7 @@ export function ReferencesButton({ helpKey }: { helpKey: string }) {
     <DialogTrigger>
       <Button
         aria-label={t("refs.aria", { title })}
-        className="cff-control text-text-2 relative flex size-[18px] items-center justify-center rounded-full p-0 before:absolute before:-inset-1 before:content-['']"
+        className="cff-control text-text-2 hover:border-accent hover:text-accent relative flex size-[18px] items-center justify-center rounded-full p-0 before:absolute before:-inset-1 before:content-['']"
       >
         <Book width={11} height={11} strokeWidth={2} aria-hidden />
       </Button>
