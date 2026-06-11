@@ -27,7 +27,7 @@ export function CardNearestName({ number }: CardProps) {
         </p>
       ) : (
         <div className="flex flex-1 flex-col">
-          <div className="mb-1.5 text-[30px] font-extrabold tracking-[-0.02em]">
+          <div className="mb-1.5 text-[24px] font-extrabold tracking-[-0.02em] sm:text-[30px]">
             {result.entry.name}
           </div>
           <div className="mb-[18px] flex items-center gap-[9px]">

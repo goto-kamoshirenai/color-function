@@ -33,7 +33,7 @@ export function CardDeltaE({ number }: CardProps) {
         <p className="text-text-3 font-mono text-xs">{t("card.needPair")}</p>
       ) : (
         <div className="flex flex-1 flex-col">
-          <div className="font-mono text-5xl leading-none font-medium tracking-[-0.03em]">
+          <div className="font-mono text-4xl leading-none font-medium tracking-[-0.03em] sm:text-5xl">
             {de.toFixed(2)}
           </div>
           <div className="mt-2.5 mb-4 text-[13px] font-bold">

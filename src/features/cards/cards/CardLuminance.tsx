@@ -22,7 +22,7 @@ export function CardLuminance({ number }: CardProps) {
         <p className="text-text-3 font-mono text-xs">{t("card.empty")}</p>
       ) : (
         <div className="flex flex-1 flex-col">
-          <div className="font-mono text-[42px] leading-none font-medium tracking-[-0.03em]">
+          <div className="font-mono text-[32px] leading-none font-medium tracking-[-0.03em] sm:text-[42px]">
             {lum.toFixed(4)}
           </div>
           <div className="text-text-3 text-meta mt-1.5 mb-3.5 font-mono tracking-[0.04em]">

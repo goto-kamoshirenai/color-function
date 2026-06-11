@@ -86,7 +86,7 @@ export function CardList() {
       <div className="border-border-strong relative mb-[22px] overflow-hidden border-b pt-[26px] pb-4">
         <div
           aria-hidden
-          className="text-surface-2 pointer-events-none absolute -right-3 -bottom-[18px] z-0 text-[128px] leading-[0.8] font-black tracking-[-0.05em] whitespace-nowrap select-none"
+          className="text-surface-2 pointer-events-none absolute -right-3 -bottom-[18px] z-0 text-[72px] leading-[0.8] font-black tracking-[-0.05em] whitespace-nowrap select-none sm:text-[128px]"
         >
           {modeWord}
         </div>
@@ -101,7 +101,7 @@ export function CardList() {
                 {modeSub}
               </span>
             </div>
-            <h1 className="text-[32px] leading-none font-extrabold tracking-[-0.025em]">
+            <h1 className="text-[24px] leading-none font-extrabold tracking-[-0.025em] sm:text-[32px]">
               {t(UNIT_KEY[unit])} × {t(VIEW_KEY[view])}
             </h1>
           </div>

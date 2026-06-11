@@ -73,10 +73,10 @@ export function CardWcagContrast({ number }: CardProps) {
           <div className="grid items-center gap-7 md:grid-cols-[auto_1fr]">
             <div>
               <div className="flex items-baseline gap-1.5">
-                <span className="font-mono text-[76px] leading-[0.85] font-semibold tracking-[-0.05em]">
+                <span className="font-mono text-[52px] leading-[0.85] font-semibold tracking-[-0.05em] sm:text-[76px]">
                   {ratio.toFixed(2)}
                 </span>
-                <span className="text-accent font-mono text-[26px] font-medium">
+                <span className="text-accent font-mono text-[20px] font-medium sm:text-[26px]">
                   :1
                 </span>
               </div>
