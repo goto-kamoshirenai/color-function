@@ -82,6 +82,7 @@ export function CardHarmony({ number }: CardProps) {
                         <button
                           key={`${rule.id}-${i}`}
                           type="button"
+                          data-specimen
                           onClick={() => add(hex)}
                           aria-label={t("card.harmony.add", {
                             label: ruleName,

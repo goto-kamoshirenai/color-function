@@ -169,7 +169,9 @@ export function CardWcagContrast({ number }: CardProps) {
                 </button>
               </div>
             </div>
+            {/* ユーザー指定色の標本領域（コントラストは測定対象であり UI の a11y 対象外） */}
             <div
+              data-specimen
               className="px-[22px] py-6"
               style={{ backgroundColor: pair.bg.hex, color: pair.fg.hex }}
             >

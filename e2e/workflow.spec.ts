@@ -23,8 +23,8 @@ test("起動: 既定パレットとペア×検証カードが表示される", a
     page.getByRole("heading", { name: "WCAG コントラスト比" }),
   ).toBeVisible();
   await expect(page.getByText(":1", { exact: true }).first()).toBeVisible();
-  // 既定3色（FG/BG=黒・アクセント=赤）のスウォッチ
-  await expect(page.getByRole("button", { name: /を選択$/ })).toHaveCount(3);
+  // 既定2色（FG=黒 / BG=アクセント=赤）のスウォッチ
+  await expect(page.getByRole("button", { name: /を選択$/ })).toHaveCount(2);
 });
 
 test("色を追加すると URL ハッシュとカードに即時反映される", async ({
@@ -35,7 +35,7 @@ test("色を追加すると URL ハッシュとカードに即時反映される
   await page.getByRole("textbox").fill("#ABCDEF");
   await page.getByRole("button", { name: "追加", exact: true }).click();
 
-  await expect(page.getByRole("button", { name: /を選択$/ })).toHaveCount(4);
+  await expect(page.getByRole("button", { name: /を選択$/ })).toHaveCount(3);
   await expect(page).toHaveURL(/#p=.*ABCDEF/);
 });
 
@@ -114,7 +114,12 @@ test.describe("アクセシビリティ (axe)", () => {
       // ハイドレーション完了（アクセント注入）を待ってから解析する
       await expect(page.getByRole("radio", { name: "検証" })).toBeVisible();
       await setup(page);
-      const results = await new AxeBuilder({ page }).analyze();
+      // [data-specimen] はユーザー指定色をそのまま表示する標本領域
+      // （プレビュー・CVDサンプル・調和チップ）。そのコントラストは
+      // アプリが「測定して見せる対象」であり、UI の a11y 違反ではない。
+      const results = await new AxeBuilder({ page })
+        .exclude("[data-specimen]")
+        .analyze();
       const serious = results.violations.filter(
         (v) => v.impact === "serious" || v.impact === "critical",
       );

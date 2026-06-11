@@ -117,7 +117,7 @@ state = {
 }
 ```
 
-- **既定値**: palette = `#080808 #E83015 #080808`、起動モードは **pair × verify**、fg=0 / bg=2、アクセント=1（赤 `#E83015`。FG/BG=黒・アクセント=赤の初期値は 2026-06-11 ユーザー指定）。
+- **既定値**: palette = `#080808 #E83015`、起動モードは **pair × verify**、fg=0（黒）/ bg=1（赤）、アクセント=1（赤 `#E83015`。FG=黒・BG=アクセント=赤の初期値は 2026-06-11 ユーザー指定）。
 - [05 §2](./05_data_model_and_card_contract.md) との対応: `view` ⇄ `perspective`、`roles.fg/bg` ⇄ `fg/bg`（index 方式）、`selection` ⇄ `selected`。
   実装では 05 の **id ベース**（color.id）を踏襲しつつ、モックの index 挙動を再現する（並べ替え・削除で安定するよう id 採用）。
 

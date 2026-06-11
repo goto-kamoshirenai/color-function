@@ -58,9 +58,9 @@ export type ColorStore = {
   showToast: (msg: string) => void;
 };
 
-// 既定パレット（2026-06-11 ユーザー指定）: FG/BG = #080808、アクセント = #E83015。
-// FG=先頭・BG=末尾の規則に合わせ、黒2点の間に赤を置く並びにする。
-const DEFAULT_HEXES = ["#080808", "#E83015", "#080808"];
+// 既定パレット（2026-06-11 ユーザー指定）: FG = #080808、BG = アクセント = #E83015。
+// FG=先頭・BG=末尾・アクセント=末尾の規則にそのまま一致する並び。
+const DEFAULT_HEXES = ["#080808", "#E83015"];
 
 const uid = (): string => crypto.randomUUID();
 
@@ -98,14 +98,12 @@ function reconcile(
 
 function initialState(hexes: string[] = DEFAULT_HEXES) {
   const palette = makeColors(hexes);
-  // 既定パレットではアクセント = 中央の赤 #E83015。任意パレットでは末尾。
-  const accentIndex = hexes === DEFAULT_HEXES ? 1 : palette.length - 1;
   return {
     palette,
     selectedId: palette[0]?.id ?? null,
     fgId: palette[0]?.id ?? null,
     bgId: palette[palette.length - 1]?.id ?? null,
-    accentId: palette[accentIndex]?.id ?? null,
+    accentId: palette[palette.length - 1]?.id ?? null,
     unit: "pair" as Unit,
     view: "verify" as View,
     picker: {

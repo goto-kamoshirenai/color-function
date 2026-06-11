@@ -45,7 +45,9 @@ export function CardCvd({ number }: CardProps) {
                   <div className="text-control font-semibold">{t(nameKey)}</div>
                   <div className="text-text-3 text-meta font-mono">{sub}</div>
                 </div>
+                {/* ユーザー指定色の標本領域（axe のコントラスト検査から除外） */}
                 <div
+                  data-specimen
                   className="border-border-strong rounded-control flex h-[38px] flex-1 items-center border px-[13px] text-[13px] font-bold"
                   style={{ backgroundColor: toHex(simBg), color: toHex(simFg) }}
                 >
