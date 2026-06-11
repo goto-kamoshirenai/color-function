@@ -70,6 +70,8 @@ const JA = {
   "palette.add": "色を追加",
   "palette.count": "{count} 色",
   "palette.clear": "すべて消去",
+  "palette.collapse": "パレットを折りたたむ",
+  "palette.expand": "パレットを展開",
 
   // スウォッチ
   "swatch.select": "色 {n} {hex}{badge} を選択",
@@ -238,6 +240,8 @@ const EN: Record<MessageKey, string> = {
   "palette.add": "Add color",
   "palette.count": "{count} colors",
   "palette.clear": "Clear all",
+  "palette.collapse": "Collapse palette",
+  "palette.expand": "Expand palette",
 
   "swatch.select": "Select color {n} {hex}{badge}",
   "swatch.selectTitle": "Click to select / double-click to edit",

@@ -16,7 +16,10 @@ function renderBar() {
 }
 
 describe("PaletteBar", () => {
-  beforeEach(() => resetColorStore(["#1F2933", "#2D6CDF", "#E4572E"]));
+  beforeEach(() => {
+    resetColorStore(["#1F2933", "#2D6CDF", "#E4572E"]);
+    localStorage.removeItem("cff-palette-collapsed");
+  });
 
   it("パレットの色数だけスウォッチを描画する", () => {
     renderBar();
@@ -50,5 +53,50 @@ describe("PaletteBar", () => {
     resetColorStore([]);
     renderBar();
     expect(screen.getByText(/NO SWATCHES/)).toBeInTheDocument();
+  });
+
+  describe("折りたたみ", () => {
+    it("折りたたむとミニチップ列になり、モード切替等が隠れる", () => {
+      renderBar();
+      fireEvent.click(
+        screen.getByRole("button", { name: "パレットを折りたたむ" }),
+      );
+
+      // 選択は引き続き可能（ミニチップ）
+      const chips = screen.getAllByRole("button", { name: /を選択$/ });
+      expect(chips).toHaveLength(3);
+      // モード切替・CLEAR ALL・編集系は非表示
+      expect(screen.queryByRole("radio", { name: "単色" })).toBeNull();
+      expect(screen.queryByRole("button", { name: "すべて消去" })).toBeNull();
+      expect(screen.queryByRole("button", { name: /を削除$/ })).toBeNull();
+      // 保持される
+      expect(localStorage.getItem("cff-palette-collapsed")).toBe("1");
+    });
+
+    it("展開で元の UI に戻る", () => {
+      renderBar();
+      fireEvent.click(
+        screen.getByRole("button", { name: "パレットを折りたたむ" }),
+      );
+      fireEvent.click(screen.getByRole("button", { name: "パレットを展開" }));
+
+      expect(screen.getByRole("radio", { name: "単色" })).toBeInTheDocument();
+      expect(
+        screen.getByRole("button", { name: "すべて消去" }),
+      ).toBeInTheDocument();
+      expect(localStorage.getItem("cff-palette-collapsed")).toBe("0");
+    });
+
+    it("折りたたみ中でもミニチップで選択できる", () => {
+      renderBar();
+      fireEvent.click(
+        screen.getByRole("button", { name: "パレットを折りたたむ" }),
+      );
+      const chips = screen.getAllByRole("button", { name: /を選択$/ });
+      fireEvent.click(chips[1]); // pair: fg に設定
+      expect(useColorStore.getState().fgId).toBe(
+        useColorStore.getState().palette[1].id,
+      );
+    });
   });
 });

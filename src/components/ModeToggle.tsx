@@ -23,7 +23,8 @@ function Segmented<T extends string>({
 }) {
   return (
     <div className="flex items-center gap-[9px]">
-      <span className="text-text-3 text-meta font-mono tracking-[0.16em] uppercase">
+      {/* ラベルは小画面では非表示（グループの aria-label は維持） */}
+      <span className="text-text-3 text-meta hidden font-mono tracking-[0.16em] uppercase sm:inline">
         {label}
       </span>
       <ToggleButtonGroup

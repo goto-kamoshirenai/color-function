@@ -1,15 +1,40 @@
 "use client";
 
-import { Plus } from "iconoir-react";
-import { useColorStore } from "@/store/useColorStore";
+import { useSyncExternalStore } from "react";
+import { Plus, NavArrowDown, NavArrowUp } from "iconoir-react";
+import { useColorStore, type Color } from "@/store/useColorStore";
 import { ModeToggle } from "./ModeToggle";
 import { Swatch } from "./Swatch";
 import { HelpButton } from "./HelpButton";
 import { useT } from "@/lib/i18n/locale";
 import { useFormatColor } from "@/lib/colorFormat";
 
+const COLLAPSED_KEY = "cff-palette-collapsed";
+const COLLAPSED_EVENT = "cff-palette-collapsed-change";
+
+function subscribeCollapsed(callback: () => void) {
+  window.addEventListener(COLLAPSED_EVENT, callback);
+  return () => window.removeEventListener(COLLAPSED_EVENT, callback);
+}
+
+/** 折りたたみ状態（localStorage が真実の源。未設定ならスマホ幅で自動的に畳む）。 */
+function getCollapsed(): boolean {
+  try {
+    const stored = localStorage.getItem(COLLAPSED_KEY);
+    if (stored === "1") return true;
+    if (stored === "0") return false;
+    return window.matchMedia("(max-width: 639px)").matches;
+  } catch {
+    return false;
+  }
+}
+
+const getCollapsedServer = () => false;
+
 /**
  * 常設の配色パレットバー（v2: 上段スウォッチ列／下段モード切替＋CLEAR ALL）。
+ * 折りたたみ可（特にスマホでの占有を抑える）。折りたたみ中は選択のみ可能な
+ * ミニチップ列になり、選択状態は localStorage に保持。初回はスマホ幅なら自動で畳む。
  */
 export function PaletteBar() {
   const palette = useColorStore((s) => s.palette);
@@ -30,6 +55,21 @@ export function PaletteBar() {
   const t = useT();
   const fmt = useFormatColor();
 
+  // SSR は展開で描画し、ハイドレーション後に保持値（無ければスマホ幅なら畳む）を反映
+  const collapsed = useSyncExternalStore(
+    subscribeCollapsed,
+    getCollapsed,
+    getCollapsedServer,
+  );
+  const toggleCollapsed = () => {
+    try {
+      localStorage.setItem(COLLAPSED_KEY, collapsed ? "0" : "1");
+    } catch {
+      // localStorage 不可環境は無視
+    }
+    window.dispatchEvent(new Event(COLLAPSED_EVENT));
+  };
+
   const removeWithToast = (id: string, hex: string) => {
     apply({ kind: "remove", id });
     showToast(t("toast.remove", { hex: fmt(hex) }));
@@ -38,6 +78,79 @@ export function PaletteBar() {
     setAccent(id);
     showToast(t("toast.accent", { hex: fmt(hex) }));
   };
+
+  /** 選択・強調の状態（設計ビューは単位を問わず基準色 selectedId の選択）。 */
+  const swatchState = (color: Color) => {
+    const design = view === "design";
+    const isFg = !design && unit === "pair" && color.id === fgId;
+    const isBg = !design && unit === "pair" && color.id === bgId;
+    const selBase = (design || unit === "single") && color.id === selectedId;
+    const highlighted = selBase || isFg || isBg;
+    const active = highlighted || unit === "palette" || design;
+    return { isFg, isBg, highlighted, active };
+  };
+
+  if (collapsed) {
+    return (
+      <footer className="border-border-strong bg-surface z-5 flex-none border-t">
+        <div className="flex items-center gap-2.5 px-[22px] py-2">
+          <div className="cff-scroll flex flex-1 items-center gap-[7px] overflow-x-auto">
+            {palette.length === 0 ? (
+              <span className="text-text-3 font-mono text-xs">
+                {t("palette.empty")}
+              </span>
+            ) : (
+              palette.map((color, i) => {
+                const { isFg, isBg, highlighted, active } = swatchState(color);
+                const badge = isFg ? " (FG)" : isBg ? " (BG)" : "";
+                return (
+                  <button
+                    key={color.id}
+                    type="button"
+                    onClick={() => selectSwatch(color.id)}
+                    aria-label={t("swatch.select", {
+                      n: i + 1,
+                      hex: fmt(color.hex),
+                      badge,
+                    })}
+                    aria-pressed={highlighted}
+                    title={fmt(color.hex)}
+                    className="border-border-strong rounded-control h-6 w-9 flex-none border p-0"
+                    style={{
+                      backgroundColor: color.hex,
+                      opacity: active ? 1 : 0.5,
+                      boxShadow: highlighted
+                        ? "var(--shadow-selected)"
+                        : "none",
+                    }}
+                  />
+                );
+              })
+            )}
+            <button
+              type="button"
+              onClick={openAdd}
+              aria-label={t("palette.add")}
+              title={t("palette.add")}
+              className="border-border-strong text-text-2 hover:border-accent hover:text-accent rounded-control flex h-6 w-9 flex-none items-center justify-center border border-dashed bg-transparent"
+            >
+              <Plus width={14} height={14} aria-hidden />
+            </button>
+          </div>
+          <button
+            type="button"
+            onClick={toggleCollapsed}
+            aria-label={t("palette.expand")}
+            aria-expanded={false}
+            title={t("palette.expand")}
+            className="cff-control text-text-2 hover:text-text flex size-7 flex-none items-center justify-center"
+          >
+            <NavArrowUp width={14} height={14} aria-hidden />
+          </button>
+        </div>
+      </footer>
+    );
+  }
 
   return (
     <footer className="border-border-strong bg-surface z-5 flex-none border-t">
@@ -51,14 +164,7 @@ export function PaletteBar() {
           </div>
         ) : (
           palette.map((color, i) => {
-            // 設計ビューは単位を問わず基準色（selectedId）の選択として扱う
-            const design = view === "design";
-            const isFg = !design && unit === "pair" && color.id === fgId;
-            const isBg = !design && unit === "pair" && color.id === bgId;
-            const selBase =
-              (design || unit === "single") && color.id === selectedId;
-            const highlighted = selBase || isFg || isBg;
-            const active = highlighted || unit === "palette" || design;
+            const { isFg, isBg, highlighted, active } = swatchState(color);
             return (
               <Swatch
                 key={color.id}
@@ -87,8 +193,8 @@ export function PaletteBar() {
         </button>
       </div>
 
-      {/* 下段: モード切替＋カウント＋CLEAR ALL */}
-      <div className="border-border flex flex-wrap items-center justify-between gap-[18px] border-t px-[22px] pt-[9px] pb-3">
+      {/* 下段: モード切替＋カウント＋CLEAR ALL＋折りたたみ */}
+      <div className="border-border flex flex-wrap items-center justify-between gap-x-[18px] gap-y-2 border-t px-[22px] pt-[9px] pb-3">
         <ModeToggle />
         <div className="flex items-center gap-2.5">
           <HelpButton helpKey="usage" />
@@ -105,6 +211,16 @@ export function PaletteBar() {
               CLEAR ALL
             </button>
           ) : null}
+          <button
+            type="button"
+            onClick={toggleCollapsed}
+            aria-label={t("palette.collapse")}
+            aria-expanded
+            title={t("palette.collapse")}
+            className="cff-control text-text-2 hover:text-text flex size-7 flex-none items-center justify-center"
+          >
+            <NavArrowDown width={14} height={14} aria-hidden />
+          </button>
         </div>
       </div>
     </footer>
