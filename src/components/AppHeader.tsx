@@ -1,13 +1,17 @@
 "use client";
 
+import Link from "next/link";
+import { usePathname } from "next/navigation";
+import { Book } from "iconoir-react";
 import { ThemeToggle } from "./ThemeToggle";
 import { LanguageToggle } from "./LanguageToggle";
 import { ColorFormatSelect } from "./ColorFormatSelect";
 import { useT } from "@/lib/i18n/locale";
 
-/** ヘッダー（v2: 56px・ロゴブロック・表示形式・言語切替・テーマ切替）。 */
+/** ヘッダー（v2: 56px・ロゴブロック・表示形式・座学・言語切替・テーマ切替）。 */
 export function AppHeader() {
   const t = useT();
+  const onLearn = usePathname() === "/learn";
   return (
     <header className="border-border-strong bg-surface z-5 flex h-14 flex-none items-center justify-between border-b pr-3 sm:pr-[18px]">
       <div className="flex h-full items-stretch">
@@ -28,6 +32,21 @@ export function AppHeader() {
       </div>
       <div className="flex items-center gap-2 sm:gap-3.5">
         <ColorFormatSelect />
+        {/* 座学・ベンチツール（/learn）への導線 */}
+        <Link
+          href="/learn"
+          aria-label={t("learn.open")}
+          title={t("learn.open")}
+          aria-current={onLearn ? "page" : undefined}
+          className={
+            "cff-control flex size-9 items-center justify-center " +
+            (onLearn
+              ? "border-(--text) bg-(--text) text-(--bg) hover:bg-(--text)"
+              : "text-text-2 hover:border-accent hover:text-accent")
+          }
+        >
+          <Book width={15} height={15} aria-hidden />
+        </Link>
         <LanguageToggle />
         <ThemeToggle />
       </div>

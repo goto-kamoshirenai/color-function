@@ -83,6 +83,20 @@ const JA = {
   "refs.aria": "{title} の参考資料",
   "refs.title": "参考資料",
   "refs.note": "リンクは外部サイトを新しいタブで開きます",
+  "refs.viewAll": "すべての資料を見る",
+
+  // 座学・ベンチツール（/learn）
+  "learn.open": "座学・ベンチツールを開く",
+  "learn.title": "座学・ベンチツール",
+  "learn.lead":
+    "色を定量的に扱うための背景知識と、検証に使える外部ツールのコレクション。",
+  "learn.back": "ツールに戻る",
+  "learn.byTopic": "指標別リファレンス",
+  "learn.articles": "記事・読み物",
+  "learn.books": "書籍",
+  "learn.tools": "ベンチツール",
+  "learn.affiliateNote":
+    "書籍は Amazon 検索へのリンクです（アフィリエイト/PR を含む場合があります）",
 
   // カード共通の案内
   "card.empty": "色がありません — 下の ＋ から追加してください",
@@ -251,6 +265,19 @@ const EN: Record<MessageKey, string> = {
   "refs.aria": "References for {title}",
   "refs.title": "References",
   "refs.note": "Links open external sites in a new tab",
+  "refs.viewAll": "View all references",
+
+  "learn.open": "Open learning & bench tools",
+  "learn.title": "Learning & Bench Tools",
+  "learn.lead":
+    "Background knowledge for quantitative color work, plus external tools for verification.",
+  "learn.back": "Back to the tool",
+  "learn.byTopic": "References by Metric",
+  "learn.articles": "Articles & Reading",
+  "learn.books": "Books",
+  "learn.tools": "Bench Tools",
+  "learn.affiliateNote":
+    "Book entries link to Amazon search (may contain affiliate/PR links)",
 
   "card.empty": "No colors — use ＋ below to add one",
   "card.needPair": "A pair needs at least 2 colors — add more with ＋ below",

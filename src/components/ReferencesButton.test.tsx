@@ -13,12 +13,17 @@ describe("ReferencesButton（参考資料）", () => {
       screen.getByRole("button", { name: /WCAG コントラスト比 の参考資料/ }),
     );
 
-    const links = await screen.findAllByRole("link");
+    const links = (await screen.findAllByRole("link")).filter(
+      (l) => l.getAttribute("target") === "_blank",
+    );
     expect(links).toHaveLength(REFERENCES.contrast.length);
     for (const link of links) {
-      expect(link).toHaveAttribute("target", "_blank");
       expect(link).toHaveAttribute("rel", expect.stringContaining("noopener"));
     }
+    // /learn への内部リンクも持つ
+    expect(
+      screen.getByRole("link", { name: "すべての資料を見る" }),
+    ).toBeInTheDocument();
   });
 
   it("資料がない指標では何も描画しない", () => {

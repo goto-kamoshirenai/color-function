@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import {
   DialogTrigger,
   Button,
@@ -7,9 +8,10 @@ import {
   Dialog,
   Heading,
 } from "react-aria-components";
-import { Book, ArrowUpRight } from "iconoir-react";
+import { Book } from "iconoir-react";
 import { HELP } from "@/features/cards/help";
 import { REFERENCES } from "@/features/cards/references";
+import { ResourceLink } from "./ResourceLink";
 import { useLocale, useT } from "@/lib/i18n/locale";
 
 /**
@@ -48,40 +50,29 @@ export function ReferencesButton({ helpKey }: { helpKey: string }) {
             </div>
             <span className="text-text-3 text-meta font-mono">{title}</span>
           </div>
-          <ul className="py-1">
+          <ul className="px-2 py-1">
             {refs.map((r) => (
               <li key={r.url}>
-                <a
-                  href={r.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="hover:bg-surface-2 flex items-center justify-between gap-3 px-[18px] py-2.5"
-                >
-                  <span className="min-w-0">
-                    <span className="flex items-center gap-1.5 text-[13px] font-semibold">
-                      <span className="truncate">{r.title}</span>
-                      <ArrowUpRight
-                        width={11}
-                        height={11}
-                        strokeWidth={2}
-                        className="text-text-3 flex-none"
-                        aria-hidden
-                      />
-                    </span>
-                    <span className="text-text-3 text-meta block font-mono">
-                      {r.source}
-                    </span>
-                  </span>
-                  <span className="border-border-strong text-text-2 rounded-control text-meta flex-none border px-1.5 py-0.5 font-mono uppercase">
-                    {r.lang}
-                  </span>
-                </a>
+                <ResourceLink
+                  title={r.title}
+                  source={r.source}
+                  url={r.url}
+                  badge={r.lang}
+                />
               </li>
             ))}
           </ul>
-          <p className="text-text-3 text-meta border-border border-t px-[18px] py-2.5 font-mono tracking-[0.04em]">
-            {t("refs.note")}
-          </p>
+          <div className="border-border flex items-center justify-between gap-3 border-t px-[18px] py-2.5">
+            <p className="text-text-3 text-meta font-mono tracking-[0.04em]">
+              {t("refs.note")}
+            </p>
+            <Link
+              href="/learn"
+              className="text-text-2 hover:text-accent text-meta flex-none font-mono underline-offset-2 hover:underline"
+            >
+              {t("refs.viewAll")}
+            </Link>
+          </div>
         </Dialog>
       </Popover>
     </DialogTrigger>

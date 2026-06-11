@@ -85,6 +85,35 @@ test("設計ビュー: ペア単位のままでもスウォッチ選択が基準
   await expect(page.getByText("BASE #009B4C")).toBeVisible();
 });
 
+test("ヘッダーから座学・ベンチツール画面に遷移できる", async ({ page }) => {
+  await page.goto("/");
+  await page.getByRole("link", { name: "座学・ベンチツールを開く" }).click();
+
+  await expect(
+    page.getByRole("heading", { name: "座学・ベンチツール" }),
+  ).toBeVisible();
+  // 指標別・記事・書籍・ツールの4セクション
+  for (const name of [
+    "指標別リファレンス",
+    "記事・読み物",
+    "書籍",
+    "ベンチツール",
+  ]) {
+    await expect(
+      page.getByRole("heading", { name, exact: true }),
+    ).toBeVisible();
+  }
+  // 外部リンクは新しいタブで開く
+  const first = page.getByRole("link", { name: /Contrast Checker/ }).first();
+  await expect(first).toHaveAttribute("target", "_blank");
+
+  // ツールへ戻れる
+  await page.getByRole("link", { name: /ツールに戻る/ }).click();
+  await expect(
+    page.getByRole("heading", { name: "WCAG コントラスト比" }),
+  ).toBeVisible();
+});
+
 test("全消去は確認ダイアログを経由する", async ({ page }) => {
   await page.goto("/");
   await page.getByRole("button", { name: "すべて消去" }).click();
