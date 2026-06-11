@@ -1,7 +1,8 @@
 "use client";
 
 import { useColorStore, type Color } from "@/store/useColorStore";
-import { useT } from "@/lib/i18n/locale";
+
+export { useCopy } from "@/lib/useCopy";
 
 /** 現在フォーカス中の単色（selectedId、無ければ先頭）。 */
 export function useSelectedColor(): Color | null {
@@ -19,18 +20,4 @@ export function usePairColors(): { fg: Color; bg: Color } | null {
   const fg = palette.find((c) => c.id === fgId) ?? palette[0];
   const bg = palette.find((c) => c.id === bgId) ?? palette[palette.length - 1];
   return { fg, bg };
-}
-
-/** クリップボードコピー＋トースト。 */
-export function useCopy(): (text: string) => void {
-  const showToast = useColorStore((s) => s.showToast);
-  const t = useT();
-  return (text: string) => {
-    try {
-      navigator.clipboard?.writeText(text);
-    } catch {
-      // 失敗は無視
-    }
-    showToast(t("toast.copy", { text }));
-  };
 }

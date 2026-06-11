@@ -7,6 +7,7 @@ import { useSelectedColor } from "../hooks";
 import { useHarmonyRules } from "@/lib/useHarmonyRules";
 import { useLocale, useT } from "@/lib/i18n/locale";
 import { useFormatColor } from "@/lib/colorFormat";
+import { ColorCode } from "@/components/ColorCode";
 import type { CardProps } from "../types";
 
 function chipColors(hex: string): { bg: string; fg: string } {
@@ -49,7 +50,7 @@ export function CardHarmony({ number }: CardProps) {
       ) : (
         <>
           <p className="text-text-3 text-meta mt-[5px] mb-[18px] font-mono tracking-[0.03em]">
-            {t("card.harmony.hint", { hex: fmt(color.hex) })}
+            BASE <ColorCode hex={color.hex} /> — {t("card.harmony.hint")}
           </p>
           <div className="flex flex-col gap-[13px]">
             {rules.map((rule) => {

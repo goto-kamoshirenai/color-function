@@ -8,7 +8,7 @@ const HELP_JA = {
     title: "パレットバーの使い方",
     body:
       "スウォッチをクリックで選択します（ペアでは前景 FG に。背景 BG をクリックすると FG/BG が入れ替わります）。" +
-      "色の下の HEX ラベルかダブルクリックで編集、右上の × で削除、右下の塗りつぶしアイコンでその色を画面の差し色（アクセント）に指定できます。" +
+      "ダブルクリックで編集、色の下のカラーコードはクリックでコピー、右上の × で削除、右下の塗りつぶしアイコンでその色を画面の差し色（アクセント）に指定できます。" +
       "下段の「単位」はどの粒度で見るか（単色 / ペア / パレット）、「観点」は目的（検証 = 診断 / 設計 = 配色づくり）を切り替え、組み合わせで表示カードが決まります。",
     guide: "FG=前景 / BG=背景 / 塗りつぶし=アクセント指定",
   },
@@ -86,7 +86,7 @@ const HELP_EN: Record<HelpKey, HelpEntry> = {
     title: "How to Use the Palette Bar",
     body:
       "Click a swatch to select it (in Pair mode it becomes the foreground FG; clicking the background BG swaps FG/BG). " +
-      "Edit via the HEX label below a color or by double-clicking, remove with the × at the top right, and use the fill icon at the bottom right to make that color the UI accent. " +
+      "Double-click to edit, click the color code below a swatch to copy it, remove with the × at the top right, and use the fill icon at the bottom right to make that color the UI accent. " +
       "In the bottom row, Unit sets the granularity (Single / Pair / Palette) and View sets the goal (Verify = diagnose / Design = build a scheme); their combination decides which cards are shown.",
     guide: "FG=foreground / BG=background / fill=set accent",
   },

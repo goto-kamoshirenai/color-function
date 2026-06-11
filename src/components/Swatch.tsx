@@ -4,6 +4,7 @@ import { Xmark, FillColor } from "iconoir-react";
 import type { Color } from "@/store/useColorStore";
 import { useT } from "@/lib/i18n/locale";
 import { useFormatColor } from "@/lib/colorFormat";
+import { ColorCode } from "./ColorCode";
 
 type Props = {
   color: Color;
@@ -95,15 +96,8 @@ export function Swatch({
           />
         ) : null}
       </div>
-      <button
-        type="button"
-        onClick={onEdit}
-        aria-label={t("swatch.edit", { n })}
-        title={t("swatch.editTitle")}
-        className="text-text-2 hover:text-text decoration-border-strong bg-transparent p-0 font-mono text-[12px] tracking-[0.02em] underline-offset-2 hover:underline"
-      >
-        {fmt(color.hex)}
-      </button>
+      {/* カラーコードはクリックでコピー（編集はスウォッチのダブルクリック） */}
+      <ColorCode hex={color.hex} className="text-[12px] tracking-[0.02em]" />
     </div>
   );
 }

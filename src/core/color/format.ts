@@ -27,3 +27,24 @@ export function formatColor(hex: string, format: ColorFormat): string {
     }
   }
 }
+
+/**
+ * コピー用の関数表記（CardValue の copyText と同じスタイル）。
+ * 例: rgb "rgb(45, 108, 223)" / hsl "hsl(219, 74%, 53%)"。hex は HEX のまま。
+ */
+export function formatColorCss(hex: string, format: ColorFormat): string {
+  const rgb = parseHex(hex);
+  if (!rgb || format === "hex") return hex.toUpperCase();
+  switch (format) {
+    case "rgb":
+      return `rgb(${r0(rgb.r)}, ${r0(rgb.g)}, ${r0(rgb.b)})`;
+    case "hsl": {
+      const v = rgbToHsl(rgb);
+      return `hsl(${r0(v.h)}, ${r0(v.s)}%, ${r0(v.l)}%)`;
+    }
+    case "hsv": {
+      const v = rgbToHsv(rgb);
+      return `hsv(${r0(v.h)}, ${r0(v.s)}%, ${r0(v.v)}%)`;
+    }
+  }
+}

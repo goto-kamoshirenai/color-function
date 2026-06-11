@@ -16,8 +16,10 @@ const JA = {
   "theme.toDark": "ダークモードに切替",
   "theme.toLight": "ライトモードに切替",
 
-  // カラーコード表示形式
+  // カラーコード表示形式・コピー
   "format.label": "カラーコードの表示形式",
+  "colorcode.copy": "クリックでコピー",
+  "colorcode.copyAria": "{code} をコピー",
 
   // 共有
   "share.copy": "共有リンクをコピー",
@@ -75,8 +77,6 @@ const JA = {
   "swatch.remove": "色 {n} を削除",
   "swatch.accent": "色 {n} をアクセントに設定",
   "swatch.accentTitle": "アクセントに設定（画面の差し色に反映）",
-  "swatch.edit": "色 {n} を編集",
-  "swatch.editTitle": "クリックで編集",
 
   // ヘルプ
   "help.aria": "{title} の説明",
@@ -164,7 +164,7 @@ const JA = {
   // カード: 調和スキーム生成
   "card.harmony.title": "調和スキーム生成",
   "card.harmony.loading": "調和ルールを読み込み中…",
-  "card.harmony.hint": "BASE {hex} — クリックでパレットに追加",
+  "card.harmony.hint": "クリックでパレットに追加",
   "card.harmony.add": "{label}の色 {hex} をパレットに追加",
 
   // カード: トーン展開
@@ -188,6 +188,8 @@ const EN: Record<MessageKey, string> = {
   "theme.toLight": "Switch to light mode",
 
   "format.label": "Color code format",
+  "colorcode.copy": "Click to copy",
+  "colorcode.copyAria": "Copy {code}",
 
   "share.copy": "Copy share link",
   "share.copied": "Share link copied",
@@ -238,8 +240,6 @@ const EN: Record<MessageKey, string> = {
   "swatch.remove": "Remove color {n}",
   "swatch.accent": "Set color {n} as accent",
   "swatch.accentTitle": "Set as accent (used as the UI accent color)",
-  "swatch.edit": "Edit color {n}",
-  "swatch.editTitle": "Click to edit",
 
   "help.aria": "About {title}",
   "help.guide": "Guide",
@@ -314,7 +314,7 @@ const EN: Record<MessageKey, string> = {
 
   "card.harmony.title": "Harmony Schemes",
   "card.harmony.loading": "Loading harmony rules…",
-  "card.harmony.hint": "BASE {hex} — click to add to the palette",
+  "card.harmony.hint": "click to add to the palette",
   "card.harmony.add": "Add {label} color {hex} to the palette",
 
   "card.tone.title": "Tone Scale",

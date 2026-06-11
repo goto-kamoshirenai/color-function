@@ -42,7 +42,12 @@ test("色を追加すると URL ハッシュとカードに即時反映される
 test("共有URLからパレットを復元できる", async ({ page }) => {
   await page.goto("/#p=112233,AABBCC");
   await expect(page.getByRole("button", { name: /を選択$/ })).toHaveCount(2);
-  await expect(page.getByRole("button", { name: /#112233/ })).toBeVisible();
+  // パレットバーのカラーコード（クリックでコピー）として表示される
+  await expect(
+    page
+      .getByRole("contentinfo")
+      .getByRole("button", { name: "#112233 をコピー" }),
+  ).toBeVisible();
 });
 
 test("モード切替: 単色×検証 → 5カード", async ({ page }) => {

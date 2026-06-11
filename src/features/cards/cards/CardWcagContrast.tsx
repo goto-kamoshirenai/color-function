@@ -7,6 +7,7 @@ import { useColorStore } from "@/store/useColorStore";
 import { usePairColors, useCopy } from "../hooks";
 import { useT } from "@/lib/i18n/locale";
 import { useFormatColor } from "@/lib/colorFormat";
+import { ColorCode } from "@/components/ColorCode";
 import type { MessageKey } from "@/lib/i18n/messages";
 import type { CardProps } from "../types";
 
@@ -144,14 +145,14 @@ export function CardWcagContrast({ number }: CardProps) {
                     className="border-border-strong rounded-control size-[11px] border"
                     style={{ backgroundColor: pair.fg.hex }}
                   />
-                  FG {fmt(pair.fg.hex)}
+                  FG <ColorCode hex={pair.fg.hex} />
                 </span>
                 <span className="inline-flex items-center gap-[5px]">
                   <span
                     className="border-border-strong rounded-control size-[11px] border"
                     style={{ backgroundColor: pair.bg.hex }}
                   />
-                  BG {fmt(pair.bg.hex)}
+                  BG <ColorCode hex={pair.bg.hex} />
                 </span>
                 <button
                   type="button"
