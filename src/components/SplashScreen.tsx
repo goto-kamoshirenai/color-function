@@ -8,12 +8,12 @@ import { useT } from "@/lib/i18n/locale";
 /**
  * スプラッシュ（v4: #FFF マークの SVG 描画演出）。
  * public/logo/color-function_logo.svg のパスを motion の pathLength で
- * ストロークなぞり描き → 塗りフェード → マーク内をアクセントの光沢が掃引 → タグライン。
+ * ストロークなぞり描き → 塗りフェード → マーク内をアクセントの光沢が掃引。
  * - セッション初回のみ（sessionStorage）。表示判定はペイント前スクリプト（data-splash）。
  * - クリック / Esc / SKIP でいつでもスキップ。prefers-reduced-motion では表示しない。
  */
 
-const TOTAL_MS = 5200; // 演出 ~4.2s + ホールド
+const TOTAL_MS = 4600; // 演出 ~3.4s + ホールド
 const EASE: [number, number, number, number] = [0.4, 0, 0.2, 1];
 
 // フェーズ開始時刻（秒）
@@ -21,7 +21,6 @@ const T = {
   draw: 0.25, // なぞり描き（0.12s 間隔）
   fill: 1.5, // 塗り（0.08s 間隔）
   sweep: 2.45, // マーク内の光沢スイープ
-  tagline: 2.9,
 } as const;
 
 // #FFF マークのパス（public/logo/color-function_logo.svg・viewBox 300×300）。
@@ -128,7 +127,7 @@ export function SplashScreen() {
               }}
             />
 
-            {/* 本体: キャプション＋マーク＋タグライン */}
+            {/* 本体: マークのみ */}
             <motion.div
               className="relative flex flex-col items-center"
               initial={{ opacity: 0, scale: 0.97, filter: "blur(6px)" }}
@@ -136,15 +135,6 @@ export function SplashScreen() {
               exit={{ scale: 1.02, filter: "blur(5px)" }}
               transition={{ duration: 0.8, ease: EASE }}
             >
-              <motion.span
-                className="text-accent text-meta mb-1 font-mono tracking-[0.2em]"
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ delay: 0.15, duration: 0.5, ease: EASE }}
-              >
-                MARK “#FFF”
-              </motion.span>
-
               {/* マーク（なぞり描き → 塗り） */}
               <div className="relative size-64 sm:size-80" aria-hidden>
                 <svg viewBox="0 0 300 300" width="100%" height="100%">
@@ -209,24 +199,6 @@ export function SplashScreen() {
                   />
                 </div>
               </div>
-
-              {/* タグライン */}
-              <motion.div
-                className="mt-4 text-center whitespace-nowrap"
-                initial={{ opacity: 0, y: 8, filter: "blur(4px)" }}
-                animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
-                transition={{ delay: T.tagline, duration: 0.6, ease: EASE }}
-              >
-                <span className="text-text-2 text-meta font-mono tracking-[0.32em] uppercase">
-                  Color Follows Function
-                </span>
-                <span className="text-text-3 text-meta mx-2.5 font-mono">
-                  ·
-                </span>
-                <span className="text-text-3 text-meta font-mono tracking-[0.18em]">
-                  {t("app.tagline")}
-                </span>
-              </motion.div>
             </motion.div>
 
             {/* フッター: SKIP */}
