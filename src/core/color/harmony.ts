@@ -19,6 +19,24 @@ export function generateScheme(base: RGB, hueOffsets: number[]): RGB[] {
   return hueOffsets.map((d) => rotateHueOklch(base, d));
 }
 
+/** 色相シフトの回転角（度）。0 が基準色、±30° 刻み＋対角 180°。 */
+export const HUE_SHIFT_STEPS = [
+  -150, -120, -90, -60, -30, 0, 30, 60, 90, 120, 150, 180,
+] as const;
+export type HueShiftStep = (typeof HUE_SHIFT_STEPS)[number];
+export type HueShift = { offset: HueShiftStep; rgb: RGB };
+
+/**
+ * 色相シフト展開。基準色の明度・彩度（OKLCH L/C）を保ち、色相だけを
+ * 段階回転した候補を返す。アクセントカラーの検討用（docs/04 H 系）。
+ */
+export function generateHueShifts(base: RGB): HueShift[] {
+  return HUE_SHIFT_STEPS.map((offset) => ({
+    offset,
+    rgb: offset === 0 ? base : rotateHueOklch(base, offset),
+  }));
+}
+
 /** トーン段階（MUI 等のカラーパレット流儀。500 が基準色）。 */
 export const TONE_STEPS = [
   50, 100, 200, 300, 400, 500, 600, 700, 800, 900,

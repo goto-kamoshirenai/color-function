@@ -12,6 +12,7 @@ import { CardDeltaMatrix } from "./cards/CardDeltaMatrix";
 import { CardHueDistribution } from "./cards/CardHueDistribution";
 import { CardHarmony } from "./cards/CardHarmony";
 import { CardTone } from "./cards/CardTone";
+import { CardHueShift } from "./cards/CardHueShift";
 
 const SINGLE_VERIFY = [{ unit: "single", view: "verify" }] as const;
 const PAIR_VERIFY = [{ unit: "pair", view: "verify" }] as const;
@@ -128,5 +129,13 @@ export const CARD_REGISTRY: CardDef[] = [
     appliesTo: [...ALL_DESIGN],
     helpKey: "tone",
     Component: CardTone,
+  },
+  {
+    key: "hue-shift",
+    title: "色相シフト",
+    category: "generate",
+    appliesTo: [...ALL_DESIGN],
+    helpKey: "hueshift",
+    Component: CardHueShift,
   },
 ];

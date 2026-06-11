@@ -77,6 +77,11 @@ const HELP_JA = {
     body: "基準色を 500 として、明るい 50 から暗い 900 まで明度を段階変化させた色階調です（MUI 等のカラーパレットの流儀）。",
     guide: "50=最明 / 500=基準色 / 900=最暗",
   },
+  hueshift: {
+    title: "色相シフト",
+    body: "基準色の明度・彩度を保ったまま、色相だけを OKLCH で段階回転した候補です。基準色とトーンが揃ったまま色味だけ変わるため、アクセントカラーの検討に向きます。",
+    guide: "±30°=隣接色 / ±150°〜180°=補色寄り",
+  },
 } as const satisfies Record<string, HelpEntry>;
 
 type HelpKey = keyof typeof HELP_JA;
@@ -154,6 +159,11 @@ const HELP_EN: Record<HelpKey, HelpEntry> = {
     title: "Tone Scale",
     body: "A tonal scale in the style of MUI-like color palettes: the base color sits at 500, stepping lighter to 50 and darker to 900.",
     guide: "50=lightest / 500=base / 900=darkest",
+  },
+  hueshift: {
+    title: "Hue Shift",
+    body: "Candidates that rotate only the hue in OKLCH while keeping the base color's lightness and chroma. The tone stays consistent while the hue changes, which makes this useful for exploring accent colors.",
+    guide: "±30°=adjacent / ±150°–180°=near-complementary",
   },
 };
 

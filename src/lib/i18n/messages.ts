@@ -171,6 +171,10 @@ const JA = {
   "card.tone.title": "トーン展開",
   "card.tone.add": "トーン {step} {hex} をパレットに追加",
 
+  // カード: 色相シフト
+  "card.hueshift.title": "色相シフト",
+  "card.hueshift.add": "色相シフト {offset} {hex} をパレットに追加",
+
   // スプラッシュ
   "splash.aria": "起動アニメーション（クリックでスキップ）",
   "splash.skip": "起動アニメーションをスキップ",
@@ -319,6 +323,9 @@ const EN: Record<MessageKey, string> = {
 
   "card.tone.title": "Tone Scale",
   "card.tone.add": "Add tone {step} {hex} to the palette",
+
+  "card.hueshift.title": "Hue Shift",
+  "card.hueshift.add": "Add hue shift {offset} {hex} to the palette",
 
   "splash.aria": "Intro animation (click to skip)",
   "splash.skip": "Skip intro animation",

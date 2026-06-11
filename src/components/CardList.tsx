@@ -47,6 +47,7 @@ const LAYOUT: Record<string, { className: string; keys: string[] }[]> = {
   design: [
     { className: "", keys: ["harmony"] },
     { className: "", keys: ["tone"] },
+    { className: "", keys: ["hue-shift"] },
   ],
 };
 

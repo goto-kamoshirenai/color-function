@@ -3,7 +3,9 @@ import {
   rotateHueOklch,
   generateScheme,
   generateTones,
+  generateHueShifts,
   TONE_STEPS,
+  HUE_SHIFT_STEPS,
 } from "./harmony";
 import { parseHex, rgbToOklch } from "./convert";
 
@@ -37,6 +39,26 @@ describe("generateScheme", () => {
 
   it("トライアドは3色", () => {
     expect(generateScheme(hex("#e8c547"), [0, 120, 240])).toHaveLength(3);
+  });
+});
+
+describe("generateHueShifts", () => {
+  it("12段階で、0 は基準色そのもの", () => {
+    const base = hex("#2d6cdf");
+    const shifts = generateHueShifts(base);
+    expect(shifts.map((s) => s.offset)).toEqual([...HUE_SHIFT_STEPS]);
+    expect(shifts.find((s) => s.offset === 0)?.rgb).toEqual(base);
+  });
+
+  it("OKLCH の色相が指定角だけ回転し、明度はほぼ保たれる", () => {
+    const base = hex("#2d6cdf");
+    const { l: l0, h: h0 } = rgbToOklch(base);
+    for (const { offset, rgb } of generateHueShifts(base)) {
+      const o = rgbToOklch(rgb);
+      const diff = (((o.h - h0 - offset) % 360) + 360) % 360;
+      expect(Math.min(diff, 360 - diff)).toBeLessThan(2);
+      expect(Math.abs(o.l - l0)).toBeLessThan(0.05); // ガマット圧縮分の許容
+    }
   });
 });
 
