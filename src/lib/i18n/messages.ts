@@ -21,11 +21,6 @@ const JA = {
   "colorcode.copy": "クリックでコピー",
   "colorcode.copyAria": "{code} をコピー",
 
-  // 共有
-  "share.copy": "共有リンクをコピー",
-  "share.copied": "共有リンクをコピーしました",
-  "share.failed": "コピーに失敗しました",
-
   // トースト
   "toast.add": "追加: {hex}",
   "toast.update": "更新: {hex}",
@@ -196,10 +191,6 @@ const EN: Record<MessageKey, string> = {
   "format.label": "Color code format",
   "colorcode.copy": "Click to copy",
   "colorcode.copyAria": "Copy {code}",
-
-  "share.copy": "Copy share link",
-  "share.copied": "Share link copied",
-  "share.failed": "Copy failed",
 
   "toast.add": "Added: {hex}",
   "toast.update": "Updated: {hex}",

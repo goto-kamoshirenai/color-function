@@ -1,12 +1,11 @@
 "use client";
 
 import { ThemeToggle } from "./ThemeToggle";
-import { ShareButton } from "./ShareButton";
 import { LanguageToggle } from "./LanguageToggle";
 import { ColorFormatSelect } from "./ColorFormatSelect";
 import { useT } from "@/lib/i18n/locale";
 
-/** ヘッダー（v2: 56px・ロゴブロック・表示形式・SHARE・言語切替・テーマ切替）。 */
+/** ヘッダー（v2: 56px・ロゴブロック・表示形式・言語切替・テーマ切替）。 */
 export function AppHeader() {
   const t = useT();
   return (
@@ -27,7 +26,6 @@ export function AppHeader() {
       </div>
       <div className="flex items-center gap-2 sm:gap-3.5">
         <ColorFormatSelect />
-        <ShareButton />
         <LanguageToggle />
         <ThemeToggle />
       </div>
