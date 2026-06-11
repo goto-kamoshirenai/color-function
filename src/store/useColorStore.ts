@@ -1,6 +1,8 @@
 import { create } from "zustand";
 import { parseHex, toHex, rgbToHsv, hsvToRgb } from "@/core/color";
 import { translate, getLocale } from "@/lib/i18n/messages";
+import { formatColor } from "@/core/color/format";
+import { getColorFormat } from "@/lib/colorFormat";
 
 export type Color = { id: string; hex: string };
 export type Unit = "single" | "pair" | "palette";
@@ -227,16 +229,13 @@ export const useColorStore = create<ColorStore>((set, get) => ({
   commitPicker: () => {
     const { picker, apply, closePicker, showToast } = get();
     const hex = draftHex(picker.h, picker.s, picker.v);
+    const shown = formatColor(hex, getColorFormat());
     if (picker.isNew) {
       apply({ kind: "add", hex });
-      showToast(
-        translate(getLocale(), "toast.add", { hex: hex.toUpperCase() }),
-      );
+      showToast(translate(getLocale(), "toast.add", { hex: shown }));
     } else if (picker.targetId) {
       apply({ kind: "set", id: picker.targetId, hex });
-      showToast(
-        translate(getLocale(), "toast.update", { hex: hex.toUpperCase() }),
-      );
+      showToast(translate(getLocale(), "toast.update", { hex: shown }));
     }
     closePicker();
   },

@@ -5,6 +5,7 @@ import { CardFrame } from "@/components/Card";
 import { useColorStore } from "@/store/useColorStore";
 import { useSelectedColor } from "../hooks";
 import { useT } from "@/lib/i18n/locale";
+import { useFormatColor } from "@/lib/colorFormat";
 import type { CardProps } from "../types";
 
 /** チップ上のラベル色（色面とのコントラストが高い方の白/黒）。 */
@@ -21,10 +22,11 @@ export function CardTone({ number }: CardProps) {
   const apply = useColorStore((s) => s.apply);
   const showToast = useColorStore((s) => s.showToast);
   const t = useT();
+  const fmt = useFormatColor();
 
   const add = (hex: string) => {
     apply({ kind: "add", hex });
-    showToast(t("toast.add", { hex }));
+    showToast(t("toast.add", { hex: fmt(hex) }));
   };
 
   return (
@@ -46,8 +48,8 @@ export function CardTone({ number }: CardProps) {
                   key={step}
                   type="button"
                   onClick={() => add(hex)}
-                  aria-label={t("card.tone.add", { step, hex })}
-                  title={hex}
+                  aria-label={t("card.tone.add", { step, hex: fmt(hex) })}
+                  title={fmt(hex)}
                   className="border-border-strong rounded-control relative h-[52px] border p-0 transition-transform hover:-translate-y-0.5"
                   style={{ backgroundColor: hex }}
                 >

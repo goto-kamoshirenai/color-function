@@ -3,6 +3,7 @@
 import { Xmark, FillColor } from "iconoir-react";
 import type { Color } from "@/store/useColorStore";
 import { useT } from "@/lib/i18n/locale";
+import { useFormatColor } from "@/lib/colorFormat";
 
 type Props = {
   color: Color;
@@ -31,6 +32,7 @@ export function Swatch({
   onSetAccent,
 }: Props) {
   const t = useT();
+  const fmt = useFormatColor();
   const n = index + 1;
   return (
     <div className="relative flex flex-none flex-col items-center gap-[5px]">
@@ -44,7 +46,7 @@ export function Swatch({
           onDoubleClick={onEdit}
           aria-label={t("swatch.select", {
             n,
-            hex: color.hex,
+            hex: fmt(color.hex),
             badge: badge ? ` (${badge})` : "",
           })}
           aria-pressed={highlighted}
@@ -100,7 +102,7 @@ export function Swatch({
         title={t("swatch.editTitle")}
         className="text-text-2 hover:text-text decoration-border-strong bg-transparent p-0 font-mono text-[12px] tracking-[0.02em] underline-offset-2 hover:underline"
       >
-        {color.hex}
+        {fmt(color.hex)}
       </button>
     </div>
   );

@@ -5,6 +5,7 @@ import { parseHex, hueDistribution, paletteEntropy } from "@/core/color";
 import { CardFrame } from "@/components/Card";
 import { useColorStore } from "@/store/useColorStore";
 import { useT } from "@/lib/i18n/locale";
+import { useFormatColor } from "@/lib/colorFormat";
 import type { CardProps } from "../types";
 
 const HUE_BAR =
@@ -14,6 +15,7 @@ const HUE_BAR =
 export function CardHueDistribution({ number }: CardProps) {
   const palette = useColorStore((s) => s.palette);
   const t = useT();
+  const fmt = useFormatColor();
   const rgbs = palette.map((c) => parseHex(c.hex) ?? { r: 0, g: 0, b: 0 });
   const hues = hueDistribution(rgbs);
   const entropy = paletteEntropy(rgbs);
@@ -45,7 +47,7 @@ export function CardHueDistribution({ number }: CardProps) {
                   <div
                     className="border-surface absolute top-1/2 size-3.5 -translate-x-1/2 -translate-y-1/2 rounded-full border-2 shadow-[0_0_0_1.5px_var(--ring)]"
                     style={{ left, backgroundColor: c.hex }}
-                    title={`${c.hex} · ${Math.round(hues[i])}°`}
+                    title={`${fmt(c.hex)} · ${Math.round(hues[i])}°`}
                   />
                 </Fragment>
               );

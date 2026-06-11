@@ -6,6 +6,7 @@ import { CardFrame } from "@/components/Card";
 import { useColorStore } from "@/store/useColorStore";
 import { usePairColors, useCopy } from "../hooks";
 import { useT } from "@/lib/i18n/locale";
+import { useFormatColor } from "@/lib/colorFormat";
 import type { MessageKey } from "@/lib/i18n/messages";
 import type { CardProps } from "../types";
 
@@ -22,6 +23,7 @@ export function CardWcagContrast({ number }: CardProps) {
   const selectSwatch = useColorStore((s) => s.selectSwatch);
   const copy = useCopy();
   const t = useT();
+  const fmt = useFormatColor();
 
   const fgRgb = pair
     ? (parseHex(pair.fg.hex) ?? { r: 0, g: 0, b: 0 })
@@ -51,7 +53,9 @@ export function CardWcagContrast({ number }: CardProps) {
           <button
             type="button"
             onClick={() =>
-              copy(`${pair.fg.hex} on ${pair.bg.hex} — ${ratio.toFixed(2)}:1`)
+              copy(
+                `${fmt(pair.fg.hex)} on ${fmt(pair.bg.hex)} — ${ratio.toFixed(2)}:1`,
+              )
             }
             className="cff-control text-text-2 inline-flex items-center gap-1 px-2.5 py-1.5 font-mono text-[12px] tracking-[0.06em] whitespace-nowrap"
           >
@@ -140,14 +144,14 @@ export function CardWcagContrast({ number }: CardProps) {
                     className="border-border-strong rounded-control size-[11px] border"
                     style={{ backgroundColor: pair.fg.hex }}
                   />
-                  FG {pair.fg.hex}
+                  FG {fmt(pair.fg.hex)}
                 </span>
                 <span className="inline-flex items-center gap-[5px]">
                   <span
                     className="border-border-strong rounded-control size-[11px] border"
                     style={{ backgroundColor: pair.bg.hex }}
                   />
-                  BG {pair.bg.hex}
+                  BG {fmt(pair.bg.hex)}
                 </span>
                 <button
                   type="button"

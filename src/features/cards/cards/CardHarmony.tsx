@@ -6,6 +6,7 @@ import { useColorStore } from "@/store/useColorStore";
 import { useSelectedColor } from "../hooks";
 import { useHarmonyRules } from "@/lib/useHarmonyRules";
 import { useLocale, useT } from "@/lib/i18n/locale";
+import { useFormatColor } from "@/lib/colorFormat";
 import type { CardProps } from "../types";
 
 function chipColors(hex: string): { bg: string; fg: string } {
@@ -25,10 +26,11 @@ export function CardHarmony({ number }: CardProps) {
   const showToast = useColorStore((s) => s.showToast);
   const locale = useLocale();
   const t = useT();
+  const fmt = useFormatColor();
 
   const add = (hex: string) => {
     apply({ kind: "add", hex });
-    showToast(t("toast.add", { hex: hex.toUpperCase() }));
+    showToast(t("toast.add", { hex: fmt(hex) }));
   };
 
   return (
@@ -47,7 +49,7 @@ export function CardHarmony({ number }: CardProps) {
       ) : (
         <>
           <p className="text-text-3 text-meta mt-[5px] mb-[18px] font-mono tracking-[0.03em]">
-            {t("card.harmony.hint", { hex: color.hex })}
+            {t("card.harmony.hint", { hex: fmt(color.hex) })}
           </p>
           <div className="flex flex-col gap-[13px]">
             {rules.map((rule) => {
@@ -78,7 +80,7 @@ export function CardHarmony({ number }: CardProps) {
                           onClick={() => add(hex)}
                           aria-label={t("card.harmony.add", {
                             label: ruleName,
-                            hex,
+                            hex: fmt(hex),
                           })}
                           className="border-border-strong rounded-control relative flex h-[52px] flex-1 items-end border p-1.5 transition-transform hover:-translate-y-0.5"
                           style={{ backgroundColor: hex }}
@@ -87,7 +89,7 @@ export function CardHarmony({ number }: CardProps) {
                             className="rounded-control text-meta px-[5px] py-0.5 font-mono"
                             style={{ background: chip.bg, color: chip.fg }}
                           >
-                            {hex}
+                            {fmt(hex)}
                           </span>
                         </button>
                       );

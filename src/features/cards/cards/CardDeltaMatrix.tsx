@@ -5,12 +5,14 @@ import { parseHex, rgbToLab, deltaE2000 } from "@/core/color";
 import { CardFrame } from "@/components/Card";
 import { useColorStore } from "@/store/useColorStore";
 import { useT } from "@/lib/i18n/locale";
+import { useFormatColor } from "@/lib/colorFormat";
 import type { CardProps } from "../types";
 
 /** 色差 ΔE マトリクス（v2: 16px スウォッチ＋11px セル。太字=紛らわしい近さ）。 */
 export function CardDeltaMatrix({ number }: CardProps) {
   const palette = useColorStore((s) => s.palette);
   const t = useT();
+  const fmt = useFormatColor();
   const labs = palette.map((c) =>
     rgbToLab(parseHex(c.hex) ?? { r: 0, g: 0, b: 0 }),
   );
@@ -40,7 +42,7 @@ export function CardDeltaMatrix({ number }: CardProps) {
                 <span
                   className="border-border-strong rounded-control size-4 border"
                   style={{ backgroundColor: c.hex }}
-                  title={c.hex}
+                  title={fmt(c.hex)}
                 />
               </div>
             ))}
@@ -50,7 +52,7 @@ export function CardDeltaMatrix({ number }: CardProps) {
                   <span
                     className="border-border-strong rounded-control size-4 border"
                     style={{ backgroundColor: row.hex }}
-                    title={row.hex}
+                    title={fmt(row.hex)}
                   />
                 </div>
                 {palette.map((col, ci) => {

@@ -7,6 +7,7 @@ export * from "./convert";
 export * from "./contrast";
 export * from "./difference";
 export * from "./cvd";
+export * from "./format";
 export * from "./harmony";
 export * from "./stats";
 export * from "./name";

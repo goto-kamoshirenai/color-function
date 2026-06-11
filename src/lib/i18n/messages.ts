@@ -16,6 +16,9 @@ const JA = {
   "theme.toDark": "ダークモードに切替",
   "theme.toLight": "ライトモードに切替",
 
+  // カラーコード表示形式
+  "format.label": "カラーコードの表示形式",
+
   // 共有
   "share.copy": "共有リンクをコピー",
   "share.copied": "共有リンクをコピーしました",
@@ -183,6 +186,8 @@ const EN: Record<MessageKey, string> = {
   "app.tagline": "Quantitative Color Analysis",
   "theme.toDark": "Switch to dark mode",
   "theme.toLight": "Switch to light mode",
+
+  "format.label": "Color code format",
 
   "share.copy": "Copy share link",
   "share.copied": "Share link copied",

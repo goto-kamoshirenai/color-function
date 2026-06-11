@@ -5,6 +5,7 @@ import { CardFrame } from "@/components/Card";
 import { useSelectedColor } from "../hooks";
 import { useColorNames } from "@/lib/useColorNames";
 import { useT } from "@/lib/i18n/locale";
+import { useFormatColor } from "@/lib/colorFormat";
 import type { CardProps } from "../types";
 
 /** 最寄り色名カード（v2: 30px 名前＋スウォッチ＋下端 ΔE 行）。 */
@@ -12,6 +13,7 @@ export function CardNearestName({ number }: CardProps) {
   const color = useSelectedColor();
   const names = useColorNames();
   const t = useT();
+  const fmt = useFormatColor();
   const result = color
     ? nearestName(parseHex(color.hex) ?? { r: 0, g: 0, b: 0 }, names)
     : null;
@@ -36,7 +38,7 @@ export function CardNearestName({ number }: CardProps) {
               aria-hidden
             />
             <span className="text-text-2 font-mono text-[13px]">
-              {result.entry.hex}
+              {fmt(result.entry.hex)}
             </span>
           </div>
           <div className="border-border mt-auto flex items-baseline justify-between border-t pt-3.5">

@@ -5,12 +5,14 @@ import { parseHex, contrastRatio } from "@/core/color";
 import { CardFrame } from "@/components/Card";
 import { useColorStore } from "@/store/useColorStore";
 import { useT } from "@/lib/i18n/locale";
+import { useFormatColor } from "@/lib/colorFormat";
 import type { CardProps } from "../types";
 
 /** コントラスト比マトリクス（v2: inline-grid・太字＋インセット枠=AA合格）。 */
 export function CardContrastMatrix({ number }: CardProps) {
   const palette = useColorStore((s) => s.palette);
   const t = useT();
+  const fmt = useFormatColor();
   const rgbs = palette.map((c) => parseHex(c.hex) ?? { r: 0, g: 0, b: 0 });
 
   return (
@@ -46,7 +48,7 @@ export function CardContrastMatrix({ number }: CardProps) {
                 <span
                   className="border-border-strong rounded-control size-5 border"
                   style={{ backgroundColor: c.hex }}
-                  title={c.hex}
+                  title={fmt(c.hex)}
                 />
               </div>
             ))}
@@ -56,7 +58,7 @@ export function CardContrastMatrix({ number }: CardProps) {
                   <span
                     className="border-border-strong rounded-control size-5 border"
                     style={{ backgroundColor: row.hex }}
-                    title={row.hex}
+                    title={fmt(row.hex)}
                   />
                 </div>
                 {palette.map((col, ci) => {

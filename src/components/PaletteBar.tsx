@@ -6,6 +6,7 @@ import { ModeToggle } from "./ModeToggle";
 import { Swatch } from "./Swatch";
 import { HelpButton } from "./HelpButton";
 import { useT } from "@/lib/i18n/locale";
+import { useFormatColor } from "@/lib/colorFormat";
 
 /**
  * 常設の配色パレットバー（v2: 上段スウォッチ列／下段モード切替＋CLEAR ALL）。
@@ -27,14 +28,15 @@ export function PaletteBar() {
   const askClear = useColorStore((s) => s.askClear);
   const showToast = useColorStore((s) => s.showToast);
   const t = useT();
+  const fmt = useFormatColor();
 
   const removeWithToast = (id: string, hex: string) => {
     apply({ kind: "remove", id });
-    showToast(t("toast.remove", { hex }));
+    showToast(t("toast.remove", { hex: fmt(hex) }));
   };
   const setAccentWithToast = (id: string, hex: string) => {
     setAccent(id);
-    showToast(t("toast.accent", { hex }));
+    showToast(t("toast.accent", { hex: fmt(hex) }));
   };
 
   return (
