@@ -1,0 +1,110 @@
+{
+  "schemaVersion": "1.0.0",
+  "terms": [
+    {
+      "id": "contrast-ratio",
+      "term": { "ja": "コントラスト比", "en": "Contrast Ratio" },
+      "def": {
+        "ja": "2色の相対輝度の比（1:1〜21:1）。WCAG はテキストの可読性基準として通常文字 AA 4.5:1 / AAA 7:1 を定める。",
+        "en": "The ratio of two colors' relative luminance (1:1–21:1). WCAG sets AA 4.5:1 / AAA 7:1 for normal text readability."
+      }
+    },
+    {
+      "id": "relative-luminance",
+      "term": { "ja": "相対輝度", "en": "Relative Luminance" },
+      "def": {
+        "ja": "人の知覚に合わせて重み付けした明るさ（0=黒〜1=白）。コントラスト比の計算基盤。",
+        "en": "Brightness weighted for human perception (0=black to 1=white); the basis of contrast ratio calculations."
+      }
+    },
+    {
+      "id": "delta-e",
+      "term": { "ja": "色差 ΔE", "en": "Color Difference ΔE" },
+      "def": {
+        "ja": "2色の知覚的な違いの大きさ。本アプリは CIEDE2000 を使用。ΔE<2 はほぼ識別不能、>10 は明確に別色。",
+        "en": "The perceptual difference between two colors. This app uses CIEDE2000; ΔE<2 is nearly indistinguishable, >10 clearly different."
+      }
+    },
+    {
+      "id": "apca",
+      "term": { "ja": "APCA / Lc", "en": "APCA / Lc" },
+      "def": {
+        "ja": "WCAG 3 ドラフトで検討される知覚ベースのコントラスト指標。Lc 値の絶対値 75 以上が本文の目安。",
+        "en": "A perceptual contrast metric explored for WCAG 3 drafts. |Lc| of 75+ is the guideline for body text."
+      }
+    },
+    {
+      "id": "cvd",
+      "term": {
+        "ja": "色覚多様性（P/D/T型）",
+        "en": "Color Vision Deficiency (Protan/Deutan/Tritan)"
+      },
+      "def": {
+        "ja": "錐体細胞の特性による色の見え方の違い。P型=赤系、D型=緑系、T型=青系の感度が弱い。日本では男性の約5%。",
+        "en": "Differences in color perception due to cone characteristics: protan (red), deutan (green), tritan (blue) weakness. Affects ~5% of men in Japan."
+      }
+    },
+    {
+      "id": "oklch",
+      "term": { "ja": "OKLCH / OKLab", "en": "OKLCH / OKLab" },
+      "def": {
+        "ja": "知覚均等性に優れた近年の色空間。L=明度・C=彩度・H=色相。明度を保ったまま色相を回す等の操作が安定する。",
+        "en": "A modern, perceptually uniform color space (L=lightness, C=chroma, H=hue). Operations like rotating hue at constant lightness behave predictably."
+      }
+    },
+    {
+      "id": "cielab",
+      "term": { "ja": "CIELAB (L*a*b*)", "en": "CIELAB (L*a*b*)" },
+      "def": {
+        "ja": "CIE が定めた知覚均等色空間。L*=明度、a*=赤緑軸、b*=黄青軸。色差 ΔE の計算に使われる。",
+        "en": "CIE's perceptually uniform color space: L*=lightness, a*=red–green, b*=yellow–blue. Used to compute ΔE."
+      }
+    },
+    {
+      "id": "hsv-hsl",
+      "term": { "ja": "HSV / HSL", "en": "HSV / HSL" },
+      "def": {
+        "ja": "色相・彩度・明度（または輝度）で表す直感的な色空間。UI のピッカーで広く使われるが知覚均等ではない。",
+        "en": "Intuitive spaces of hue, saturation, and value (or lightness). Common in pickers, but not perceptually uniform."
+      }
+    },
+    {
+      "id": "gamut",
+      "term": { "ja": "ガマット（色域）", "en": "Gamut" },
+      "def": {
+        "ja": "デバイスや規格が再現できる色の範囲。sRGB ⊂ Display-P3 ⊂ Rec.2020。印刷（CMYK）はまた別の範囲を持つ。",
+        "en": "The range of colors a device or standard can reproduce. sRGB ⊂ Display-P3 ⊂ Rec.2020; print (CMYK) has its own."
+      }
+    },
+    {
+      "id": "cct",
+      "term": {
+        "ja": "相関色温度（CCT）",
+        "en": "Correlated Color Temperature (CCT)"
+      },
+      "def": {
+        "ja": "光の色味を黒体放射の温度（K）で表したもの。低い=暖色（電球色 約2700K）、高い=寒色（昼光色 約6500K）。",
+        "en": "Light color expressed as a blackbody temperature (K). Lower = warm (incandescent ~2700K), higher = cool (daylight ~6500K)."
+      }
+    },
+    {
+      "id": "tone",
+      "term": {
+        "ja": "トーン（Tint / Shade / Tone）",
+        "en": "Tone (Tint / Shade / Tone)"
+      },
+      "def": {
+        "ja": "基準色に白を混ぜたものが Tint、黒が Shade、灰が Tone。明度・彩度の体系的な展開に使う。",
+        "en": "Tint adds white to a base color, shade adds black, tone adds gray — a systematic way to derive lightness/saturation variants."
+      }
+    },
+    {
+      "id": "harmony",
+      "term": { "ja": "調和スキーム", "en": "Harmony Scheme" },
+      "def": {
+        "ja": "色相環上の角度関係に基づく配色の型。補色（180°）・類似色（±30°）・トライアド（120°）・分裂補色など。",
+        "en": "Color scheme archetypes based on hue-wheel angles: complementary (180°), analogous (±30°), triadic (120°), split-complementary, and more."
+      }
+    }
+  ]
+}

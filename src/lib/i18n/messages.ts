@@ -101,6 +101,7 @@ const JA = {
   "learn.articles": "記事・読み物",
   "learn.books": "書籍",
   "learn.tools": "ベンチツール",
+  "learn.glossary": "用語集",
   "learn.affiliateNote":
     "書籍は Amazon 検索へのリンクです（アフィリエイト/PR を含む場合があります）",
 
@@ -392,6 +393,7 @@ const EN: Record<MessageKey, string> = {
   "learn.articles": "Articles & Reading",
   "learn.books": "Books",
   "learn.tools": "Bench Tools",
+  "learn.glossary": "Glossary",
   "learn.affiliateNote":
     "Book entries link to Amazon search (may contain affiliate/PR links)",
 

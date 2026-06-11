@@ -7,6 +7,7 @@ import { ResourceLink } from "@/components/ResourceLink";
 import { CARD_REGISTRY } from "@/features/cards/registry";
 import { HELP } from "@/features/cards/help";
 import { REFERENCES, ARTICLES, TOOLS, BOOKS, bookUrl } from "@/lib/references";
+import { GLOSSARY } from "@/lib/glossary";
 import { useLocale, useT } from "@/lib/i18n/locale";
 
 /**
@@ -27,7 +28,8 @@ export function LearnContent() {
     topics.reduce((n, c) => n + REFERENCES[c.helpKey].length, 0) +
     ARTICLES.length +
     BOOKS.length +
-    TOOLS.length;
+    TOOLS.length +
+    GLOSSARY.length;
 
   return (
     <div className="mx-auto max-w-[900px] px-4 pb-10 sm:px-[26px] sm:pb-[52px]">
@@ -145,6 +147,22 @@ export function LearnContent() {
               </li>
             ))}
           </ul>
+        </CardFrame>
+
+        {/* 05 用語集 */}
+        <CardFrame number="05" title={t("learn.glossary")} helpKey="learn">
+          <dl className="grid grid-cols-1 gap-x-6 gap-y-4 sm:grid-cols-2">
+            {GLOSSARY.map((g) => (
+              <div key={g.id}>
+                <dt className="border-border mb-1 border-b pb-1 text-[13px] font-bold">
+                  {g.term[locale]}
+                </dt>
+                <dd className="text-text-2 text-[12.5px] leading-[1.7]">
+                  {g.def[locale]}
+                </dd>
+              </div>
+            ))}
+          </dl>
         </CardFrame>
       </div>
     </div>

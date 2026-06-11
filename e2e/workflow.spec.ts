@@ -92,12 +92,13 @@ test("ヘッダーから学習コンテンツ画面に遷移できる", async ({
   await expect(
     page.getByRole("heading", { name: "学習コンテンツ" }),
   ).toBeVisible();
-  // 指標別・記事・書籍・ツールの4セクション
+  // 指標別・記事・書籍・ツール・用語集の5セクション
   for (const name of [
     "指標別リファレンス",
     "記事・読み物",
     "書籍",
     "ベンチツール",
+    "用語集",
   ]) {
     await expect(
       page.getByRole("heading", { name, exact: true }),
