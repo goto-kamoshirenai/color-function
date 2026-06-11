@@ -6,8 +6,7 @@ import { CardFrame } from "@/components/Card";
 import { ResourceLink } from "@/components/ResourceLink";
 import { CARD_REGISTRY } from "@/features/cards/registry";
 import { HELP } from "@/features/cards/help";
-import { REFERENCES } from "@/features/cards/references";
-import { ARTICLES, TOOLS, BOOKS, bookUrl } from "@/features/learn/resources";
+import { REFERENCES, ARTICLES, TOOLS, BOOKS, bookUrl } from "@/lib/references";
 import { useLocale, useT } from "@/lib/i18n/locale";
 
 /**

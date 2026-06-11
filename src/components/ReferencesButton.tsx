@@ -10,7 +10,7 @@ import {
 } from "react-aria-components";
 import { Book } from "iconoir-react";
 import { HELP } from "@/features/cards/help";
-import { REFERENCES } from "@/features/cards/references";
+import { REFERENCES } from "@/lib/references";
 import { ResourceLink } from "./ResourceLink";
 import { useLocale, useT } from "@/lib/i18n/locale";
 

@@ -2,7 +2,7 @@ import { describe, it, expect } from "vitest";
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { ReferencesButton } from "./ReferencesButton";
-import { REFERENCES } from "@/features/cards/references";
+import { REFERENCES } from "@/lib/references";
 
 describe("ReferencesButton（参考資料）", () => {
   it("資料がある指標ではボタンが出て、外部リンク一覧を開ける", async () => {
