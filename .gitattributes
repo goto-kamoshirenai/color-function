@@ -1,0 +1,8 @@
+# 改行コードはリポジトリ・作業ツリーとも LF に統一
+# （Windows の core.autocrlf より優先される。Prettier の endOfLine: lf と対）
+* text=auto eol=lf
+
+# バイナリ
+*.png binary
+*.ico binary
+*.woff2 binary

@@ -42,34 +42,42 @@ public/data/              # 静的アセット（[06] のスキーマ）
 
 ```ts
 // types.ts
-export type RGB = { r: number; g: number; b: number };   // 0–255
+export type RGB = { r: number; g: number; b: number }; // 0–255
 export type HSL = { h: number; s: number; l: number };
 export type HSV = { h: number; s: number; v: number };
 export type OKLCH = { l: number; c: number; h: number };
 export type LAB = { L: number; a: number; b: number };
-export type CvdType = 'protan' | 'deutan' | 'tritan';
+export type CvdType = "protan" | "deutan" | "tritan";
 
 // convert.ts
-export function parseHex(input: string): RGB | null;     // #rgb/#rrggbb 受理、不正は null
-export function toHex(rgb: RGB): string;                  // 小文字 #rrggbb
-export function srgbToLinear(c: number): number;          // 0–1
+export function parseHex(input: string): RGB | null; // #rgb/#rrggbb 受理、不正は null
+export function toHex(rgb: RGB): string; // 小文字 #rrggbb
+export function srgbToLinear(c: number): number; // 0–1
 export function linearToSrgb(c: number): number;
-export function rgbToHsl(rgb: RGB): HSL;  export function hslToRgb(hsl: HSL): RGB;
-export function rgbToHsv(rgb: RGB): HSV;  export function hsvToRgb(hsv: HSV): RGB;
-export function rgbToOklch(rgb: RGB): OKLCH; export function oklchToRgb(o: OKLCH): RGB;
-export function rgbToLab(rgb: RGB): LAB;                   // 経由: linear→XYZ(D65)→LAB
+export function rgbToHsl(rgb: RGB): HSL;
+export function hslToRgb(hsl: HSL): RGB;
+export function rgbToHsv(rgb: RGB): HSV;
+export function hsvToRgb(hsv: HSV): RGB;
+export function rgbToOklch(rgb: RGB): OKLCH;
+export function oklchToRgb(o: OKLCH): RGB;
+export function rgbToLab(rgb: RGB): LAB; // 経由: linear→XYZ(D65)→LAB
 
 // contrast.ts
-export function relativeLuminance(rgb: RGB): number;       // 0–1
-export function contrastRatio(a: RGB, b: RGB): number;     // 1–21
+export function relativeLuminance(rgb: RGB): number; // 0–1
+export function contrastRatio(a: RGB, b: RGB): number; // 1–21
 export function judgeWcag(ratio: number, std: ContrastStandard): WcagVerdict;
 
 // difference.ts
-export function deltaE2000(a: LAB, b: LAB): number;        // 採用（[07 §7.3]）
-export function deltaE76(a: LAB, b: LAB): number;          // 参考・教育用
+export function deltaE2000(a: LAB, b: LAB): number; // 採用（[07 §7.3]）
+export function deltaE76(a: LAB, b: LAB): number; // 参考・教育用
 
 // cvd.ts  （Machado2009・線形RGBで適用 [06 §5]）
-export function simulateCvd(rgb: RGB, type: CvdType, severity: number, profiles: CvdAsset): RGB;
+export function simulateCvd(
+  rgb: RGB,
+  type: CvdType,
+  severity: number,
+  profiles: CvdAsset,
+): RGB;
 
 // harmony.ts （OKLCH色相回転 [06 §4.1]）
 export function rotateHueOklch(rgb: RGB, deltaDeg: number): RGB;
@@ -77,15 +85,22 @@ export function generateScheme(base: RGB, rule: HarmonyRule): RGB[];
 
 // stats.ts
 export function paletteEntropy(palette: RGB[]): number;
-export function hueDistribution(palette: RGB[]): number[];  // 0–360 上の位置
+export function hueDistribution(palette: RGB[]): number[]; // 0–360 上の位置
 
 // name.ts
-export function nearestName(rgb: RGB, dict: ColorNameEntry[]): { entry: ColorNameEntry; deltaE: number } | null;
+export function nearestName(
+  rgb: RGB,
+  dict: ColorNameEntry[],
+): { entry: ColorNameEntry; deltaE: number } | null;
 
 // accent.ts （アクセント色の a11y 補正 [10 §1.1]）
 // accent を bg の上で最低コントラスト minRatio に届くよう OKLCH の明度を調整して返す。
 // 装飾用途では補正せず原色を使う（呼び出し側が usage を指定）。
-export function ensureReadableAccent(accent: RGB, bg: RGB, minRatio: number): RGB;
+export function ensureReadableAccent(
+  accent: RGB,
+  bg: RGB,
+  minRatio: number,
+): RGB;
 ```
 
 - 丸めは**しない**（[07 §1](./07_card_calculation_specs.md)）。表示丸めは UI/カード側。
@@ -128,6 +143,7 @@ type Actions = {
 ```
 
 ### アクセント注入（[10 §1.1]）
+
 - `accentId` の色を取得 → `ensureReadableAccent` で a11y 補正 → `--accent` CSS変数をルート（`<html>`）に注入。
 - `palette` 変更で `accentId` が消えたら `palette[0]` にフォールバック（全削除時は中立 `--text-2` 相当）。
 - スウォッチにアクセント指定の導線（例: 長押し/メニュー）を持たせる（[10 §1.2] の連番表示と両立）。
@@ -145,32 +161,32 @@ type Actions = {
 
 ```ts
 type CardDef = {
-  key: string;                       // 'wcag-contrast' 等
+  key: string; // 'wcag-contrast' 等
   title: string;
   category: CardCategory;
   appliesTo: { unit: Unit; view: View }[];
-  helpKey: string;                   // helpMap のキー（[10 §4] の13指標）
-  Component: React.FC;               // ストアを購読し core/color で算出・描画
+  helpKey: string; // helpMap のキー（[10 §4] の13指標）
+  Component: React.FC; // ストアを購読し core/color で算出・描画
 };
 ```
 
 確定レジストリ（モード→カード、[10 §4]）:
 
-| key | モード | helpKey |
-|-----|--------|---------|
-| `value` | single×verify | value |
-| `hsv` | single×verify | hsv |
-| `luminance` | single×verify | luminance |
-| `hue-wheel` | single×verify | wheel |
-| `nearest-name` | single×verify | name |
-| `wcag-contrast` | pair×verify | contrast |
-| `delta-e` | pair×verify | deltae |
-| `cvd` | pair×verify | cvd |
-| `contrast-matrix` | palette×verify | cmatrix |
-| `delta-matrix` | palette×verify | dmatrix |
-| `hue-distribution` | palette×verify | huedist |
-| `harmony` | (single/pair/palette)×design | harmony |
-| `tone` | (single/pair/palette)×design | tone |
+| key                | モード                       | helpKey   |
+| ------------------ | ---------------------------- | --------- |
+| `value`            | single×verify                | value     |
+| `hsv`              | single×verify                | hsv       |
+| `luminance`        | single×verify                | luminance |
+| `hue-wheel`        | single×verify                | wheel     |
+| `nearest-name`     | single×verify                | name      |
+| `wcag-contrast`    | pair×verify                  | contrast  |
+| `delta-e`          | pair×verify                  | deltae    |
+| `cvd`              | pair×verify                  | cvd       |
+| `contrast-matrix`  | palette×verify               | cmatrix   |
+| `delta-matrix`     | palette×verify               | dmatrix   |
+| `hue-distribution` | palette×verify               | huedist   |
+| `harmony`          | (single/pair/palette)×design | harmony   |
+| `tone`             | (single/pair/palette)×design | tone      |
 
 - メイン領域は現在の `unit×view` で `appliesTo` をフィルタし、`category` 順に並べる。
 
@@ -180,13 +196,13 @@ type CardDef = {
 
 ```ts
 // urlState.ts
-export function encodePalette(palette: Color[]): string;     // '#p=1F2933,2D6CDF,…'
+export function encodePalette(palette: Color[]): string; // '#p=1F2933,2D6CDF,…'
 export function decodePalette(hash: string): string[] | null;
-export function syncToHash(palette: Color[]): void;          // history.replaceState
+export function syncToHash(palette: Color[]): void; // history.replaceState
 
 // assets.ts （zod 検証 [08 必須]）
-export async function loadAsset<T>(key: keyof Manifest): Promise<T>;  // fetch→zod parse→cache
-export const NamesSchema, StandardsSchema, HarmonyRulesSchema, CvdSchema;  // zod
+export async function loadAsset<T>(key: keyof Manifest): Promise<T>; // fetch→zod parse→cache
+export const NamesSchema, StandardsSchema, HarmonyRulesSchema, CvdSchema; // zod
 ```
 
 - アセットは [06 §1.3](./06_static_assets_schema.md) の `manifest.json` 経由で遅延取得し、zod で検証。失敗時はカードを無効化（クラッシュさせない）。
@@ -197,16 +213,16 @@ export const NamesSchema, StandardsSchema, HarmonyRulesSchema, CvdSchema;  // zo
 
 垂直スライス。各スプリント末に「動くもの」が増える。
 
-| S | 内容 | 主な成果物 | DoD（完了条件） |
-|---|------|-----------|----------------|
-| **S0** | 基盤scaffold | Next＋Tailwindトークン(v2 [10 §1])＋`--accent`機構の器＋フォント(Archivo/Geist Mono)＋テーマ切替＋ESLint/Prettier/Husky/CI | light/dark でアプリシェルが表示。CI(lint/型/test/build)が緑 |
-| **S1** | `core/color`＋テスト | convert/contrast/difference(ΔE2000)/cvd/harmony/stats/name/accent | [07 §10](./07_card_calculation_specs.md) の参照値で vitest 通過。CIEDE2000 は Sharma 34組で照合。`ensureReadableAccent` のテスト |
-| **S2** | ストア＋パレットバー＋アクセント | Zustand＋スウォッチ＋2軸トグル＋ピッカー(追加/編集/削除)＋アクセント指定＋`--accent`注入＋URLハッシュ同期＋コピー/トースト | パレットを編集でき、共有URLで復元。アクセント指定がアプリ全体に反映＋a11y補正。確認ダイアログで全消去 |
-| **S3** | 単色×検証カード | 色値/HSV/相対輝度/色相環/最寄り色名（names アセット投入） | 5カードが描画・リアルタイム更新・ヘルプ動作 |
-| **S4** | ペア×検証カード | WCAGコントラスト(+テキストプレビュー)/色差ΔE/色覚シミュ（wcag・cvd アセット投入） | 3カード動作。判定が wcag.json 基準と一致 |
-| **S5** | パレット×検証カード | コントラスト比マトリクス/色差ΔEマトリクス/色相分布 | 3カード動作。2色未満は空状態表示 |
-| **S6** | 設計カード | 調和スキーム(OKLCH)/トーン展開（harmony アセット投入） | クリックでパレットに色追加。OKLCH回転で生成 |
-| **S7** | 仕上げ＋a11y | キーボード操作・フォーカス・レスポンシブ・空状態・トースト | @axe-core/playwright が主要画面でクリーン。主要フローの Playwright 緑 |
+| S      | 内容                             | 主な成果物                                                                                                                 | DoD（完了条件）                                                                                                                  |
+| ------ | -------------------------------- | -------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------- |
+| **S0** | 基盤scaffold                     | Next＋Tailwindトークン(v2 [10 §1])＋`--accent`機構の器＋フォント(Archivo/Geist Mono)＋テーマ切替＋ESLint/Prettier/Husky/CI | light/dark でアプリシェルが表示。CI(lint/型/test/build)が緑                                                                      |
+| **S1** | `core/color`＋テスト             | convert/contrast/difference(ΔE2000)/cvd/harmony/stats/name/accent                                                          | [07 §10](./07_card_calculation_specs.md) の参照値で vitest 通過。CIEDE2000 は Sharma 34組で照合。`ensureReadableAccent` のテスト |
+| **S2** | ストア＋パレットバー＋アクセント | Zustand＋スウォッチ＋2軸トグル＋ピッカー(追加/編集/削除)＋アクセント指定＋`--accent`注入＋URLハッシュ同期＋コピー/トースト | パレットを編集でき、共有URLで復元。アクセント指定がアプリ全体に反映＋a11y補正。確認ダイアログで全消去                            |
+| **S3** | 単色×検証カード                  | 色値/HSV/相対輝度/色相環/最寄り色名（names アセット投入）                                                                  | 5カードが描画・リアルタイム更新・ヘルプ動作                                                                                      |
+| **S4** | ペア×検証カード                  | WCAGコントラスト(+テキストプレビュー)/色差ΔE/色覚シミュ（wcag・cvd アセット投入）                                          | 3カード動作。判定が wcag.json 基準と一致                                                                                         |
+| **S5** | パレット×検証カード              | コントラスト比マトリクス/色差ΔEマトリクス/色相分布                                                                         | 3カード動作。2色未満は空状態表示                                                                                                 |
+| **S6** | 設計カード                       | 調和スキーム(OKLCH)/トーン展開（harmony アセット投入）                                                                     | クリックでパレットに色追加。OKLCH回転で生成                                                                                      |
+| **S7** | 仕上げ＋a11y                     | キーボード操作・フォーカス・レスポンシブ・空状態・トースト                                                                 | @axe-core/playwright が主要画面でクリーン。主要フローの Playwright 緑                                                            |
 
 > MVP の体験（[05 §8](./05_data_model_and_card_contract.md)「色を入れる→検証→共有」）は **S2 終了時点**で一周する。S3 以降は可視化軸の拡充。
 
@@ -214,23 +230,23 @@ export const NamesSchema, StandardsSchema, HarmonyRulesSchema, CvdSchema;  // zo
 
 ## 7. 静的アセット投入スケジュール
 
-| アセット | 投入スプリント | 備考 |
-|---------|--------------|------|
-| `names/*`（色名辞書） | S3 | モックの18色を起点に拡充。CSS/JIS/和色 |
-| `standards/wcag.json` | S4 | 閾値は事実データ。S2でも仮値可 |
-| `cvd/profiles.json` | S4 | Machado2009 実係数を確定 |
-| `harmony/rules.json` | S6 | OKLCH回転前提のオフセット |
-| `harmony/templates.json` | S6以降 | テンプレート適用カード（MVP範囲外） |
+| アセット                 | 投入スプリント | 備考                                   |
+| ------------------------ | -------------- | -------------------------------------- |
+| `names/*`（色名辞書）    | S3             | モックの18色を起点に拡充。CSS/JIS/和色 |
+| `standards/wcag.json`    | S4             | 閾値は事実データ。S2でも仮値可         |
+| `cvd/profiles.json`      | S4             | Machado2009 実係数を確定               |
+| `harmony/rules.json`     | S6             | OKLCH回転前提のオフセット              |
+| `harmony/templates.json` | S6以降         | テンプレート適用カード（MVP範囲外）    |
 
 ---
 
 ## 8. テスト戦略
 
-| 層 | 道具 | 対象 |
-|----|------|------|
-| 単体 | Vitest | `core/color`（[07 §10] 参照値・CIEDE2000 標準ペア） |
-| コンポーネント | Vitest＋Testing Library＋happy-dom | カード描画・ストア連携 |
-| E2E / a11y | Playwright＋@axe-core/playwright | 編集→検証→共有フロー、アクセシビリティ |
+| 層             | 道具                               | 対象                                                |
+| -------------- | ---------------------------------- | --------------------------------------------------- |
+| 単体           | Vitest                             | `core/color`（[07 §10] 参照値・CIEDE2000 標準ペア） |
+| コンポーネント | Vitest＋Testing Library＋happy-dom | カード描画・ストア連携                              |
+| E2E / a11y     | Playwright＋@axe-core/playwright   | 編集→検証→共有フロー、アクセシビリティ              |
 
 ---
 

@@ -19,6 +19,10 @@ jobs:
         run: pnpm install --frozen-lockfile
       - name: Lint
         run: pnpm lint
+      - name: Format check
+        run: pnpm format:check
+      - name: Knip (unused code/deps)
+        run: pnpm knip
       - name: Typecheck
         run: pnpm typecheck
       - name: Test

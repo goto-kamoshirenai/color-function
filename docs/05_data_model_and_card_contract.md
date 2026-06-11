@@ -15,9 +15,9 @@
 
 ```ts
 type Color = {
-  id: string;       // 安定識別子（並べ替え・役割割当・差分追跡のキー）
-  srgb: RGB;        // 正準表現: sRGB（0–255 または 0–1 に正規化、実装で統一）
-  alpha?: number;   // 0–1。省略時は 1（不透明）
+  id: string; // 安定識別子（並べ替え・役割割当・差分追跡のキー）
+  srgb: RGB; // 正準表現: sRGB（0–255 または 0–1 に正規化、実装で統一）
+  alpha?: number; // 0–1。省略時は 1（不透明）
   // 表示名・色名ヒット・各色空間値・指標はすべて srgb から算出する派生情報
 };
 
@@ -40,14 +40,14 @@ type RGB = { r: number; g: number; b: number };
 [UI骨格 §2](./03_ui_skeleton.md) を精緻化したもの。
 
 ```ts
-type Unit = 'single' | 'pair' | 'palette';   // 単色 / ペア / パレット
-type View = 'validate' | 'design';           // 検証 / 設計
+type Unit = "single" | "pair" | "palette"; // 単色 / ペア / パレット
+type View = "validate" | "design"; // 検証 / 設計
 
 type AppState = {
-  palette: Color[];                  // 唯一の真実の源（順序つき）
-  selection: string[];               // フォーカス中の color.id 群（単位で意味が変わる §3）
+  palette: Color[]; // 唯一の真実の源（順序つき）
+  selection: string[]; // フォーカス中の color.id 群（単位で意味が変わる §3）
   roles: { fg?: string; bg?: string }; // ペア時の役割割当（前景/背景）
-  mode: { unit: Unit; view: View };  // 2軸モード
+  mode: { unit: Unit; view: View }; // 2軸モード
 };
 ```
 
@@ -60,12 +60,12 @@ type AppState = {
 
 [UI骨格 §4](./03_ui_skeleton.md) の引き継ぎを具体化する。単位を切り替えても色・選択は可能な限り保持する。
 
-| 遷移 | selection / roles の扱い |
-|------|------------------------|
-| → single | selection を先頭1色に縮約。なければ palette[0] |
-| → pair | フォーカス色を `fg` に、次の色（なければ palette 内の対照色）を `bg` に。2色未満なら不足分を促す |
-| → pair → palette | roles はハイライト用に退避。評価対象は palette 全体 |
-| palette 内で色削除 | selection / roles から当該 id を除去し、規則で再充当 |
+| 遷移               | selection / roles の扱い                                                                         |
+| ------------------ | ------------------------------------------------------------------------------------------------ |
+| → single           | selection を先頭1色に縮約。なければ palette[0]                                                   |
+| → pair             | フォーカス色を `fg` に、次の色（なければ palette 内の対照色）を `bg` に。2色未満なら不足分を促す |
+| → pair → palette   | roles はハイライト用に退避。評価対象は palette 全体                                              |
+| palette 内で色削除 | selection / roles から当該 id を除去し、規則で再充当                                             |
 
 > 単位変更で「色や選択を失わない」ことを不変条件とする（コンセプト §5.2 の地続き性）。
 
@@ -76,12 +76,14 @@ type AppState = {
 [制約 §2.3 / §5](./02_constraints.md) に従い、DB を介さず共有・復元する。
 
 ### URL（共有リンク）
+
 - `palette`: `#` を除いた HEX を区切り連結（例 `p=ff0044-1e90ff-222831`）。
 - `mode`: 短縮コード（例 `m=pair.validate`）。
 - アルファありの色は `ff0044cc` のように8桁で表現。
 - 設計目標: 数色のパレットが**URLとして手で扱える長さ**に収まること。
 
 ### localStorage（履歴・一時保存・任意）
+
 - 直近の作業状態、最近使った色、ユーザー定義テンプレートなど。
 - サーバには送らない（[制約 §4](./02_constraints.md) プライバシー）。
 
@@ -117,8 +119,18 @@ core/color/            ← フレームワーク非依存の純粋ロジック
 
 ```ts
 type CardCategory =
-  | 'space' | 'luminance' | 'contrast' | 'difference' | 'cvd'
-  | 'stats' | 'harmony' | 'generate' | 'naming' | 'preview' | 'gamut' | 'export';
+  | "space"
+  | "luminance"
+  | "contrast"
+  | "difference"
+  | "cvd"
+  | "stats"
+  | "harmony"
+  | "generate"
+  | "naming"
+  | "preview"
+  | "gamut"
+  | "export";
 
 type ModeMatch = { unit: Unit; view: View };
 
@@ -130,22 +142,24 @@ type CardContext = {
 };
 
 type CardDef = {
-  key: string;                 // 一意キー（例 'wcag-contrast'）
-  title: string;               // 表示名
-  category: CardCategory;      // カタログ04の分類
-  appliesTo: ModeMatch[];      // 表示されるモードの組（複数可）
-  help: HelpRef;               // 解説の相棒（カタログ M）
+  key: string; // 一意キー（例 'wcag-contrast'）
+  title: string; // 表示名
+  category: CardCategory; // カタログ04の分類
+  appliesTo: ModeMatch[]; // 表示されるモードの組（複数可）
+  help: HelpRef; // 解説の相棒（カタログ M）
   // 描画: CardContext を購読し、core/color を使って算出・表示する
   // render(ctx: CardContext): UI
 };
 ```
 
 ### メイン領域のレンダリング規則
+
 1. 現在の `mode` に `appliesTo` が一致するカードを抽出。
 2. `category` の規定順（04のA→M順）で縦に並べる。
 3. 各カードは `CardContext` を購読し、状態変化でリアルタイム再描画する。
 
 ### カード追加の手順（拡張契約）
+
 1. `core/color/*` に計算関数を足す（必要なら）。
 2. `CardDef` を1つ書いて**レジストリに登録**。
 3. レイアウトは不変。`appliesTo` がモードへの所属を決める。
@@ -160,11 +174,11 @@ type CardDef = {
 
 ```ts
 type ColorChangeIntent =
-  | { kind: 'set';     id: string; srgb: RGB; alpha?: number }   // 1色変更
-  | { kind: 'add';     srgb: RGB; alpha?: number }               // 追加
-  | { kind: 'remove';  id: string }                              // 削除
-  | { kind: 'reorder'; order: string[] }                         // 並べ替え
-  | { kind: 'replaceAll'; palette: Color[] };                    // 一括置換（破壊的）
+  | { kind: "set"; id: string; srgb: RGB; alpha?: number } // 1色変更
+  | { kind: "add"; srgb: RGB; alpha?: number } // 追加
+  | { kind: "remove"; id: string } // 削除
+  | { kind: "reorder"; order: string[] } // 並べ替え
+  | { kind: "replaceAll"; palette: Color[] }; // 一括置換（破壊的）
 
 // apply(intent): 破壊的判定 → 必要なら確認ダイアログ → palette 更新 → URL同期
 ```
@@ -181,6 +195,7 @@ type ColorChangeIntent =
 狙いは「下部パレットバー＋メイン＝カード」の骨格を、少数のカードで端から端まで通すこと。
 
 ### スプリント1（骨格＋単色・ペアの検証）
+
 - 基盤: パレットバー（スウォッチ/モード2軸トグル/追加） + メイン領域 + `apply` + URL同期
 - 計算: `convert` / `contrast` / `difference` の最小実装
 - カード（検証）:

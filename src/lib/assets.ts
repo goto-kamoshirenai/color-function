@@ -65,7 +65,7 @@ export function parseNamesAsset(json: unknown): ColorNameEntry[] {
 }
 
 /** 調和ルールアセット(JSON)を検証してルール配列に変換。不正なら例外。 */
-export function parseHarmonyRulesAsset(json: unknown): HarmonyRule[] {
+function parseHarmonyRulesAsset(json: unknown): HarmonyRule[] {
   return HarmonyRulesSchema.parse(json).data.rules;
 }
 

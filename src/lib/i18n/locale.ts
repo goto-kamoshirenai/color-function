@@ -9,7 +9,7 @@ import {
   type MessageParams,
 } from "./messages";
 
-export const LOCALE_EVENT = "cff-locale-change";
+const LOCALE_EVENT = "cff-locale-change";
 const STORAGE_KEY = "cff-lang";
 
 function subscribe(callback: () => void) {

@@ -1,0 +1,6 @@
+{
+  "$schema": "https://unpkg.com/knip@6/schema.json",
+  "entry": ["scripts/*.mjs"],
+  "ignoreExportsUsedInFile": true,
+  "ignoreDependencies": ["lint-staged"]
+}
