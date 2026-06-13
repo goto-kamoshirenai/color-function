@@ -160,13 +160,15 @@ export function PairRolePicker() {
       aria-label={t("role.barRegion")}
       className="border-border-strong bg-surface xl:rounded-panel sticky top-0 z-20 -mx-4 mb-4 border-b px-4 py-2.5 sm:-mx-[26px] sm:px-[26px] sm:py-3 xl:fixed xl:top-[64px] xl:left-5 xl:m-0 xl:w-[168px] xl:border xl:px-3 xl:py-3"
     >
-      {/* 折りたたみ時のハンドル（スマホのみ） */}
+      {/* スマホ: 常設ヘッダ（両状態で同一。行全体がトグル。(?) は出さない）。
+          シェブロンのみ向きを反転し、展開時は下にフィールドが増える。 */}
       <button
         type="button"
         onClick={toggleCollapsed}
-        aria-label={t("role.barExpand")}
-        aria-expanded={false}
-        className={`${collapsed ? "flex" : "hidden"} w-full items-center gap-2.5 sm:hidden`}
+        aria-label={collapsed ? t("role.barExpand") : t("role.barCollapse")}
+        aria-expanded={!collapsed}
+        aria-controls="pairbar-fields"
+        className="flex w-full items-center gap-2.5 sm:hidden"
       >
         <span className="text-accent text-meta font-mono tracking-[0.1em]">
           FG·BG
@@ -186,37 +188,36 @@ export function PairRolePicker() {
         <span className="text-text-2 truncate text-[12px] whitespace-nowrap">
           {t("role.pairLabel")}
         </span>
-        <NavArrowDown
-          width={14}
-          height={14}
-          className="text-text-3 ml-auto flex-none"
-          aria-hidden
-        />
+        {collapsed ? (
+          <NavArrowDown
+            width={14}
+            height={14}
+            className="text-text-3 ml-auto flex-none"
+            aria-hidden
+          />
+        ) : (
+          <NavArrowUp
+            width={14}
+            height={14}
+            className="text-text-3 ml-auto flex-none"
+            aria-hidden
+          />
+        )}
       </button>
 
-      {/* フィールド領域（スマホ折りたたみ時のみ非表示。≥640 は常時表示） */}
+      {/* フィールド領域（スマホ折りたたみ時のみ非表示。≥640 は常時表示）。
+          スマホ展開時はヘッダとの間を細い下罫線で区切る。 */}
       <div
-        className={`${collapsed ? "hidden sm:flex" : "flex"} flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-center sm:gap-x-6 sm:gap-y-2 xl:flex-col xl:items-stretch xl:gap-3`}
+        id="pairbar-fields"
+        className={`${collapsed ? "hidden sm:flex" : "flex"} ${!collapsed ? "border-border mt-3 border-t pt-3 sm:mt-0 sm:border-t-0 sm:pt-0" : ""} flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-center sm:gap-x-6 sm:gap-y-2 xl:flex-col xl:items-stretch xl:gap-3`}
       >
-        {/* ラベル＋ツールチップ＋（スマホのみ）折りたたみボタン */}
-        <div className="flex items-center justify-between gap-2 sm:justify-start xl:justify-between">
-          <span className="flex items-baseline gap-2">
-            <span className="text-[13px] font-bold whitespace-nowrap sm:hidden xl:inline xl:text-[12px]">
-              {t("role.pairLabel")}
-            </span>
+        {/* タブレット/PC のヘッダ（ラベル[PCのみ]＋ツールチップ）。
+            スマホは上の常設ヘッダを使うため非表示。 */}
+        <div className="hidden items-center justify-between gap-2 sm:flex sm:justify-start xl:justify-between">
+          <span className="hidden text-[13px] font-bold whitespace-nowrap xl:inline xl:text-[12px]">
+            {t("role.pairLabel")}
           </span>
-          <span className="flex items-center gap-0.5">
-            {hintTooltip}
-            <button
-              type="button"
-              onClick={toggleCollapsed}
-              aria-label={t("role.barCollapse")}
-              aria-expanded
-              className="cff-control text-text-2 hover:text-text flex size-7 items-center justify-center sm:hidden"
-            >
-              <NavArrowUp width={14} height={14} aria-hidden />
-            </button>
-          </span>
+          {hintTooltip}
         </div>
         {field("fg", fgId)}
         {field("bg", bgId)}
