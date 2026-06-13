@@ -66,7 +66,6 @@ const LAYOUT: Record<string, { className: string; keys: string[] }[]> = {
   design: [
     { className: "", keys: ["base-scheme"] },
     { className: "", keys: ["harmony"] },
-    { className: "", keys: ["partner"] },
     { className: "", keys: ["tone"] },
     { className: "", keys: ["hue-shift"] },
     { className: "", keys: ["ls-variations"] },

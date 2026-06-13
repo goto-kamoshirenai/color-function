@@ -24,9 +24,7 @@ export function CardDeltaMatrix({ number }: CardProps) {
       helpKey="dmatrix"
     >
       {palette.length < 2 ? (
-        <div className="text-text-3 p-10 text-center font-mono text-xs">
-          {t("card.needMatrix")}
-        </div>
+        <p className="text-text-3 font-mono text-xs">{t("card.needMatrix")}</p>
       ) : (
         <div className="cff-scroll overflow-x-auto">
           <p className="sr-only">{t("card.dmatrix.sr")}</p>

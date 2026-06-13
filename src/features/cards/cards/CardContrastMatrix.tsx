@@ -22,9 +22,7 @@ export function CardContrastMatrix({ number }: CardProps) {
       helpKey="cmatrix"
     >
       {palette.length < 2 ? (
-        <div className="text-text-3 p-10 text-center font-mono text-xs">
-          {t("card.needMatrix")}
-        </div>
+        <p className="text-text-3 font-mono text-xs">{t("card.needMatrix")}</p>
       ) : (
         <>
           <div className="cff-scroll overflow-x-auto">
