@@ -1,18 +1,19 @@
 "use client";
 
-import { Fragment } from "react";
 import { parseHex, rgbToLab, deltaE2000 } from "@/core/color";
 import { CardFrame } from "@/components/Card";
+import { MatrixGrid } from "./MatrixGrid";
 import { useColorStore } from "@/store/useColorStore";
 import { useT } from "@/lib/i18n/locale";
-import { useFormatColor } from "@/lib/colorFormat";
 import type { CardProps } from "../types";
 
-/** 色差 ΔE マトリクス（v2: 16px スウォッチ＋11px セル。太字=紛らわしい近さ）。 */
+/** 値セル共通のレイアウト（背景色は用途ごとに前置）。 */
+const CELL = "px-1 py-2 text-center font-mono text-meta";
+
+/** 色差 ΔE マトリクス（v2: スウォッチ塗りセル。太字=紛らわしい近さ）。 */
 export function CardDeltaMatrix({ number }: CardProps) {
   const palette = useColorStore((s) => s.palette);
   const t = useT();
-  const fmt = useFormatColor();
   const labs = palette.map((c) =>
     rgbToLab(parseHex(c.hex) ?? { r: 0, g: 0, b: 0 }),
   );
@@ -26,61 +27,21 @@ export function CardDeltaMatrix({ number }: CardProps) {
       {palette.length < 2 ? (
         <p className="text-text-3 font-mono text-xs">{t("card.needMatrix")}</p>
       ) : (
-        <div className="cff-scroll overflow-x-auto">
-          <p className="sr-only">{t("card.dmatrix.sr")}</p>
-          <div
-            className="bg-border border-border inline-grid gap-px border"
-            style={{
-              gridTemplateColumns: `30px repeat(${palette.length}, minmax(36px, 1fr))`,
-            }}
-          >
-            <div className="bg-surface min-w-[30px]" />
-            {palette.map((c) => (
-              <div key={c.id} className="bg-surface flex justify-center p-1.5">
-                <span
-                  className="border-border-strong rounded-control size-4 border"
-                  style={{ backgroundColor: c.hex }}
-                  title={fmt(c.hex)}
-                />
-              </div>
-            ))}
-            {palette.map((row, ri) => (
-              <Fragment key={row.id}>
-                <div className="bg-surface flex justify-center p-1.5">
-                  <span
-                    className="border-border-strong rounded-control size-4 border"
-                    style={{ backgroundColor: row.hex }}
-                    title={fmt(row.hex)}
-                  />
-                </div>
-                {palette.map((col, ci) => {
-                  if (ri === ci)
-                    return (
-                      <div
-                        key={col.id}
-                        className="bg-surface-2 text-text-3 text-meta min-w-[36px] px-1 py-2 text-center font-mono"
-                      >
-                        —
-                      </div>
-                    );
-                  const de = deltaE2000(labs[ri], labs[ci]);
-                  const close = de < 10; // CIEDE2000: 10未満は紛らわしい近さ
-                  return (
-                    <div
-                      key={col.id}
-                      className={
-                        "bg-surface text-meta min-w-[36px] px-1 py-2 text-center font-mono " +
-                        (close ? "font-bold" : "text-text-3")
-                      }
-                    >
-                      {Math.round(de)}
-                    </div>
-                  );
-                })}
-              </Fragment>
-            ))}
-          </div>
-        </div>
+        <MatrixGrid
+          palette={palette}
+          leadWidth={30}
+          cellMinWidth={36}
+          srText={t("card.dmatrix.sr")}
+          diagonalClassName={`bg-surface-2 text-text-3 ${CELL}`}
+          cell={(ri, ci) => {
+            const de = deltaE2000(labs[ri], labs[ci]);
+            // CIEDE2000: 10未満は紛らわしい近さ
+            return {
+              content: Math.round(de),
+              className: `bg-surface ${CELL} ${de < 10 ? "font-bold" : "text-text-3"}`,
+            };
+          }}
+        />
       )}
     </CardFrame>
   );
