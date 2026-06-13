@@ -1,7 +1,5 @@
 "use client";
 
-import Link from "next/link";
-import { NavArrowLeft } from "iconoir-react";
 import { CardFrame } from "@/components/Card";
 import { ResourceLink } from "@/components/ResourceLink";
 import { CARD_REGISTRY } from "@/features/cards/registry";
@@ -61,13 +59,6 @@ export function LearnContent() {
           </div>
           <div className="text-text-3 text-right font-mono text-[11px] leading-[1.9] tracking-[0.08em] whitespace-nowrap">
             <div>LINKS — {totalLinks}</div>
-            <Link
-              href="/"
-              className="text-text-2 hover:text-accent inline-flex items-center gap-1 underline-offset-2 hover:underline"
-            >
-              <NavArrowLeft width={11} height={11} aria-hidden />
-              {t("learn.back")}
-            </Link>
           </div>
         </div>
       </div>

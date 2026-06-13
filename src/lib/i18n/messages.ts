@@ -14,6 +14,10 @@ const JA = {
   // ヘッダー
   "app.tagline": "色彩定量解析",
 
+  // ナビゲーション
+  "nav.home": "ホーム",
+  "nav.backHome": "ホームに戻る",
+
   // 設定メニュー
   "settings.open": "設定",
   "settings.title": "設定",
@@ -117,7 +121,6 @@ const JA = {
   "learn.title": "学習コンテンツ",
   "learn.lead":
     "色を定量的に扱うための背景知識と、検証に使える外部ツールのコレクション。",
-  "learn.back": "ツールに戻る",
   "learn.byTopic": "指標別リファレンス",
   "learn.articles": "記事・読み物",
   "learn.books": "書籍",
@@ -339,6 +342,9 @@ const EN: Record<MessageKey, string> = {
 
   "app.tagline": "Quantitative Color Analysis",
 
+  "nav.home": "Home",
+  "nav.backHome": "Back to home",
+
   "settings.open": "Settings",
   "settings.title": "Settings",
   "settings.theme": "Theme",
@@ -430,7 +436,6 @@ const EN: Record<MessageKey, string> = {
   "learn.title": "Learning Content",
   "learn.lead":
     "Background knowledge for quantitative color work, plus external tools for verification.",
-  "learn.back": "Back to the tool",
   "learn.byTopic": "References by Metric",
   "learn.articles": "Articles & Reading",
   "learn.books": "Books",

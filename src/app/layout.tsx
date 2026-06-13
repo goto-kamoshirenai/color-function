@@ -9,6 +9,7 @@ import { ConfirmDialog } from "@/components/ConfirmDialog";
 import { Toast } from "@/components/Toast";
 import { SplashScreen } from "@/components/SplashScreen";
 import { FirstRunHint } from "@/components/FirstRunHint";
+import { HomeBackButton } from "@/components/HomeBackButton";
 
 const archivo = Archivo({ variable: "--font-archivo", subsets: ["latin"] });
 const geistMono = Geist_Mono({
@@ -66,6 +67,7 @@ export default function RootLayout({
         <AppHeader />
 
         <main className="cff-scroll bg-bg min-h-0 min-w-0 flex-1 overflow-x-hidden overflow-y-auto">
+          <HomeBackButton />
           {children}
         </main>
 
