@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useSyncExternalStore } from "react";
+import { usePathname } from "next/navigation";
 import { Plus, NavArrowDown, NavArrowUp } from "iconoir-react";
 import { useColorStore, type Color } from "@/store/useColorStore";
 import { ModeToggle } from "./ModeToggle";
@@ -81,6 +82,11 @@ export function PaletteBar() {
   // 並べ替え（DnD・キーボード共通）。並び順が役割割当（背景=BG など）の基準になる。
   const [draggingId, setDraggingId] = useState<string | null>(null);
   const [dropTargetId, setDropTargetId] = useState<string | null>(null);
+
+  // 配色パレットは Home（/）専用。他ページ（/learn 等）では出さない。
+  // フック呼び出し後に早期 return（パレット状態は保持され、Home 復帰で再表示）。
+  const pathname = usePathname();
+  if (pathname !== "/") return null;
 
   /** dragId を targetId の位置へ移動した新しい id 配列を適用する。 */
   const dropOnto = (targetId: string) => {
