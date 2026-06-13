@@ -69,7 +69,13 @@
       "PowerShell(npx playwright test --reporter=list)",
       "PowerShell(npx playwright install chromium)",
       "PowerShell(git *)",
-      "PowerShell(node C:\\\\dev\\\\GitHub\\\\color-function\\\\e2e\\\\__shot.mjs)"
+      "PowerShell(node C:\\\\dev\\\\GitHub\\\\color-function\\\\e2e\\\\__shot.mjs)",
+      "Bash(node -e \"console.log\\(require.resolve\\('@playwright/test'\\)\\)\")",
+      "Bash(node -e \"const r=require\\('react-aria-components'\\); console.log\\('Tooltip:', !!r.Tooltip, 'TooltipTrigger:', !!r.TooltipTrigger, 'OverlayArrow:', !!r.OverlayArrow\\)\")",
+      "Bash(node -e \"const i=require\\('iconoir-react'\\); console.log\\('InfoCircle:', !!i.InfoCircle, 'QuestionMark:', !!i.QuestionMark\\)\")",
+      "PowerShell(pnpm build *)",
+      "PowerShell(pnpm exec *)",
+      "Bash(node *)"
     ]
   }
 }
