@@ -158,7 +158,7 @@ export function PairRolePicker() {
   return (
     <section
       aria-label={t("role.barRegion")}
-      className="border-border-strong bg-surface xl:rounded-panel sticky top-0 z-20 -mx-4 mb-4 border-b px-4 py-2.5 sm:-mx-[26px] sm:px-[26px] sm:py-3 xl:fixed xl:top-[64px] xl:left-5 xl:m-0 xl:w-[168px] xl:border xl:px-3 xl:py-3"
+      className="border-border-strong bg-surface sm:rounded-panel sticky top-0 z-20 -mx-4 mb-4 border-b px-4 py-2.5 sm:top-3 sm:mx-0 sm:mt-3 sm:border sm:px-4 sm:py-3 xl:fixed xl:top-[64px] xl:left-5 xl:m-0 xl:w-[168px] xl:border xl:px-3 xl:py-3"
     >
       {/* スマホ: 常設ヘッダ（両状態で同一。行全体がトグル。(?) は出さない）。
           シェブロンのみ向きを反転し、展開時は下にフィールドが増える。 */}
