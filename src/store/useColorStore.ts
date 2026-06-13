@@ -42,6 +42,7 @@ export type ColorStore = {
   setUnit: (u: Unit) => void;
   setView: (v: View) => void;
   selectSwatch: (id: string) => void;
+  setRole: (role: "fg" | "bg", id: string) => void;
   setAccent: (id: string) => void;
   hydratePalette: (hexes: string[]) => void;
 
@@ -157,17 +158,18 @@ export const useColorStore = create<ColorStore>((set, get) => ({
   setUnit: (unit) => set({ unit }),
   setView: (view) => set({ view }),
 
-  selectSwatch: (id) => {
-    const { unit, view, fgId, bgId } = get();
-    // 設計ビューは単位を問わず「基準色の選択」（調和・トーンは selectedId を参照）。
-    // FG/BG の入替はペア×検証のときだけ。
-    if (view !== "design" && unit === "pair") {
-      if (id === bgId) set({ fgId: bgId, bgId: fgId });
-      else set({ fgId: id });
-    } else {
-      set({ selectedId: id });
-    }
-  },
+  // スウォッチのクリックは「基準色の選択」のみを担う（操作の多重化を避ける）。
+  // ペアの FG/BG は PairRolePicker のプルダウンで明示的に指定する。
+  selectSwatch: (id) => set({ selectedId: id }),
+
+  // FG/BG の明示指定。相手側と同じ色を選んだら入替して常に別色を保つ。
+  setRole: (role, id) =>
+    set((s) => {
+      if (role === "fg") {
+        return id === s.bgId ? { fgId: id, bgId: s.fgId } : { fgId: id };
+      }
+      return id === s.fgId ? { bgId: id, fgId: s.bgId } : { bgId: id };
+    }),
 
   setAccent: (id) => set({ accentId: id }),
 

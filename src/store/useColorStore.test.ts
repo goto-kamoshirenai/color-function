@@ -53,31 +53,30 @@ describe("useColorStore", () => {
     });
   });
 
-  describe("selectSwatch（pair）", () => {
-    it("bg をクリックで fg/bg 入替", () => {
-      const before = get();
-      const fg0 = before.fgId;
-      const bg0 = before.bgId!;
-      get().selectSwatch(bg0);
-      const after = get();
-      expect(after.fgId).toBe(bg0);
-      expect(after.bgId).toBe(fg0);
-    });
-    it("他をクリックで fg に設定", () => {
-      const mid = get().palette[1].id;
-      get().selectSwatch(mid);
-      expect(get().fgId).toBe(mid);
-    });
-  });
-
-  describe("selectSwatch（design）", () => {
-    it("設計ビューではペア単位でも selectedId（基準色）を更新する", () => {
-      get().setView("design");
+  describe("selectSwatch", () => {
+    it("クリックは selectedId のみ更新し、FG/BG は変えない", () => {
       const fg0 = get().fgId;
+      const bg0 = get().bgId;
       const mid = get().palette[1].id;
       get().selectSwatch(mid);
       expect(get().selectedId).toBe(mid);
-      expect(get().fgId).toBe(fg0); // FG/BG は変化しない
+      expect(get().fgId).toBe(fg0);
+      expect(get().bgId).toBe(bg0);
+    });
+  });
+
+  describe("setRole（FG/BG 明示指定）", () => {
+    it("FG を指定すると fgId が変わる", () => {
+      const mid = get().palette[1].id;
+      get().setRole("fg", mid);
+      expect(get().fgId).toBe(mid);
+    });
+    it("相手側と同じ色を選ぶと入替して別色を保つ", () => {
+      const fg0 = get().fgId!;
+      const bg0 = get().bgId!;
+      get().setRole("fg", bg0);
+      expect(get().fgId).toBe(bg0);
+      expect(get().bgId).toBe(fg0);
     });
   });
 

@@ -76,10 +76,26 @@ const JA = {
 
   // スウォッチ
   "swatch.select": "色 {n} {hex}{badge} を選択",
-  "swatch.selectTitle": "クリックで選択 / ダブルクリックで編集",
+  "swatch.selectTitle":
+    "クリックで選択 / ダブルクリックで編集 / ドラッグ・←→で並べ替え",
   "swatch.remove": "色 {n} を削除",
   "swatch.accent": "色 {n} をアクセントに設定",
   "swatch.accentTitle": "アクセントに設定（画面の差し色に反映）",
+  "swatch.reorder": "色 {n} を並べ替え",
+  "swatch.reorderTitle": "ドラッグで並べ替え / ←→ キーで移動",
+  "swatch.moved": "色を {n} 番目に移動",
+
+  // FG/BG 役割セレクタ（ペア×検証）
+  "role.pairLabel": "文字色と背景色",
+  "role.pairHint":
+    "コントラストは「文字色（FG）と背景色（BG）」の組み合わせで測定します。",
+  "role.fgLabel": "文字色",
+  "role.bgLabel": "背景色",
+  "role.fg": "文字色（FG）を選択",
+  "role.bg": "背景色（BG）を選択",
+  "role.barRegion": "文字色と背景色（固定表示）",
+  "role.barExpand": "文字色と背景色を展開",
+  "role.barCollapse": "文字色と背景色を折りたたむ",
 
   // ヘルプ
   "help.aria": "{title} の説明",
@@ -249,7 +265,8 @@ const JA = {
   "card.scheme.tooFew": "有彩色が2色以上必要です",
   "card.scheme.note": "最も近い既知スキームとの合致度",
   "card.uipreview.title": "UI モックプレビュー",
-  "card.uipreview.note": "役割の自動割当はセマンティックロールと同じ規則",
+  "card.uipreview.note":
+    "並び順と FG/BG 指定で色を割当（背景=BG・テキスト=FG・以降が順に primary/accent）",
   "card.svgpreview.title": "SVG プレビュー",
   "card.svgpreview.aria": "パレットを適用した抽象図形のプレビュー",
   "card.chartpreview.title": "データビズプレビュー",
@@ -371,10 +388,26 @@ const EN: Record<MessageKey, string> = {
   "palette.expand": "Expand palette",
 
   "swatch.select": "Select color {n} {hex}{badge}",
-  "swatch.selectTitle": "Click to select / double-click to edit",
+  "swatch.selectTitle":
+    "Click to select / double-click to edit / drag or ←→ to reorder",
   "swatch.remove": "Remove color {n}",
   "swatch.accent": "Set color {n} as accent",
   "swatch.accentTitle": "Set as accent (used as the UI accent color)",
+  "swatch.reorder": "Reorder color {n}",
+  "swatch.reorderTitle": "Drag to reorder / move with ←→ keys",
+  "swatch.moved": "Moved color to position {n}",
+
+  // FG/BG role selectors (pair × verify)
+  "role.pairLabel": "Text & background",
+  "role.pairHint":
+    "Contrast is measured between the text (FG) and background (BG) colors.",
+  "role.fgLabel": "Text",
+  "role.bgLabel": "Background",
+  "role.fg": "Select text color (FG)",
+  "role.bg": "Select background color (BG)",
+  "role.barRegion": "Text & background (pinned)",
+  "role.barExpand": "Expand text & background",
+  "role.barCollapse": "Collapse text & background",
 
   "help.aria": "About {title}",
   "help.guide": "Guide",
@@ -524,7 +557,8 @@ const EN: Record<MessageKey, string> = {
   "card.scheme.tooFew": "Needs at least 2 chromatic colors",
   "card.scheme.note": "Match score against the closest known scheme",
   "card.uipreview.title": "UI Mock Preview",
-  "card.uipreview.note": "Roles auto-assigned with the Semantic Roles rule",
+  "card.uipreview.note":
+    "Colors follow palette order & FG/BG (background=BG, text=FG, then primary/accent)",
   "card.svgpreview.title": "SVG Preview",
   "card.svgpreview.aria": "Abstract shapes preview using the palette",
   "card.chartpreview.title": "Data Viz Preview",

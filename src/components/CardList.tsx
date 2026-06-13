@@ -3,6 +3,7 @@
 import { useColorStore, type Unit, type View } from "@/store/useColorStore";
 import { CARD_REGISTRY } from "@/features/cards/registry";
 import { filterCards } from "@/features/cards/types";
+import { PairRolePicker } from "./PairRolePicker";
 import { useT } from "@/lib/i18n/locale";
 import type { MessageKey } from "@/lib/i18n/messages";
 
@@ -108,6 +109,10 @@ export function CardList() {
 
   return (
     <div className="mx-auto max-w-[900px] px-4 pb-10 sm:px-[26px] sm:pb-[52px]">
+      {/* ペア検証モード専用: FG/BG 固定パネル（3 段階レスポンシブ / docs/adr/0001）。
+          スクロール領域の最上部に置き、PC では position:fixed で左ガターへ逃がす。 */}
+      <PairRolePicker />
+
       {/* マストヘッド（v2: 巨大背景ワード＋figタグ＋タイトル＋カウンタ）。
           透かしの色はテーマ相対の color-mix（surface-2 はライトで bg より明るく潰れるため） */}
       <div className="border-border-strong relative mb-[22px] overflow-hidden border-b pt-[26px] pb-4">

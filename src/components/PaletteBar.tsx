@@ -1,6 +1,6 @@
 "use client";
 
-import { useSyncExternalStore } from "react";
+import { useState, useSyncExternalStore } from "react";
 import { Plus, NavArrowDown, NavArrowUp } from "iconoir-react";
 import { useColorStore, type Color } from "@/store/useColorStore";
 import { ModeToggle } from "./ModeToggle";
@@ -77,6 +77,39 @@ export function PaletteBar() {
   const setAccentWithToast = (id: string, hex: string) => {
     setAccent(id);
     showToast(t("toast.accent", { hex: fmt(hex) }));
+  };
+
+  // 並べ替え（DnD・キーボード共通）。並び順が役割割当（背景=BG など）の基準になる。
+  const [draggingId, setDraggingId] = useState<string | null>(null);
+  const [dropTargetId, setDropTargetId] = useState<string | null>(null);
+
+  /** dragId を targetId の位置へ移動した新しい id 配列を適用する。 */
+  const dropOnto = (targetId: string) => {
+    if (!draggingId || draggingId === targetId) return;
+    const ids = palette.map((c) => c.id);
+    const from = ids.indexOf(draggingId);
+    const toOrig = ids.indexOf(targetId);
+    if (from < 0 || toOrig < 0) return;
+    ids.splice(from, 1);
+    const insertAt = ids.indexOf(targetId) + (from < toOrig ? 1 : 0);
+    ids.splice(insertAt, 0, draggingId);
+    apply({ kind: "reorder", order: ids });
+  };
+
+  const endDrag = () => {
+    setDraggingId(null);
+    setDropTargetId(null);
+  };
+
+  /** 矢印キーでの 1 つ隣への移動（左右端は何もしない）。 */
+  const moveBy = (id: string, dir: -1 | 1) => {
+    const ids = palette.map((c) => c.id);
+    const i = ids.indexOf(id);
+    const j = i + dir;
+    if (i < 0 || j < 0 || j >= ids.length) return;
+    [ids[i], ids[j]] = [ids[j], ids[i]];
+    apply({ kind: "reorder", order: ids });
+    showToast(t("swatch.moved", { n: j + 1 }));
   };
 
   /** 選択・強調の状態（設計ビューは単位を問わず基準色 selectedId の選択）。 */
@@ -185,10 +218,22 @@ export function PaletteBar() {
                 highlighted={highlighted}
                 dimmed={!active}
                 isAccent={color.id === accentId}
+                dragging={draggingId === color.id}
+                dropTarget={
+                  dropTargetId === color.id && draggingId !== color.id
+                }
                 onSelect={() => selectSwatch(color.id)}
                 onEdit={() => openEdit(color.id)}
                 onRemove={() => removeWithToast(color.id, color.hex)}
                 onSetAccent={() => setAccentWithToast(color.id, color.hex)}
+                onDragStart={() => setDraggingId(color.id)}
+                onDragEnterItem={() => setDropTargetId(color.id)}
+                onDrop={() => {
+                  dropOnto(color.id);
+                  endDrag();
+                }}
+                onDragEnd={endDrag}
+                onMove={(dir) => moveBy(color.id, dir)}
               />
             );
           })

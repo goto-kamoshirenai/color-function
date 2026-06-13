@@ -55,6 +55,46 @@ describe("PaletteBar", () => {
     expect(screen.getByText(/NO SWATCHES/)).toBeInTheDocument();
   });
 
+  describe("並べ替え", () => {
+    it("色カードの →キー で次の位置へ移動する", () => {
+      renderBar();
+      const before = useColorStore.getState().palette.map((c) => c.hex);
+      const tiles = screen.getAllByRole("button", { name: /を選択$/ });
+      fireEvent.keyDown(tiles[0], { key: "ArrowRight" });
+
+      const after = useColorStore.getState().palette.map((c) => c.hex);
+      expect(after).toEqual([before[1], before[0], before[2]]);
+    });
+
+    it("先頭で ←キー を押しても順序は変わらない", () => {
+      renderBar();
+      const before = useColorStore.getState().palette.map((c) => c.hex);
+      const tiles = screen.getAllByRole("button", { name: /を選択$/ });
+      fireEvent.keyDown(tiles[0], { key: "ArrowLeft" });
+
+      expect(useColorStore.getState().palette.map((c) => c.hex)).toEqual(
+        before,
+      );
+    });
+
+    it("色カードのドラッグ＆ドロップで対象位置へ移動する", () => {
+      renderBar();
+      const before = useColorStore.getState().palette.map((c) => c.hex);
+      const tiles = screen.getAllByRole("button", { name: /を選択$/ });
+      const wrappers = tiles
+        .map((el) => el.closest("div.relative")?.parentElement)
+        .filter((el): el is HTMLElement => el !== null && el !== undefined);
+
+      // 先頭をドラッグ開始 → 3番目のカード上でドロップ
+      fireEvent.dragStart(tiles[0]);
+      fireEvent.dragEnter(wrappers[2]);
+      fireEvent.drop(wrappers[2]);
+
+      const after = useColorStore.getState().palette.map((c) => c.hex);
+      expect(after).toEqual([before[1], before[2], before[0]]);
+    });
+  });
+
   describe("折りたたみ", () => {
     it("折りたたむとミニチップ列になり、モード切替等が隠れる", () => {
       renderBar();
@@ -93,8 +133,8 @@ describe("PaletteBar", () => {
         screen.getByRole("button", { name: "パレットを折りたたむ" }),
       );
       const chips = screen.getAllByRole("button", { name: /を選択$/ });
-      fireEvent.click(chips[1]); // pair: fg に設定
-      expect(useColorStore.getState().fgId).toBe(
+      fireEvent.click(chips[1]); // 基準色の選択
+      expect(useColorStore.getState().selectedId).toBe(
         useColorStore.getState().palette[1].id,
       );
     });
