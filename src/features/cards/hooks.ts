@@ -24,23 +24,13 @@ export function usePairColors(): { fg: Color; bg: Color } | null {
 }
 
 /**
- * パレットの並び順＋ FG/BG/アクセント指定に基づくロール別の色（HEX）。
- * 割当できないロールは null。UI モック等、順番ベースの色設定で使う。
+ * パレットの並び順だけに基づくロール別の色（HEX）。割当できないロールは null。
+ * UI モック等で使う。FG/BG・アクセント指定（ペアモードの選択）には依存しない。
  */
 export function useRoleColors(): Record<SemanticRole, string | null> {
   const palette = useColorStore((s) => s.palette);
-  const fgId = useColorStore((s) => s.fgId);
-  const bgId = useColorStore((s) => s.bgId);
-  const accentId = useColorStore((s) => s.accentId);
 
-  const indexOf = (id: string | null) =>
-    id ? palette.findIndex((c) => c.id === id) : -1;
-  const accentIndex = indexOf(accentId);
-  const roles = rolesByOrder(palette.length, {
-    fgIndex: indexOf(fgId),
-    bgIndex: indexOf(bgId),
-    accentIndex: accentIndex >= 0 ? accentIndex : undefined,
-  });
+  const roles = rolesByOrder(palette.length);
 
   const out: Record<SemanticRole, string | null> = {
     background: null,

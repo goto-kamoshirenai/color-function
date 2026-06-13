@@ -6,7 +6,7 @@ import { useRoleColors } from "../hooks";
 import { useT } from "@/lib/i18n/locale";
 import type { CardProps } from "../types";
 
-/** UI モックプレビューカード（パレットの並び順＋ FG/BG 指定で色を割り当てる）。 */
+/** UI モックプレビューカード（パレットの並び順だけで色を割り当てる）。 */
 export function CardUiPreview({ number }: CardProps) {
   const palette = useColorStore((s) => s.palette);
   const roles = useRoleColors();

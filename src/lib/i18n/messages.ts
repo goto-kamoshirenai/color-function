@@ -277,7 +277,7 @@ const JA = {
   "card.scheme.note": "最も近い既知スキームとの合致度",
   "card.uipreview.title": "UI モックプレビュー",
   "card.uipreview.note":
-    "並び順と FG/BG 指定で色を割当（背景=BG・テキスト=FG・以降が順に primary/accent）",
+    "並び順で色を割当（1=背景・2=テキスト・3=primary・4=accent）",
   "card.svgpreview.title": "SVG プレビュー",
   "card.svgpreview.aria": "パレットを適用した抽象図形のプレビュー",
   "card.chartpreview.title": "データビズプレビュー",
@@ -577,7 +577,7 @@ const EN: Record<MessageKey, string> = {
   "card.scheme.note": "Match score against the closest known scheme",
   "card.uipreview.title": "UI Mock Preview",
   "card.uipreview.note":
-    "Colors follow palette order & FG/BG (background=BG, text=FG, then primary/accent)",
+    "Colors follow palette order (1=background, 2=text, 3=primary, 4=accent)",
   "card.svgpreview.title": "SVG Preview",
   "card.svgpreview.aria": "Abstract shapes preview using the palette",
   "card.chartpreview.title": "Data Viz Preview",

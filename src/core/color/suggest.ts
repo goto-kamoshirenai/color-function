@@ -212,37 +212,28 @@ export function assignRoles(
   return out;
 }
 
+/** 位置順ロール割当の並び（n 番目の色 → ROLE_ORDER[n]）。 */
+const ROLE_ORDER: SemanticRole[] = [
+  "background",
+  "text",
+  "primary",
+  "accent",
+  "neutral",
+];
+
 /**
- * 順番ベースのロール割当: パレットの並び順とユーザー指定の FG / BG / アクセントから
- * 決定的にロールを割り当てる。ヒューリスティックな {@link assignRoles} と異なり、
- * ユーザーが DnD・FG/BG 指定で完全に制御できる（docs/05 §3 palette は順序つきの真実の源）。
- *
- * background = BG 指定 / text = FG 指定 / accent = アクセント指定 /
- * primary = 残りの先頭 / neutral = 残りの末尾。
- * 無効な index は既定（bg = 末尾・fg = 先頭）にフォールバックする。
+ * 位置順のロール割当: パレットの並び順だけで決定的にロールを割り当てる。
+ * 1 番目=background / 2=text / 3=primary / 4=accent / 5=neutral。
+ * FG/BG・アクセント指定（ペアモード等の選択状態）には一切依存しない
+ * — ペア用の設定を他モード（UI モック等）へ波及させないため。
+ * ヒューリスティックな {@link assignRoles} と異なり並び順のみで決まる。
  */
 export function rolesByOrder(
   count: number,
-  opts: { fgIndex: number; bgIndex: number; accentIndex?: number },
 ): { role: SemanticRole; index: number }[] {
-  if (count === 0) return [];
-  const valid = (i: number | undefined): i is number =>
-    i !== undefined && i >= 0 && i < count;
-  const out: { role: SemanticRole; index: number }[] = [];
-  const taken = new Set<number>();
-  const claim = (role: SemanticRole, i: number | undefined): void => {
-    if (valid(i) && !taken.has(i)) {
-      taken.add(i);
-      out.push({ role, index: i });
-    }
-  };
-  claim("background", valid(opts.bgIndex) ? opts.bgIndex : count - 1);
-  claim("text", valid(opts.fgIndex) ? opts.fgIndex : 0);
-  claim("accent", opts.accentIndex);
-  const rest = Array.from({ length: count }, (_, i) => i).filter(
-    (i) => !taken.has(i),
-  );
-  if (rest.length > 0) claim("primary", rest[0]);
-  if (rest.length > 1) claim("neutral", rest[rest.length - 1]);
-  return out;
+  const n = Math.min(count, ROLE_ORDER.length);
+  return Array.from({ length: n }, (_, i) => ({
+    role: ROLE_ORDER[i],
+    index: i,
+  }));
 }
