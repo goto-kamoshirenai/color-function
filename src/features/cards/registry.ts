@@ -42,6 +42,9 @@ import { CardNudge } from "./cards/CardNudge";
 import { CardTemplates } from "./cards/CardTemplates";
 import { CardCvdSafe } from "./cards/CardCvdSafe";
 import { CardTokens } from "./cards/CardTokens";
+import { CardSingleHero } from "./cards/CardSingleHero";
+import { CardPaletteOverview } from "./cards/CardPaletteOverview";
+import { CardBaseScheme } from "./cards/CardBaseScheme";
 
 const SINGLE_VERIFY = [{ unit: "single", view: "verify" }] as const;
 const PAIR_VERIFY = [{ unit: "pair", view: "verify" }] as const;
@@ -406,5 +409,30 @@ export const CARD_REGISTRY: CardDef[] = [
     appliesTo: [...ALL_DESIGN],
     helpKey: "tokens",
     Component: CardTokens,
+  },
+  // 各モードのサマリーヒーロー（docs/adr/0002）
+  {
+    key: "single-hero",
+    title: "色値",
+    category: "space",
+    appliesTo: [...SINGLE_VERIFY],
+    helpKey: "value",
+    Component: CardSingleHero,
+  },
+  {
+    key: "palette-overview",
+    title: "パレット概要",
+    category: "stats",
+    appliesTo: [...PALETTE_VERIFY],
+    helpKey: "overview",
+    Component: CardPaletteOverview,
+  },
+  {
+    key: "base-scheme",
+    title: "ベース配色",
+    category: "harmony",
+    appliesTo: [...ALL_DESIGN],
+    helpKey: "harmony",
+    Component: CardBaseScheme,
   },
 ];

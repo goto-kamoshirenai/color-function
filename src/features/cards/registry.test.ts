@@ -4,7 +4,7 @@ import { filterCards } from "./types";
 import { HELP } from "./help";
 
 describe("カードレジストリ / filterCards", () => {
-  it("単色×検証で9カード（基礎5 + 拡張色空間/知覚/不透明度/ガマット）", () => {
+  it("単色×検証で10カード（基礎5 + 拡張色空間/知覚/不透明度/ガマット + ヒーロー）", () => {
     const keys = filterCards(CARD_REGISTRY, "single", "verify").map(
       (c) => c.key,
     );
@@ -18,6 +18,7 @@ describe("カードレジストリ / filterCards", () => {
       "perception",
       "alpha",
       "gamut",
+      "single-hero",
     ]);
   });
 
@@ -32,7 +33,7 @@ describe("カードレジストリ / filterCards", () => {
     ]);
   });
 
-  it("パレット×検証で13カード（マトリクス系 + 統計/識別性/プレビュー）", () => {
+  it("パレット×検証で14カード（マトリクス系 + 統計/識別性/プレビュー + ヒーロー）", () => {
     const keys = filterCards(CARD_REGISTRY, "palette", "verify").map(
       (c) => c.key,
     );
@@ -50,15 +51,17 @@ describe("カードレジストリ / filterCards", () => {
       "ui-preview",
       "svg-preview",
       "chart-preview",
+      "palette-overview",
     ]);
   });
 
-  it("設計ビューは単位共通で16カード", () => {
+  it("設計ビューは単位共通で17カード（+ ヒーロー）", () => {
     for (const unit of ["single", "pair", "palette"] as const) {
       const keys = filterCards(CARD_REGISTRY, unit, "design").map((c) => c.key);
-      expect(keys).toHaveLength(16);
+      expect(keys).toHaveLength(17);
       expect(keys).toContain("harmony");
       expect(keys).toContain("tokens");
+      expect(keys).toContain("base-scheme");
     }
   });
 

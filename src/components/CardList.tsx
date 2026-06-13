@@ -30,15 +30,14 @@ const FIG_TAG = {
 /** モード別のカード配置（v2 のグリッド構成。キーは registry のカード）。 */
 const LAYOUT: Record<string, { className: string; keys: string[] }[]> = {
   "single|verify": [
-    { className: "", keys: ["value"] },
+    { className: "", keys: ["single-hero"] },
     { className: "md:grid-cols-[1.35fr_1fr]", keys: ["hsv", "luminance"] },
-    { className: "md:grid-cols-2", keys: ["hue-wheel", "nearest-name"] },
     { className: "", keys: ["spaces"] },
     {
       className: "md:grid-cols-[1fr_1fr]",
       keys: ["perception", "alpha"],
     },
-    { className: "md:grid-cols-2", keys: ["gamut"] },
+    { className: "md:grid-cols-2", keys: ["hue-wheel", "gamut"] },
   ],
   "pair|verify": [
     { className: "", keys: ["wcag-contrast"] },
@@ -49,6 +48,7 @@ const LAYOUT: Record<string, { className: string; keys: string[] }[]> = {
     },
   ],
   "palette|verify": [
+    { className: "", keys: ["palette-overview"] },
     { className: "", keys: ["contrast-matrix"] },
     {
       className: "md:grid-cols-[1.4fr_1fr]",
@@ -64,6 +64,7 @@ const LAYOUT: Record<string, { className: string; keys: string[] }[]> = {
     { className: "md:grid-cols-2", keys: ["svg-preview", "chart-preview"] },
   ],
   design: [
+    { className: "", keys: ["base-scheme"] },
     { className: "", keys: ["harmony"] },
     { className: "", keys: ["partner"] },
     { className: "", keys: ["tone"] },
@@ -92,6 +93,11 @@ export function CardList() {
   const cards = filterCards(CARD_REGISTRY, unit, view);
   const byKey = new Map(cards.map((c) => [c.key, c]));
   const rows = layoutFor(unit, view);
+  // 実際に配置（描画）されるカード数。registry には載るが当モードのレイアウトに
+  // 含めないカード（例: 単色ヒーローが吸収した色値/最寄り色名）は数えない。
+  const renderedCount = rows
+    .flatMap((r) => r.keys)
+    .filter((k) => byKey.has(k)).length;
 
   const modeWord = view === "design" ? "SCHEME" : MODE_WORD[unit];
   const figTag = view === "design" ? "CFF·04" : FIG_TAG[unit];
@@ -138,7 +144,7 @@ export function CardList() {
             </h1>
           </div>
           <div className="text-text-3 text-meta text-right font-mono leading-[1.9] tracking-[0.08em] whitespace-nowrap">
-            <div>CARDS — {cards.length}</div>
+            <div>CARDS — {renderedCount}</div>
             <div>SWATCHES — {paletteCount}</div>
           </div>
         </div>

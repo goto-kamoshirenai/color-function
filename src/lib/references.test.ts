@@ -15,7 +15,10 @@ describe("参考資料データ（references.json）", () => {
   });
 
   it("レジストリの全指標に対応する資料がある", () => {
+    // サマリーヒーロー（要約カード）は単一指標ではないため参考資料を持たない
+    const SUMMARY_NO_REFS = new Set(["overview"]);
     for (const card of CARD_REGISTRY) {
+      if (SUMMARY_NO_REFS.has(card.helpKey)) continue;
       expect(
         REFERENCES[card.helpKey]?.length,
         `topics.${card.helpKey} が references.json にない`,

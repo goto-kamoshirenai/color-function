@@ -117,6 +117,11 @@ const HELP_JA = {
     body: "パレット各色を明度（OKLCH L）と彩度（HSV S）の軸に配置します。UI の階層に必要な明度レンジが揃っているか、鮮やかさの偏りがないかを確認できます。",
     guide: "明度が広い=階層を作りやすい",
   },
+  overview: {
+    title: "パレット概要",
+    body: "パレット全体の健全性を一目で把握する要約です。色数・最小コントラスト比・紛らわしいペア数（色差 ΔE00 < 10）・色相エントロピー・グレースケール化したときの潰れ有無を表示します。詳細は下のカードで確認できます。",
+    guide: "最小コントラスト・紛らわしいペアをまず確認",
+  },
   warmcool: {
     title: "暖寒バランス",
     body: "各色を暖色・寒色・中立に分類し、配色全体の温度感の比率を表示します。低彩度の色は中立に分類されます。",
@@ -344,6 +349,11 @@ const HELP_EN: Record<HelpKey, HelpEntry> = {
     title: "Lightness & Saturation Distribution",
     body: "Palette colors placed on lightness (OKLCH L) and saturation (HSV S) axes. Check whether the lightness range covers UI hierarchy needs and whether vividness is skewed.",
     guide: "wide lightness range = easier hierarchy",
+  },
+  overview: {
+    title: "Palette Overview",
+    body: "An at-a-glance summary of overall palette health: number of colors, minimum contrast ratio, confusable pairs (ΔE00 < 10), hue entropy, and whether any colors merge in grayscale. See the cards below for details.",
+    guide: "Check min contrast and confusable pairs first",
   },
   warmcool: {
     title: "Warm / Cool Balance",

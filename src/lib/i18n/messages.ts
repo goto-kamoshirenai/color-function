@@ -254,6 +254,20 @@ const JA = {
   "card.dbreak.title": "色差の内訳",
   "card.dbreak.components": "成分差（FG → BG）",
 
+  // カード: サマリーヒーロー（docs/adr/0002）
+  "card.overview.title": "パレット概要",
+  "card.overview.colors": "色数",
+  "card.overview.minContrast": "最小コントラスト",
+  "card.overview.confusing": "紛らわしいペア",
+  "card.overview.entropy": "色相エントロピー",
+  "card.overview.grayscale": "グレー耐性",
+  "card.overview.grayOk": "良好",
+  "card.overview.grayNg": "{n}組潰れ",
+  "card.basescheme.title": "ベース配色",
+  "card.basescheme.hint": "おすすめの調和（クリックで追加）",
+  "card.basescheme.complement": "補色",
+  "card.basescheme.analogous": "類似色",
+
   // カード: パレット統計・プレビュー（パレット×検証）
   "card.lsdist.title": "明度・彩度分布",
   "card.lsdist.lightness": "明度（OKLCH L）",
@@ -554,6 +568,19 @@ const EN: Record<MessageKey, string> = {
   "card.apca.bodyShort": "body",
   "card.dbreak.title": "ΔE Breakdown",
   "card.dbreak.components": "Components (FG → BG)",
+
+  "card.overview.title": "Palette Overview",
+  "card.overview.colors": "Colors",
+  "card.overview.minContrast": "Min contrast",
+  "card.overview.confusing": "Confusable pairs",
+  "card.overview.entropy": "Hue entropy",
+  "card.overview.grayscale": "Grayscale",
+  "card.overview.grayOk": "Good",
+  "card.overview.grayNg": "{n} merge",
+  "card.basescheme.title": "Base Scheme",
+  "card.basescheme.hint": "Suggested harmony (click to add)",
+  "card.basescheme.complement": "Complementary",
+  "card.basescheme.analogous": "Analogous",
 
   "card.lsdist.title": "Lightness & Saturation",
   "card.lsdist.lightness": "Lightness (OKLCH L)",
