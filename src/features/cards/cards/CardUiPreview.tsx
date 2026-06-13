@@ -1,26 +1,21 @@
 "use client";
 
-import { parseHex, toHex, assignRoles } from "@/core/color";
 import { CardFrame } from "@/components/Card";
 import { useColorStore } from "@/store/useColorStore";
+import { useRoleColors } from "../hooks";
 import { useT } from "@/lib/i18n/locale";
 import type { CardProps } from "../types";
 
-/** UI モックプレビューカード（役割を自動割当てて簡易 UI に適用）。 */
+/** UI モックプレビューカード（パレットの並び順＋ FG/BG 指定で色を割り当てる）。 */
 export function CardUiPreview({ number }: CardProps) {
   const palette = useColorStore((s) => s.palette);
+  const roles = useRoleColors();
   const t = useT();
 
-  const rgbs = palette.map((c) => parseHex(c.hex) ?? { r: 0, g: 0, b: 0 });
-  const roles = assignRoles(rgbs);
-  const hexOf = (role: string, fallback: string) => {
-    const found = roles.find((r) => r.role === role);
-    return found ? toHex(rgbs[found.index]).toUpperCase() : fallback;
-  };
-  const bg = hexOf("background", "#ffffff");
-  const text = hexOf("text", "#111111");
-  const primary = hexOf("primary", text);
-  const accent = hexOf("accent", primary);
+  const bg = roles.background ?? "#ffffff";
+  const text = roles.text ?? "#111111";
+  const primary = roles.primary ?? text;
+  const accent = roles.accent ?? primary;
 
   return (
     <CardFrame
