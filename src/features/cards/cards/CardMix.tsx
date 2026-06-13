@@ -9,7 +9,7 @@ import {
 } from "@/core/color";
 import { CardFrame } from "@/components/Card";
 import { useColorStore } from "@/store/useColorStore";
-import { usePairColors } from "../hooks";
+import { useOrderedPair } from "../hooks";
 import { useT } from "@/lib/i18n/locale";
 import { useFormatColor } from "@/lib/colorFormat";
 import { ScaleChip } from "./ScaleChip";
@@ -22,9 +22,9 @@ const MODE_LABEL: Record<BlendMode, string> = {
   overlay: "OVERLAY",
 };
 
-/** 色のミックスカード（FG×BG の合成結果）。 */
+/** 色のミックスカード（並び順1番目×2番目の合成結果）。 */
 export function CardMix({ number }: CardProps) {
-  const pair = usePairColors();
+  const pair = useOrderedPair();
   const apply = useColorStore((s) => s.apply);
   const showToast = useColorStore((s) => s.showToast);
   const t = useT();
@@ -35,8 +35,8 @@ export function CardMix({ number }: CardProps) {
     showToast(t("toast.add", { hex: fmt(hex) }));
   };
 
-  const fg = pair ? (parseHex(pair.fg.hex) ?? { r: 0, g: 0, b: 0 }) : null;
-  const bg = pair ? (parseHex(pair.bg.hex) ?? { r: 0, g: 0, b: 0 }) : null;
+  const fg = pair ? (parseHex(pair.first.hex) ?? { r: 0, g: 0, b: 0 }) : null;
+  const bg = pair ? (parseHex(pair.second.hex) ?? { r: 0, g: 0, b: 0 }) : null;
 
   return (
     <CardFrame
@@ -46,7 +46,7 @@ export function CardMix({ number }: CardProps) {
       helpKey="mix"
     >
       {!pair || !fg || !bg ? (
-        <p className="text-text-3 font-mono text-xs">{t("card.needPair")}</p>
+        <p className="text-text-3 font-mono text-xs">{t("card.needTwo")}</p>
       ) : (
         <div className="grid grid-cols-2 gap-[7px] sm:grid-cols-4">
           {BLEND_MODES.map((mode) => {

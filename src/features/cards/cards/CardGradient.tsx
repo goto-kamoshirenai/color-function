@@ -9,7 +9,7 @@ import {
 } from "@/core/color";
 import { CardFrame } from "@/components/Card";
 import { useColorStore } from "@/store/useColorStore";
-import { usePairColors } from "../hooks";
+import { useOrderedPair } from "../hooks";
 import { useT } from "@/lib/i18n/locale";
 import { useFormatColor } from "@/lib/colorFormat";
 import { segCompactClass } from "@/components/segmented";
@@ -23,9 +23,9 @@ const SPACE_LABEL: Record<GradientSpace, string> = {
   hsv: "HSV",
 };
 
-/** 2色間グラデーションカード（補間色空間を選択・連続プレビュー＋段階チップ）。 */
+/** 2色間グラデーションカード（並び順1番目↔2番目・補間色空間を選択・段階チップ）。 */
 export function CardGradient({ number }: CardProps) {
-  const pair = usePairColors();
+  const pair = useOrderedPair();
   const apply = useColorStore((s) => s.apply);
   const showToast = useColorStore((s) => s.showToast);
   const t = useT();
@@ -38,7 +38,7 @@ export function CardGradient({ number }: CardProps) {
   };
 
   const steps = pair
-    ? gradientSteps(pair.fg.hex, pair.bg.hex, space, STEPS)
+    ? gradientSteps(pair.first.hex, pair.second.hex, space, STEPS)
     : [];
 
   return (
@@ -70,7 +70,7 @@ export function CardGradient({ number }: CardProps) {
       }
     >
       {!pair ? (
-        <p className="text-text-3 font-mono text-xs">{t("card.needPair")}</p>
+        <p className="text-text-3 font-mono text-xs">{t("card.needTwo")}</p>
       ) : (
         <div className="flex flex-col gap-3">
           {/* 連続グラデーションプレビュー */}

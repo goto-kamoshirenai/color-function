@@ -136,6 +136,7 @@ const JA = {
   "card.empty": "色がありません — 下の ＋ から追加してください",
   "card.needPair": "ペアには2色以上が必要です — 下の ＋ から色を追加",
   "card.needMatrix": "マトリクスには2色以上が必要です — 下の ＋ から色を追加",
+  "card.needTwo": "2色以上が必要です — 下の ＋ から色を追加",
 
   // カード: 色値
   "card.value.title": "色値",
@@ -309,7 +310,7 @@ const JA = {
   "card.nudge.title": "アクセシブル化ナッジ",
   "card.nudge.current": "現在のコントラスト比 {ratio}:1",
   "card.nudge.already": "{level} を満たしています",
-  "card.nudge.applied": "FG を {hex} に補正しました（{ratio}:1）",
+  "card.nudge.applied": "1番目の色を {hex} に補正しました（{ratio}:1）",
   "card.nudge.apply": "適用",
   "card.nudge.bestEffort": "最良値",
   "card.cvdsafe.title": "色覚セーフ提案",
@@ -467,6 +468,7 @@ const EN: Record<MessageKey, string> = {
   "card.needPair": "A pair needs at least 2 colors — add more with ＋ below",
   "card.needMatrix":
     "The matrix needs at least 2 colors — add more with ＋ below",
+  "card.needTwo": "Needs at least 2 colors — add more with ＋ below",
 
   "card.value.title": "Color Value",
   "card.value.copyHint": "CLICK TO COPY",
@@ -622,7 +624,7 @@ const EN: Record<MessageKey, string> = {
   "card.nudge.title": "Accessibility Nudge",
   "card.nudge.current": "Current contrast ratio {ratio}:1",
   "card.nudge.already": "Already meets {level}",
-  "card.nudge.applied": "FG nudged to {hex} ({ratio}:1)",
+  "card.nudge.applied": "Nudged color 1 to {hex} ({ratio}:1)",
   "card.nudge.apply": "Apply",
   "card.nudge.bestEffort": "best effort",
   "card.cvdsafe.title": "CVD-Safe Suggestion",

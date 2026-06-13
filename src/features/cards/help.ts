@@ -179,17 +179,17 @@ const HELP_JA = {
   },
   gradient: {
     title: "2色間グラデーション",
-    body: "FG から BG への補間列です。補間に使う色空間で印象が変わります: sRGB は中間が濁りやすく、OKLab は知覚的に滑らか、HSV は色相経由で回ります。",
+    body: "並び順の1番目の色から2番目の色への補間列です。補間に使う色空間で印象が変わります: sRGB は中間が濁りやすく、OKLab は知覚的に滑らか、HSV は色相経由で回ります。",
     guide: "迷ったら OKLab 補間",
   },
   mix: {
     title: "色のミックス",
-    body: "FG と BG の合成結果です。MIX は 50/50 平均、MULTIPLY は重ねて暗く、SCREEN は光を重ねて明るく、OVERLAY は明暗を強調します。",
+    body: "並び順の1番目と2番目の色の合成結果です。MIX は 50/50 平均、MULTIPLY は重ねて暗く、SCREEN は光を重ねて明るく、OVERLAY は明暗を強調します。",
     guide: "CSS の mix-blend-mode と同じ式",
   },
   nudge: {
     title: "アクセシブル化ナッジ",
-    body: "現在の FG/BG ペアが基準に満たない場合、FG の明度だけを調整して AA(4.5:1)・AAA(7:1) に届く最寄り色を提案します。「適用」で FG を置き換えます。",
+    body: "並び順の1番目の色を、2番目の色に対して明度だけ調整し、AA(4.5:1)・AAA(7:1) に届く最寄り色を提案します。「適用」で1番目の色を置き換えます。",
     guide: "色相・彩度は保ったまま明度のみ調整",
   },
   cvdsafe: {
@@ -412,17 +412,17 @@ const HELP_EN: Record<HelpKey, HelpEntry> = {
   },
   gradient: {
     title: "Two-Color Gradient",
-    body: "Interpolation steps from FG to BG. The interpolation space changes the result: sRGB can muddy the middle, OKLab stays perceptually smooth, HSV travels around the hue wheel.",
+    body: "Interpolation steps from the 1st to the 2nd palette color. The interpolation space changes the result: sRGB can muddy the middle, OKLab stays perceptually smooth, HSV travels around the hue wheel.",
     guide: "when unsure, pick OKLab",
   },
   mix: {
     title: "Color Mix",
-    body: "Composites of FG and BG: MIX is a 50/50 average, MULTIPLY darkens, SCREEN lightens, OVERLAY boosts contrast.",
+    body: "Composites of the 1st and 2nd palette colors: MIX is a 50/50 average, MULTIPLY darkens, SCREEN lightens, OVERLAY boosts contrast.",
     guide: "same math as CSS mix-blend-mode",
   },
   nudge: {
     title: "Accessibility Nudge",
-    body: "When the current FG/BG pair misses the bar, proposes the nearest FG adjusted in lightness only to reach AA (4.5:1) and AAA (7:1). Apply replaces the FG.",
+    body: "Adjusts the 1st palette color in lightness only (against the 2nd) to reach AA (4.5:1) and AAA (7:1), proposing the nearest color. Apply replaces the 1st color.",
     guide: "hue and chroma stay, only lightness moves",
   },
   cvdsafe: {

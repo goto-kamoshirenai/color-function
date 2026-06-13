@@ -4,7 +4,7 @@ import { Check } from "iconoir-react";
 import { parseHex, toHex, contrastRatio, nudgeForContrast } from "@/core/color";
 import { CardFrame } from "@/components/Card";
 import { useColorStore } from "@/store/useColorStore";
-import { usePairColors } from "../hooks";
+import { useOrderedPair } from "../hooks";
 import { useT } from "@/lib/i18n/locale";
 import { useFormatColor } from "@/lib/colorFormat";
 import type { CardProps } from "../types";
@@ -14,23 +14,24 @@ const TARGETS = [
   { key: "AAA", ratio: 7 },
 ] as const;
 
-/** アクセシブル化ナッジカード（FG を AA/AAA に届く最寄り色へ補正提案）。 */
+/** アクセシブル化ナッジカード（並び順1番目を2番目に対し AA/AAA へ補正提案）。 */
 export function CardNudge({ number }: CardProps) {
-  const pair = usePairColors();
+  const pair = useOrderedPair();
   const apply = useColorStore((s) => s.apply);
   const showToast = useColorStore((s) => s.showToast);
   const t = useT();
   const fmt = useFormatColor();
 
-  const fg = pair ? (parseHex(pair.fg.hex) ?? { r: 0, g: 0, b: 0 }) : null;
+  // 1番目=補正対象 / 2番目=コントラストの基準
+  const fg = pair ? (parseHex(pair.first.hex) ?? { r: 0, g: 0, b: 0 }) : null;
   const bg = pair
-    ? (parseHex(pair.bg.hex) ?? { r: 255, g: 255, b: 255 })
+    ? (parseHex(pair.second.hex) ?? { r: 255, g: 255, b: 255 })
     : null;
   const current = fg && bg ? contrastRatio(fg, bg) : 0;
 
   const applyFix = (hex: string, ratio: number) => {
     if (!pair) return;
-    apply({ kind: "set", id: pair.fg.id, hex });
+    apply({ kind: "set", id: pair.first.id, hex });
     showToast(
       t("card.nudge.applied", { hex: fmt(hex), ratio: ratio.toFixed(2) }),
     );
@@ -44,7 +45,7 @@ export function CardNudge({ number }: CardProps) {
       helpKey="nudge"
     >
       {!pair || !fg || !bg ? (
-        <p className="text-text-3 font-mono text-xs">{t("card.needPair")}</p>
+        <p className="text-text-3 font-mono text-xs">{t("card.needTwo")}</p>
       ) : (
         <div className="flex flex-col gap-2.5">
           <p className="text-text-2 text-meta font-mono">

@@ -24,6 +24,16 @@ export function usePairColors(): { fg: Color; bg: Color } | null {
 }
 
 /**
+ * 並び順の先頭2色（1番目・2番目）。FG/BG 指定には依存しない。
+ * 設計モードの2色操作（ミックス/グラデーション/ナッジ）で使う。2色未満は null。
+ */
+export function useOrderedPair(): { first: Color; second: Color } | null {
+  const palette = useColorStore((s) => s.palette);
+  if (palette.length < 2) return null;
+  return { first: palette[0], second: palette[1] };
+}
+
+/**
  * パレットの並び順だけに基づくロール別の色（HEX）。割当できないロールは null。
  * UI モック等で使う。FG/BG・アクセント指定（ペアモードの選択）には依存しない。
  */
