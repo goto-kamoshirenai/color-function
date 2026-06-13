@@ -35,3 +35,39 @@ export function readPaletteFromHash(): string[] | null {
   if (typeof window === "undefined") return null;
   return decodePalette(window.location.hash || "");
 }
+
+/**
+ * localStorage への保持（一時保存。共有=URLハッシュ / 保存=localStorage）。
+ * URL と同じく色（HEX 列）のみ。空配列はキーを消す（次回は既定に戻る）。
+ */
+export const PALETTE_STORAGE_KEY = "cff-palette";
+
+export function savePaletteToStorage(hexes: string[]): void {
+  if (typeof window === "undefined") return;
+  try {
+    const body = hexes
+      .map((h) => h.replace(/^#/, "").toUpperCase())
+      .filter((x) => /^[0-9A-F]{6}$/.test(x))
+      .join(",");
+    if (body) localStorage.setItem(PALETTE_STORAGE_KEY, body);
+    else localStorage.removeItem(PALETTE_STORAGE_KEY);
+  } catch {
+    // localStorage 不可環境は無視
+  }
+}
+
+/** localStorage から復元（無効・未設定なら null）。 */
+export function readPaletteFromStorage(): string[] | null {
+  if (typeof window === "undefined") return null;
+  try {
+    const raw = localStorage.getItem(PALETTE_STORAGE_KEY);
+    if (!raw) return null;
+    const cols = raw
+      .split(",")
+      .filter((x) => /^[0-9a-fA-F]{6}$/.test(x))
+      .map((x) => "#" + x.toUpperCase());
+    return cols.length ? cols : null;
+  } catch {
+    return null;
+  }
+}

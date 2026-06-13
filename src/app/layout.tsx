@@ -46,7 +46,7 @@ export const viewport: Viewport = {
 // 言語も同様に確定: localStorage（手動切替の保持値）→ ブラウザ言語（ja 以外は en）。
 // URL ハッシュに共有パレット（#p=）がある場合は、復元完了までスウォッチ列を隠す
 // フラグを立てる（SSR の既定5色が一瞬見えるのを防ぐ。解除は StoreSync）。
-const themeInit = `(function(){try{var t=localStorage.getItem('cff-theme');document.documentElement.dataset.theme=(t==='dark'||t==='light')?t:'light';}catch(e){document.documentElement.dataset.theme='light';}try{var l=null;try{l=localStorage.getItem('cff-lang');}catch(e){}if(l!=='ja'&&l!=='en'){l=((navigator.language||'').toLowerCase().indexOf('ja')===0)?'ja':'en';}document.documentElement.lang=l;}catch(e){}try{var rm=window.matchMedia('(prefers-reduced-motion: reduce)').matches;if(!rm&&!sessionStorage.getItem('cff-splash-shown')){document.documentElement.dataset.splash='1';}}catch(e){}try{if(location.hash.indexOf('#p=')===0){document.documentElement.dataset.paletteRestore='1';}}catch(e){}})();`;
+const themeInit = `(function(){try{var t=localStorage.getItem('cff-theme');document.documentElement.dataset.theme=(t==='dark'||t==='light')?t:'light';}catch(e){document.documentElement.dataset.theme='light';}try{var l=null;try{l=localStorage.getItem('cff-lang');}catch(e){}if(l!=='ja'&&l!=='en'){l=((navigator.language||'').toLowerCase().indexOf('ja')===0)?'ja':'en';}document.documentElement.lang=l;}catch(e){}try{var rm=window.matchMedia('(prefers-reduced-motion: reduce)').matches;if(!rm&&!sessionStorage.getItem('cff-splash-shown')){document.documentElement.dataset.splash='1';}}catch(e){}try{if(location.hash.indexOf('#p=')===0||localStorage.getItem('cff-palette')){document.documentElement.dataset.paletteRestore='1';}}catch(e){}})();`;
 
 export default function RootLayout({
   children,

@@ -2,7 +2,12 @@
 
 import { useEffect, useLayoutEffect } from "react";
 import { useColorStore } from "@/store/useColorStore";
-import { syncPaletteToHash, readPaletteFromHash } from "@/lib/urlState";
+import {
+  syncPaletteToHash,
+  readPaletteFromHash,
+  readPaletteFromStorage,
+  savePaletteToStorage,
+} from "@/lib/urlState";
 import { parseHex, toHex, ensureReadableAccent } from "@/core/color";
 
 // 復元はペイント前（useLayoutEffect）に行い、既定パレットの一瞬の表示を防ぐ。
@@ -20,7 +25,8 @@ const useIsomorphicLayoutEffect =
  */
 export function StoreSync() {
   useIsomorphicLayoutEffect(() => {
-    const restored = readPaletteFromHash();
+    // 優先: URL ハッシュ → localStorage → 既定（hydrate しない）
+    const restored = readPaletteFromHash() ?? readPaletteFromStorage();
     if (restored) useColorStore.getState().hydratePalette(restored);
     // 復元待ちカバーを解除（ハッシュが不正だった場合も含めて必ず）
     delete document.documentElement.dataset.paletteRestore;
@@ -44,16 +50,18 @@ export function StoreSync() {
       );
     };
 
-    const syncHash = () => {
-      syncPaletteToHash(useColorStore.getState().palette.map((c) => c.hex));
+    const persist = () => {
+      const hexes = useColorStore.getState().palette.map((c) => c.hex);
+      syncPaletteToHash(hexes);
+      savePaletteToStorage(hexes);
     };
 
     applyAccent();
-    syncHash();
+    persist();
 
     const unsub = useColorStore.subscribe(() => {
       applyAccent();
-      syncHash();
+      persist();
     });
     window.addEventListener("cff-theme-change", applyAccent);
 
