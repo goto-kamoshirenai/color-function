@@ -54,6 +54,8 @@ export function SplashScreen() {
       // 保存不可環境は無視
     }
     setDismissed(true);
+    // 初回コーチマーク（FirstRunHint）はスプラッシュ終了後に出すため通知する
+    window.dispatchEvent(new Event("cff-splash-done"));
   }, []);
 
   // 万一モーション低減で attr が立っていた場合はプリカバーを畳む（setState は使わない）
@@ -65,6 +67,7 @@ export function SplashScreen() {
         // 無視
       }
       delete document.documentElement.dataset.splash;
+      window.dispatchEvent(new Event("cff-splash-done"));
     }
   }, [shouldShow, reducedMotion]);
 

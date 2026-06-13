@@ -97,6 +97,11 @@ const JA = {
   "role.barExpand": "文字色と背景色を展開",
   "role.barCollapse": "文字色と背景色を折りたたむ",
 
+  // 初回コーチマーク（配色パレットの導線）
+  "coach.title": "ここから操作",
+  "coach.body": "色を選んで追加・編集できます",
+  "coach.dismiss": "閉じる",
+
   // ヘルプ
   "help.aria": "{title} の説明",
   "help.guide": "目安 / Guide",
@@ -408,6 +413,10 @@ const EN: Record<MessageKey, string> = {
   "role.barRegion": "Text & background (pinned)",
   "role.barExpand": "Expand text & background",
   "role.barCollapse": "Collapse text & background",
+
+  "coach.title": "Start here",
+  "coach.body": "Pick, add, and edit colors",
+  "coach.dismiss": "Dismiss",
 
   "help.aria": "About {title}",
   "help.guide": "Guide",

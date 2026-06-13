@@ -8,6 +8,7 @@ import { ColorPicker } from "@/components/ColorPicker";
 import { ConfirmDialog } from "@/components/ConfirmDialog";
 import { Toast } from "@/components/Toast";
 import { SplashScreen } from "@/components/SplashScreen";
+import { FirstRunHint } from "@/components/FirstRunHint";
 
 const archivo = Archivo({ variable: "--font-archivo", subsets: ["latin"] });
 const geistMono = Geist_Mono({
@@ -74,6 +75,7 @@ export default function RootLayout({
         <ConfirmDialog />
         <Toast />
         <SplashScreen />
+        <FirstRunHint />
       </body>
     </html>
   );
