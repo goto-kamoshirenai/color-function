@@ -30,7 +30,7 @@ export function LearnContent() {
     GLOSSARY.length;
 
   return (
-    <div className="mx-auto max-w-[900px] px-4 pb-10 sm:px-[26px] sm:pb-[52px]">
+    <div className="mx-auto max-w-[900px] px-4 pb-[calc(2.5rem_+_env(safe-area-inset-bottom))] sm:px-[26px] sm:pb-[calc(3.25rem_+_env(safe-area-inset-bottom))]">
       {/* マストヘッド（CardList と同意匠） */}
       <div className="border-border-strong relative mb-[22px] overflow-hidden border-b pt-[26px] pb-4">
         <div

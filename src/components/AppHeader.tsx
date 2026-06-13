@@ -14,7 +14,7 @@ export function AppHeader() {
   const t = useT();
   const onLearn = usePathname() === "/learn";
   return (
-    <header className="border-border-strong bg-surface z-5 flex h-14 flex-none items-center justify-between border-b pr-3 sm:pr-[18px]">
+    <header className="border-border-strong bg-surface z-5 flex h-[calc(3.5rem_+_env(safe-area-inset-top))] flex-none items-center justify-between border-b pt-[env(safe-area-inset-top)] pr-3 sm:pr-[18px]">
       {/* ロゴブロック全体を / への導線にする（ホームへ戻る） */}
       <Link
         href="/"

@@ -199,7 +199,7 @@ export function SplashScreen() {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 0.2, duration: 0.5, ease: EASE }}
-              className="absolute right-[18px] bottom-4"
+              className="absolute right-[18px] bottom-[calc(1rem_+_env(safe-area-inset-bottom))]"
             >
               <button
                 type="button"

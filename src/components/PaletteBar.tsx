@@ -152,7 +152,7 @@ export function PaletteBar() {
     return (
       <footer
         data-coach-target="palette"
-        className="border-border-strong bg-surface relative z-5 flex-none border-t"
+        className="border-border-strong bg-surface relative z-5 flex-none border-t pb-[env(safe-area-inset-bottom)]"
       >
         <div className="flex items-center gap-2.5 py-[13px] pr-[60px] pl-[22px]">
           <div className="cff-scroll cff-palette-strip flex flex-1 items-center gap-[7px] overflow-x-auto">

@@ -31,6 +31,9 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
+  // iOS PWA 等で端末の端（ノッチ/ホームインジケータ）まで描画し、
+  // 各要素は env(safe-area-inset-*) でセーフエリアに収める。
+  viewportFit: "cover",
   // アプリのテーマは data-theme 切替のため、OS 設定に応じた近似値を返す
   themeColor: [
     { media: "(prefers-color-scheme: light)", color: "#ffffff" },
