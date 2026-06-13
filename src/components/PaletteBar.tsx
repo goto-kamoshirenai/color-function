@@ -138,10 +138,10 @@ export function PaletteBar() {
       aria-label={collapsed ? t("palette.expand") : t("palette.collapse")}
       aria-expanded={!collapsed}
       title={collapsed ? t("palette.expand") : t("palette.collapse")}
-      className="cff-control text-text-2 hover:text-text absolute right-[22px] bottom-[11px] flex size-7 items-center justify-center"
+      className="cff-control text-text-2 hover:text-text absolute right-[22px] bottom-[11px] flex size-8 items-center justify-center p-1"
     >
       {collapsed ? (
-        <NavArrowUp width={14} height={14} aria-hidden />
+        <NavArrowUp width={18} height={18} aria-hidden />
       ) : (
         <NavArrowDown width={14} height={14} aria-hidden />
       )}
@@ -254,7 +254,7 @@ export function PaletteBar() {
           onClick={openAdd}
           aria-label={t("palette.add")}
           title={t("palette.add")}
-          className="border-border-strong text-text-2 hover:border-accent hover:text-accent rounded-panel mt-[15px] flex size-[50px] flex-none items-center justify-center border-[1.5px] border-dashed bg-transparent"
+          className="border-border-strong text-text-2 hover:border-accent hover:text-accent rounded-panel mt-[21px] flex size-[50px] flex-none items-center justify-center border-[1.5px] border-dashed bg-transparent"
         >
           <Plus width={20} height={20} aria-hidden />
         </button>
@@ -264,9 +264,6 @@ export function PaletteBar() {
       <div className="border-border flex flex-wrap items-center justify-between gap-x-[18px] gap-y-2 border-t pt-[9px] pr-[60px] pb-2.5 pl-[22px]">
         <ModeToggle />
         <div className="flex items-center gap-2.5">
-          <span className="text-text-3 text-meta font-mono">
-            {t("palette.count", { count: palette.length })}
-          </span>
           {palette.length > 0 ? (
             <button
               type="button"
