@@ -11,19 +11,39 @@ import { QuestionMark } from "iconoir-react";
 import { HELP } from "@/features/cards/help";
 import { useLocale, useT } from "@/lib/i18n/locale";
 
-/** 指標ヘルプ（v2 パネル意匠の Popover）。 */
-export function HelpButton({ helpKey }: { helpKey: string }) {
+/**
+ * 指標ヘルプ（v2 パネル意匠の Popover）。
+ * variant="card"（既定）はカード見出し用の小丸トリガー、
+ * variant="header" はヘッダーの学習/設定と揃えた 36px アイコンボタン。
+ */
+export function HelpButton({
+  helpKey,
+  variant = "card",
+}: {
+  helpKey: string;
+  variant?: "card" | "header";
+}) {
   const locale = useLocale();
   const t = useT();
   const help = HELP[locale][helpKey];
   if (!help) return null;
+  const isHeader = variant === "header";
   return (
     <DialogTrigger>
       <Button
         aria-label={t("help.aria", { title: help.title })}
-        className="cff-control text-text-2 hover:border-accent hover:text-accent relative flex size-[18px] items-center justify-center rounded-full p-0 before:absolute before:-inset-1 before:content-['']"
+        className={
+          isHeader
+            ? "cff-control text-text-2 hover:border-accent hover:text-accent flex size-9 items-center justify-center"
+            : "cff-control text-text-2 hover:border-accent hover:text-accent relative flex size-[18px] items-center justify-center rounded-full p-0 before:absolute before:-inset-1 before:content-['']"
+        }
       >
-        <QuestionMark width={12} height={12} strokeWidth={2.2} aria-hidden />
+        <QuestionMark
+          width={isHeader ? 15 : 12}
+          height={isHeader ? 15 : 12}
+          strokeWidth={2.2}
+          aria-hidden
+        />
       </Button>
       <Popover className="border-border-strong bg-surface rounded-panel shadow-overlay w-[400px] max-w-[90vw] border">
         <Dialog className="outline-none">

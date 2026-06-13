@@ -5,7 +5,6 @@ import { Plus, NavArrowDown, NavArrowUp } from "iconoir-react";
 import { useColorStore, type Color } from "@/store/useColorStore";
 import { ModeToggle } from "./ModeToggle";
 import { Swatch } from "./Swatch";
-import { HelpButton } from "./HelpButton";
 import { useT } from "@/lib/i18n/locale";
 import { useFormatColor } from "@/lib/colorFormat";
 
@@ -253,7 +252,6 @@ export function PaletteBar() {
       <div className="border-border flex flex-wrap items-center justify-between gap-x-[18px] gap-y-2 border-t pt-[9px] pr-[60px] pb-2.5 pl-[22px]">
         <ModeToggle />
         <div className="flex items-center gap-2.5">
-          <HelpButton helpKey="usage" />
           <span className="text-text-3 text-meta font-mono">
             {t("palette.count", { count: palette.length })}
           </span>

@@ -5,7 +5,7 @@ export type HelpEntry = { title: string; body: string; guide: string };
 
 const HELP_JA = {
   usage: {
-    title: "パレットバーの使い方",
+    title: "使い方",
     body:
       "スウォッチをクリックで選択します（ペアでは前景 FG に。背景 BG をクリックすると FG/BG が入れ替わります）。" +
       "ダブルクリックで編集、色の下のカラーコードはクリックでコピー、右上の × で削除、右下の塗りつぶしアイコンでその色を画面の差し色（アクセント）に指定できます。" +
@@ -233,7 +233,7 @@ type HelpKey = keyof typeof HELP_JA;
 
 const HELP_EN: Record<HelpKey, HelpEntry> = {
   usage: {
-    title: "How to Use the Palette Bar",
+    title: "How to Use",
     body:
       "Click a swatch to select it (in Pair mode it becomes the foreground FG; clicking the background BG swaps FG/BG). " +
       "Double-click to edit, click the color code below a swatch to copy it, remove with the × at the top right, and use the fill icon at the bottom right to make that color the UI accent. " +

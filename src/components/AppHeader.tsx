@@ -5,6 +5,7 @@ import { usePathname } from "next/navigation";
 import { Book } from "iconoir-react";
 import { BrandMark } from "./BrandMark";
 import { ColorFormatSelect } from "./ColorFormatSelect";
+import { HelpButton } from "./HelpButton";
 import { SettingsMenu } from "./SettingsMenu";
 import { useT } from "@/lib/i18n/locale";
 
@@ -30,6 +31,8 @@ export function AppHeader() {
       </div>
       <div className="flex items-center gap-2 sm:gap-3.5">
         <ColorFormatSelect />
+        {/* 使い方ヘルプ（旧: パレットバー下段。学習導線の隣に集約） */}
+        <HelpButton helpKey="usage" variant="header" />
         {/* 学習コンテンツ（/learn）への導線 */}
         <Link
           href="/learn"
