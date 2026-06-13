@@ -97,6 +97,16 @@ function reconcile(
   };
 }
 
+/**
+ * 色数に対して無効な単位を、有効な最上位へ補正する（パレット→ペア→単色）。
+ * 単色=常時 / ペア=2色以上 / パレット=3色以上（docs: ModeToggle の出し分けと対）。
+ */
+function clampUnit(unit: Unit, count: number): Unit {
+  if (unit === "palette" && count < 3) return count >= 2 ? "pair" : "single";
+  if (unit === "pair" && count < 2) return "single";
+  return unit;
+}
+
 function initialState(hexes: string[] = DEFAULT_HEXES) {
   const palette = makeColors(hexes);
   return {
@@ -105,7 +115,7 @@ function initialState(hexes: string[] = DEFAULT_HEXES) {
     fgId: palette[0]?.id ?? null,
     bgId: palette[palette.length - 1]?.id ?? null,
     accentId: palette[palette.length - 1]?.id ?? null,
-    unit: "pair" as Unit,
+    unit: clampUnit("pair", palette.length),
     view: "verify" as View,
     picker: {
       open: false,
@@ -152,7 +162,11 @@ export const useColorStore = create<ColorStore>((set, get) => ({
         next = makeColors(intent.hexes);
         break;
     }
-    set({ palette: next, ...reconcile(next, get()) });
+    set({
+      palette: next,
+      ...reconcile(next, get()),
+      unit: clampUnit(get().unit, next.length),
+    });
   },
 
   setUnit: (unit) => set({ unit }),
@@ -181,6 +195,7 @@ export const useColorStore = create<ColorStore>((set, get) => ({
       fgId: palette[0]?.id ?? null,
       bgId: palette[palette.length - 1]?.id ?? palette[0]?.id ?? null,
       accentId: palette[palette.length - 1]?.id ?? null,
+      unit: clampUnit(get().unit, palette.length),
     });
   },
 

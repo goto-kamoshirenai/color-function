@@ -69,6 +69,9 @@ const JA = {
   "unit.palette": "パレット",
   "view.verify": "検証",
   "view.design": "設計",
+  // 単位が選べない理由（色数不足。disable 時の title）
+  "mode.needPair": "ペアには2色以上が必要です",
+  "mode.needPalette": "パレットには3色以上が必要です",
 
   // パレットバー
   "palette.empty": "NO SWATCHES — ＋ で追加",
@@ -388,6 +391,8 @@ const EN: Record<MessageKey, string> = {
   "unit.single": "Single",
   "unit.pair": "Pair",
   "unit.palette": "Palette",
+  "mode.needPair": "A pair needs at least 2 colors",
+  "mode.needPalette": "A palette needs at least 3 colors",
   "view.verify": "Verify",
   "view.design": "Design",
 
