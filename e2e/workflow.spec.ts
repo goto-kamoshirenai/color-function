@@ -23,8 +23,12 @@ test("起動: 既定パレットとペア×検証カードが表示される", a
     page.getByRole("heading", { name: "WCAG コントラスト比" }),
   ).toBeVisible();
   await expect(page.getByText(":1", { exact: true }).first()).toBeVisible();
-  // 既定4色（FG=黒 … BG=アクセント=赤）のスウォッチ
-  await expect(page.getByRole("button", { name: /を選択$/ })).toHaveCount(4);
+  // 既定4色（FG=黒 … BG=アクセント=赤）のスウォッチ。
+  // FG/BG セレクトの aria-label も「…を選択」で終わるため、
+  // 数え上げはパレットバー（contentinfo）内に限定する。
+  await expect(
+    page.getByRole("contentinfo").getByRole("button", { name: /を選択$/ }),
+  ).toHaveCount(4);
 });
 
 test("色を追加すると URL ハッシュとカードに即時反映される", async ({
@@ -35,13 +39,17 @@ test("色を追加すると URL ハッシュとカードに即時反映される
   await page.getByRole("textbox").fill("#ABCDEF");
   await page.getByRole("button", { name: "追加", exact: true }).click();
 
-  await expect(page.getByRole("button", { name: /を選択$/ })).toHaveCount(5);
+  await expect(
+    page.getByRole("contentinfo").getByRole("button", { name: /を選択$/ }),
+  ).toHaveCount(5);
   await expect(page).toHaveURL(/#p=.*ABCDEF/);
 });
 
 test("共有URLからパレットを復元できる", async ({ page }) => {
   await page.goto("/#p=112233,AABBCC");
-  await expect(page.getByRole("button", { name: /を選択$/ })).toHaveCount(2);
+  await expect(
+    page.getByRole("contentinfo").getByRole("button", { name: /を選択$/ }),
+  ).toHaveCount(2);
   // パレットバーのカラーコード（クリックでコピー）として表示される
   await expect(
     page
@@ -50,11 +58,19 @@ test("共有URLからパレットを復元できる", async ({ page }) => {
   ).toBeVisible();
 });
 
-test("モード切替: 単色×検証 → 5カード", async ({ page }) => {
+test("モード切替: 単色×検証のカード群に切り替わる", async ({ page }) => {
   await page.goto("/");
   await page.getByRole("radio", { name: "単色" }).click();
+  // ヒーロー（色値）＋単色向けカード。最寄り色名はヒーローが吸収するため
+  // 独立カードとしては現れない（CardList の LAYOUT を参照）。
   await expect(page.getByRole("heading", { name: "色値" })).toBeVisible();
-  await expect(page.getByRole("heading", { name: "最寄り色名" })).toBeVisible();
+  await expect(page.getByRole("heading", { name: "HSV" })).toBeVisible();
+  await expect(
+    page.getByRole("heading", { name: "ガマット・出力適合" }),
+  ).toBeVisible();
+  await expect(page.getByRole("heading", { name: "最寄り色名" })).toHaveCount(
+    0,
+  );
 });
 
 test("設計ビュー: 調和スキームから色を追加できる", async ({ page }) => {
@@ -108,8 +124,8 @@ test("ヘッダーから学習コンテンツ画面に遷移できる", async ({
   const first = page.getByRole("link", { name: /Contrast Checker/ }).first();
   await expect(first).toHaveAttribute("target", "_blank");
 
-  // ツールへ戻れる
-  await page.getByRole("link", { name: /ツールに戻る/ }).click();
+  // ツールへ戻れる（ヘッダーの学習トグルが「ホームに戻る」になる）
+  await page.getByRole("link", { name: "ホームに戻る" }).click();
   await expect(
     page.getByRole("heading", { name: "WCAG コントラスト比" }),
   ).toBeVisible();
@@ -124,26 +140,45 @@ test("全消去は確認ダイアログを経由する", async ({ page }) => {
 });
 
 test.describe("アクセシビリティ (axe)", () => {
-  for (const [label, setup] of [
-    ["ペア×検証（既定）", async () => {}],
-    [
-      "単色×検証",
-      async (page: import("@playwright/test").Page) => {
-        await page.getByRole("radio", { name: "単色" }).click();
-      },
-    ],
-    [
-      "設計ビュー",
-      async (page: import("@playwright/test").Page) => {
-        await page.getByRole("radio", { name: "設計" }).click();
-      },
-    ],
-  ] as const) {
+  /**
+   * 初回コーチマーク（FirstRunHint）はフェードイン／アウトする。opacity が 1 未満の
+   * 途中で解析すると背後との合成色になり、色コントラストを誤検出する。そのため
+   * 「出現しきるまで待つ」「モード切替で閉じたなら DOM から外れるまで待つ」の
+   * 両方を待ち切ってから axe を回す（モード切替はパレットバー内の操作なので閉じる）。
+   */
+  const SCENES = [
+    { label: "ペア×検証（既定）", setup: async () => {}, coachStays: true },
+    {
+      label: "単色×検証",
+      setup: (page: import("@playwright/test").Page) =>
+        page.getByRole("radio", { name: "単色" }).click(),
+      coachStays: false,
+    },
+    {
+      label: "設計ビュー",
+      setup: (page: import("@playwright/test").Page) =>
+        page.getByRole("radio", { name: "設計" }).click(),
+      coachStays: false,
+    },
+  ] as const;
+
+  for (const { label, setup, coachStays } of SCENES) {
     test(`${label} で重大違反ゼロ`, async ({ page }) => {
       await page.goto("/");
       // ハイドレーション完了（アクセント注入）を待ってから解析する
       await expect(page.getByRole("radio", { name: "検証" })).toBeVisible();
+
+      const coach = page
+        .getByRole("status")
+        .filter({ hasText: "ここから操作" });
+      await expect(coach).toBeVisible();
+      await expect
+        .poll(() => coach.evaluate((el) => getComputedStyle(el).opacity))
+        .toBe("1");
+
       await setup(page);
+      await expect(coach).toHaveCount(coachStays ? 1 : 0);
+
       // [data-specimen] はユーザー指定色をそのまま表示する標本領域
       // （プレビュー・CVDサンプル・調和チップ）。そのコントラストは
       // アプリが「測定して見せる対象」であり、UI の a11y 違反ではない。
