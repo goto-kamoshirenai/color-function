@@ -127,10 +127,11 @@ const JA = {
   "learn.byTopic": "指標別リファレンス",
   "learn.articles": "記事・読み物",
   "learn.books": "書籍",
+  "learn.book.print": "単行本",
+  "learn.book.kindle": "Kindle",
   "learn.tools": "ベンチツール",
   "learn.glossary": "用語集",
-  "learn.affiliateNote":
-    "書籍は Amazon 検索へのリンクです（アフィリエイト/PR を含む場合があります）",
+  "learn.affiliateNote": "書籍リンクは Amazon アソシエイトのリンクです（PR）",
 
   // カード共通の案内
   "card.empty": "色がありません — 下の ＋ から追加してください",
@@ -459,10 +460,11 @@ const EN: Record<MessageKey, string> = {
   "learn.byTopic": "References by Metric",
   "learn.articles": "Articles & Reading",
   "learn.books": "Books",
+  "learn.book.print": "Print",
+  "learn.book.kindle": "Kindle",
   "learn.tools": "Bench Tools",
   "learn.glossary": "Glossary",
-  "learn.affiliateNote":
-    "Book entries link to Amazon search (may contain affiliate/PR links)",
+  "learn.affiliateNote": "Book links are Amazon Associates links (PR)",
 
   "card.empty": "No colors — use ＋ below to add one",
   "card.needPair": "A pair needs at least 2 colors — add more with ＋ below",

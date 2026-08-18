@@ -3,14 +3,13 @@ import raw from "@/data/references.json";
 
 /**
  * 参考資料データ（src/data/references.json）のローダー。
- * 指標別リファレンス・記事・書籍・ベンチツール・アフィリエイトタグを
- * 1つの JSON で管理し、ここで zod 検証して型付きで公開する
+ * 指標別リファレンス・記事・書籍・ベンチツールを 1つの JSON で管理し、
+ * ここで zod 検証して型付きで公開する
  * （不正なデータはビルド/テスト時に即座に失敗する）。
  *
  * リンクの追加・修正は JSON の編集だけで完結する:
  *  - topics.<helpKey>: カードの本マークと /learn の指標別リファレンス
  *  - articles / tools / books: /learn の各セクション
- *  - amazonAssociateTag: 設定すると書籍リンクがアフィリエイトリンクになる
  */
 const ReferenceSchema = z.object({
   title: z.string().min(1),
@@ -19,17 +18,28 @@ const ReferenceSchema = z.object({
   lang: z.enum(["ja", "en"]),
 });
 
+/**
+ * 書籍の購入リンク（Amazon アソシエイトの短縮リンク。タグは URL に内包）。
+ * 電子版がない書籍は kindle を省略する。
+ */
+const BookLinksSchema = z.object({
+  print: z.url(),
+  kindle: z.url().optional(),
+});
+
 const BookSchema = z.object({
+  /** React キー・テスト用の安定 ID（書名や版が変わっても据え置く） */
+  id: z.string().min(1),
   title: z.string().min(1),
   author: z.string().min(1),
   publisher: z.string().min(1),
-  /** Amazon 検索クエリ（ASIN 直リンクは改版で切れやすいため検索を使う） */
-  query: z.string().min(1),
+  /** 邦訳版・改訂版がある書籍はその版の発行年 */
+  year: z.int().min(1900).max(2100),
+  links: BookLinksSchema,
 });
 
 const ReferencesAssetSchema = z.object({
   schemaVersion: z.string(),
-  amazonAssociateTag: z.string(),
   topics: z.record(z.string(), z.array(ReferenceSchema).min(1)),
   articles: z.array(ReferenceSchema).min(1),
   tools: z.array(ReferenceSchema).min(1),
@@ -38,6 +48,8 @@ const ReferencesAssetSchema = z.object({
 
 export type Reference = z.infer<typeof ReferenceSchema>;
 export type Book = z.infer<typeof BookSchema>;
+/** 書籍リンクの版種別（単行本 / Kindle）。 */
+export type BookFormat = keyof z.infer<typeof BookLinksSchema>;
 
 const data = ReferencesAssetSchema.parse(raw);
 
@@ -50,12 +62,13 @@ export const TOOLS: Reference[] = data.tools;
 /** 書籍。 */
 export const BOOKS: Book[] = data.books;
 
-/** 書籍の Amazon 検索 URL（amazonAssociateTag 設定時はアフィリエイトリンク）。 */
-export function bookUrl(book: Book): string {
-  const url = new URL("https://www.amazon.co.jp/s");
-  url.searchParams.set("k", book.query);
-  if (data.amazonAssociateTag) {
-    url.searchParams.set("tag", data.amazonAssociateTag);
-  }
-  return url.toString();
+/** 書籍の版種別と購入 URL の組（表示順は単行本→Kindle）。 */
+export type BookLinkEntry = { format: BookFormat; url: string };
+
+/** 書籍が持つ版のリンクを表示順に列挙する（電子版がなければ単行本のみ）。 */
+export function bookLinks(book: Book): BookLinkEntry[] {
+  const { print, kindle } = book.links;
+  const entries: BookLinkEntry[] = [{ format: "print", url: print }];
+  if (kindle) entries.push({ format: "kindle", url: kindle });
+  return entries;
 }

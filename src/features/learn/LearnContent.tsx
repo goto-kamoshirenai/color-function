@@ -1,10 +1,16 @@
 "use client";
 
 import { CardFrame } from "@/components/Card";
-import { ResourceLink } from "@/components/ResourceLink";
+import { BookLink, ResourceLink } from "@/components/ResourceLink";
 import { CARD_REGISTRY } from "@/features/cards/registry";
 import { HELP } from "@/features/cards/help";
-import { REFERENCES, ARTICLES, TOOLS, BOOKS, bookUrl } from "@/lib/references";
+import {
+  REFERENCES,
+  ARTICLES,
+  TOOLS,
+  BOOKS,
+  bookLinks,
+} from "@/lib/references";
 import { GLOSSARY } from "@/lib/glossary";
 import { useLocale, useT } from "@/lib/i18n/locale";
 
@@ -25,7 +31,7 @@ export function LearnContent() {
   const totalLinks =
     topics.reduce((n, c) => n + REFERENCES[c.helpKey].length, 0) +
     ARTICLES.length +
-    BOOKS.length +
+    BOOKS.reduce((n, b) => n + bookLinks(b).length, 0) +
     TOOLS.length +
     GLOSSARY.length;
 
@@ -109,12 +115,14 @@ export function LearnContent() {
         <CardFrame number="03" title={t("learn.books")} helpKey="learn">
           <ul className="grid grid-cols-1 gap-x-6 sm:grid-cols-2">
             {BOOKS.map((b) => (
-              <li key={b.query}>
-                <ResourceLink
+              <li key={b.id}>
+                <BookLink
                   title={b.title}
-                  source={`${b.author} · ${b.publisher}`}
-                  url={bookUrl(b)}
-                  badge="book"
+                  meta={`${b.author} · ${b.publisher} · ${b.year}`}
+                  links={bookLinks(b).map((l) => ({
+                    label: t(`learn.book.${l.format}`),
+                    url: l.url,
+                  }))}
                 />
               </li>
             ))}

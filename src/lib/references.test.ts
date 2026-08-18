@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import { REFERENCES, ARTICLES, TOOLS, BOOKS, bookUrl } from "./references";
+import { REFERENCES, ARTICLES, TOOLS, BOOKS, bookLinks } from "./references";
 import { CARD_REGISTRY } from "@/features/cards/registry";
 
 describe("参考資料データ（references.json）", () => {
@@ -26,12 +26,21 @@ describe("参考資料データ（references.json）", () => {
     }
   });
 
-  it("書籍リンクは Amazon 検索 URL（タグ未設定時は tag パラメータなし）", () => {
+  it("書籍リンクは Amazon アソシエイトの短縮リンク", () => {
     for (const b of BOOKS) {
-      const url = new URL(bookUrl(b));
-      expect(url.origin).toBe("https://www.amazon.co.jp");
-      expect(url.searchParams.get("k")).toBe(b.query);
-      expect(url.searchParams.get("tag")).toBeNull();
+      const links = bookLinks(b);
+      expect(links[0].format, `${b.id} の先頭は単行本`).toBe("print");
+      for (const l of links) {
+        expect(new URL(l.url).origin, `${b.id} / ${l.format}`).toBe(
+          "https://amzn.to",
+        );
+      }
     }
+  });
+
+  it("書籍の版リンクは重複せず、ID は一意", () => {
+    const urls = BOOKS.flatMap((b) => bookLinks(b).map((l) => l.url));
+    expect(new Set(urls).size).toBe(urls.length);
+    expect(new Set(BOOKS.map((b) => b.id)).size).toBe(BOOKS.length);
   });
 });

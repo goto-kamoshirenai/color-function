@@ -1,6 +1,5 @@
 {
-  "schemaVersion": "1.0.0",
-  "amazonAssociateTag": "",
+  "schemaVersion": "2.0.0",
   "topics": {
     "value": [
       {
@@ -725,34 +724,57 @@
   ],
   "books": [
     {
+      "id": "albers-interaction-of-color",
       "title": "配色の設計 — Interaction of Color",
       "author": "ジョセフ・アルバース",
-      "publisher": "ビー・エヌ・エヌ",
-      "query": "配色の設計 アルバース"
+      "publisher": "ビー・エヌ・エヌ新社",
+      "year": 2016,
+      "links": {
+        "print": "https://amzn.to/4gfxoyW"
+      }
     },
     {
-      "title": "配色アイデア手帖",
+      "id": "sakurai-color-idea-notebook",
+      "title": "配色アイデア手帖 めくって見つける新しいデザインの本",
       "author": "桜井輝子",
       "publisher": "SBクリエイティブ",
-      "query": "配色アイデア手帖"
+      "year": 2017,
+      "links": {
+        "print": "https://amzn.to/466P6Qp",
+        "kindle": "https://amzn.to/3SlGceL"
+      }
     },
     {
+      "id": "aft-color-certification-2",
       "title": "色彩検定 公式テキスト 2級編",
       "author": "色彩検定協会（A・F・T）",
       "publisher": "色彩検定協会",
-      "query": "色彩検定 公式テキスト 2級"
+      "year": 2020,
+      "links": {
+        "print": "https://amzn.to/4g4Ibx5"
+      }
     },
     {
+      "id": "coady-color-accessibility",
       "title": "カラー・アクセシビリティ",
       "author": "Geri Coady",
-      "publisher": "ビー・エヌ・エヌ",
-      "query": "カラー・アクセシビリティ Coady"
+      "publisher": "ビー・エヌ・エヌ新社",
+      "year": 2017,
+      "links": {
+        "print": "https://amzn.to/3SG4ct5",
+        "kindle": "https://amzn.to/4ifVgoH"
+      }
     },
     {
+      "id": "popo-color-psychology",
       "title": "色彩心理図鑑",
-      "author": "ポーポー・ポロダクション",
+      "author": "ポーポー・プロダクション",
       "publisher": "日本文芸社",
-      "query": "色彩心理図鑑"
+      "year": 2019,
+      "links": {
+        "print": "https://amzn.to/4bYxfi9",
+        "kindle": "https://amzn.to/45ywpVO"
+      }
     }
   ]
 }

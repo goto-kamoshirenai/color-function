@@ -86,6 +86,24 @@ e2e/              # Playwright テスト
 
 ## 書籍リンクのアフィリエイト設定
 
-/learn の書籍リンクは Amazon 検索 URL です。`src/data/references.json` の
-`amazonAssociateTag` にアソシエイト ID（例: `"yourtag-22"`）を設定すると
-アフィリエイトリンクになります（PR 注記は表示済み）。
+/learn の書籍リンクは Amazon アソシエイトの短縮リンク（`https://amzn.to/...`）
+です。アソシエイト ID は短縮リンク自体に内包されるため、アプリ側の設定項目は
+ありません（PR 注記は表示済み）。
+
+書籍の追加・差し替えは `src/data/references.json` の `books` を編集する:
+
+```jsonc
+{
+  "id": "安定した識別子", // React キー・テスト用。版が変わっても据え置く
+  "title": "書名",
+  "author": "著者名",
+  "publisher": "出版社",
+  "year": 2017, // 邦訳版・改訂版はその版の発行年
+  "links": {
+    "print": "https://amzn.to/...", // 単行本（必須）
+    "kindle": "https://amzn.to/...", // Kindle（電子版がなければ省略）
+  },
+}
+```
+
+`links` に両方の版があるとリンク行に「単行本」「Kindle」の 2 チップが並ぶ。
