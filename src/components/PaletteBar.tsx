@@ -138,7 +138,7 @@ export function PaletteBar() {
       aria-label={collapsed ? t("palette.expand") : t("palette.collapse")}
       aria-expanded={!collapsed}
       title={collapsed ? t("palette.expand") : t("palette.collapse")}
-      className="cff-control text-text-2 hover:text-text absolute right-[22px] bottom-[11px] flex size-8 items-center justify-center p-1"
+      className="cff-control text-text-2 hover:text-text absolute right-[22px] bottom-[calc(11px_+_env(safe-area-inset-bottom))] flex size-8 items-center justify-center p-1"
     >
       {collapsed ? (
         <NavArrowUp width={18} height={18} aria-hidden />
@@ -207,7 +207,7 @@ export function PaletteBar() {
   return (
     <footer
       data-coach-target="palette"
-      className="border-border-strong bg-surface relative z-5 flex-none border-t"
+      className="border-border-strong bg-surface relative z-5 flex-none border-t pb-[env(safe-area-inset-bottom)]"
     >
       {/* 上段: スウォッチ列 */}
       <div className="cff-scroll cff-palette-strip flex items-start gap-[15px] overflow-x-auto px-[22px] pt-[13px] pb-2.5">
