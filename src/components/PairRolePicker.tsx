@@ -209,7 +209,7 @@ export function PairRolePicker() {
           スマホ展開時はヘッダとの間を細い下罫線で区切る。 */}
       <div
         id="pairbar-fields"
-        className={`${collapsed ? "hidden sm:flex" : "flex"} ${!collapsed ? "border-border mt-3 border-t pt-3 sm:mt-0 sm:border-t-0 sm:pt-0" : ""} flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-center sm:gap-x-6 sm:gap-y-2 xl:flex-col xl:items-stretch xl:gap-3`}
+        className={`${collapsed ? "hidden sm:flex" : "flex"} ${!collapsed ? "border-border mt-3 border-t pt-3 sm:mt-0 sm:border-t-0 sm:pt-0" : ""} flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-center sm:gap-x-6 sm:gap-y-2 xl:flex-col xl:flex-nowrap xl:items-stretch xl:gap-3`}
       >
         {/* タブレット/PC のヘッダ（ラベル[PCのみ]＋ツールチップ）。
             スマホは上の常設ヘッダを使うため非表示。 */}

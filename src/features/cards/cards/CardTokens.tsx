@@ -76,7 +76,7 @@ export function CardTokens({ number }: CardProps) {
               const next = [...keys][0] as TokenFormat | undefined;
               if (next) setFormat(next);
             }}
-            className="border-border-strong rounded-control inline-flex overflow-hidden border"
+            className="border-border-strong rounded-control inline-flex shrink-0 overflow-hidden border"
           >
             <ToggleButton id="css" className={segCompactClass}>
               CSS

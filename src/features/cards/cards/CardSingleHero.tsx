@@ -111,7 +111,9 @@ export function CardSingleHero({ number }: CardProps) {
           <div className="bg-border border-border rounded-control mt-5 grid grid-cols-3 gap-px overflow-hidden border">
             {stats.map((s) => (
               <div key={s.label} className="bg-surface px-3 py-2.5">
-                <div className="text-text-3 text-meta mb-0.5 font-mono tracking-[0.1em] uppercase">
+                {/* 3 列固定のため、狭幅では長い英単語（RELATIVE LUMINANCE 等）を
+                    途中で折り返してセルから溢れないようにする */}
+                <div className="text-text-3 text-meta mb-0.5 font-mono tracking-[0.1em] break-words uppercase">
                   {s.label}
                 </div>
                 <div className="font-mono text-[15px] font-medium">

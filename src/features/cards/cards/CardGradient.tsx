@@ -58,7 +58,7 @@ export function CardGradient({ number }: CardProps) {
               const next = [...keys][0] as GradientSpace | undefined;
               if (next) setSpace(next);
             }}
-            className="border-border-strong rounded-control inline-flex overflow-hidden border"
+            className="border-border-strong rounded-control inline-flex shrink-0 overflow-hidden border"
           >
             {GRADIENT_SPACES.map((s) => (
               <ToggleButton key={s} id={s} className={segCompactClass}>

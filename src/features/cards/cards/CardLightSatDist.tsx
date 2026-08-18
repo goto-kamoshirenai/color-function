@@ -54,18 +54,25 @@ export function CardLightSatDist({ number }: CardProps) {
                 className="border-border rounded-control relative h-[30px] border"
                 style={{ background: axis.bg }}
               >
-                {points.map((p) => (
-                  <Fragment key={p.id}>
-                    <div
-                      className="border-surface absolute top-1/2 size-3.5 -translate-x-1/2 -translate-y-1/2 rounded-full border-2 shadow-[0_0_0_1.5px_var(--ring)]"
-                      style={{
-                        left: `${axis.at(p).toFixed(1)}%`,
-                        backgroundColor: p.hex,
-                      }}
-                      title={p.hex}
-                    />
-                  </Fragment>
-                ))}
+                {/* マーカーは半径分（7px）内側の領域に配置する。軸の両端（L=0/1・
+                    S=0/100%）でも中心が端に来るとマーカーが軸の外へはみ出すため。 */}
+                <div
+                  className="absolute inset-x-[7px] inset-y-0"
+                  data-overflow-ok
+                >
+                  {points.map((p) => (
+                    <Fragment key={p.id}>
+                      <div
+                        className="border-surface absolute top-1/2 size-3.5 -translate-x-1/2 -translate-y-1/2 rounded-full border-2 shadow-[0_0_0_1.5px_var(--ring)]"
+                        style={{
+                          left: `${axis.at(p).toFixed(1)}%`,
+                          backgroundColor: p.hex,
+                        }}
+                        title={p.hex}
+                      />
+                    </Fragment>
+                  ))}
+                </div>
               </div>
               <div className="text-text-3 text-meta mt-1 flex justify-between font-mono">
                 {axis.ticks.map((tick) => (

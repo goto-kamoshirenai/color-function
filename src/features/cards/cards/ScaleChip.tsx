@@ -31,7 +31,8 @@ export function ScaleChip({
       <div className="bg-surface px-1 py-1 text-center">
         <div
           className={
-            "text-meta font-mono font-semibold " + (isBase ? "text-accent" : "")
+            "text-meta truncate font-mono font-semibold " +
+            (isBase ? "text-accent" : "")
           }
         >
           {label}

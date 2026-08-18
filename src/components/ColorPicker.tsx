@@ -101,7 +101,7 @@ export function ColorPicker() {
         if (!open) closePicker();
       }}
       isDismissable
-      className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 p-6"
+      className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 p-4 sm:p-6"
     >
       <Modal className="border-border-strong bg-surface rounded-panel shadow-overlay w-[380px] max-w-full overflow-hidden border">
         <Dialog className="outline-none">
@@ -145,7 +145,7 @@ export function ColorPicker() {
                   aria-label={t("picker.hex")}
                   aria-invalid={hexInvalid}
                   aria-describedby={hexInvalid ? "hex-error" : undefined}
-                  className="border-border-strong bg-bg rounded-control flex-1 border px-[11px] py-2 font-mono text-[15px] tracking-[0.02em] aria-invalid:border-(--text)"
+                  className="border-border-strong bg-bg rounded-control min-w-0 flex-1 border px-[11px] py-2 font-mono text-[15px] tracking-[0.02em] aria-invalid:border-(--text)"
                 />
               </div>
               {hexInvalid ? (
@@ -172,7 +172,7 @@ export function ColorPicker() {
                   const next = [...keys][0] as Format | undefined;
                   if (next) setFormat(next);
                 }}
-                className="border-border-strong rounded-control inline-flex overflow-hidden border"
+                className="border-border-strong rounded-control inline-flex shrink-0 overflow-hidden border"
               >
                 {FORMATS.map((f) => (
                   <ToggleButton key={f} id={f} className={segClass}>

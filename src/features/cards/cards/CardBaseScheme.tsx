@@ -86,7 +86,7 @@ export function CardBaseScheme({ number }: CardProps) {
                 return (
                   <div
                     key={`${s.label}-${s.offset}`}
-                    className="flex flex-1 flex-col gap-1"
+                    className="flex min-w-0 flex-1 flex-col gap-1"
                   >
                     <span className="text-text-2 text-meta font-mono">
                       {s.label}
@@ -103,7 +103,7 @@ export function CardBaseScheme({ number }: CardProps) {
                       style={{ backgroundColor: s.hex }}
                     >
                       <span
-                        className="rounded-control text-meta px-[5px] py-0.5 font-mono"
+                        className="rounded-control text-meta max-w-full truncate px-[5px] py-0.5 font-mono"
                         style={{ background: chip.bg, color: chip.fg }}
                       >
                         {fmt(s.hex)}

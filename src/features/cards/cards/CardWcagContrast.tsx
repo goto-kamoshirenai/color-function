@@ -139,7 +139,7 @@ export function CardWcagContrast({ number }: CardProps) {
               <span className="text-text-2 text-meta font-mono tracking-[0.14em] uppercase">
                 {t("card.contrast.preview")}
               </span>
-              <div className="text-text-2 text-meta flex items-center gap-[9px] font-mono">
+              <div className="text-text-2 text-meta flex flex-wrap items-center gap-x-[9px] gap-y-1.5 font-mono">
                 <span className="inline-flex items-center gap-[5px]">
                   <span
                     className="border-border-strong rounded-control size-[11px] border"

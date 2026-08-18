@@ -42,7 +42,9 @@ export function CardFrame({
       className={
         // flex-col: カード本文が flex-1 で「ヘッダーを除く残り高さ」を埋められるように
         // （h-full はヘッダー分を含む高さに解決されて下にはみ出すため使わない）
-        "bg-surface rounded-control relative flex flex-col border " +
+        // min-w-0: グリッド/フレックスの子として内容の min-content 未満にも縮められる
+        // ようにする（マトリクス等の広いカードが列トラックを押し広げないため）
+        "bg-surface rounded-control relative flex min-w-0 flex-col border " +
         (hero
           ? "border-border-strong px-4 py-[18px] sm:px-6 sm:py-[22px]"
           : "border-border px-4 py-4 sm:px-[22px] sm:py-[18px]")
@@ -69,8 +71,10 @@ export function CardFrame({
         </>
       ) : null}
 
-      <header className="border-border mb-4 flex items-end justify-between border-b pb-[13px]">
-        <div className="flex items-baseline gap-[11px]">
+      {/* 狭いカード幅（スマホ／2カラム時）では折り返す。折り返さないと
+          タイトルと rightSlot が押し合ってカードの外へ溢れる。 */}
+      <header className="border-border mb-4 flex flex-wrap items-end justify-between gap-x-3 gap-y-2 border-b pb-[13px]">
+        <div className="flex min-w-0 flex-wrap items-baseline gap-x-[11px] gap-y-1">
           <span className="text-accent text-meta font-mono tracking-[0.1em]">
             {number}
           </span>

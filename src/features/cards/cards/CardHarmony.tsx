@@ -75,7 +75,9 @@ export function CardHarmony({ number }: CardProps) {
                       </div>
                     ) : null}
                   </div>
-                  <div className="flex flex-1 gap-[7px]">
+                  {/* 狭幅では 2 列グリッド（4色スキームでも各チップにカラーコードが
+                      収まる幅を確保する。1 行に詰めるとカード外へ溢れる） */}
+                  <div className="grid grid-cols-2 gap-[7px] sm:flex sm:flex-1">
                     {scheme.map((hex, i) => {
                       const chip = chipColors(hex);
                       return (
@@ -88,11 +90,11 @@ export function CardHarmony({ number }: CardProps) {
                             label: ruleName,
                             hex: fmt(hex),
                           })}
-                          className="border-border-strong rounded-control relative flex h-[52px] flex-1 items-end border p-1.5 transition-transform hover:-translate-y-0.5"
+                          className="border-border-strong rounded-control relative flex h-[52px] min-w-0 flex-1 items-end border p-1.5 transition-transform hover:-translate-y-0.5"
                           style={{ backgroundColor: hex }}
                         >
                           <span
-                            className="rounded-control text-meta px-[5px] py-0.5 font-mono"
+                            className="rounded-control text-meta max-w-full truncate px-[5px] py-0.5 font-mono"
                             style={{ background: chip.bg, color: chip.fg }}
                           >
                             {fmt(hex)}
