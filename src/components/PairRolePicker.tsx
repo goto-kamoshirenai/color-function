@@ -168,7 +168,7 @@ export function PairRolePicker() {
         aria-label={collapsed ? t("role.barExpand") : t("role.barCollapse")}
         aria-expanded={!collapsed}
         aria-controls="pairbar-fields"
-        className="flex w-full items-center gap-2.5 sm:hidden"
+        className="flex min-h-6 w-full items-center gap-2.5 sm:hidden"
       >
         <span className="text-accent text-meta font-mono tracking-[0.1em]">
           FG·BG

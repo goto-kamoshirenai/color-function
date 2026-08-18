@@ -57,7 +57,7 @@ export function CardAlpha({ number }: CardProps) {
               value={alpha}
               onChange={(e) => setAlpha(Number(e.target.value))}
               aria-label={t("card.alpha.title")}
-              className="w-full accent-(--accent)"
+              className="h-6 w-full accent-(--accent)"
             />
           </div>
 

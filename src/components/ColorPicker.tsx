@@ -58,7 +58,7 @@ function Slider({
         value={Math.round(value)}
         onChange={(e) => onChange(Number(e.target.value))}
         aria-label={label}
-        className="w-full accent-(--accent)"
+        className="h-6 w-full accent-(--accent)"
       />
     </div>
   );

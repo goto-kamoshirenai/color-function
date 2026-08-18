@@ -30,7 +30,9 @@ export function ColorCode({
       title={t("colorcode.copy")}
       aria-label={t("colorcode.copyAria", { code: text })}
       className={
-        "text-text-2 hover:text-text decoration-border-strong bg-transparent p-0 font-mono underline-offset-2 hover:underline " +
+        // 文字高（16-20px）のままだとタップ標的が 24px を切るため、
+        // ::before で上下の当たり判定だけを広げる（見た目は変えない）。
+        "text-text-2 hover:text-text decoration-border-strong relative bg-transparent p-0 font-mono underline-offset-2 before:absolute before:inset-x-0 before:-inset-y-1 before:content-[''] hover:underline " +
         className
       }
     >
