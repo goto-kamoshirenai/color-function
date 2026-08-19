@@ -182,6 +182,19 @@ const SCENES: {
   { name: "1色のみ", hash: "#p=336699" },
   { name: "空のパレット", hash: "#p=" },
   { name: "学習コンテンツ", path: "/learn" },
+  { name: "図書館", path: "/library" },
+  { name: "書籍の詳細", path: "/library/coady-color-accessibility" },
+  {
+    // 基準未達のペア＝カード末尾の書籍導線が出ている状態
+    name: "ペア×検証（コントラスト不足）",
+    hash: "#p=777777,808080",
+  },
+  {
+    // 似すぎた色＝冗長性・色覚識別性の書籍導線が出ている状態
+    name: "パレット×検証（似色）",
+    hash: "#p=2D6CDF,2F6EDD,3070E0,336699",
+    setup: (p, l) => p.getByRole("radio", { name: l.palette }).click(),
+  },
   {
     name: "カラーピッカー",
     setup: (p, l) => p.getByRole("button", { name: l.add }).click(),

@@ -5,6 +5,7 @@ import { parseHex, contrastRatio, judgeWcag } from "@/core/color";
 import { CardFrame } from "@/components/Card";
 import { useColorStore } from "@/store/useColorStore";
 import { usePairColors, useCopy } from "../hooks";
+import { BookNudge } from "../BookNudge";
 import { useT } from "@/lib/i18n/locale";
 import { useFormatColor } from "@/lib/colorFormat";
 import { ColorCode } from "@/components/ColorCode";
@@ -188,6 +189,8 @@ export function CardWcagContrast({ number }: CardProps) {
           </div>
         </>
       )}
+      {/* 通常テキストの AA を割ったときだけ、直し方を扱う書籍へ送る */}
+      <BookNudge helpKey="contrast" when={!!pair && !v.aaNormal} />
     </CardFrame>
   );
 }

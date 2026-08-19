@@ -108,11 +108,10 @@ test("ヘッダーから学習コンテンツ画面に遷移できる", async ({
   await expect(
     page.getByRole("heading", { name: "学習コンテンツ" }),
   ).toBeVisible();
-  // 指標別・記事・書籍・ツール・用語集の5セクション
+  // 指標別・記事・ツール・用語集の4セクション（書籍は図書館へ分離）
   for (const name of [
     "指標別リファレンス",
     "記事・読み物",
-    "書籍",
     "ベンチツール",
     "用語集",
   ]) {
@@ -125,6 +124,53 @@ test("ヘッダーから学習コンテンツ画面に遷移できる", async ({
   await expect(first).toHaveAttribute("target", "_blank");
 
   // ツールへ戻れる（ヘッダーの学習トグルが「ホームに戻る」になる）
+  await page.getByRole("link", { name: "ホームに戻る" }).click();
+  await expect(
+    page.getByRole("heading", { name: "WCAG コントラスト比" }),
+  ).toBeVisible();
+});
+
+test("学習コンテンツから図書館へ渡り、書籍の詳細まで辿れる", async ({
+  page,
+}) => {
+  await page.goto("/learn");
+
+  // /learn 先頭の帯から図書館へ
+  await page.getByRole("link", { name: /書籍で学ぶ/ }).click();
+  await expect(page.getByRole("heading", { name: "図書館" })).toBeVisible();
+  await expect(page.getByRole("heading", { name: "蔵書" })).toBeVisible();
+
+  // 購入リンクは別タブ・sponsored
+  const buy = page
+    .getByRole("link", { name: /カラー・アクセシビリティ を Amazon で見る/ })
+    .first();
+  await expect(buy).toHaveAttribute("target", "_blank");
+  await expect(buy).toHaveAttribute("rel", /sponsored/);
+
+  // 書名から詳細ページへ
+  await page
+    .getByRole("link", { name: "カラー・アクセシビリティ", exact: true })
+    .first()
+    .click();
+  await expect(
+    page.getByRole("heading", { level: 1, name: "カラー・アクセシビリティ" }),
+  ).toBeVisible();
+  await expect(
+    page.getByRole("heading", { name: "この本について" }),
+  ).toBeVisible();
+
+  // 扱う指標から指標別リファレンスへ戻れる
+  await page
+    .getByRole("link", { name: "WCAG コントラスト比", exact: true })
+    .click();
+  await expect(page).toHaveURL(/\/learn#topic-contrast$/);
+});
+
+test("ヘッダーの図書館トグルでホームと往復できる", async ({ page }) => {
+  await page.goto("/");
+  await page.getByRole("link", { name: "図書館を開く" }).click();
+  await expect(page.getByRole("heading", { name: "図書館" })).toBeVisible();
+
   await page.getByRole("link", { name: "ホームに戻る" }).click();
   await expect(
     page.getByRole("heading", { name: "WCAG コントラスト比" }),

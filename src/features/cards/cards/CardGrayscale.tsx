@@ -10,6 +10,7 @@ import {
 import { CardFrame } from "@/components/Card";
 import { useColorStore } from "@/store/useColorStore";
 import { useT } from "@/lib/i18n/locale";
+import { BookNudge } from "../BookNudge";
 import type { CardProps } from "../types";
 
 /** グレースケール耐性カード（脱色時の見え方と、潰れるペアの検出）。 */
@@ -98,6 +99,7 @@ export function CardGrayscale({ number }: CardProps) {
           </div>
         </div>
       )}
+      <BookNudge helpKey="grayscale" when={collisions.length > 0} />
     </CardFrame>
   );
 }

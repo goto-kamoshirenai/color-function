@@ -9,8 +9,8 @@ import AxeBuilder from "@axe-core/playwright";
  *    moderate には見出し階層・landmark・ARIA 属性の不備など、SR 利用に
  *    実害のある指摘が含まれるため素通ししない。
  *  - ホームの3モードだけでなく、オーバーレイ（ピッカー・確認ダイアログ・
- *    設定メニュー・ヘルプ／参考資料ポップオーバー）・`/learn`・スプラッシュ
- *    表示中も解析対象にする。
+ *    設定メニュー・ヘルプ／参考資料ポップオーバー）・`/learn`・`/library`・
+ *    書籍導線が出た状態・スプラッシュ表示中も解析対象にする。
  *  - `[data-specimen]` はユーザー指定色をそのまま見せる標本領域
  *    （プレビュー・CVDサンプル・調和チップ）。そのコントラストはアプリが
  *    「測定して見せる対象」であり、UI の a11y 違反ではないため除外する。
@@ -167,6 +167,32 @@ test("学習コンテンツ（/learn）で違反ゼロ", async ({ page }) => {
   await expect(
     page.getByRole("heading", { name: "学習コンテンツ" }),
   ).toBeVisible();
+  await analyze(page);
+});
+
+test("図書館（/library）で違反ゼロ", async ({ page }) => {
+  await page.addInitScript(skipSplash);
+  await page.goto("/library");
+  await expect(page.getByRole("heading", { name: "図書館" })).toBeVisible();
+  await analyze(page);
+});
+
+test("書籍の詳細（/library/[id]）で違反ゼロ", async ({ page }) => {
+  await page.addInitScript(skipSplash);
+  await page.goto("/library/coady-color-accessibility");
+  await expect(
+    page.getByRole("heading", { level: 1, name: "カラー・アクセシビリティ" }),
+  ).toBeVisible();
+  await analyze(page);
+});
+
+test("結果連動の書籍導線が出た状態で違反ゼロ", async ({ page }) => {
+  await page.addInitScript(skipSplash);
+  // コントラスト不足のペア＝カード末尾に「次の一手」が出ている
+  await page.goto("/#p=777777,808080");
+  await ready(page);
+  await coachSettled(page, true);
+  await expect(page.getByText("次の一手").first()).toBeVisible();
   await analyze(page);
 });
 

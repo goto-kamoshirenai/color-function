@@ -121,20 +121,62 @@ const JA = {
   "refs.title": "参考資料",
   "refs.note": "リンクは外部サイトを新しいタブで開きます",
   "refs.viewAll": "すべての資料を見る",
+  "refs.books": "この指標を学ぶ本",
+  "refs.viewLibrary": "図書館",
 
-  // 学習コンテンツ（/learn）
+  // 学習コンテンツ（/learn）— 記事・リファレンスで学ぶ
   "learn.open": "学習コンテンツを開く",
   "learn.title": "学習コンテンツ",
   "learn.lead":
     "色を定量的に扱うための背景知識と、検証に使える外部ツールのコレクション。",
   "learn.byTopic": "指標別リファレンス",
   "learn.articles": "記事・読み物",
-  "learn.books": "書籍",
-  "learn.book.print": "単行本",
-  "learn.book.kindle": "Kindle",
   "learn.tools": "ベンチツール",
   "learn.glossary": "用語集",
-  "learn.affiliateNote": "書籍リンクは Amazon アソシエイトのリンクです（PR）",
+  "learn.toLibrary": "書籍で学ぶ",
+  "learn.toLibraryLead":
+    "腰を据えて学ぶなら書籍。指標との対応をつけて図書館に並べています。",
+  "learn.toLibraryCta": "図書館へ",
+  "learn.jump": "セクションへ移動",
+
+  // 図書館（/library）— 書籍で学ぶ
+  "library.open": "図書館を開く",
+  "library.title": "図書館",
+  "library.lead":
+    "色を体系的に学ぶための書籍。どの指標を扱う本かを対応づけて並べています。",
+  "library.books": "蔵書",
+  "library.byTopic": "指標から探す",
+  "library.detail": "この本について読む",
+  "library.related": "この本が扱う指標",
+  "library.summary": "この本について",
+  "library.back": "図書館に戻る",
+  "library.toLearn": "記事・リファレンスで学ぶ",
+  "library.toLearnCta": "学習コンテンツへ",
+  "library.noBooks": "この指標に対応する書籍はまだありません",
+  "library.affiliateNote": "購入リンクは Amazon アソシエイトのリンクです（PR）",
+  "library.shelf.theory": "理論",
+  "library.shelf.practice": "実践",
+  "library.shelf.accessibility": "アクセシビリティ",
+  "library.shelf.psychology": "色彩心理",
+  "library.shelf.reference": "体系・用語",
+  "book.print": "単行本",
+  "book.kindle": "Kindle",
+  "book.buyAria": "{title} を Amazon で見る（{format}・PR）",
+
+  // 結果連動の書籍導線（カード末尾）
+  "booknudge.label": "次の一手",
+  "booknudge.contrast":
+    "この組み合わせは通常テキストの基準に届いていません。意図を保ったまま基準を満たす直し方を、体系立てて学ぶなら。",
+  "booknudge.apca":
+    "Lc が本文の目安（75）に届いていません。知覚に沿ったコントラストの考え方を学ぶなら。",
+  "booknudge.cvdmatrix":
+    "特定の色覚で見分けにくいペアがあります。色だけに頼らない情報設計を学ぶなら。",
+  "booknudge.grayscale":
+    "脱色すると潰れるペアがあります。明度で情報を担保する設計を学ぶなら。",
+  "booknudge.redundancy":
+    "似すぎている色があります。隣り合う色で見えが変わる仕組みを、実習で体得するなら。",
+  "booknudge.scheme":
+    "規則としての調和は取れています。狙う印象へ寄せる引き出しを増やすなら。",
 
   // カード共通の案内
   "card.empty": "色がありません — 下の ＋ から追加してください",
@@ -467,6 +509,8 @@ const EN: Record<MessageKey, string> = {
   "refs.title": "References",
   "refs.note": "Links open external sites in a new tab",
   "refs.viewAll": "View all references",
+  "refs.books": "Books on this metric",
+  "refs.viewLibrary": "Library",
 
   "learn.open": "Open learning content",
   "learn.title": "Learning Content",
@@ -474,12 +518,50 @@ const EN: Record<MessageKey, string> = {
     "Background knowledge for quantitative color work, plus external tools for verification.",
   "learn.byTopic": "References by Metric",
   "learn.articles": "Articles & Reading",
-  "learn.books": "Books",
-  "learn.book.print": "Print",
-  "learn.book.kindle": "Kindle",
   "learn.tools": "Bench Tools",
   "learn.glossary": "Glossary",
-  "learn.affiliateNote": "Book links are Amazon Associates links (PR)",
+  "learn.toLibrary": "Learn from books",
+  "learn.toLibraryLead":
+    "For sustained study, books. The library maps each one to the metrics it covers.",
+  "learn.toLibraryCta": "Go to the library",
+  "learn.jump": "Jump to section",
+
+  "library.open": "Open the library",
+  "library.title": "Library",
+  "library.lead":
+    "Books for learning color systematically, each mapped to the metrics it covers.",
+  "library.books": "Collection",
+  "library.byTopic": "Find by Metric",
+  "library.detail": "Read about this book",
+  "library.related": "Metrics this book covers",
+  "library.summary": "About this book",
+  "library.back": "Back to the library",
+  "library.toLearn": "Learn from articles & references",
+  "library.toLearnCta": "Go to learning content",
+  "library.noBooks": "No book covers this metric yet",
+  "library.affiliateNote": "Purchase links are Amazon Associates links (PR)",
+  "library.shelf.theory": "Theory",
+  "library.shelf.practice": "Practice",
+  "library.shelf.accessibility": "Accessibility",
+  "library.shelf.psychology": "Psychology",
+  "library.shelf.reference": "Systems & Terms",
+  "book.print": "Print",
+  "book.kindle": "Kindle",
+  "book.buyAria": "View {title} on Amazon ({format}, PR)",
+
+  "booknudge.label": "Next step",
+  "booknudge.contrast":
+    "This pair falls short of the normal-text threshold. To learn how to meet it without losing your design intent:",
+  "booknudge.apca":
+    "Lc is below the body-text guide of 75. To learn contrast the way perception actually works:",
+  "booknudge.cvdmatrix":
+    "Some pairs are hard to tell apart under certain color vision. To learn information design that never relies on color alone:",
+  "booknudge.grayscale":
+    "Some pairs collapse when desaturated. To learn how to carry information in lightness:",
+  "booknudge.redundancy":
+    "Some colors are too similar. To learn by exercise how neighboring colors change what you see:",
+  "booknudge.scheme":
+    "Harmony holds as a rule. To widen your repertoire for a specific impression:",
 
   "card.empty": "No colors — use ＋ below to add one",
   "card.needPair": "A pair needs at least 2 colors — add more with ＋ below",

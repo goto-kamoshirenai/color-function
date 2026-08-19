@@ -2,17 +2,25 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Book } from "iconoir-react";
+import { BookStack, GraduationCap } from "iconoir-react";
 import { BrandMark } from "./BrandMark";
 import { ColorFormatSelect } from "./ColorFormatSelect";
 import { HelpButton } from "./HelpButton";
 import { SettingsMenu } from "./SettingsMenu";
 import { useT } from "@/lib/i18n/locale";
 
-/** ヘッダー（v2: 56px・ロゴブロック・表示形式・学習コンテンツ・設定）。 */
+/** 現在地のナビゲーションは反転表示にする（v2 のトグル意匠）。 */
+const navStyle = (active: boolean) =>
+  active
+    ? "border-(--text) bg-(--text) text-(--bg) hover:bg-(--text)"
+    : "text-text-2 hover:border-accent hover:text-accent";
+
+/** ヘッダー（v2: 56px・ロゴブロック・表示形式・学習/図書館・設定）。 */
 export function AppHeader() {
   const t = useT();
-  const onLearn = usePathname() === "/learn";
+  const pathname = usePathname();
+  const onLearn = pathname === "/learn";
+  const onLibrary = pathname.startsWith("/library");
   return (
     <header className="border-border-strong bg-surface z-5 flex h-[calc(3.5rem_+_env(safe-area-inset-top))] flex-none items-center justify-between border-b pt-[env(safe-area-inset-top)] pr-3 sm:pr-[18px]">
       {/* ロゴブロック全体を / への導線にする（ホームへ戻る） */}
@@ -38,7 +46,8 @@ export function AppHeader() {
         <ColorFormatSelect />
         {/* 使い方ヘルプ（旧: パレットバー下段。学習導線の隣に集約） */}
         <HelpButton helpKey="usage" variant="header" />
-        {/* 学習コンテンツ（/learn）への導線。/learn では再押下でホームへ戻るトグル */}
+        {/* 学びの2系統。記事・リファレンス = /learn、書籍 = /library。
+            現在地では再押下でホームへ戻るトグルになる */}
         <Link
           href={onLearn ? "/" : "/learn"}
           aria-label={onLearn ? t("nav.backHome") : t("learn.open")}
@@ -46,12 +55,22 @@ export function AppHeader() {
           aria-current={onLearn ? "page" : undefined}
           className={
             "cff-control flex size-9 items-center justify-center " +
-            (onLearn
-              ? "border-(--text) bg-(--text) text-(--bg) hover:bg-(--text)"
-              : "text-text-2 hover:border-accent hover:text-accent")
+            navStyle(onLearn)
           }
         >
-          <Book width={15} height={15} aria-hidden />
+          <GraduationCap width={15} height={15} aria-hidden />
+        </Link>
+        <Link
+          href={onLibrary ? "/" : "/library"}
+          aria-label={onLibrary ? t("nav.backHome") : t("library.open")}
+          title={onLibrary ? t("nav.backHome") : t("library.open")}
+          aria-current={onLibrary ? "page" : undefined}
+          className={
+            "cff-control flex size-9 items-center justify-center " +
+            navStyle(onLibrary)
+          }
+        >
+          <BookStack width={15} height={15} aria-hidden />
         </Link>
         {/* テーマ・言語は設定メニューに集約 */}
         <SettingsMenu />

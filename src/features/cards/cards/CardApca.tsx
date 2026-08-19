@@ -3,6 +3,7 @@
 import { parseHex, apcaContrast, apcaUsage } from "@/core/color";
 import { CardFrame } from "@/components/Card";
 import { usePairColors } from "../hooks";
+import { BookNudge } from "../BookNudge";
 import { useT } from "@/lib/i18n/locale";
 import type { MessageKey } from "@/lib/i18n/messages";
 import type { CardProps } from "../types";
@@ -71,6 +72,7 @@ export function CardApca({ number }: CardProps) {
           </div>
         </div>
       )}
+      <BookNudge helpKey="apca" when={!!pair && usage === "fail"} />
     </CardFrame>
   );
 }
