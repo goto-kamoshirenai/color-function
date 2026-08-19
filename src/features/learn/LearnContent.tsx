@@ -1,5 +1,7 @@
 "use client";
 
+import Link from "next/link";
+import { ArrowLeft } from "iconoir-react";
 import { CardFrame } from "@/components/Card";
 import { ResourceLink } from "@/components/ResourceLink";
 import { LibraryBridge } from "@/features/library/LibraryBridge";
@@ -141,6 +143,17 @@ export function LearnContent() {
             ))}
           </dl>
         </CardFrame>
+
+        {/* 長い用語集を読み終えた位置にも戻り導線を置く（上部2箇所だけでは遠い） */}
+        <p className="mt-1 text-center">
+          <Link
+            href="/"
+            className="cff-control text-text-2 hover:border-accent hover:text-accent inline-flex items-center gap-1.5 px-3.5 py-2 font-mono text-[12.5px]"
+          >
+            <ArrowLeft width={13} height={13} aria-hidden />
+            {t("nav.backHome")}
+          </Link>
+        </p>
       </div>
     </div>
   );
