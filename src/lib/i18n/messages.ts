@@ -219,6 +219,8 @@ const JA = {
 
   // カード: 色相分布
   "card.huedist.title": "色相分布",
+  "card.huedist.achromatic":
+    "無彩色 {n} 色は色相が定まらないため帯に表示しません",
   "card.huedist.aria":
     "色相分布。0°から360°の色相帯の上にパレット各色の位置をマーカーで示す",
   "card.huedist.entropy": "色相エントロピー",
@@ -550,6 +552,8 @@ const EN: Record<MessageKey, string> = {
   "card.dmatrix.distinct": "distinct",
 
   "card.huedist.title": "Hue Distribution",
+  "card.huedist.achromatic":
+    "{n} achromatic color(s) have no defined hue and are not plotted",
   "card.huedist.aria":
     "Hue distribution. Markers show each palette color on a 0°–360° hue strip.",
   "card.huedist.entropy": "Hue Entropy",

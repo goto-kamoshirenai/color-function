@@ -18,6 +18,7 @@ export function CardHueDistribution({ number }: CardProps) {
   const fmt = useFormatColor();
   const rgbs = palette.map((c) => parseHex(c.hex) ?? { r: 0, g: 0, b: 0 });
   const hues = hueDistribution(rgbs);
+  const achromatic = hues.filter((h) => h === null).length;
   const entropy = paletteEntropy(rgbs);
 
   return (
@@ -37,7 +38,10 @@ export function CardHueDistribution({ number }: CardProps) {
             style={{ background: HUE_BAR }}
           >
             {palette.map((c, i) => {
-              const left = `${((hues[i] / 360) * 100).toFixed(1)}%`;
+              const hue = hues[i];
+              // 無彩色は色相が定義できないため帯には置かない（下に件数を注記）
+              if (hue === null) return null;
+              const left = `${((hue / 360) * 100).toFixed(1)}%`;
               return (
                 <Fragment key={c.id}>
                   <div
@@ -47,7 +51,7 @@ export function CardHueDistribution({ number }: CardProps) {
                   <div
                     className="border-surface absolute top-1/2 size-3.5 -translate-x-1/2 -translate-y-1/2 rounded-full border-2 shadow-[0_0_0_1.5px_var(--ring)]"
                     style={{ left, backgroundColor: c.hex }}
-                    title={`${fmt(c.hex)} · ${Math.round(hues[i])}°`}
+                    title={`${fmt(c.hex)} · ${Math.round(hue)}°`}
                   />
                 </Fragment>
               );
@@ -59,6 +63,11 @@ export function CardHueDistribution({ number }: CardProps) {
             <span>240°</span>
             <span>360°</span>
           </div>
+          {achromatic > 0 ? (
+            <p className="text-text-3 text-meta mt-2 font-mono">
+              {t("card.huedist.achromatic", { n: achromatic })}
+            </p>
+          ) : null}
           <div className="border-border mt-4 flex items-baseline justify-between border-t pt-3">
             <span className="text-text-2 text-meta font-mono">
               {t("card.huedist.entropy")}
