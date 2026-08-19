@@ -201,6 +201,7 @@ export function PaletteBar() {
             )}
             <button
               type="button"
+              data-coach-target="add"
               onClick={openAdd}
               aria-label={t("palette.add")}
               title={t("palette.add")}
@@ -263,6 +264,7 @@ export function PaletteBar() {
         )}
         <button
           type="button"
+          data-coach-target="add"
           onClick={openAdd}
           aria-label={t("palette.add")}
           title={t("palette.add")}
