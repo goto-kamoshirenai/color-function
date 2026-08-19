@@ -299,6 +299,8 @@ const JA = {
   "card.gamut.safe": "適合",
   "card.gamut.print": "印刷近似（CMYK 往復）",
   "card.gamut.nearest": "最寄りの Web セーフ:",
+  "card.gamut.printNote":
+    "印刷近似はナイーブ CMYK 変換（ICC プロファイル無し）の往復誤差です。sRGB へほぼ可逆なため実際の印刷ガマット外判定には使えません。",
 
   // カード: APCA / 色差内訳（ペア×検証）
   "card.apca.title": "APCA コントラスト",
@@ -668,6 +670,8 @@ const EN: Record<MessageKey, string> = {
   "card.gamut.safe": "Safe",
   "card.gamut.print": "Print approx. (CMYK round-trip)",
   "card.gamut.nearest": "Nearest web-safe:",
+  "card.gamut.printNote":
+    "The print figure is the round-trip error of a naive CMYK conversion (no ICC profile). It is nearly lossless against sRGB, so it cannot judge whether a color is outside a real print gamut.",
 
   "card.apca.title": "APCA Contrast",
   "card.apca.body": "Usable for body text (|Lc| ≥ 75)",

@@ -17,7 +17,11 @@ import { useT } from "@/lib/i18n/locale";
 import type { CardProps } from "../types";
 import type { RGB } from "@/core/color";
 
-/** ナイーブ CMYK を sRGB に戻す（往復誤差 = 印刷近似の劣化度合い）。 */
+/**
+ * ナイーブ CMYK を sRGB に戻す（往復誤差 = 印刷近似の劣化度合い）。
+ * ICC プロファイルを介さないナイーブ変換は sRGB へほぼ可逆なため、
+ * この ΔE は「実際の印刷ガマット外か」の判定材料にはならない（カードに注記）。
+ */
 function cmykRoundtrip(rgb: RGB): RGB {
   const { c, m, y, k } = rgbToCmyk(rgb);
   const K = k / 100;
@@ -108,6 +112,9 @@ export function CardGamut({ number }: CardProps) {
               <ColorCode hex={nearestSafe} />
             </p>
           ) : null}
+          <p className="text-text-3 text-meta mt-2.5 leading-[1.5]">
+            {t("card.gamut.printNote")}
+          </p>
         </>
       )}
     </CardFrame>
