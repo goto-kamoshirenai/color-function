@@ -53,7 +53,9 @@ export function BookNudge({
   if (!when || !book) return null;
 
   return (
-    <aside className="border-border border-l-accent rounded-control mt-4 border border-l-[3px] px-3 py-2.5">
+    // カード本文の一部であってランドマークではないため aside は使わない
+    // （complementary は最上位に置く必要があり、axe の landmark 検査に触れる）
+    <div className="border-border border-l-accent rounded-control mt-4 border border-l-[3px] px-3 py-2.5">
       <p className="text-text-3 text-meta mb-1.5 flex items-center gap-1.5 font-mono tracking-[0.14em] uppercase">
         <BookmarkBook width={11} height={11} strokeWidth={2} aria-hidden />
         {t("booknudge.label")}
@@ -73,6 +75,6 @@ export function BookNudge({
       <p className="text-text-3 text-meta mt-1.5 font-mono tracking-[0.04em]">
         {t("library.affiliateNote")}
       </p>
-    </aside>
+    </div>
   );
 }
