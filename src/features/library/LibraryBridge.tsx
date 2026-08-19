@@ -6,6 +6,9 @@ import { BookCover } from "@/components/BookCover";
 import { BOOKS } from "@/lib/references";
 import { useT } from "@/lib/i18n/locale";
 
+/** 帯に並べるカバーの上限（40px 幅 × 5 + 隙間で 320px 端末に収まる）。 */
+const MAX_COVERS = 5;
+
 /**
  * 学習コンテンツ（/learn）から図書館（/library）へ渡す帯。
  * 「記事で学ぶ」ページの先頭に置き、腰を据えて学ぶ経路が別にあることを示す。
@@ -19,8 +22,9 @@ export function LibraryBridge() {
       className="border-border-strong bg-surface rounded-control hover:border-accent group flex flex-wrap items-center justify-between gap-x-5 gap-y-3.5 border px-4 py-3.5 sm:px-[22px]"
     >
       <div className="flex min-w-0 flex-wrap items-center gap-x-4 gap-y-3">
-        <span className="flex flex-none gap-1" aria-hidden>
-          {BOOKS.map((b) => (
+        {/* 蔵書が増えても帯は 1 行に収める（320px 幅で溢れないよう冊数を絞る） */}
+        <span className="flex flex-none flex-wrap gap-1" aria-hidden>
+          {BOOKS.slice(0, MAX_COVERS).map((b) => (
             <BookCover key={b.id} book={b} />
           ))}
         </span>
