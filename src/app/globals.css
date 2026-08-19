@@ -160,11 +160,16 @@ a:focus-visible,
 }
 
 /*
- * URL ハッシュ（#p=）からのパレット復元待ちの間、SSR の既定5色スウォッチを
+ * URL ハッシュ（#p=）／localStorage からのパレット復元待ちの間、SSR の既定色を
  * 見せないためのカバー。フラグはペイント前スクリプトが立て、StoreSync が
  * 復元と同時に（ペイント前の useLayoutEffect で）解除する。
+ *
+ * スウォッチ列だけでなくカード領域（main）も隠す。カードは SSR の既定色で
+ * 描画されるため、共有リンクの復元では「既定の黒/赤のコントラスト比や
+ * プレビューが一瞬見えて差し替わる」フラッシュが残っていた。
  */
-[data-palette-restore="1"] .cff-palette-strip {
+[data-palette-restore="1"] .cff-palette-strip,
+[data-palette-restore="1"] main {
   visibility: hidden;
 }
 
