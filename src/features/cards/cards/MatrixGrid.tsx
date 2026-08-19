@@ -56,9 +56,7 @@ export function MatrixGrid({
           tableLayout: "fixed",
           width: fillWidth ? "100%" : undefined,
           // 1fr 相当に伸ばしつつ、各列は cellMinWidth を下回らせない
-          minWidth: fillWidth
-            ? leadWidth + palette.length * cellMinWidth
-            : undefined,
+          minWidth: undefined,
         }}
       >
         <caption className="sr-only">{srText}</caption>
@@ -70,7 +68,10 @@ export function MatrixGrid({
               <th
                 key={c.id}
                 scope="col"
-                className="bg-surface py-4"
+                // 読み上げ用テキスト（position:absolute）の基準を自セルにする。
+                // 位置指定の祖先がスクロール容器の外だと、はみ出しがページ全体の
+                // 横スクロールになるため relative は必須。
+                className="bg-surface relative py-4"
                 style={{ backgroundColor: c.hex, width: cellMinWidth }}
                 title={fmt(c.hex)}
               >
@@ -84,7 +85,7 @@ export function MatrixGrid({
             <tr key={row.id}>
               <th
                 scope="row"
-                className="bg-surface py-2"
+                className="bg-surface relative py-2"
                 style={{ backgroundColor: row.hex }}
                 title={fmt(row.hex)}
               >
@@ -102,7 +103,9 @@ export function MatrixGrid({
                   <td key={col.id} className={className}>
                     {content}
                     {srLabel ? (
-                      <span className="sr-only"> {srLabel}</span>
+                      <span className="relative">
+                        <span className="sr-only"> {srLabel}</span>
+                      </span>
                     ) : null}
                   </td>
                 );

@@ -97,7 +97,8 @@ test("設計ビュー: ペア単位のままでもスウォッチ選択が基準
   await page.getByRole("radio", { name: "設計" }).click();
   await expect(page.getByText("BASE #080808")).toBeVisible();
 
-  await page.getByRole("button", { name: /色 2 #009B4C を選択/ }).click();
+  // ラベルは「色 {n}/{総数}」形式（総数は操作で変わりうるため緩く照合）
+  await page.getByRole("button", { name: /色 2\/\d+ #009B4C を選択/ }).click();
   await expect(page.getByText("BASE #009B4C")).toBeVisible();
 });
 
