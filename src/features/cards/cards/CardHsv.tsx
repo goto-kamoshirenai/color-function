@@ -2,6 +2,7 @@
 
 import { parseHex, rgbToHsv } from "@/core/color";
 import { CardFrame } from "@/components/Card";
+import { CardEmpty } from "./CardEmpty";
 import { useSelectedColor } from "../hooks";
 import { useT } from "@/lib/i18n/locale";
 import type { CardProps } from "../types";
@@ -27,7 +28,7 @@ export function CardHsv({ number }: CardProps) {
       helpKey="hsv"
     >
       {!color ? (
-        <p className="text-text-3 font-mono text-xs">{t("card.empty")}</p>
+        <CardEmpty messageKey="card.empty" />
       ) : (
         <div className="flex flex-col gap-[18px]">
           <div>

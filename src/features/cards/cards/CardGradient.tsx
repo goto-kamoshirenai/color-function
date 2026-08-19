@@ -8,6 +8,7 @@ import {
   type GradientSpace,
 } from "@/core/color";
 import { CardFrame } from "@/components/Card";
+import { CardEmpty } from "./CardEmpty";
 import { useColorStore } from "@/store/useColorStore";
 import { useOrderedPair } from "../hooks";
 import { useT } from "@/lib/i18n/locale";
@@ -70,7 +71,7 @@ export function CardGradient({ number }: CardProps) {
       }
     >
       {!pair ? (
-        <p className="text-text-3 font-mono text-xs">{t("card.needTwo")}</p>
+        <CardEmpty messageKey="card.needTwo" />
       ) : (
         <div className="flex flex-col gap-3">
           {/* 連続グラデーションプレビュー */}

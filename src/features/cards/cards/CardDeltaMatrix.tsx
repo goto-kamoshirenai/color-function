@@ -2,6 +2,7 @@
 
 import { parseHex, rgbToLab, deltaE2000 } from "@/core/color";
 import { CardFrame } from "@/components/Card";
+import { CardEmpty } from "./CardEmpty";
 import { MatrixGrid } from "./MatrixGrid";
 import { useColorStore } from "@/store/useColorStore";
 import { useT } from "@/lib/i18n/locale";
@@ -25,7 +26,7 @@ export function CardDeltaMatrix({ number }: CardProps) {
       helpKey="dmatrix"
     >
       {palette.length < 2 ? (
-        <p className="text-text-3 font-mono text-xs">{t("card.needMatrix")}</p>
+        <CardEmpty messageKey="card.needMatrix" />
       ) : (
         <MatrixGrid
           palette={palette}

@@ -2,6 +2,7 @@
 
 import { parseHex, toHex, generateTones } from "@/core/color";
 import { CardFrame } from "@/components/Card";
+import { CardEmpty } from "./CardEmpty";
 import { useColorStore } from "@/store/useColorStore";
 import { useSelectedColor } from "../hooks";
 import { useT } from "@/lib/i18n/locale";
@@ -30,7 +31,7 @@ export function CardTone({ number }: CardProps) {
       helpKey="tone"
     >
       {!color ? (
-        <p className="text-text-3 font-mono text-xs">{t("card.empty")}</p>
+        <CardEmpty messageKey="card.empty" />
       ) : (
         <div className="grid grid-cols-3 gap-[7px] sm:grid-cols-5">
           {generateTones(parseHex(color.hex) ?? { r: 0, g: 0, b: 0 }).map(

@@ -2,6 +2,7 @@
 
 import { parseHex, rgbToLab, deltaE2000 } from "@/core/color";
 import { CardFrame } from "@/components/Card";
+import { CardEmpty } from "./CardEmpty";
 import { usePairColors } from "../hooks";
 import { useT } from "@/lib/i18n/locale";
 import type { MessageKey } from "@/lib/i18n/messages";
@@ -30,7 +31,7 @@ export function CardDeltaE({ number }: CardProps) {
   return (
     <CardFrame number={number} title={t("card.deltae.title")} helpKey="deltae">
       {!pair ? (
-        <p className="text-text-3 font-mono text-xs">{t("card.needPair")}</p>
+        <CardEmpty messageKey="card.needPair" />
       ) : (
         <div className="flex flex-1 flex-col">
           <div className="font-mono text-4xl leading-none font-medium tracking-[-0.03em] sm:text-5xl">

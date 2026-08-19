@@ -2,6 +2,7 @@
 
 import { parseHex, apcaContrast, apcaUsage } from "@/core/color";
 import { CardFrame } from "@/components/Card";
+import { CardEmpty } from "./CardEmpty";
 import { usePairColors } from "../hooks";
 import { BookNudge } from "../BookNudge";
 import { useT } from "@/lib/i18n/locale";
@@ -37,7 +38,7 @@ export function CardApca({ number }: CardProps) {
       helpKey="apca"
     >
       {!pair ? (
-        <p className="text-text-3 font-mono text-xs">{t("card.needPair")}</p>
+        <CardEmpty messageKey="card.needPair" />
       ) : (
         <div className="flex flex-1 flex-col">
           <div className="flex items-baseline gap-2">

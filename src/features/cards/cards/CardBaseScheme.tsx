@@ -2,6 +2,7 @@
 
 import { parseHex, toHex, rotateHueOklch, contrastRatio } from "@/core/color";
 import { CardFrame } from "@/components/Card";
+import { CardEmpty } from "./CardEmpty";
 import { useColorStore } from "@/store/useColorStore";
 import { useSelectedColor } from "../hooks";
 import { useT } from "@/lib/i18n/locale";
@@ -56,7 +57,7 @@ export function CardBaseScheme({ number }: CardProps) {
       hero
     >
       {!color ? (
-        <p className="text-text-3 font-mono text-xs">{t("card.empty")}</p>
+        <CardEmpty messageKey="card.empty" />
       ) : (
         <div className="flex flex-col gap-5 sm:flex-row sm:items-stretch">
           <div className="flex items-center gap-3.5 sm:w-[180px] sm:flex-none sm:flex-col sm:items-start">

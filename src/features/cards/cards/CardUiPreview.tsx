@@ -1,6 +1,7 @@
 "use client";
 
 import { CardFrame } from "@/components/Card";
+import { CardEmpty } from "./CardEmpty";
 import { useColorStore } from "@/store/useColorStore";
 import { useRoleColors } from "../hooks";
 import { useT } from "@/lib/i18n/locale";
@@ -25,7 +26,7 @@ export function CardUiPreview({ number }: CardProps) {
       helpKey="uipreview"
     >
       {palette.length < 2 ? (
-        <p className="text-text-3 font-mono text-xs">{t("card.needMatrix")}</p>
+        <CardEmpty messageKey="card.needMatrix" />
       ) : (
         <>
           {/* ユーザー指定色の標本領域（コントラストは測定対象） */}

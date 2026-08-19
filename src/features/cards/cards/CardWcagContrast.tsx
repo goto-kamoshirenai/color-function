@@ -3,6 +3,7 @@
 import { Check, Xmark, Copy, DataTransferBoth } from "iconoir-react";
 import { parseHex, contrastRatio, judgeWcag } from "@/core/color";
 import { CardFrame } from "@/components/Card";
+import { CardEmpty } from "./CardEmpty";
 import { useColorStore } from "@/store/useColorStore";
 import { usePairColors, useCopy } from "../hooks";
 import { BookNudge } from "../BookNudge";
@@ -68,7 +69,7 @@ export function CardWcagContrast({ number }: CardProps) {
       }
     >
       {!pair ? (
-        <p className="text-text-3 font-mono text-xs">{t("card.needPair")}</p>
+        <CardEmpty messageKey="card.needPair" />
       ) : (
         <>
           <div className="grid items-center gap-7 md:grid-cols-[auto_1fr]">

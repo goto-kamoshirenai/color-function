@@ -10,6 +10,7 @@ import {
   warmCoolOf,
 } from "@/core/color";
 import { CardFrame } from "@/components/Card";
+import { CardEmpty } from "./CardEmpty";
 import { ColorCode } from "@/components/ColorCode";
 import { useSelectedColor } from "../hooks";
 import { useT } from "@/lib/i18n/locale";
@@ -43,7 +44,7 @@ export function CardPerception({ number }: CardProps) {
       helpKey="perception"
     >
       {!color ? (
-        <p className="text-text-3 font-mono text-xs">{t("card.empty")}</p>
+        <CardEmpty messageKey="card.empty" />
       ) : (
         <div className="flex flex-col gap-3.5">
           {meters.map((m) => (

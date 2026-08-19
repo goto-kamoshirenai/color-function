@@ -2,6 +2,7 @@
 
 import { parseHex, toHex, suggestGapFill } from "@/core/color";
 import { CardFrame } from "@/components/Card";
+import { CardEmpty } from "./CardEmpty";
 import { useColorStore } from "@/store/useColorStore";
 import { useT } from "@/lib/i18n/locale";
 import { useFormatColor } from "@/lib/colorFormat";
@@ -34,10 +35,11 @@ export function CardComplement({ number }: CardProps) {
       enLabel="Gap Fill"
       helpKey="complement"
     >
-      {!hex ? (
-        <p className="text-text-3 font-mono text-xs">
-          {t("card.complement.tooFew")}
-        </p>
+      {palette.length === 0 ? (
+        // 0色は「色が無い」。有彩色不足（無彩色だけ・1色だけ）とは案内を分ける
+        <CardEmpty messageKey="card.empty" />
+      ) : !hex ? (
+        <CardEmpty messageKey="card.complement.tooFew" />
       ) : (
         <div className="flex flex-1 flex-col gap-3">
           <p className="text-text-2 text-[13px] leading-[1.6]">
