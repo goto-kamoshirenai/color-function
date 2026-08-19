@@ -84,8 +84,26 @@ describe("知覚指標（HSP/色温度/暖寒/グレースケール）", () => {
 
   it("白の相関色温度は 6500K 前後（D65 近傍）", () => {
     const cct = correlatedColorTemp(hex("#ffffff"));
-    expect(cct).toBeGreaterThan(6000);
-    expect(cct).toBeLessThan(7000);
+    expect(cct).not.toBeNull();
+    expect(cct!).toBeGreaterThan(6000);
+    expect(cct!).toBeLessThan(7000);
+  });
+
+  it("純黒は色度が定まらないので色温度なし（null）", () => {
+    expect(correlatedColorTemp(hex("#000000"))).toBeNull();
+  });
+
+  it("黒体軌跡から遠い高彩度色は色温度なし（null）", () => {
+    // 純緑・純マゼンタは Δuv が大きく McCamy 近似が破綻する
+    expect(correlatedColorTemp(hex("#00ff00"))).toBeNull();
+    expect(correlatedColorTemp(hex("#ff00ff"))).toBeNull();
+  });
+
+  it("無彩色グレーは D65 近傍として色温度を返す", () => {
+    const cct = correlatedColorTemp(hex("#888888"));
+    expect(cct).not.toBeNull();
+    expect(cct!).toBeGreaterThan(6000);
+    expect(cct!).toBeLessThan(7000);
   });
 
   it("暖寒分類: 赤=warm / 青=cool / グレー=neutral", () => {
