@@ -272,6 +272,34 @@ describe("設計支援（ナッジ/CVDセーフ/補完/変換/並べ替え/ロ�
     expect(nudgeForContrast(hex("#000000"), hex("#ffffff"), 4.5)).toBeNull();
   });
 
+  it("nudgeForContrast: 補正は必要最小限（境界に寄せる）", () => {
+    const r = nudgeForContrast(hex("#777777"), hex("#888888"), 4.5)!;
+    expect(r.ratio).toBeGreaterThanOrEqual(4.5);
+    // 二分で境界へ寄せるため、目標を大きく超えない
+    expect(r.ratio).toBeLessThan(4.8);
+  });
+
+  it("nudgeForContrast: 明暗どちらでも近い方向を選ぶ", () => {
+    // 明るい背景なら暗く、暗い背景なら明るく寄る
+    const onLight = nudgeForContrast(hex("#9a9a9a"), hex("#ffffff"), 4.5)!;
+    const onDark = nudgeForContrast(hex("#5a5a5a"), hex("#000000"), 4.5)!;
+    expect(rgbToOklch(onLight.rgb).l).toBeLessThan(
+      rgbToOklch(hex("#9a9a9a")).l,
+    );
+    expect(rgbToOklch(onDark.rgb).l).toBeGreaterThan(
+      rgbToOklch(hex("#5a5a5a")).l,
+    );
+  });
+
+  it("nudgeForContrast: 届かないときは最良値＋reached=false", () => {
+    // 中間グレー背景では到達できる比に上限がある（黒でも約5.3:1）
+    const r = nudgeForContrast(hex("#8a8a8a"), hex("#808080"), 8)!;
+    expect(r.reached).toBe(false);
+    expect(r.ratio).toBeGreaterThan(
+      contrastRatio(hex("#8a8a8a"), hex("#808080")),
+    );
+  });
+
   it("suggestCvdSafe: 紛らわしい相手から離れる方向に調整", () => {
     const r = suggestCvdSafe(hex("#7a9a01"), [hex("#d34d00")], 12);
     expect(r.minDelta).toBeGreaterThanOrEqual(12);

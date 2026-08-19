@@ -1,5 +1,6 @@
 import { normalizeHue, rgbToLab, rgbToOklch, oklchToRgb } from "./convert";
 import { ACHROMATIC_CHROMA } from "./stats";
+import { bestByLightness, nearestByLightness } from "./search";
 import { contrastRatio } from "./contrast";
 import { deltaE2000 } from "./difference";
 import { simulateCvd } from "./cvd";
@@ -16,6 +17,9 @@ const CVD_TYPES: CvdType[] = ["protan", "deutan", "tritan"];
  * アクセシブル化ナッジ: fg の明度を調整して bg とのコントラスト比が
  * target 以上になる最寄り色を返す。元々満たしている場合は null。
  * どう調整しても届かない場合は最良値を返す（reached=false）。
+ *
+ * 動かすのは OKLCH の明度のみ（色相・彩度は保つ）。明度では届かず彩度を
+ * 落とさないと届かない色は reached=false になる。
  */
 export function nudgeForContrast(
   fg: RGB,
@@ -23,24 +27,17 @@ export function nudgeForContrast(
   target: number,
 ): { rgb: RGB; ratio: number; reached: boolean } | null {
   if (contrastRatio(fg, bg) >= target) return null;
-  const o = rgbToOklch(fg);
-  let best = fg;
-  let bestRatio = contrastRatio(fg, bg);
 
-  // 明るい方向・暗い方向の両方を試し、先に届いた方（=最寄り）を採用
-  for (let i = 1; i <= 50; i++) {
-    for (const dir of [-1, 1]) {
-      const l = Math.min(1, Math.max(0, o.l + dir * 0.02 * i));
-      const cand = oklchToRgb({ l, c: o.c, h: o.h });
-      const ratio = contrastRatio(cand, bg);
-      if (ratio >= target) return { rgb: cand, ratio, reached: true };
-      if (ratio > bestRatio) {
-        bestRatio = ratio;
-        best = cand;
-      }
-    }
-  }
-  return { rgb: best, ratio: bestRatio, reached: false };
+  const found = nearestByLightness(fg, (c) => contrastRatio(c, bg) >= target);
+  if (found)
+    return {
+      rgb: found.rgb,
+      ratio: contrastRatio(found.rgb, bg),
+      reached: true,
+    };
+
+  const best = bestByLightness(fg, (c) => contrastRatio(c, bg));
+  return { rgb: best.rgb, ratio: best.value, reached: false };
 }
 
 /** 全色覚型でのシミュレーション後 ΔE00 の最小値。 */
@@ -65,27 +62,23 @@ export function suggestCvdSafe(
   others: RGB[],
   threshold: number,
 ): { rgb: RGB; minDelta: number; reached: boolean } {
-  const o = rgbToOklch(color);
   const score = (c: RGB) => Math.min(...others.map((x) => minCvdDelta(c, x)));
 
-  let best = color;
-  let bestScore = score(color);
-  if (bestScore >= threshold)
-    return { rgb: color, minDelta: bestScore, reached: true };
+  const current = score(color);
+  if (current >= threshold)
+    return { rgb: color, minDelta: current, reached: true };
 
-  for (let i = 1; i <= 40; i++) {
-    for (const dir of [-1, 1]) {
-      const l = Math.min(1, Math.max(0, o.l + dir * 0.025 * i));
-      const cand = oklchToRgb({ l, c: o.c, h: o.h });
-      const s = score(cand);
-      if (s >= threshold) return { rgb: cand, minDelta: s, reached: true };
-      if (s > bestScore) {
-        bestScore = s;
-        best = cand;
-      }
-    }
-  }
-  return { rgb: best, minDelta: bestScore, reached: false };
+  // ΔE の最小値は明度に対して単調でないため、粗い刻みで成立点を見つけてから
+  // 直前の不成立点との間を二分する（nearestByLightness が担う）。
+  const found = nearestByLightness(color, (c) => score(c) >= threshold, {
+    step: 0.025,
+    refine: 10,
+  });
+  if (found)
+    return { rgb: found.rgb, minDelta: score(found.rgb), reached: true };
+
+  const best = bestByLightness(color, score, { step: 0.025 });
+  return { rgb: best.rgb, minDelta: best.value, reached: false };
 }
 
 /**
