@@ -177,6 +177,17 @@ test("ヘッダーの図書館トグルでホームと往復できる", async ({
   ).toBeVisible();
 });
 
+test("共有リンクをコピーできる", async ({ page, context }) => {
+  await context.grantPermissions(["clipboard-read", "clipboard-write"]);
+  await page.goto("/#p=112233,AABBCC");
+
+  await page.getByRole("button", { name: "共有リンクをコピー" }).click();
+  await expect(page.getByText("共有リンクをコピーしました")).toBeVisible();
+
+  const copied = await page.evaluate(() => navigator.clipboard.readText());
+  expect(copied).toContain("#p=112233,AABBCC");
+});
+
 test("全消去は確認ダイアログを経由する", async ({ page }) => {
   await page.goto("/");
   await page.getByRole("button", { name: "すべて消去" }).click();

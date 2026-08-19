@@ -81,6 +81,13 @@ const JA = {
   "palette.count": "{count} 色",
   "palette.clear": "すべて消去",
   "palette.collapse": "パレットを折りたたむ",
+
+  // 共有（URL ハッシュ）
+  "share.label": "リンク",
+  "share.copy": "共有リンクをコピー",
+  "share.copied": "共有リンクをコピーしました",
+  "share.failed":
+    "コピーできませんでした（URL をアドレスバーからコピーしてください）",
   "palette.expand": "パレットを展開",
 
   // スウォッチ
@@ -480,6 +487,11 @@ const EN: Record<MessageKey, string> = {
   "palette.count": "{count} colors",
   "palette.clear": "Clear all",
   "palette.collapse": "Collapse palette",
+
+  "share.label": "Link",
+  "share.copy": "Copy share link",
+  "share.copied": "Share link copied",
+  "share.failed": "Could not copy (copy the URL from the address bar)",
   "palette.expand": "Expand palette",
 
   "swatch.select": "Select color {n} of {total} {hex}{badge}",
