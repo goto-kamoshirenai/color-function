@@ -998,6 +998,74 @@
       "links": {
         "print": "https://amzn.to/4qppZ4N"
       }
+    },
+    {
+      "id": "kholmatova-design-systems",
+      "title": "Design Systems",
+      "author": "Alla Kholmatova",
+      "publisher": "ボーンデジタル",
+      "year": 2018,
+      "shelf": "practice",
+      "accent": "#3F4A8C",
+      "topics": ["tokens", "semroles", "roles", "templates"],
+      "pitch": {
+        "ja": "色を「個別の指定」から「共有された語彙」に変える、デザインシステムの実践書。",
+        "en": "Turning color from one-off choices into shared vocabulary — design systems in practice."
+      },
+      "summary": {
+        "ja": [
+          "デザインシステムを、コンポーネント集ではなく「チームで共有する言語とルール」として捉え直す本。何をパターンとして切り出し、どう名前をつけ、どう育てるかを、実在するプロダクトの事例から組み立てている。",
+          "色に関して言えば、本ツールのセマンティックロール割当やデザイントークン出力がやろうとしていることそのものを扱う。個々の HEX を選ぶ話から、成功・警告・危険といった意味に色を割り当て、その割当を組織で保つ話へ視点を上げてくれる。",
+          "トークンの命名や粒度に迷ったときに戻る場所になる。出力したトークンをどう運用に載せるかまで含めて考えたい人向け。"
+        ],
+        "en": [
+          "A book that reframes a design system as a shared language and set of rules for a team, rather than a component library. It builds up what to extract as a pattern, how to name it, and how to grow it, drawing on real products.",
+          "On color specifically, it covers exactly what this tool's semantic role assignment and token export are reaching for: moving from picking individual hex values to assigning colors to meanings — success, warning, danger — and keeping those assignments stable across an organization.",
+          "It is the place to return to when you are unsure about token naming or granularity, and it thinks past the export into how tokens actually get used."
+        ]
+      },
+      "links": {
+        "print": "https://amzn.to/4zsumAb",
+        "kindle": "https://amzn.to/4gfTTUl"
+      }
+    },
+    {
+      "id": "ohta-color-engineering",
+      "title": "色彩工学",
+      "author": "大田登",
+      "publisher": "東京電機大学出版局",
+      "year": 2001,
+      "shelf": "reference",
+      "accent": "#4C5866",
+      "topics": [
+        "gamut",
+        "alpha",
+        "spaces",
+        "luminance",
+        "perception",
+        "deltae",
+        "dbreak",
+        "value"
+      ],
+      "pitch": {
+        "ja": "測色の原理から色再現まで。指標が「なぜその式なのか」を根拠から辿れる1冊。",
+        "en": "From the principles of colorimetry to color reproduction — where the formulas come from."
+      },
+      "summary": {
+        "ja": [
+          "測色の原理を体系的に扱う工学書。等色関数と三刺激値から始まり、XYZ・CIELAB などの表色系がどのように導かれるか、色差式が何を近似しているか、色再現とガマットがどう定まるかを順に積み上げる。",
+          "本ツールの計算層はここで扱われる式の上に立っている。拡張色空間・相対輝度・色差 ΔE・ガマット適合の各カードが「なぜその値になるのか」を、定義まで遡って確かめられる。",
+          "読み物ではなく参照用の教科書で、数式に踏み込む前提の本。他の5冊が「どう使うか」を扱うのに対し、この1冊だけが「なぜそうなるのか」を担当する。"
+        ],
+        "en": [
+          "An engineering text that treats colorimetry systematically. It starts from color-matching functions and tristimulus values, then builds up how spaces like XYZ and CIELAB are derived, what the color-difference formulas approximate, and how color reproduction and gamut are determined.",
+          "This tool's calculation layer stands on the equations covered here. For the extended color space, relative luminance, delta-E and gamut cards, you can trace why a value comes out the way it does all the way back to the definition.",
+          "This is a reference textbook rather than a read-through, and it assumes you will engage with the math. Where the other books cover how to use color, this is the one that covers why the numbers behave as they do."
+        ]
+      },
+      "links": {
+        "print": "https://amzn.to/4g4nO38"
+      }
     }
   ]
 }
