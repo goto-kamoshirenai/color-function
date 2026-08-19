@@ -14,6 +14,19 @@ import type {
 
 const clamp = (v: number, a: number, b: number) => Math.max(a, Math.min(b, v));
 
+/**
+ * 変換の入口で RGB を正規化する（0–255・有限値）。
+ * parseHex 経由なら常に範囲内だが、内部生成の RGB（補正・混色・シミュレーション
+ * の中間値）は負や 255 超・非有限になりうる。各変換が入口で正規化することで
+ * 範囲外入力が NaN や極端値として下流へ伝播するのを防ぐ（docs/07 §1）。
+ */
+const channel = (v: number) => (Number.isFinite(v) ? clamp(v, 0, 255) : 0);
+export const normalizeRgb = ({ r, g, b }: RGB): RGB => ({
+  r: channel(r),
+  g: channel(g),
+  b: channel(b),
+});
+
 // ---------- HEX <-> RGB ----------
 
 /** #rgb / #rrggbb（# 省略可）を 0–255 RGB に。不正は null（docs/07 §2）。 */
@@ -54,7 +67,8 @@ export function linearToSrgb(c: number): number {
 
 // ---------- HSL（docs/07 §3） ----------
 
-export function rgbToHsl({ r, g, b }: RGB): HSL {
+export function rgbToHsl(rgb: RGB): HSL {
+  let { r, g, b } = normalizeRgb(rgb);
   r /= 255;
   g /= 255;
   b /= 255;
@@ -95,7 +109,8 @@ export function hslToRgb({ h, s, l }: HSL): RGB {
 
 // ---------- HSV（docs/07 §4） ----------
 
-export function rgbToHsv({ r, g, b }: RGB): HSV {
+export function rgbToHsv(rgb: RGB): HSV {
+  let { r, g, b } = normalizeRgb(rgb);
   r /= 255;
   g /= 255;
   b /= 255;
@@ -147,7 +162,8 @@ function hueSector(h: number, c: number, x: number): [number, number, number] {
 const toOklch = converter("oklch");
 const toRgb = converter("rgb");
 
-export function rgbToOklch({ r, g, b }: RGB): OKLCH {
+export function rgbToOklch(rgb: RGB): OKLCH {
+  const { r, g, b } = normalizeRgb(rgb);
   const o = toOklch({ mode: "rgb", r: r / 255, g: g / 255, b: b / 255 });
   return { l: o.l, c: o.c, h: o.h ?? 0 };
 }
@@ -165,7 +181,8 @@ export function oklchToRgb({ l, c, h }: OKLCH): RGB {
 
 // ---------- CIE XYZ（D65・sRGB 行列） ----------
 
-export function rgbToXyz({ r, g, b }: RGB): XYZ {
+export function rgbToXyz(rgb: RGB): XYZ {
+  const { r, g, b } = normalizeRgb(rgb);
   const R = srgbToLinear(r / 255);
   const G = srgbToLinear(g / 255);
   const B = srgbToLinear(b / 255);
@@ -212,14 +229,16 @@ export function labToLch({ L, a, b }: LAB): LCH {
 
 const toOklab = converter("oklab");
 
-export function rgbToOklab({ r, g, b }: RGB): OKLAB {
+export function rgbToOklab(rgb: RGB): OKLAB {
+  const { r, g, b } = normalizeRgb(rgb);
   const o = toOklab({ mode: "rgb", r: r / 255, g: g / 255, b: b / 255 });
   return { l: o.l, a: o.a, b: o.b };
 }
 
 // ---------- HWB / CMYK（CSS Color 4 / ナイーブ近似） ----------
 
-export function rgbToHwb(rgb: RGB): HWB {
+export function rgbToHwb(input: RGB): HWB {
+  const rgb = normalizeRgb(input);
   const { h } = rgbToHsv(rgb);
   const w = Math.min(rgb.r, rgb.g, rgb.b) / 255;
   const b = 1 - Math.max(rgb.r, rgb.g, rgb.b) / 255;
@@ -227,12 +246,14 @@ export function rgbToHwb(rgb: RGB): HWB {
 }
 
 /** ナイーブ CMYK 近似（ICC プロファイル無し・印刷の参考値）。 */
-export function rgbToCmyk({ r, g, b }: RGB): CMYK {
+export function rgbToCmyk(rgb: RGB): CMYK {
+  const { r, g, b } = normalizeRgb(rgb);
   const R = r / 255;
   const G = g / 255;
   const B = b / 255;
   const k = 1 - Math.max(R, G, B);
-  if (k >= 1) return { c: 0, m: 0, y: 0, k: 100 };
+  // 1-k が 0 近傍（実質黒）では c/m/y が 0 除算・極端値になるため早期 return
+  if (1 - k <= 1e-9) return { c: 0, m: 0, y: 0, k: 100 };
   return {
     c: ((1 - R - k) / (1 - k)) * 100,
     m: ((1 - G - k) / (1 - k)) * 100,

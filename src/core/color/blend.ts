@@ -1,5 +1,5 @@
 import { interpolate, formatHex } from "culori";
-import { parseHex, toHex } from "./convert";
+import { normalizeRgb, parseHex, toHex } from "./convert";
 import type { RGB } from "./types";
 
 /** 合成モード（CSS の mix-blend-mode サブセット＋単純平均）。 */
@@ -19,12 +19,21 @@ function blendChannel(mode: BlendMode, a: number, b: number): number {
   }
 }
 
-/** 2色の合成（前景 a × 背景 b、ガンマ空間チャンネル演算）。 */
+/**
+ * 2色の合成（前景 a × 背景 b）。
+ *
+ * チャンネル演算はガンマ空間（sRGB のまま）で行う。これは CSS の
+ * mix-blend-mode / Photoshop 等の実装に一致させるためで、知覚的に正確な
+ * 混色ではない（線形 RGB や OKLab での混色とは結果が異なる）。
+ * 補間（gradientSteps）は線形/OKLab を選べるが、こちらは CSS 互換が目的。
+ */
 export function mixColors(a: RGB, b: RGB, mode: BlendMode): RGB {
+  const x = normalizeRgb(a);
+  const y = normalizeRgb(b);
   return {
-    r: blendChannel(mode, a.r / 255, b.r / 255) * 255,
-    g: blendChannel(mode, a.g / 255, b.g / 255) * 255,
-    b: blendChannel(mode, a.b / 255, b.b / 255) * 255,
+    r: blendChannel(mode, x.r / 255, y.r / 255) * 255,
+    g: blendChannel(mode, x.g / 255, y.g / 255) * 255,
+    b: blendChannel(mode, x.b / 255, y.b / 255) * 255,
   };
 }
 
@@ -47,7 +56,8 @@ export function gradientSteps(
 }
 
 /** Web セーフカラー（216色）への最近傍丸め。 */
-export function toWebSafe(rgb: RGB): RGB {
+export function toWebSafe(input: RGB): RGB {
+  const rgb = normalizeRgb(input);
   const q = (v: number) => Math.round(v / 51) * 51;
   return { r: q(rgb.r), g: q(rgb.g), b: q(rgb.b) };
 }

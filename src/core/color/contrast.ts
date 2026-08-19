@@ -1,10 +1,11 @@
-import { srgbToLinear } from "./convert";
+import { normalizeRgb, srgbToLinear } from "./convert";
 import type { RGB } from "./types";
 
 /**
  * WCAG 相対輝度 Y（docs/07 §5）。係数は計算定数（アセットではない）。
  */
-export function relativeLuminance({ r, g, b }: RGB): number {
+export function relativeLuminance(rgb: RGB): number {
+  const { r, g, b } = normalizeRgb(rgb);
   const R = srgbToLinear(r / 255);
   const G = srgbToLinear(g / 255);
   const B = srgbToLinear(b / 255);
