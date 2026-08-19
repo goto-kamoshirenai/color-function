@@ -98,6 +98,7 @@ const JA = {
   "role.pairLabel": "文字色と背景色",
   "role.pairHint":
     "コントラストは「文字色（FG）と背景色（BG）」の組み合わせで測定します。",
+  "role.pairHintOpen": "文字色と背景色の説明を表示",
   "role.fgLabel": "文字色",
   "role.bgLabel": "背景色",
   "role.fg": "文字色（FG）を選択",
@@ -444,6 +445,7 @@ const EN: Record<MessageKey, string> = {
   "role.pairLabel": "Text & background",
   "role.pairHint":
     "Contrast is measured between the text (FG) and background (BG) colors.",
+  "role.pairHintOpen": "Show help for text & background",
   "role.fgLabel": "Text",
   "role.bgLabel": "Background",
   "role.fg": "Select text color (FG)",

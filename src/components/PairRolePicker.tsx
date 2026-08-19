@@ -8,8 +8,8 @@ import {
   ListBox,
   ListBoxItem,
   SelectValue,
-  Tooltip,
-  TooltipTrigger,
+  Dialog,
+  DialogTrigger,
 } from "react-aria-components";
 import { NavArrowDown, NavArrowUp, InfoCircle } from "iconoir-react";
 import { useColorStore } from "@/store/useColorStore";
@@ -80,21 +80,26 @@ export function PairRolePicker() {
   const optionText = (i: number) =>
     `${String(i + 1).padStart(2, "0")} ${fmt(palette[i].hex)}`;
 
-  const hintTooltip = (
-    <TooltipTrigger delay={200}>
+  // ヒントは Popover（タップでも開く）。Tooltip はタッチで出ずモバイルで
+  // 情報が欠落するため使わない。ボタン名は「開く操作」、本文は Popover 側に置く
+  // （同じ文言を aria-label と本文で二重に読ませない）。
+  const hintPopover = (
+    <DialogTrigger>
       <Button
         className="cff-control text-text-3 hover:text-text rounded-control flex size-6 flex-none items-center justify-center"
-        aria-label={t("role.pairHint")}
+        aria-label={t("role.pairHintOpen")}
       >
         <InfoCircle width={14} height={14} aria-hidden />
       </Button>
-      <Tooltip
+      <Popover
         offset={6}
-        className="bg-surface border-border-strong rounded-control shadow-overlay text-text-2 max-w-[240px] border px-2.5 py-1.5 text-[12px] leading-[1.5]"
+        className="border-border-strong bg-surface rounded-control shadow-overlay z-30 max-w-[240px] border"
       >
-        {t("role.pairHint")}
-      </Tooltip>
-    </TooltipTrigger>
+        <Dialog className="text-text-2 px-2.5 py-1.5 text-[12px] leading-[1.5] outline-none">
+          {t("role.pairHint")}
+        </Dialog>
+      </Popover>
+    </DialogTrigger>
   );
 
   const field = (role: Role, selectedId: string | null) => {
@@ -217,7 +222,7 @@ export function PairRolePicker() {
           <span className="hidden text-[13px] font-bold whitespace-nowrap xl:inline xl:text-[12px]">
             {t("role.pairLabel")}
           </span>
-          {hintTooltip}
+          {hintPopover}
         </div>
         {field("fg", fgId)}
         {field("bg", bgId)}
