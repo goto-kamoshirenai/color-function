@@ -40,3 +40,6 @@ yarn-error.log*
 # scaffold temp
 /cna-temp
 /.next-pw
+
+# エージェント作業用の一時 worktree（リポジトリ内に作られるため除外）
+/.claude/worktrees

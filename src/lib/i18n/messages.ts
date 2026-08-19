@@ -17,6 +17,7 @@ const JA = {
   // ナビゲーション
   "nav.home": "ホーム",
   "nav.backHome": "ホームに戻る",
+  "nav.skipToMain": "メインコンテンツへスキップ",
 
   // 設定メニュー
   "settings.open": "設定",
@@ -97,6 +98,7 @@ const JA = {
   "role.pairLabel": "文字色と背景色",
   "role.pairHint":
     "コントラストは「文字色（FG）と背景色（BG）」の組み合わせで測定します。",
+  "role.pairHintOpen": "文字色と背景色の説明を表示",
   "role.fgLabel": "文字色",
   "role.bgLabel": "背景色",
   "role.fg": "文字色（FG）を選択",
@@ -240,15 +242,22 @@ const JA = {
   "card.cvd.tritan": "T型 (3型)",
   "card.cvd.sample": "サンプル文字 Ag",
 
+  // カード: 総当たりマトリクス共通
+  "card.matrix.color": "色 {n} {hex}",
+
   // カード: コントラスト比マトリクス
   "card.cmatrix.title": "コントラスト比マトリクス",
   "card.cmatrix.sr":
     "パレット全色の総当たりコントラスト比の表。行と列の交点が2色の比で、4.5以上はAA合格として太字で強調されます。",
+  "card.cmatrix.pass": "AA合格",
+  "card.cmatrix.fail": "AA不合格",
 
   // カード: 色差 ΔE マトリクス
   "card.dmatrix.title": "色差 ΔE マトリクス",
   "card.dmatrix.sr":
     "パレット全色の総当たり色差(CIEDE2000)の表。値が10未満のペアは紛らわしい近さとして太字で強調されます。",
+  "card.dmatrix.close": "紛らわしい近さ",
+  "card.dmatrix.distinct": "識別可",
 
   // カード: 色相分布
   "card.huedist.title": "色相分布",
@@ -406,6 +415,7 @@ const EN: Record<MessageKey, string> = {
 
   "nav.home": "Home",
   "nav.backHome": "Back to home",
+  "nav.skipToMain": "Skip to main content",
 
   "settings.open": "Settings",
   "settings.title": "Settings",
@@ -477,6 +487,7 @@ const EN: Record<MessageKey, string> = {
   "role.pairLabel": "Text & background",
   "role.pairHint":
     "Contrast is measured between the text (FG) and background (BG) colors.",
+  "role.pairHintOpen": "Show help for text & background",
   "role.fgLabel": "Text",
   "role.bgLabel": "Background",
   "role.fg": "Select text color (FG)",
@@ -606,13 +617,19 @@ const EN: Record<MessageKey, string> = {
   "card.cvd.tritan": "Tritan",
   "card.cvd.sample": "Sample text Ag",
 
+  "card.matrix.color": "Color {n} {hex}",
+
   "card.cmatrix.title": "Contrast Ratio Matrix",
   "card.cmatrix.sr":
     "Table of pairwise contrast ratios for all palette colors. Each cell is the ratio of two colors; values of 4.5 or higher pass AA and are shown in bold.",
+  "card.cmatrix.pass": "AA pass",
+  "card.cmatrix.fail": "AA fail",
 
   "card.dmatrix.title": "ΔE Difference Matrix",
   "card.dmatrix.sr":
     "Table of pairwise color differences (CIEDE2000) for all palette colors. Pairs below 10 are confusably close and shown in bold.",
+  "card.dmatrix.close": "confusably close",
+  "card.dmatrix.distinct": "distinct",
 
   "card.huedist.title": "Hue Distribution",
   "card.huedist.aria":

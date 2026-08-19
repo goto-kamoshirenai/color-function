@@ -3,6 +3,7 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { useSyncExternalStore } from "react";
 import { motion, AnimatePresence, useReducedMotion } from "motion/react";
+import { ModalOverlay, Modal, Dialog } from "react-aria-components";
 import { useT } from "@/lib/i18n/locale";
 import { MARK_PATHS } from "./BrandMark";
 
@@ -12,6 +13,8 @@ import { MARK_PATHS } from "./BrandMark";
  * ストロークなぞり描き → 塗りフェード → マーク内をアクセントの光沢が掃引。
  * - セッション初回のみ（sessionStorage）。表示判定はペイント前スクリプト（data-splash）。
  * - クリック / Esc / SKIP でいつでもスキップ。prefers-reduced-motion では表示しない。
+ * - モーダル（react-aria）として出すため、初期フォーカスは SKIP・フォーカスは
+ *   ダイアログ内に閉じ、背後のアプリは aria-hidden になる。
  */
 
 const TOTAL_MS = 4600; // 演出 ~3.4s + ホールド
@@ -41,6 +44,7 @@ export function SplashScreen() {
   const [dismissed, setDismissed] = useState(false);
   const reducedMotion = useReducedMotion();
   const done = useRef(false);
+  const skipRef = useRef<HTMLButtonElement>(null);
   const t = useT();
 
   const visible = shouldShow && !dismissed && !reducedMotion;
@@ -71,6 +75,14 @@ export function SplashScreen() {
     }
   }, [shouldShow, reducedMotion]);
 
+  // 初期フォーカスは SKIP（スキップ手段を最初に渡す）。
+  // react-aria の Dialog は既定でダイアログ自身にフォーカスするため、
+  // 子孫の effect 後に実行される本 effect で上書きする。
+  useEffect(() => {
+    if (!visible) return;
+    skipRef.current?.focus();
+  }, [visible]);
+
   // 自動終了タイマー＋Esc スキップ
   useEffect(() => {
     if (!visible) return;
@@ -96,130 +108,149 @@ export function SplashScreen() {
         }}
       >
         {visible ? (
-          <motion.div
+          <ModalOverlay
             key="splash"
-            role="dialog"
-            aria-label={t("splash.aria")}
-            onClick={dismiss}
-            exit={{
-              opacity: 0,
-              transition: { duration: 0.4, ease: "easeOut" },
+            isOpen
+            isDismissable
+            onOpenChange={(open) => {
+              if (!open) dismiss();
             }}
-            className="bg-surface fixed inset-0 z-[100] flex cursor-pointer items-center justify-center"
+            className="fixed inset-0 z-[100]"
           >
-            {/* ごく淡いスポットライト（奥行き） */}
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ duration: 1.2, ease: EASE }}
-              aria-hidden
-              className="pointer-events-none absolute inset-0"
-              style={{
-                background:
-                  "radial-gradient(ellipse 70% 55% at 50% 46%, color-mix(in srgb, var(--text) 4%, transparent), transparent 70%)",
-              }}
-            />
-
-            {/* 本体: マークのみ */}
-            <motion.div
-              className="relative flex flex-col items-center"
-              initial={{ opacity: 0, scale: 0.97, filter: "blur(6px)" }}
-              animate={{ opacity: 1, scale: 1, filter: "blur(0px)" }}
-              exit={{ scale: 1.02, filter: "blur(5px)" }}
-              transition={{ duration: 0.8, ease: EASE }}
-            >
-              {/* マーク（なぞり描き → 塗り） */}
-              <div className="relative size-64 sm:size-80" aria-hidden>
-                <svg viewBox="0 0 300 300" width="100%" height="100%">
-                  {MARK_PATHS.map((d, i) => (
-                    <motion.path
-                      key={i}
-                      d={d}
-                      fill="var(--text)"
-                      stroke="var(--text)"
-                      strokeWidth={1.6}
-                      initial={{
-                        pathLength: 0,
-                        fillOpacity: 0,
-                        strokeOpacity: 1,
-                      }}
-                      animate={{
-                        pathLength: 1,
-                        fillOpacity: 1,
-                        strokeOpacity: 0,
-                      }}
-                      transition={{
-                        pathLength: {
-                          delay: T.draw + i * 0.12,
-                          duration: 0.7,
-                          ease: "easeInOut",
-                        },
-                        fillOpacity: {
-                          delay: T.fill + i * 0.08,
-                          duration: 0.45,
-                          ease: EASE,
-                        },
-                        strokeOpacity: {
-                          delay: T.fill + i * 0.08 + 0.35,
-                          duration: 0.3,
-                          ease: EASE,
-                        },
-                      }}
-                    />
-                  ))}
-                </svg>
-
-                {/* マーク形状でマスクしたアクセントの光沢スイープ */}
-                <div
-                  className="pointer-events-none absolute inset-0 overflow-hidden"
-                  style={{
-                    maskImage: `url(${MARK_URL})`,
-                    WebkitMaskImage: `url(${MARK_URL})`,
-                    maskSize: "100% 100%",
-                    WebkitMaskSize: "100% 100%",
+            <Modal className="size-full">
+              <Dialog
+                aria-label={t("splash.aria")}
+                className="size-full outline-none"
+              >
+                <motion.div
+                  onClick={dismiss}
+                  exit={{
+                    opacity: 0,
+                    transition: { duration: 0.4, ease: "easeOut" },
                   }}
+                  className="bg-surface absolute inset-0 flex cursor-pointer items-center justify-center"
                 >
+                  {/* ごく淡いスポットライト（奥行き） */}
                   <motion.div
-                    className="absolute top-[-20%] h-[140%] w-1/3"
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    transition={{ duration: 1.2, ease: EASE }}
+                    aria-hidden
+                    className="pointer-events-none absolute inset-0"
                     style={{
                       background:
-                        "linear-gradient(105deg, transparent, color-mix(in srgb, var(--accent) 85%, transparent), transparent)",
-                      filter: "blur(2px)",
+                        "radial-gradient(ellipse 70% 55% at 50% 46%, color-mix(in srgb, var(--text) 4%, transparent), transparent 70%)",
                     }}
-                    initial={{ left: "-40%" }}
-                    animate={{ left: "115%" }}
-                    transition={{ delay: T.sweep, duration: 0.9, ease: EASE }}
                   />
-                </div>
-              </div>
-            </motion.div>
 
-            {/* フッター: SKIP */}
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 0.2, duration: 0.5, ease: EASE }}
-              className="absolute right-[18px] bottom-[calc(1rem_+_env(safe-area-inset-bottom))]"
-            >
-              <button
-                type="button"
-                onClick={dismiss}
-                aria-label={t("splash.skip")}
-                className="cff-control text-text-2 hover:text-text px-3 py-[7px] font-mono text-[12px] tracking-[0.05em]"
-              >
-                SKIP ▸
-              </button>
-            </motion.div>
+                  {/* 本体: マークのみ */}
+                  <motion.div
+                    className="relative flex flex-col items-center"
+                    initial={{ opacity: 0, scale: 0.97, filter: "blur(6px)" }}
+                    animate={{ opacity: 1, scale: 1, filter: "blur(0px)" }}
+                    exit={{ scale: 1.02, filter: "blur(5px)" }}
+                    transition={{ duration: 0.8, ease: EASE }}
+                  >
+                    {/* マーク（なぞり描き → 塗り） */}
+                    <div className="relative size-64 sm:size-80" aria-hidden>
+                      <svg viewBox="0 0 300 300" width="100%" height="100%">
+                        {MARK_PATHS.map((d, i) => (
+                          <motion.path
+                            key={i}
+                            d={d}
+                            fill="var(--text)"
+                            stroke="var(--text)"
+                            strokeWidth={1.6}
+                            initial={{
+                              pathLength: 0,
+                              fillOpacity: 0,
+                              strokeOpacity: 1,
+                            }}
+                            animate={{
+                              pathLength: 1,
+                              fillOpacity: 1,
+                              strokeOpacity: 0,
+                            }}
+                            transition={{
+                              pathLength: {
+                                delay: T.draw + i * 0.12,
+                                duration: 0.7,
+                                ease: "easeInOut",
+                              },
+                              fillOpacity: {
+                                delay: T.fill + i * 0.08,
+                                duration: 0.45,
+                                ease: EASE,
+                              },
+                              strokeOpacity: {
+                                delay: T.fill + i * 0.08 + 0.35,
+                                duration: 0.3,
+                                ease: EASE,
+                              },
+                            }}
+                          />
+                        ))}
+                      </svg>
 
-            {/* 進行プログレスバー（最下端・アクセント） */}
-            <motion.div
-              aria-hidden
-              className="bg-accent absolute bottom-0 left-0 h-0.5 w-full origin-left"
-              initial={{ scaleX: 0 }}
-              animate={{ scaleX: 1 }}
-              transition={{ duration: TOTAL_MS / 1000, ease: "linear" }}
-            />
-          </motion.div>
+                      {/* マーク形状でマスクしたアクセントの光沢スイープ */}
+                      <div
+                        className="pointer-events-none absolute inset-0 overflow-hidden"
+                        style={{
+                          maskImage: `url(${MARK_URL})`,
+                          WebkitMaskImage: `url(${MARK_URL})`,
+                          maskSize: "100% 100%",
+                          WebkitMaskSize: "100% 100%",
+                        }}
+                      >
+                        <motion.div
+                          className="absolute top-[-20%] h-[140%] w-1/3"
+                          style={{
+                            background:
+                              "linear-gradient(105deg, transparent, color-mix(in srgb, var(--accent) 85%, transparent), transparent)",
+                            filter: "blur(2px)",
+                          }}
+                          initial={{ left: "-40%" }}
+                          animate={{ left: "115%" }}
+                          transition={{
+                            delay: T.sweep,
+                            duration: 0.9,
+                            ease: EASE,
+                          }}
+                        />
+                      </div>
+                    </div>
+                  </motion.div>
+
+                  {/* フッター: SKIP */}
+                  <motion.div
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    transition={{ delay: 0.2, duration: 0.5, ease: EASE }}
+                    className="absolute right-[18px] bottom-[calc(1rem_+_env(safe-area-inset-bottom))]"
+                  >
+                    <button
+                      ref={skipRef}
+                      type="button"
+                      onClick={dismiss}
+                      aria-label={t("splash.skip")}
+                      className="cff-control text-text-2 hover:text-text px-3 py-[7px] font-mono text-[12px] tracking-[0.05em]"
+                    >
+                      SKIP ▸
+                    </button>
+                  </motion.div>
+
+                  {/* 進行プログレスバー（最下端・アクセント） */}
+                  <motion.div
+                    aria-hidden
+                    className="bg-accent absolute bottom-0 left-0 h-0.5 w-full origin-left"
+                    initial={{ scaleX: 0 }}
+                    animate={{ scaleX: 1 }}
+                    transition={{ duration: TOTAL_MS / 1000, ease: "linear" }}
+                  />
+                </motion.div>
+              </Dialog>
+            </Modal>
+          </ModalOverlay>
         ) : null}
       </AnimatePresence>
     </>

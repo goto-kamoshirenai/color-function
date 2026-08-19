@@ -32,6 +32,35 @@ describe("SplashScreen", () => {
     expect(document.documentElement.dataset.splash).toBeUndefined();
   });
 
+  it("表示中は SKIP に初期フォーカスが当たる", async () => {
+    document.documentElement.dataset.splash = "1";
+    render(<SplashScreen />);
+    await screen.findByRole("dialog");
+
+    const skip = screen.getByRole("button", {
+      name: "起動アニメーションをスキップ",
+    });
+    await waitFor(() => {
+      expect(document.activeElement).toBe(skip);
+    });
+  });
+
+  it("表示中は背後のアプリが操作・読み上げ対象から外れる", async () => {
+    document.documentElement.dataset.splash = "1";
+    render(
+      <>
+        <main data-testid="app">アプリ本体</main>
+        <SplashScreen />
+      </>,
+    );
+    await screen.findByRole("dialog");
+
+    await waitFor(() => {
+      // react-aria が背後のコンテンツを inert にする（フォーカスも SR も届かない）
+      expect(screen.getByTestId("app").closest("[inert]")).not.toBeNull();
+    });
+  });
+
   it("Escape キーでもスキップできる", async () => {
     document.documentElement.dataset.splash = "1";
     render(<SplashScreen />);

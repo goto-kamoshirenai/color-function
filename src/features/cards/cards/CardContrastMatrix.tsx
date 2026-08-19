@@ -38,6 +38,8 @@ export function CardContrastMatrix({ number }: CardProps) {
               const pass = ratio >= 4.5;
               return {
                 content: ratio.toFixed(2),
+                // 合否は太字＋枠（視覚）だけでなく文字でも伝える
+                srLabel: pass ? t("card.cmatrix.pass") : t("card.cmatrix.fail"),
                 className: `bg-surface ${CELL} ${
                   pass
                     ? "font-bold shadow-[inset_0_0_0_1.5px_var(--accent)]"
