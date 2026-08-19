@@ -27,10 +27,10 @@ export default defineConfig({
        * 高い水準を維持し、UI 層はカードの網羅を進めながら床を上げていく。
        */
       thresholds: {
-        statements: 80,
-        branches: 64,
-        functions: 75,
-        lines: 81,
+        statements: 83,
+        branches: 68,
+        functions: 80,
+        lines: 85,
         "src/core/**": {
           statements: 95,
           branches: 85,
