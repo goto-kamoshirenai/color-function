@@ -365,3 +365,89 @@ describe("設計支援（ナッジ/CVDセーフ/補完/変換/並べ替え/ロ�
     expect(rolesByOrder(8)).toHaveLength(5);
   });
 });
+
+describe("境界・null 分岐（設計支援・APCA・冗長性）", () => {
+  it("apcaContrast: 差が極小なら 0（deltaYmin）", () => {
+    expect(apcaContrast(hex("#808080"), hex("#808080"))).toBe(0);
+  });
+
+  it("apcaContrast: loClip 未満のわずかな差も 0 に丸める", () => {
+    // 隣接する明度差では Lc が立たない
+    expect(Math.abs(apcaContrast(hex("#808080"), hex("#818181")))).toBe(0);
+  });
+
+  it("apcaContrast: 明背景の暗文字は正、暗背景の明文字は負（reverse 側）", () => {
+    expect(apcaContrast(hex("#000000"), hex("#ffffff"))).toBeGreaterThan(90);
+    expect(apcaContrast(hex("#ffffff"), hex("#000000"))).toBeLessThan(-90);
+  });
+
+  it("apcaUsage: 75/60/45 の境界", () => {
+    expect(apcaUsage(75)).toBe("body");
+    expect(apcaUsage(74.9)).toBe("large");
+    expect(apcaUsage(-60)).toBe("large");
+    expect(apcaUsage(45)).toBe("ui");
+    expect(apcaUsage(44.9)).toBe("fail");
+  });
+
+  it("suggestGapFill: 有彩色が 2 色未満なら null", () => {
+    expect(suggestGapFill([])).toBeNull();
+    expect(suggestGapFill([hex("#ff0000")])).toBeNull();
+    // 無彩色は有彩色として数えない
+    expect(suggestGapFill([hex("#ff0000"), hex("#888888")])).toBeNull();
+    expect(suggestGapFill([hex("#ff0000"), hex("#00ff00")])).not.toBeNull();
+  });
+
+  it("equalizeLightness: 3 色未満はそのまま返す", () => {
+    const one = [hex("#ff0000")];
+    expect(equalizeLightness(one)).toBe(one);
+    const two = [hex("#ff0000"), hex("#0000ff")];
+    expect(equalizeLightness(two)).toBe(two);
+  });
+
+  it("equalizeLightness: 3 色以上は明度が等間隔になる", () => {
+    const out = equalizeLightness([
+      hex("#ffffff"),
+      hex("#cccccc"),
+      hex("#000000"),
+    ]);
+    const ls = out.map((c) => rgbToOklch(c).l).sort((a, b) => a - b);
+    expect(ls[1] - ls[0]).toBeCloseTo(ls[2] - ls[1], 6);
+  });
+
+  it("confusablePairs: 空・1色は空配列", () => {
+    expect(confusablePairs([], 10)).toEqual([]);
+    expect(confusablePairs([hex("#ff0000")], 10)).toEqual([]);
+  });
+
+  it("cvdConfusablePairs: 空は空配列", () => {
+    expect(cvdConfusablePairs([], "protan", 10)).toEqual([]);
+  });
+
+  it("rolesCoverage: 空パレットは全て未充足で index=-1", () => {
+    for (const c of rolesCoverage([])) {
+      expect(c.ok).toBe(false);
+      expect(c.index).toBe(-1);
+    }
+  });
+
+  it("matchScheme: 有彩色が 2 色未満／ルール無しは null", () => {
+    const rules = [{ id: "complementary", hueOffsets: [0, 180] }];
+    expect(matchScheme([hex("#ff0000")], rules)).toBeNull();
+    expect(matchScheme([hex("#888888"), hex("#000000")], rules)).toBeNull();
+    expect(matchScheme([hex("#ff0000"), hex("#00ff00")], [])).toBeNull();
+  });
+
+  it("assignRoles: 空は空配列 / 2色では neutral を割り当てない", () => {
+    expect(assignRoles([])).toEqual([]);
+    const roles = assignRoles([hex("#ffffff"), hex("#000000")]).map(
+      (r) => r.role,
+    );
+    expect(roles).not.toContain("neutral");
+  });
+
+  it("suggestCvdSafe: 相手がいなければ元の色のまま reached", () => {
+    const r = suggestCvdSafe(hex("#2d6cdf"), [], 12);
+    expect(r.reached).toBe(true);
+    expect(r.rgb).toEqual(hex("#2d6cdf"));
+  });
+});

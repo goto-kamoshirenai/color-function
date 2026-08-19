@@ -55,3 +55,40 @@ describe("judgeWcag", () => {
     expect(judgeWcag(2).verdict).toBe("fail");
   });
 });
+
+describe("judgeWcag の等号境界（丸め前の生値で判定）", () => {
+  it("4.5 ちょうどは AA（aaNormal 合格・AAA 不合格）", () => {
+    const v = judgeWcag(4.5);
+    expect(v.aaNormal).toBe(true);
+    expect(v.aaaNormal).toBe(false);
+    expect(v.aaLarge).toBe(true);
+    expect(v.aaaLarge).toBe(true);
+    expect(v.verdict).toBe("AA");
+  });
+
+  it("4.5 をわずかに下回れば AA-large 止まり（2桁表示は 4.50 でも不合格）", () => {
+    const v = judgeWcag(4.4999);
+    expect(v.aaNormal).toBe(false);
+    expect(v.verdict).toBe("AA-large");
+  });
+
+  it("7 ちょうどは AAA", () => {
+    const v = judgeWcag(7);
+    expect(v.aaaNormal).toBe(true);
+    expect(v.verdict).toBe("AAA");
+  });
+
+  it("3 ちょうどは UI/大文字のみ合格", () => {
+    const v = judgeWcag(3);
+    expect(v.ui).toBe(true);
+    expect(v.aaLarge).toBe(true);
+    expect(v.aaNormal).toBe(false);
+    expect(v.verdict).toBe("AA-large");
+  });
+
+  it("3 をわずかに下回れば不合格", () => {
+    const v = judgeWcag(2.9999);
+    expect(v.ui).toBe(false);
+    expect(v.verdict).toBe("fail");
+  });
+});

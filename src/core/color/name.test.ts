@@ -24,4 +24,21 @@ describe("nearestName", () => {
   it("空辞書は null", () => {
     expect(nearestName(parseHex("#123456")!, [])).toBeNull();
   });
+
+  it("不正 HEX のみの辞書は null（不正エントリは無視する）", () => {
+    const broken: ColorNameEntry[] = [
+      { name: "壊れ1", hex: "zzz" },
+      { name: "壊れ2", hex: "#12" },
+      { name: "壊れ3", hex: "" },
+    ];
+    expect(nearestName(parseHex("#123456")!, broken)).toBeNull();
+  });
+
+  it("不正エントリが混じっても有効な最寄りを返す", () => {
+    const mixed: ColorNameEntry[] = [
+      { name: "壊れ", hex: "#gggggg" },
+      { name: "青", hex: "#2D6CDF" },
+    ];
+    expect(nearestName(parseHex("#2D6CDF")!, mixed)?.entry.name).toBe("青");
+  });
 });

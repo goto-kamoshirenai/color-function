@@ -100,3 +100,31 @@ describe("generateTones", () => {
     }
   });
 });
+
+describe("generateTones の頭打ち（極端な基準色）", () => {
+  it("基準色が 50 の目標より明るい場合は淡い側を基準色で頭打ちにする", () => {
+    const base = hex("#fdfdfd"); // L > 0.97
+    const tones = generateTones(base);
+    const l500 = rgbToOklch(base).l;
+    for (const t of tones.filter((x) => x.step < 500)) {
+      // 頭打ちにより 500 と同じ明度以下（単調性を壊さない）
+      expect(rgbToOklch(t.rgb).l).toBeLessThanOrEqual(l500 + 1e-9);
+    }
+  });
+
+  it("基準色が 900 の目標より暗い場合は濃い側を基準色で頭打ちにする", () => {
+    const base = hex("#050505"); // L < 0.25
+    const tones = generateTones(base);
+    const l500 = rgbToOklch(base).l;
+    for (const t of tones.filter((x) => x.step > 500)) {
+      expect(rgbToOklch(t.rgb).l).toBeGreaterThanOrEqual(l500 - 1e-9);
+    }
+  });
+
+  it("500 は常に基準色そのもの", () => {
+    for (const h of ["#ffffff", "#000000", "#2d6cdf"]) {
+      const tones = generateTones(hex(h));
+      expect(tones.find((t) => t.step === 500)!.rgb).toEqual(hex(h));
+    }
+  });
+});

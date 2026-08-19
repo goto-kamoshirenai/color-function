@@ -206,3 +206,56 @@ describe("色相ヘルパ（normalizeHue / hueDiff）", () => {
     expect(hueDiff(90, 90)).toBe(0);
   });
 });
+
+describe("sRGB ガンマの閾値跨ぎ", () => {
+  // sRGB 規格の区分関数は丸めた定数のため閾値で約 3e-8 の不連続がある。
+  // 実害のない範囲であることを固定する（8bit 換算で 1e-5 未満）。
+  it("srgbToLinear は 0.04045 の前後でほぼ連続（不連続は 1e-7 未満）", () => {
+    const at = srgbToLinear(0.04045);
+    expect(at).toBeCloseTo(0.04045 / 12.92, 12);
+    expect(srgbToLinear(0.04045 - 1e-9)).toBeCloseTo(at, 7);
+    expect(srgbToLinear(0.04045 + 1e-9)).toBeCloseTo(at, 7);
+  });
+
+  it("linearToSrgb は 0.0031308 の前後でほぼ連続（不連続は 1e-7 未満）", () => {
+    const at = linearToSrgb(0.0031308);
+    expect(at).toBeCloseTo(12.92 * 0.0031308, 12);
+    expect(linearToSrgb(0.0031308 - 1e-12)).toBeCloseTo(at, 7);
+    expect(linearToSrgb(0.0031308 + 1e-12)).toBeCloseTo(at, 7);
+  });
+
+  it("往復は閾値の両側で戻る", () => {
+    for (const v of [0, 0.002, 0.0031308, 0.04045, 0.2, 1]) {
+      expect(linearToSrgb(srgbToLinear(v))).toBeCloseTo(v, 7);
+    }
+  });
+});
+
+describe("oklchToRgb のガマット外処理（clampChroma）", () => {
+  it("sRGB 域外の高彩度は色相を保ったまま域内へ寄せる", () => {
+    // L=0.6 / C=0.4（sRGB 外）の赤系。単純クランプなら色相が歪む
+    const rgb = oklchToRgb({ l: 0.6, c: 0.4, h: 29.23 });
+    for (const v of [rgb.r, rgb.g, rgb.b]) {
+      expect(v).toBeGreaterThanOrEqual(0);
+      expect(v).toBeLessThanOrEqual(255);
+    }
+    const back = rgbToOklch(rgb);
+    expect(back.c).toBeLessThan(0.4); // 彩度を落として域内化
+    expect(Math.abs(back.h - 29.23)).toBeLessThan(3); // 色相は保つ
+    expect(back.l).toBeCloseTo(0.6, 1);
+  });
+
+  it("既知のガマット外指定は決定的な hex になる", () => {
+    expect(toHex(oklchToRgb({ l: 0.6, c: 0.4, h: 29.23 }))).toBe(
+      toHex(oklchToRgb({ l: 0.6, c: 0.4, h: 29.23 })),
+    );
+    expect(toHex(oklchToRgb({ l: 0.5, c: 0.5, h: 150 }))).toMatch(
+      /^#[0-9a-f]{6}$/,
+    );
+  });
+
+  it("L=0 / L=1 は黒・白になる", () => {
+    expect(toHex(oklchToRgb({ l: 0, c: 0.2, h: 100 }))).toBe("#000000");
+    expect(toHex(oklchToRgb({ l: 1, c: 0.2, h: 100 }))).toBe("#ffffff");
+  });
+});
