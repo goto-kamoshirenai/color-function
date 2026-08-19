@@ -63,10 +63,24 @@ export type ColorStore = {
 // FG=先頭・BG=末尾・アクセント=末尾の規則にそのまま一致する並び。
 const DEFAULT_HEXES = ["#080808", "#009B4C", "#576FFF", "#E83015"];
 
-const uid = (): string => crypto.randomUUID();
+/** パレットの色数上限（URL ハッシュ・localStorage の肥大化を防ぐ）。 */
+export const MAX_PALETTE_COLORS = 24;
+
+/**
+ * 一意な id。crypto.randomUUID は非セキュアコンテキスト（http の LAN 等）や
+ * 古い環境で未定義になりうるため、その場合は乱数ベースにフォールバックする
+ * （id は永続化されないため衝突耐性は十分）。
+ */
+const uid = (): string => {
+  if (typeof crypto !== "undefined" && typeof crypto.randomUUID === "function")
+    return crypto.randomUUID();
+  return `c-${Date.now().toString(36)}-${Math.random().toString(36).slice(2, 10)}`;
+};
 
 function makeColors(hexes: string[]): Color[] {
-  return hexes.map((h) => ({ id: uid(), hex: h.toUpperCase() }));
+  return hexes
+    .slice(0, MAX_PALETTE_COLORS)
+    .map((h) => ({ id: uid(), hex: h.toUpperCase() }));
 }
 
 const draftHex = (h: number, s: number, v: number) =>
@@ -146,6 +160,14 @@ export const useColorStore = create<ColorStore>((set, get) => ({
         );
         break;
       case "add":
+        if (palette.length >= MAX_PALETTE_COLORS) {
+          get().showToast(
+            translate(getLocale(), "toast.limit", {
+              max: MAX_PALETTE_COLORS,
+            }),
+          );
+          return;
+        }
         next = [...palette, { id: uid(), hex: intent.hex.toUpperCase() }];
         break;
       case "remove":
@@ -159,7 +181,7 @@ export const useColorStore = create<ColorStore>((set, get) => ({
         break;
       }
       case "replaceAll":
-        next = makeColors(intent.hexes);
+        next = makeColors(intent.hexes); // makeColors が上限で切り詰める
         break;
     }
     set({
@@ -195,7 +217,9 @@ export const useColorStore = create<ColorStore>((set, get) => ({
       fgId: palette[0]?.id ?? null,
       bgId: palette[palette.length - 1]?.id ?? palette[0]?.id ?? null,
       accentId: palette[palette.length - 1]?.id ?? null,
-      unit: clampUnit(get().unit, palette.length),
+      // 復元はパレットの全置換なので、単位も色数に見合う既定へ再計算する
+      // （直前に色数不足で single へ下がっていた状態を引きずらない）。
+      unit: clampUnit("pair", palette.length),
     });
   },
 

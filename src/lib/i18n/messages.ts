@@ -38,6 +38,7 @@ const JA = {
   "toast.remove": "削除: {hex}",
   "toast.accent": "アクセントに設定: {hex}",
   "toast.clear": "すべての色を消去しました",
+  "toast.limit": "色は最大 {max} 色までです",
   "toast.copy": "コピー: {text}",
 
   // 全消去の確認
@@ -437,6 +438,7 @@ const EN: Record<MessageKey, string> = {
   "toast.remove": "Removed: {hex}",
   "toast.accent": "Accent set: {hex}",
   "toast.clear": "All colors cleared",
+  "toast.limit": "Up to {max} colors",
   "toast.copy": "Copied: {text}",
 
   "confirm.title": "Clear all colors?",
