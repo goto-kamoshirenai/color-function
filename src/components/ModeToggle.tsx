@@ -1,5 +1,6 @@
 "use client";
 
+import { useId } from "react";
 import { ToggleButtonGroup, ToggleButton } from "react-aria-components";
 import { useColorStore, type Unit, type View } from "@/store/useColorStore";
 import { useT } from "@/lib/i18n/locale";
@@ -8,7 +9,8 @@ import { useT } from "@/lib/i18n/locale";
 const segClass =
   "border-border-strong border-r border-t-2 border-t-transparent bg-transparent px-3.5 py-1.5 " +
   "text-control font-medium text-text-2 last:border-r-0 " +
-  "data-[selected]:border-t-accent data-[selected]:bg-(--text) data-[selected]:font-semibold data-[selected]:text-(--bg)";
+  "data-[selected]:border-t-accent data-[selected]:bg-(--text) data-[selected]:font-semibold data-[selected]:text-(--bg) " +
+  "data-[disabled]:cursor-not-allowed data-[disabled]:opacity-40";
 
 type SegOption<T extends string> = {
   key: T;
@@ -28,6 +30,9 @@ function Segmented<T extends string>({
   options: SegOption<T>[];
   onChange: (v: T) => void;
 }) {
+  const reasonId = useId();
+  const withReason = options.filter((o) => o.disabled && o.reason);
+
   return (
     <div className="flex items-center gap-[9px]">
       {/* ラベルは小画面では非表示（グループの aria-label は維持） */}
@@ -42,8 +47,6 @@ function Segmented<T extends string>({
         onSelectionChange={(keys) => {
           const next = [...keys][0] as T | undefined;
           if (!next) return;
-          // 無効な単位（色数不足）は選択させない。aria-disabled で操作は通すが握り潰す。
-          if (options.find((o) => o.key === next)?.disabled) return;
           onChange(next);
         }}
         className="border-border-strong rounded-control inline-flex overflow-hidden border"
@@ -52,17 +55,24 @@ function Segmented<T extends string>({
           <ToggleButton
             key={o.key}
             id={o.key}
-            aria-disabled={o.disabled || undefined}
-            className={
-              segClass + (o.disabled ? " cursor-not-allowed opacity-40" : "")
+            // 色数不足の単位は真に無効化する（フォーカス・選択自体を通さない）。
+            // 無効な要素に tooltip は届かないため、理由は sr-only テキストを
+            // aria-describedby で関連付けて伝える。
+            isDisabled={o.disabled}
+            aria-describedby={
+              o.disabled && o.reason ? `${reasonId}-${o.key}` : undefined
             }
+            className={segClass}
           >
-            {/* 無効時はラベルを span で包み、native title で理由を示す
-                （aria-disabled だが操作自体は通すので hover で title が出る）。 */}
-            <span title={o.disabled ? o.reason : undefined}>{o.label}</span>
+            {o.label}
           </ToggleButton>
         ))}
       </ToggleButtonGroup>
+      {withReason.map((o) => (
+        <span key={o.key} id={`${reasonId}-${o.key}`} className="sr-only">
+          {o.reason}
+        </span>
+      ))}
     </div>
   );
 }
