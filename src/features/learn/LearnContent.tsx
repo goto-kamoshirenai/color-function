@@ -1,23 +1,19 @@
 "use client";
 
 import { CardFrame } from "@/components/Card";
-import { BookLink, ResourceLink } from "@/components/ResourceLink";
+import { ResourceLink } from "@/components/ResourceLink";
+import { LibraryBridge } from "@/features/library/LibraryBridge";
 import { CARD_REGISTRY } from "@/features/cards/registry";
 import { HELP } from "@/features/cards/help";
-import {
-  REFERENCES,
-  ARTICLES,
-  TOOLS,
-  BOOKS,
-  bookLinks,
-} from "@/lib/references";
+import { REFERENCES, ARTICLES, TOOLS } from "@/lib/references";
 import { GLOSSARY } from "@/lib/glossary";
 import { useLocale, useT } from "@/lib/i18n/locale";
 
 /**
- * 座学・ベンチツール画面（/learn）。
- * 指標別の参考資料（カードの本マークと同データ）に加え、一般記事・書籍・
- * 外部ツールをまとめ、定量的な色判断に必要な背景知識へ1画面で届くようにする。
+ * 座学・ベンチツール画面（/learn）— 記事・リファレンスで学ぶ側。
+ * 指標別の参考資料（カードの本マークと同データ）に加え、一般記事・外部ツール・
+ * 用語集をまとめる。腰を据えて学ぶ書籍は図書館（/library）に分けており、
+ * 先頭の LibraryBridge から渡れる。
  */
 export function LearnContent() {
   const locale = useLocale();
@@ -31,7 +27,6 @@ export function LearnContent() {
   const totalLinks =
     topics.reduce((n, c) => n + REFERENCES[c.helpKey].length, 0) +
     ARTICLES.length +
-    BOOKS.reduce((n, b) => n + bookLinks(b).length, 0) +
     TOOLS.length +
     GLOSSARY.length;
 
@@ -70,6 +65,9 @@ export function LearnContent() {
       </div>
 
       <div className="flex flex-col gap-3.5">
+        {/* 書籍で学ぶ経路（/library）への導線 */}
+        <LibraryBridge />
+
         {/* 01 指標別リファレンス */}
         <CardFrame number="01" title={t("learn.byTopic")} helpKey="learn">
           <div className="grid grid-cols-1 gap-x-6 gap-y-5 sm:grid-cols-2">
@@ -111,29 +109,8 @@ export function LearnContent() {
           </ul>
         </CardFrame>
 
-        {/* 03 書籍 */}
-        <CardFrame number="03" title={t("learn.books")} helpKey="learn">
-          <ul className="grid grid-cols-1 gap-x-6 sm:grid-cols-2">
-            {BOOKS.map((b) => (
-              <li key={b.id}>
-                <BookLink
-                  title={b.title}
-                  meta={`${b.author} · ${b.publisher} · ${b.year}`}
-                  links={bookLinks(b).map((l) => ({
-                    label: t(`learn.book.${l.format}`),
-                    url: l.url,
-                  }))}
-                />
-              </li>
-            ))}
-          </ul>
-          <p className="text-text-3 text-meta mt-3 font-mono tracking-[0.04em]">
-            {t("learn.affiliateNote")}
-          </p>
-        </CardFrame>
-
-        {/* 04 ベンチツール */}
-        <CardFrame number="04" title={t("learn.tools")} helpKey="learn">
+        {/* 03 ベンチツール */}
+        <CardFrame number="03" title={t("learn.tools")} helpKey="learn">
           <ul className="grid grid-cols-1 gap-x-6 sm:grid-cols-2">
             {TOOLS.map((r) => (
               <li key={r.url}>
@@ -148,8 +125,8 @@ export function LearnContent() {
           </ul>
         </CardFrame>
 
-        {/* 05 用語集 */}
-        <CardFrame number="05" title={t("learn.glossary")} helpKey="learn">
+        {/* 04 用語集 */}
+        <CardFrame number="04" title={t("learn.glossary")} helpKey="learn">
           <dl className="grid grid-cols-1 gap-x-6 gap-y-4 sm:grid-cols-2">
             {GLOSSARY.map((g) => (
               <div key={g.id}>
