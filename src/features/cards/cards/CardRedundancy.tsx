@@ -5,6 +5,7 @@ import { parseHex, confusablePairs } from "@/core/color";
 import { CardFrame } from "@/components/Card";
 import { useColorStore } from "@/store/useColorStore";
 import { useT } from "@/lib/i18n/locale";
+import { BookNudge } from "../BookNudge";
 import type { CardProps } from "../types";
 
 /** 冗長性検出カード（ΔE00<10 の似すぎペアを列挙）。 */
@@ -67,6 +68,10 @@ export function CardRedundancy({ number }: CardProps) {
           ))}
         </ul>
       )}
+      <BookNudge
+        helpKey="redundancy"
+        when={palette.length >= 2 && pairs.length > 0}
+      />
     </CardFrame>
   );
 }

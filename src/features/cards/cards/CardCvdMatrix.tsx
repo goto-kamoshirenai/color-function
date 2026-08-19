@@ -4,6 +4,7 @@ import { parseHex, cvdConfusablePairs, type CvdType } from "@/core/color";
 import { CardFrame } from "@/components/Card";
 import { useColorStore } from "@/store/useColorStore";
 import { useT } from "@/lib/i18n/locale";
+import { BookNudge } from "../BookNudge";
 import type { MessageKey } from "@/lib/i18n/messages";
 import type { CardProps } from "../types";
 
@@ -19,6 +20,12 @@ export function CardCvdMatrix({ number }: CardProps) {
   const t = useT();
 
   const rgbs = palette.map((c) => parseHex(c.hex) ?? { r: 0, g: 0, b: 0 });
+  // 型ごとの混同ペア（描画と書籍導線の条件で同じ結果を使う）
+  const byType = TYPES.map((entry) => ({
+    ...entry,
+    pairs: cvdConfusablePairs(rgbs, entry.type, 10),
+  }));
+  const confusable = byType.some((entry) => entry.pairs.length > 0);
 
   return (
     <CardFrame
@@ -31,8 +38,7 @@ export function CardCvdMatrix({ number }: CardProps) {
         <p className="text-text-3 font-mono text-xs">{t("card.needMatrix")}</p>
       ) : (
         <div className="flex flex-col gap-2.5">
-          {TYPES.map(({ type, nameKey }) => {
-            const pairs = cvdConfusablePairs(rgbs, type, 10);
+          {byType.map(({ type, nameKey, pairs }) => {
             return (
               <div
                 key={type}
@@ -80,6 +86,7 @@ export function CardCvdMatrix({ number }: CardProps) {
           })}
         </div>
       )}
+      <BookNudge helpKey="cvdmatrix" when={palette.length >= 2 && confusable} />
     </CardFrame>
   );
 }

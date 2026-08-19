@@ -5,6 +5,7 @@ import { CardFrame } from "@/components/Card";
 import { useColorStore } from "@/store/useColorStore";
 import { useHarmonyRules } from "@/lib/useHarmonyRules";
 import { useLocale, useT } from "@/lib/i18n/locale";
+import { BookNudge } from "../BookNudge";
 import type { CardProps } from "../types";
 
 /** 調和スキーム判定カード（既知スキームへの合致と調和スコア）。 */
@@ -64,6 +65,7 @@ export function CardSchemeMatch({ number }: CardProps) {
           </p>
         </div>
       )}
+      <BookNudge helpKey="scheme" when={!!match} />
     </CardFrame>
   );
 }
