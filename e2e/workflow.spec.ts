@@ -1,9 +1,8 @@
 import { test, expect } from "@playwright/test";
-import AxeBuilder from "@axe-core/playwright";
 
 /**
  * 主要フロー（docs/12 §3）: 色を入れる → 検証 → 共有URL復元。
- * ＋ axe による a11y 検査（docs/02 §4「自身がアクセシブル」）。
+ * a11y（axe）は a11y.spec.ts、レイアウト崩れは layout.spec.ts が受け持つ。
  * スプラッシュは本ファイルでは抑止する（専用テストは splash.spec.ts）。
  */
 
@@ -138,58 +137,4 @@ test("全消去は確認ダイアログを経由する", async ({ page }) => {
   await expect(page.getByRole("alertdialog")).toBeVisible();
   await page.getByRole("button", { name: "消去する" }).click();
   await expect(page.getByText(/NO SWATCHES/)).toBeVisible();
-});
-
-test.describe("アクセシビリティ (axe)", () => {
-  /**
-   * 初回コーチマーク（FirstRunHint）はフェードイン／アウトする。opacity が 1 未満の
-   * 途中で解析すると背後との合成色になり、色コントラストを誤検出する。そのため
-   * 「出現しきるまで待つ」「モード切替で閉じたなら DOM から外れるまで待つ」の
-   * 両方を待ち切ってから axe を回す（モード切替はパレットバー内の操作なので閉じる）。
-   */
-  const SCENES = [
-    { label: "ペア×検証（既定）", setup: async () => {}, coachStays: true },
-    {
-      label: "単色×検証",
-      setup: (page: import("@playwright/test").Page) =>
-        page.getByRole("radio", { name: "単色" }).click(),
-      coachStays: false,
-    },
-    {
-      label: "設計ビュー",
-      setup: (page: import("@playwright/test").Page) =>
-        page.getByRole("radio", { name: "設計" }).click(),
-      coachStays: false,
-    },
-  ] as const;
-
-  for (const { label, setup, coachStays } of SCENES) {
-    test(`${label} で重大違反ゼロ`, async ({ page }) => {
-      await page.goto("/");
-      // ハイドレーション完了（アクセント注入）を待ってから解析する
-      await expect(page.getByRole("radio", { name: "検証" })).toBeVisible();
-
-      const coach = page
-        .getByRole("status")
-        .filter({ hasText: "ここから操作" });
-      await expect(coach).toBeVisible();
-      await expect
-        .poll(() => coach.evaluate((el) => getComputedStyle(el).opacity))
-        .toBe("1");
-
-      await setup(page);
-      await expect(coach).toHaveCount(coachStays ? 1 : 0);
-
-      // [data-specimen] はユーザー指定色をそのまま表示する標本領域
-      // （プレビュー・CVDサンプル・調和チップ）。そのコントラストは
-      // アプリが「測定して見せる対象」であり、UI の a11y 違反ではない。
-      const results = await new AxeBuilder({ page })
-        .exclude("[data-specimen]")
-        .analyze();
-      const serious = results.violations.filter(
-        (v) => v.impact === "serious" || v.impact === "critical",
-      );
-      expect(serious, JSON.stringify(serious, null, 2)).toEqual([]);
-    });
-  }
 });
