@@ -9,6 +9,7 @@ import { ConfirmDialog } from "@/components/ConfirmDialog";
 import { Toast } from "@/components/Toast";
 import { SplashScreen } from "@/components/SplashScreen";
 import { FirstRunHint } from "@/components/FirstRunHint";
+import { SkipLink } from "@/components/SkipLink";
 
 const archivo = Archivo({ variable: "--font-archivo", subsets: ["latin"] });
 const geistMono = Geist_Mono({
@@ -66,9 +67,17 @@ export default function RootLayout({
       <body className="bg-bg text-text flex h-dvh flex-col overflow-hidden text-[14px] leading-[1.45]">
         <StoreSync />
 
+        {/* ヘッダーのコントロール群を飛ばして本文へ（フォーカス時のみ可視） */}
+        <SkipLink />
+
         <AppHeader />
 
-        <main className="cff-scroll bg-bg min-h-0 min-w-0 flex-1 overflow-x-hidden overflow-y-auto">
+        {/* リンク先としてフォーカスを受けるため tabIndex=-1（キーボードの罠にはならない） */}
+        <main
+          id="main"
+          tabIndex={-1}
+          className="cff-scroll bg-bg min-h-0 min-w-0 flex-1 overflow-x-hidden overflow-y-auto outline-none"
+        >
           {children}
         </main>
 

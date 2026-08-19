@@ -17,6 +17,7 @@ const JA = {
   // ナビゲーション
   "nav.home": "ホーム",
   "nav.backHome": "ホームに戻る",
+  "nav.skipToMain": "メインコンテンツへスキップ",
 
   // 設定メニュー
   "settings.open": "設定",
@@ -371,6 +372,7 @@ const EN: Record<MessageKey, string> = {
 
   "nav.home": "Home",
   "nav.backHome": "Back to home",
+  "nav.skipToMain": "Skip to main content",
 
   "settings.open": "Settings",
   "settings.title": "Settings",
