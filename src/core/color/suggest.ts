@@ -1,4 +1,5 @@
-import { rgbToLab, rgbToOklch, oklchToRgb } from "./convert";
+import { normalizeHue, rgbToLab, rgbToOklch, oklchToRgb } from "./convert";
+import { ACHROMATIC_CHROMA } from "./stats";
 import { contrastRatio } from "./contrast";
 import { deltaE2000 } from "./difference";
 import { simulateCvd } from "./cvd";
@@ -92,7 +93,7 @@ export function suggestCvdSafe(
  * パレットの中央値的な明度・彩度を持つ色を提案する。
  */
 export function suggestGapFill(rgbs: RGB[]): RGB | null {
-  const chroma = rgbs.map(rgbToOklch).filter((o) => o.c >= 0.03);
+  const chroma = rgbs.map(rgbToOklch).filter((o) => o.c >= ACHROMATIC_CHROMA);
   if (chroma.length < 2) return null;
   const hues = chroma.map((o) => o.h).sort((a, b) => a - b);
 
@@ -105,7 +106,7 @@ export function suggestGapFill(rgbs: RGB[]): RGB | null {
       gapStart = hues[i];
     }
   }
-  const h = (gapStart + gapSize / 2) % 360;
+  const h = normalizeHue(gapStart + gapSize / 2);
   const med = (xs: number[]) =>
     xs.sort((a, b) => a - b)[Math.floor(xs.length / 2)];
   return oklchToRgb({
@@ -132,8 +133,8 @@ export function sortOrder(rgbs: RGB[], key: SortKey): number[] {
     return idx.sort((a, b) => os[b].l - os[a].l);
   }
   return idx.sort((a, b) => {
-    const ca = os[a].c >= 0.03;
-    const cb = os[b].c >= 0.03;
+    const ca = os[a].c >= ACHROMATIC_CHROMA;
+    const cb = os[b].c >= ACHROMATIC_CHROMA;
     if (ca !== cb) return ca ? -1 : 1; // 無彩色は末尾
     if (!ca) return os[b].l - os[a].l;
     return os[a].h - os[b].h;
@@ -165,7 +166,10 @@ export type SemanticRole =
 /**
  * セマンティックロール割当（ヒューリスティック）:
  * background=明度が最も端の色 / text=背景に最も高コントラスト /
- * primary=残りで最高彩度 / accent=その次 / neutral=最も低彩度。
+ * primary=残りで最高彩度 / accent=その次 /
+ * neutral=残り（background・text を除く）の中で最も低彩度。
+ * ※ neutral はパレット全体の最低彩度ではない（background/text が
+ *   低彩度でも役割を兼任させないため、残りの中から選ぶ）。
  */
 export function assignRoles(
   rgbs: RGB[],

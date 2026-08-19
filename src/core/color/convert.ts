@@ -27,6 +27,20 @@ export const normalizeRgb = ({ r, g, b }: RGB): RGB => ({
   b: channel(b),
 });
 
+// ---------- 角度・色相 ----------
+
+/** 色相角を 0–360 に正規化する（負・360超も可）。 */
+export function normalizeHue(deg: number): number {
+  if (!Number.isFinite(deg)) return 0;
+  return ((deg % 360) + 360) % 360;
+}
+
+/** 2つの色相角の最短差（0–180）。 */
+export function hueDiff(a: number, b: number): number {
+  const d = Math.abs(normalizeHue(a) - normalizeHue(b));
+  return d > 180 ? 360 - d : d;
+}
+
 // ---------- HEX <-> RGB ----------
 
 /** #rgb / #rrggbb（# 省略可）を 0–255 RGB に。不正は null（docs/07 §2）。 */
@@ -97,7 +111,7 @@ export function rgbToHsl(rgb: RGB): HSL {
 }
 
 export function hslToRgb({ h, s, l }: HSL): RGB {
-  h = ((h % 360) + 360) % 360;
+  h = normalizeHue(h);
   s /= 100;
   l /= 100;
   const c = (1 - Math.abs(2 * l - 1)) * s;
@@ -138,7 +152,7 @@ export function rgbToHsv(rgb: RGB): HSV {
 }
 
 export function hsvToRgb({ h, s, v }: HSV): RGB {
-  h = ((h % 360) + 360) % 360;
+  h = normalizeHue(h);
   s /= 100;
   v /= 100;
   const c = v * s;

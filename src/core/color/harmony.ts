@@ -1,4 +1,4 @@
-import { rgbToOklch, oklchToRgb } from "./convert";
+import { normalizeHue, rgbToOklch, oklchToRgb } from "./convert";
 import type { RGB } from "./types";
 
 /**
@@ -7,8 +7,7 @@ import type { RGB } from "./types";
  */
 export function rotateHueOklch(rgb: RGB, deltaDeg: number): RGB {
   const o = rgbToOklch(rgb);
-  const h = (((o.h + deltaDeg) % 360) + 360) % 360;
-  return oklchToRgb({ l: o.l, c: o.c, h });
+  return oklchToRgb({ l: o.l, c: o.c, h: normalizeHue(o.h + deltaDeg) });
 }
 
 /**

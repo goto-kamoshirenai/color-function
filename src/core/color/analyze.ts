@@ -1,8 +1,9 @@
-import { rgbToLab, rgbToOklch } from "./convert";
+import { hueDiff, normalizeHue, rgbToLab, rgbToOklch } from "./convert";
 import { contrastRatio } from "./contrast";
 import { deltaE2000 } from "./difference";
 import { simulateCvd } from "./cvd";
 import { warmCoolOf, type WarmCool } from "./perception";
+import { ACHROMATIC_CHROMA } from "./stats";
 import type { CvdType, RGB } from "./types";
 
 /**
@@ -121,6 +122,12 @@ export type SchemeMatch = {
 /**
  * 調和スキーム判定。パレットの有彩色の色相（OKLCH）を各ルールの
  * 色相オフセットパターンと突き合わせ、最も合致するルールとスコアを返す。
+ *
+ * 偏差は双方向で測る:
+ *  - 各パレット色 → 最寄りターゲットの平均偏差（パターンからの外れ）
+ *  - 各ターゲット → 最寄りパレット色の平均偏差（未使用ターゲットのペナルティ）
+ * 片方向（前者のみ）だと、全色が base 近傍に固まっていても complementary の
+ * 0° 側だけで偏差ゼロになり score 100 の偽陽性が出る。
  * スコア = 100 − 平均色相偏差（度）× 2（0 でクランプ）。
  */
 export function matchScheme(
@@ -129,25 +136,22 @@ export function matchScheme(
 ): SchemeMatch | null {
   const hues = rgbs
     .map((c) => rgbToOklch(c))
-    .filter((o) => o.c >= 0.03)
+    .filter((o) => o.c >= ACHROMATIC_CHROMA)
     .map((o) => o.h);
   if (hues.length < 2 || rules.length === 0) return null;
 
-  const circDiff = (a: number, b: number) => {
-    const d = Math.abs(a - b) % 360;
-    return d > 180 ? 360 - d : d;
-  };
+  const meanNearest = (from: number[], to: number[]) =>
+    from.reduce(
+      (sum, a) => sum + Math.min(...to.map((b) => hueDiff(a, b))),
+      0,
+    ) / from.length;
 
   let best: SchemeMatch | null = null;
   for (const rule of rules) {
     // 各色を基準色と仮定して最良の合致を探す
     for (const base of hues) {
-      const targets = rule.hueOffsets.map((o) => (base + o + 360) % 360);
-      const dev =
-        hues.reduce(
-          (sum, h) => sum + Math.min(...targets.map((t) => circDiff(h, t))),
-          0,
-        ) / hues.length;
+      const targets = rule.hueOffsets.map((o) => normalizeHue(base + o));
+      const dev = (meanNearest(hues, targets) + meanNearest(targets, hues)) / 2;
       const score = Math.max(0, Math.round(100 - dev * 2));
       if (!best || score > best.score) best = { ruleId: rule.id, score };
     }

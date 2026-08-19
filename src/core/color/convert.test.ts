@@ -15,6 +15,8 @@ import {
   rgbToHwb,
   rgbToXyz,
   rgbToOklab,
+  normalizeHue,
+  hueDiff,
 } from "./convert";
 import { relativeLuminance, contrastRatio } from "./contrast";
 
@@ -185,5 +187,22 @@ describe("範囲外入力の堅牢性（入口でクランプ）", () => {
         expect(v).toBeLessThanOrEqual(100);
       }
     }
+  });
+});
+
+describe("色相ヘルパ（normalizeHue / hueDiff）", () => {
+  it("normalizeHue: 負・360超を 0–360 に畳む", () => {
+    expect(normalizeHue(0)).toBe(0);
+    expect(normalizeHue(360)).toBe(0);
+    expect(normalizeHue(-30)).toBe(330);
+    expect(normalizeHue(760)).toBe(40);
+    expect(normalizeHue(NaN)).toBe(0);
+  });
+
+  it("hueDiff: 環状の最短差（0–180）", () => {
+    expect(hueDiff(10, 350)).toBe(20);
+    expect(hueDiff(0, 180)).toBe(180);
+    expect(hueDiff(-10, 10)).toBe(20);
+    expect(hueDiff(90, 90)).toBe(0);
   });
 });

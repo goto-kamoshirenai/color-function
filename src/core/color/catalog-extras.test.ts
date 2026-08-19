@@ -230,6 +230,34 @@ describe("パレット分析", () => {
     expect(m?.ruleId).toBe("complementary");
     expect(m!.score).toBeGreaterThan(80);
   });
+
+  it("matchScheme: 全色が基準色近傍なら complementary は高得点にならない", () => {
+    // 補色側（+180°）に色が無いのに score 100 を返す偽陽性を防ぐ
+    const base = hex("#2d6cdf");
+    const o = rgbToOklch(base);
+    const near = oklchToRgb({ l: o.l, c: o.c, h: (o.h + 4) % 360 });
+    const rules = [{ id: "complementary", hueOffsets: [0, 180] }];
+    const m = matchScheme([base, near], rules);
+    expect(m).not.toBeNull();
+    expect(m!.score).toBeLessThan(50);
+  });
+
+  it("matchScheme: 未使用ターゲットがあるほどスコアは下がる", () => {
+    const base = hex("#2d6cdf");
+    const o = rgbToOklch(base);
+    const comp = oklchToRgb({ l: o.l, c: o.c, h: (o.h + 180) % 360 });
+    const rules = [{ id: "triad", hueOffsets: [0, 120, 240] }];
+    const full = matchScheme(
+      [
+        base,
+        oklchToRgb({ l: o.l, c: o.c, h: (o.h + 120) % 360 }),
+        oklchToRgb({ l: o.l, c: o.c, h: (o.h + 240) % 360 }),
+      ],
+      rules,
+    );
+    const partial = matchScheme([base, comp], rules);
+    expect(full!.score).toBeGreaterThan(partial!.score);
+  });
 });
 
 describe("設計支援（ナッジ/CVDセーフ/補完/変換/並べ替え/ロール）", () => {
