@@ -36,7 +36,7 @@ const JA = {
   "toast.add": "追加: {hex}",
   "toast.update": "更新: {hex}",
   "toast.remove": "削除: {hex}",
-  "toast.accent": "アクセントに設定: {hex}",
+  "toast.accent": "UI アクセントに設定: {hex}",
   "toast.clear": "すべての色を消去しました",
   "toast.limit": "色は最大 {max} 色までです",
   "toast.copy": "コピー: {text}",
@@ -95,8 +95,9 @@ const JA = {
   "swatch.selectTitle":
     "クリックで選択 / ダブルクリックで編集 / ドラッグ・←→で並べ替え",
   "swatch.remove": "色 {n} を削除",
-  "swatch.accent": "色 {n} をアクセントに設定",
-  "swatch.accentTitle": "アクセントに設定（画面の差し色に反映）",
+  "swatch.accent": "色 {n} を UI アクセントに設定",
+  "swatch.accentTitle":
+    "UI アクセントに設定（この配色ツール自身の差し色になります。カードの accent ロールとは別）",
   "swatch.reorder": "色 {n} を並べ替え",
   "swatch.reorderTitle": "ドラッグで並べ替え / ←→ キーで移動",
   "swatch.moved": "色を {n}/{total} 番目に移動",
@@ -361,7 +362,7 @@ const JA = {
   "card.uipreview.sampleBody":
     "本文テキストのサンプルです。割当: 背景・テキスト・プライマリ・アクセント。",
   "card.uipreview.note":
-    "並び順で色を割当（1=背景・2=テキスト・3=primary・4=accent）",
+    "並び順で色を割当（1=背景・2=テキスト・3=primary・4=accent）。UI アクセント指定（塗りつぶしアイコン）とは別。",
   "card.svgpreview.title": "SVG プレビュー",
   "card.svgpreview.aria": "パレットを適用した抽象図形のプレビュー",
   "card.chartpreview.title": "データビズプレビュー",
@@ -447,7 +448,7 @@ const EN: Record<MessageKey, string> = {
   "toast.add": "Added: {hex}",
   "toast.update": "Updated: {hex}",
   "toast.remove": "Removed: {hex}",
-  "toast.accent": "Accent set: {hex}",
+  "toast.accent": "UI accent set: {hex}",
   "toast.clear": "All colors cleared",
   "toast.limit": "Up to {max} colors",
   "toast.copy": "Copied: {text}",
@@ -498,8 +499,9 @@ const EN: Record<MessageKey, string> = {
   "swatch.selectTitle":
     "Click to select / double-click to edit / drag or ←→ to reorder",
   "swatch.remove": "Remove color {n}",
-  "swatch.accent": "Set color {n} as accent",
-  "swatch.accentTitle": "Set as accent (used as the UI accent color)",
+  "swatch.accent": "Set color {n} as the UI accent",
+  "swatch.accentTitle":
+    "Set as the UI accent (tints this tool itself; distinct from the accent role in cards)",
   "swatch.reorder": "Reorder color {n}",
   "swatch.reorderTitle": "Drag to reorder / move with ←→ keys",
   "swatch.moved": "Moved color to position {n} of {total}",
@@ -739,7 +741,7 @@ const EN: Record<MessageKey, string> = {
   "card.uipreview.sampleBody":
     "Sample body text. Roles: background, text, primary, accent.",
   "card.uipreview.note":
-    "Colors follow palette order (1=background, 2=text, 3=primary, 4=accent)",
+    "Colors follow palette order (1=background, 2=text, 3=primary, 4=accent). Distinct from the UI accent you set with the fill icon.",
   "card.svgpreview.title": "SVG Preview",
   "card.svgpreview.aria": "Abstract shapes preview using the palette",
   "card.chartpreview.title": "Data Viz Preview",

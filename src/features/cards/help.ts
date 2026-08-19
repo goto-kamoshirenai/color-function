@@ -8,9 +8,9 @@ const HELP_JA = {
     title: "使い方",
     body:
       "スウォッチをクリックで選択します（ペアでは前景 FG に。背景 BG をクリックすると FG/BG が入れ替わります）。" +
-      "ダブルクリックで編集、色の下のカラーコードはクリックでコピー、右上の × で削除、右下の塗りつぶしアイコンでその色を画面の差し色（アクセント）に指定できます。" +
+      "ダブルクリックで編集、色の下のカラーコードはクリックでコピー、右上の × で削除、右下の塗りつぶしアイコンでその色をこの配色ツール自身の差し色（UI アクセント）に指定できます。UI アクセントは、カードが自動割当する accent ロールとは別のものです。" +
       "下段の「単位」はどの粒度で見るか（単色 / ペア / パレット）、「観点」は目的（検証 = 診断 / 設計 = 配色づくり）を切り替え、組み合わせで表示カードが決まります。",
-    guide: "FG=前景 / BG=背景 / 塗りつぶし=アクセント指定",
+    guide: "FG=前景 / BG=背景 / 塗りつぶし=UI アクセント指定",
   },
   value: {
     title: "色値",
@@ -241,9 +241,9 @@ const HELP_EN: Record<HelpKey, HelpEntry> = {
     title: "How to Use",
     body:
       "Click a swatch to select it (in Pair mode it becomes the foreground FG; clicking the background BG swaps FG/BG). " +
-      "Double-click to edit, click the color code below a swatch to copy it, remove with the × at the top right, and use the fill icon at the bottom right to make that color the UI accent. " +
+      "Double-click to edit, click the color code below a swatch to copy it, remove with the × at the top right, and use the fill icon at the bottom right to make that color the UI accent — the tint of this tool itself, which is distinct from the accent role the cards assign. " +
       "In the bottom row, Unit sets the granularity (Single / Pair / Palette) and View sets the goal (Verify = diagnose / Design = build a scheme); their combination decides which cards are shown.",
-    guide: "FG=foreground / BG=background / fill=set accent",
+    guide: "FG=foreground / BG=background / fill=set UI accent",
   },
   value: {
     title: "Color Value",
