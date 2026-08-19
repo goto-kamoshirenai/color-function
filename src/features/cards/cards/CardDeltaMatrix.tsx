@@ -1,5 +1,6 @@
 "use client";
 
+import { useMemo } from "react";
 import { parseHex, rgbToLab, deltaE2000 } from "@/core/color";
 import { CardFrame } from "@/components/Card";
 import { CardEmpty } from "./CardEmpty";
@@ -15,9 +16,13 @@ const CELL = "px-1 py-2 text-center font-mono text-meta";
 export function CardDeltaMatrix({ number }: CardProps) {
   const palette = useColorStore((s) => s.palette);
   const t = useT();
-  const labs = palette.map((c) =>
-    rgbToLab(parseHex(c.hex) ?? { r: 0, g: 0, b: 0 }),
-  );
+  // CIEDE2000 を n² 回回すため、パレットが変わったときだけ計算する
+  const deltas = useMemo(() => {
+    const labs = palette.map((c) =>
+      rgbToLab(parseHex(c.hex) ?? { r: 0, g: 0, b: 0 }),
+    );
+    return labs.map((a) => labs.map((b) => deltaE2000(a, b)));
+  }, [palette]);
 
   return (
     <CardFrame
@@ -35,7 +40,7 @@ export function CardDeltaMatrix({ number }: CardProps) {
           srText={t("card.dmatrix.sr")}
           diagonalClassName={`bg-surface-2 text-text-3 ${CELL}`}
           cell={(ri, ci) => {
-            const de = deltaE2000(labs[ri], labs[ci]);
+            const de = deltas[ri][ci];
             // CIEDE2000: 10未満は紛らわしい近さ（太字だけでなく文字でも伝える）
             const close = de < 10;
             return {
