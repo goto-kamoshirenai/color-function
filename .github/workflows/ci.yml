@@ -25,7 +25,40 @@ jobs:
         run: pnpm knip
       - name: Typecheck
         run: pnpm typecheck
-      - name: Test
-        run: pnpm test
+      - name: Test (with coverage thresholds)
+        run: pnpm test:cov
       - name: Build
         run: pnpm build
+
+  # フロー / a11y(axe) / レイアウト崩れ / キーボード操作 / オフライン起動。
+  # 本番ビルドを next start で配信して検査する（dev の HMR やオンデマンド
+  # コンパイルに影響されず、Service Worker も本番同等で動く）。
+  e2e:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+      - name: Install
+        run: pnpm install --frozen-lockfile
+      - name: Install Playwright (chromium)
+        run: pnpm exec playwright install --with-deps chromium
+      - name: Build (Playwright 用の出力先)
+        run: pnpm build
+        env:
+          PW_DIST: .next-pw
+      - name: E2E
+        run: pnpm e2e
+        env:
+          PW_START: "1"
+          PW_DIST: .next-pw
+      - name: Upload report
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: playwright-report
+          path: playwright-report
+          retention-days: 7
