@@ -10,6 +10,7 @@ import { Toast } from "@/components/Toast";
 import { SplashScreen } from "@/components/SplashScreen";
 import { FirstRunHint } from "@/components/FirstRunHint";
 import { SkipLink } from "@/components/SkipLink";
+import { SITE_URL } from "@/lib/site";
 
 const archivo = Archivo({ variable: "--font-archivo", subsets: ["latin"] });
 const geistMono = Geist_Mono({
@@ -22,11 +23,37 @@ const notoJp = Noto_Sans_JP({
   weight: ["400", "700", "900"],
 });
 
+const TITLE = "Color Follows Function";
+const DESCRIPTION =
+  "配色を感覚でなく数値で扱う、配色の検証・設計支援ツール。コントラスト比・色差・色覚シミュレーションなどで定量的に可視化する。";
+
 export const metadata: Metadata = {
-  title: "Color Follows Function",
-  description:
-    "配色を感覚でなく数値で扱う、配色の検証・設計支援ツール。コントラスト比・色差・色覚シミュレーションなどで定量的に可視化する。",
-  applicationName: "Color Follows Function",
+  // 相対 URL（OG 画像・canonical）を絶対 URL に解決する基準。
+  // 未設定だと localhost 基準になり SNS 共有で壊れる。
+  metadataBase: new URL(SITE_URL),
+  title: TITLE,
+  description: DESCRIPTION,
+  applicationName: TITLE,
+  alternates: {
+    canonical: "/",
+    // ja/en は同一 URL をクライアント側で切り替える（言語別 URL を持たない）。
+    // 言語別 hreflang の代わりに、言語中立であることを x-default で示す。
+    languages: { "x-default": "/" },
+  },
+  openGraph: {
+    type: "website",
+    siteName: TITLE,
+    title: TITLE,
+    description: DESCRIPTION,
+    url: "/",
+    locale: "ja_JP",
+    alternateLocale: ["en_US"],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: TITLE,
+    description: DESCRIPTION,
+  },
   // ホーム画面追加時の表示（マニフェストは app/manifest.ts）
   appleWebApp: { capable: true, title: "CFF", statusBarStyle: "default" },
 };

@@ -9,6 +9,11 @@ export default function manifest(): MetadataRoute.Manifest {
       "配色を感覚でなく数値で扱う、配色の検証・設計支援ツール。コントラスト比・色差・色覚シミュレーションなどで定量的に可視化する。",
     id: "/",
     start_url: "/",
+    // インストール後の対象範囲（未指定でも "/" と解釈されるが明示する）
+    scope: "/",
+    lang: "ja",
+    dir: "ltr",
+    categories: ["design", "productivity", "utilities"],
     display: "standalone",
     background_color: "#ededee",
     theme_color: "#16161a",
@@ -26,6 +31,27 @@ export default function manifest(): MetadataRoute.Manifest {
         sizes: "512x512",
         type: "image/png",
         purpose: "maskable",
+      },
+    ],
+    // 主要モードへの直行（インストール後のホーム画面ショートカット）
+    shortcuts: [
+      {
+        name: "検証（ペア）",
+        short_name: "検証",
+        description: "文字色と背景色のコントラストを検証する",
+        url: "/",
+      },
+      {
+        name: "学習コンテンツ",
+        short_name: "学習",
+        description: "指標別リファレンス・記事・用語集",
+        url: "/learn",
+      },
+      {
+        name: "図書館",
+        short_name: "図書館",
+        description: "配色を学ぶ書籍",
+        url: "/library",
       },
     ],
   };
