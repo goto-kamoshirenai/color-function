@@ -35,10 +35,14 @@ export function CardDeltaMatrix({ number }: CardProps) {
           diagonalClassName={`bg-surface-2 text-text-3 ${CELL}`}
           cell={(ri, ci) => {
             const de = deltaE2000(labs[ri], labs[ci]);
-            // CIEDE2000: 10未満は紛らわしい近さ
+            // CIEDE2000: 10未満は紛らわしい近さ（太字だけでなく文字でも伝える）
+            const close = de < 10;
             return {
               content: Math.round(de),
-              className: `bg-surface ${CELL} ${de < 10 ? "font-bold" : "text-text-3"}`,
+              srLabel: close
+                ? t("card.dmatrix.close")
+                : t("card.dmatrix.distinct"),
+              className: `bg-surface ${CELL} ${close ? "font-bold" : "text-text-3"}`,
             };
           }}
         />
