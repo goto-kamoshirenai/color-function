@@ -6,7 +6,13 @@
  *   件数を含む文言は "Confusable pairs: {n}" のようにラベル＋コロン＋数値の形に
  *   して、n=1 でも自然に読めるようにする（"{n} pair(s)" 等は使わない）。
  */
-export type Locale = "ja" | "en";
+export const LOCALES = ["ja", "en"] as const;
+export type Locale = (typeof LOCALES)[number];
+
+/** 任意の値が Locale かを判定する（アサーションを使わない）。 */
+export function isLocale(v: unknown): v is Locale {
+  return v === "ja" || v === "en";
+}
 
 const JA = {
   // 共通

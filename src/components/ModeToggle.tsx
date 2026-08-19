@@ -45,9 +45,9 @@ function Segmented<T extends string>({
         aria-label={label}
         selectedKeys={[value]}
         onSelectionChange={(keys) => {
-          const next = [...keys][0] as T | undefined;
-          if (!next) return;
-          onChange(next);
+          // react-aria の Key（string|number）を、渡した選択肢の key 集合で絞る
+          const next = options.find((o) => o.key === [...keys][0]);
+          if (next) onChange(next.key);
         }}
         className="border-border-strong rounded-control inline-flex overflow-hidden border"
       >

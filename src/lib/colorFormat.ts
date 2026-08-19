@@ -10,8 +10,11 @@ import {
 const STORAGE_KEY = "cff-color-format";
 const EVENT = "cff-color-format-change";
 
-function isColorFormat(v: string | null): v is ColorFormat {
-  return COLOR_FORMATS.includes(v as ColorFormat);
+/** 任意の値が ColorFormat かを判定する（アサーションを使わない）。 */
+export function isColorFormat(v: unknown): v is ColorFormat {
+  return (
+    typeof v === "string" && (COLOR_FORMATS as readonly string[]).includes(v)
+  );
 }
 
 function subscribe(callback: () => void) {

@@ -9,8 +9,12 @@ import {
   SelectValue,
 } from "react-aria-components";
 import { NavArrowDown } from "iconoir-react";
-import { COLOR_FORMATS, type ColorFormat } from "@/core/color/format";
-import { useColorFormat, setColorFormat } from "@/lib/colorFormat";
+import { COLOR_FORMATS } from "@/core/color/format";
+import {
+  useColorFormat,
+  setColorFormat,
+  isColorFormat,
+} from "@/lib/colorFormat";
 import { useT } from "@/lib/i18n/locale";
 
 /**
@@ -24,7 +28,10 @@ export function ColorFormatSelect() {
   return (
     <Select
       selectedKey={format}
-      onSelectionChange={(key) => setColorFormat(key as ColorFormat)}
+      onSelectionChange={(key) => {
+        // react-aria の Key（string|number）は型ガードで絞る
+        if (isColorFormat(key)) setColorFormat(key);
+      }}
       aria-label={t("format.label")}
     >
       <Button className="cff-control text-text-2 hover:text-text inline-flex h-9 items-center gap-1.5 px-3 font-mono text-[12px] tracking-[0.06em]">

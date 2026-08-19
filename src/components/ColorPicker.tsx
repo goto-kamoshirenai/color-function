@@ -21,7 +21,7 @@ import {
   type HSL,
 } from "@/core/color";
 import { useT } from "@/lib/i18n/locale";
-import { segCompactClass } from "./segmented";
+import { segCompactClass, pickKey } from "./segmented";
 
 /** スライダーの入力形式。ストアの正準は HSV（RGB/HSL は変換して反映）。 */
 const FORMATS = ["hsv", "rgb", "hsl"] as const;
@@ -169,7 +169,7 @@ export function ColorPicker() {
                 aria-label={t("picker.format")}
                 selectedKeys={[format]}
                 onSelectionChange={(keys) => {
-                  const next = [...keys][0] as Format | undefined;
+                  const next = pickKey(keys, FORMATS);
                   if (next) setFormat(next);
                 }}
                 className="border-border-strong rounded-control inline-flex shrink-0 overflow-hidden border"

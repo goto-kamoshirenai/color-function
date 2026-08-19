@@ -7,7 +7,13 @@ import { useSyncExternalStore } from "react";
  * ペイント前スクリプトが localStorage から確定する（docs/10 §1）。
  * 旧 ThemeToggle のロジックを設定メニューから使えるよう切り出したもの。
  */
-export type Theme = "light" | "dark";
+export const THEMES = ["light", "dark"] as const;
+export type Theme = (typeof THEMES)[number];
+
+/** 任意の値が Theme かを判定する（アサーションを使わない）。 */
+export function isTheme(v: unknown): v is Theme {
+  return v === "light" || v === "dark";
+}
 
 const THEME_EVENT = "cff-theme-change";
 
@@ -17,7 +23,8 @@ function subscribe(callback: () => void) {
 }
 
 function getSnapshot(): Theme {
-  return (document.documentElement.dataset.theme as Theme) || "light";
+  const v = document.documentElement.dataset.theme;
+  return isTheme(v) ? v : "light";
 }
 
 const getServerSnapshot = (): Theme => "light";

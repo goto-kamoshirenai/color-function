@@ -9,10 +9,11 @@ import { CardEmpty } from "./CardEmpty";
 import { useColorStore } from "@/store/useColorStore";
 import { useT } from "@/lib/i18n/locale";
 import { useCopy } from "../hooks";
-import { segCompactClass } from "@/components/segmented";
+import { segCompactClass, pickKey } from "@/components/segmented";
 import type { CardProps } from "../types";
 
-type TokenFormat = "css" | "tailwind" | "json";
+const TOKEN_FORMATS = ["css", "tailwind", "json"] as const;
+type TokenFormat = (typeof TOKEN_FORMATS)[number];
 
 /** ロール名（割当できた色はロール、それ以外は連番）。 */
 function tokenNames(hexes: string[]): string[] {
@@ -74,7 +75,7 @@ export function CardTokens({ number }: CardProps) {
             aria-label={t("card.tokens.format")}
             selectedKeys={[format]}
             onSelectionChange={(keys) => {
-              const next = [...keys][0] as TokenFormat | undefined;
+              const next = pickKey(keys, TOKEN_FORMATS);
               if (next) setFormat(next);
             }}
             className="border-border-strong rounded-control inline-flex shrink-0 overflow-hidden border"

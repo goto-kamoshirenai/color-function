@@ -10,9 +10,9 @@ import {
   ToggleButton,
 } from "react-aria-components";
 import { Settings } from "iconoir-react";
-import { useTheme, setTheme, type Theme } from "@/lib/theme";
+import { useTheme, setTheme, isTheme } from "@/lib/theme";
 import { useLocale, setLocale, useT } from "@/lib/i18n/locale";
-import { type Locale } from "@/lib/i18n/messages";
+import { isLocale } from "@/lib/i18n/messages";
 import { segCompactClass } from "./segmented";
 
 /**
@@ -57,8 +57,8 @@ export function SettingsMenu() {
                 aria-label={t("settings.theme")}
                 selectedKeys={[theme]}
                 onSelectionChange={(keys) => {
-                  const next = [...keys][0] as Theme | undefined;
-                  if (next) setTheme(next);
+                  const next = [...keys][0];
+                  if (isTheme(next)) setTheme(next);
                 }}
                 className="border-border-strong rounded-control inline-flex overflow-hidden border"
               >
@@ -81,8 +81,8 @@ export function SettingsMenu() {
                 aria-label={t("settings.language")}
                 selectedKeys={[locale]}
                 onSelectionChange={(keys) => {
-                  const next = [...keys][0] as Locale | undefined;
-                  if (next) setLocale(next);
+                  const next = [...keys][0];
+                  if (isLocale(next)) setLocale(next);
                 }}
                 className="border-border-strong rounded-control inline-flex overflow-hidden border"
               >

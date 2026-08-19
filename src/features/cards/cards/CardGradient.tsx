@@ -13,7 +13,7 @@ import { useColorStore } from "@/store/useColorStore";
 import { useOrderedPair } from "../hooks";
 import { useT } from "@/lib/i18n/locale";
 import { useFormatColor } from "@/lib/colorFormat";
-import { segCompactClass } from "@/components/segmented";
+import { segCompactClass, pickKey } from "@/components/segmented";
 import { ScaleChip } from "./ScaleChip";
 import type { CardProps } from "../types";
 
@@ -56,7 +56,7 @@ export function CardGradient({ number }: CardProps) {
             aria-label={t("card.gradient.space")}
             selectedKeys={[space]}
             onSelectionChange={(keys) => {
-              const next = [...keys][0] as GradientSpace | undefined;
+              const next = pickKey(keys, GRADIENT_SPACES);
               if (next) setSpace(next);
             }}
             className="border-border-strong rounded-control inline-flex shrink-0 overflow-hidden border"
