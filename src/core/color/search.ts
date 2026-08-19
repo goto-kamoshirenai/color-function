@@ -15,12 +15,23 @@ import type { RGB } from "./types";
 
 const clamp01 = (v: number) => Math.max(0, Math.min(1, v));
 
+/**
+ * 8bit へ量子化する。アプリが実際に使うのは HEX（整数チャンネル）なので、
+ * 条件判定も量子化後の色で行う。境界へ寄せた結果が hex 化した途端に条件を
+ * 割る（例: AA 4.5 のはずが 4.49 になる）のを防ぐ。
+ */
+const quantize = ({ r, g, b }: RGB): RGB => ({
+  r: Math.round(r),
+  g: Math.round(g),
+  b: Math.round(b),
+});
+
 /** 明度だけを差し替えた色を返す関数（色相・彩度は保つ）。 */
 function lightnessMover(base: RGB): { l0: number; at: (l: number) => RGB } {
   const o = rgbToOklch(base);
   return {
     l0: o.l,
-    at: (l: number) => oklchToRgb({ l: clamp01(l), c: o.c, h: o.h }),
+    at: (l: number) => quantize(oklchToRgb({ l: clamp01(l), c: o.c, h: o.h })),
   };
 }
 

@@ -1,7 +1,7 @@
 import { describe, it, expect } from "vitest";
 import { ensureReadableAccent } from "./accent";
 import { contrastRatio } from "./contrast";
-import { parseHex, rgbToOklch } from "./convert";
+import { parseHex, rgbToOklch, toHex } from "./convert";
 
 const hex = (h: string) => parseHex(h)!;
 
@@ -46,5 +46,25 @@ describe("ensureReadableAccent", () => {
     const fixed = ensureReadableAccent(accent, bg, 4.5);
     // 二分で境界に寄せるため、行き過ぎ（比が大幅に超過）しない
     expect(contrastRatio(fixed, bg)).toBeLessThan(4.5 + 0.3);
+  });
+});
+
+describe("補正結果は HEX 化しても条件を満たす", () => {
+  it("8bit 量子化後もコントラスト比が minRatio を下回らない", () => {
+    // 境界へ寄せた結果が hex 化で 4.49 に落ちると axe の色コントラスト検査に落ちる
+    for (const [a, bg] of [
+      ["#e4572e", "#ededee"],
+      ["#e9d8a6", "#ffffff"],
+      ["#1f2933", "#0c0c0d"],
+      ["#576fff", "#ededee"],
+      ["#009b4c", "#ffffff"],
+    ] as const) {
+      const fixed = ensureReadableAccent(hex(a), hex(bg), 4.5);
+      const quantized = parseHex(toHex(fixed))!;
+      expect(
+        contrastRatio(quantized, hex(bg)),
+        `${a} on ${bg}`,
+      ).toBeGreaterThanOrEqual(4.5);
+    }
   });
 });
