@@ -10,6 +10,7 @@ import { Toast } from "@/components/Toast";
 import { SplashScreen } from "@/components/SplashScreen";
 import { FirstRunHint } from "@/components/FirstRunHint";
 import { SkipLink } from "@/components/SkipLink";
+import { ServiceWorkerRegistrar } from "@/components/ServiceWorkerRegistrar";
 import { SITE_URL } from "@/lib/site";
 
 const archivo = Archivo({ variable: "--font-archivo", subsets: ["latin"] });
@@ -93,6 +94,7 @@ export default function RootLayout({
       </head>
       <body className="bg-bg text-text flex h-dvh flex-col overflow-hidden text-[14px] leading-[1.45]">
         <StoreSync />
+        <ServiceWorkerRegistrar />
 
         {/* ヘッダーのコントロール群を飛ばして本文へ（フォーカス時のみ可視） */}
         <SkipLink />
