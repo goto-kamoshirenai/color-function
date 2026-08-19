@@ -738,7 +738,10 @@
         "perception",
         "warmcool",
         "huedist",
-        "deltae"
+        "deltae",
+        "dmatrix",
+        "dbreak",
+        "redundancy"
       ],
       "pitch": {
         "ja": "「色は隣り合う色で別の色に見える」。相互作用としての色を実習で体得する古典。",
@@ -776,7 +779,9 @@
         "complement",
         "tone",
         "lsvar",
-        "warmcool"
+        "warmcool",
+        "hueshift",
+        "sort"
       ],
       "pitch": {
         "ja": "イメージ別の配色見本を大量に引ける実務のアイデア帳。手が止まったときの起点に。",
@@ -858,7 +863,8 @@
         "luminance",
         "roles",
         "semroles",
-        "uipreview"
+        "uipreview",
+        "darklight"
       ],
       "pitch": {
         "ja": "Web のための色覚とコントラスト設計。本ツールの検証指標に最も直結する1冊。",
@@ -916,6 +922,81 @@
       "links": {
         "print": "https://amzn.to/4bYxfi9",
         "kindle": "https://amzn.to/45ywpVO"
+      }
+    },
+    {
+      "id": "ihara-web-app-accessibility",
+      "title": "Webアプリケーションアクセシビリティ",
+      "author": "伊原力也 ほか",
+      "publisher": "技術評論社",
+      "year": 2023,
+      "shelf": "accessibility",
+      "accent": "#0E7C86",
+      "topics": [
+        "contrast",
+        "apca",
+        "cvd",
+        "cvdsafe",
+        "roles",
+        "semroles",
+        "uipreview",
+        "nudge"
+      ],
+      "pitch": {
+        "ja": "実装と運用の現場から、アクセシビリティを継続的に改善する道筋を示す1冊。",
+        "en": "How to improve accessibility continuously from inside a real product team."
+      },
+      "summary": {
+        "ja": [
+          "Web アプリケーションのアクセシビリティを、実装・設計・運用の三方向から扱う実務書。仕様の解説にとどまらず、既存プロダクトへどう入り込み、何から直し、どう仕組みとして続けるかに紙幅が割かれている。",
+          "色に関する指摘は本ツールの検証指標と重なる。コントラスト比や色覚の話を「単発の修正」ではなく「作り続けるための基準」として据える視点は、ナッジが出す修正案を運用に落とすときに効く。",
+          "『カラー・アクセシビリティ』が色そのものを深掘りするのに対し、こちらは色を含めた全体をチームでどう回すかを扱う。2冊を並べると、判断の根拠と進め方の両方がそろう。"
+        ],
+        "en": [
+          "A practical book covering web application accessibility from three directions at once: implementation, design, and ongoing operation. Rather than stopping at the specification, it spends its pages on how to get inside an existing product, what to fix first, and how to keep it going as a process.",
+          "Its points about color overlap with this tool's verification metrics. Treating contrast and color vision as standards you keep building against, rather than one-off corrections, is what makes the nudge suggestions land in real work.",
+          "Where Color Accessibility digs into color itself, this one covers how a team keeps the whole thing running, color included. Read together, they cover both the reasoning and the process."
+        ]
+      },
+      "links": {
+        "print": "https://amzn.to/4g74rGB",
+        "kindle": "https://amzn.to/4bTEx6S"
+      }
+    },
+    {
+      "id": "wilke-dataviz-fundamentals",
+      "title": "データビジュアライゼーションの基礎",
+      "author": "Claus O. Wilke",
+      "publisher": "オライリー・ジャパン",
+      "year": 2021,
+      "shelf": "practice",
+      "accent": "#B47A16",
+      "topics": [
+        "chartpreview",
+        "huedist",
+        "cvd",
+        "warmcool",
+        "lsdist",
+        "svgpreview"
+      ],
+      "pitch": {
+        "ja": "図表で色をどう使うか——連続量・カテゴリ・強調の色分けを原理から解く。",
+        "en": "How color works in charts — sequential, categorical and highlight palettes from first principles."
+      },
+      "summary": {
+        "ja": [
+          "グラフや図表の設計原理をまとめた1冊。そのなかで色の使い方に章がまるごと割かれ、連続量を表す色・カテゴリを区別する色・一部を強調する色という3つの目的別に、何を満たすべきかが整理されている。",
+          "本ツールのデータビズプレビューや色相分布・暖寒バランスは、まさにこの3用途の妥当性を測っている。「なぜカテゴリ色は明度をそろえ、連続色は明度を単調にするのか」の答えがここにある。",
+          "色覚多様性への配慮も、装飾ではなく図表が機能するための条件として扱われる。色覚識別性カードの判定を、チャート設計の言葉に翻訳してくれる。"
+        ],
+        "en": [
+          "A book on the design principles behind charts and figures, with an entire chapter devoted to color: what a palette must satisfy when it encodes a continuous quantity, when it separates categories, and when it highlights a subset.",
+          "This tool's data-viz preview, hue distribution and warm-cool balance measure exactly those three uses. Why categorical colors should share lightness while sequential ones must vary monotonically is answered here.",
+          "Color vision deficiency is treated as a condition for the chart working at all, not as decoration — which translates the CVD distinctness card directly into chart-design terms."
+        ]
+      },
+      "links": {
+        "print": "https://amzn.to/4qppZ4N"
       }
     }
   ]
