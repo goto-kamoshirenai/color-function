@@ -1,7 +1,9 @@
 "use client";
 
+import { useMemo } from "react";
 import { parseHex, contrastRatio } from "@/core/color";
 import { CardFrame } from "@/components/Card";
+import { CardEmpty } from "./CardEmpty";
 import { MatrixGrid } from "./MatrixGrid";
 import { useColorStore } from "@/store/useColorStore";
 import { useT } from "@/lib/i18n/locale";
@@ -14,7 +16,12 @@ const CELL = "px-1 py-2.5 text-center font-mono text-xs";
 export function CardContrastMatrix({ number }: CardProps) {
   const palette = useColorStore((s) => s.palette);
   const t = useT();
-  const rgbs = palette.map((c) => parseHex(c.hex) ?? { r: 0, g: 0, b: 0 });
+  // 総当たり（n²）はパレットが変わったときだけ計算する。
+  // ストアの他の更新（トースト・選択等）での再レンダーでは再計算しない。
+  const ratios = useMemo(() => {
+    const rgbs = palette.map((c) => parseHex(c.hex) ?? { r: 0, g: 0, b: 0 });
+    return rgbs.map((a) => rgbs.map((b) => contrastRatio(a, b)));
+  }, [palette]);
 
   return (
     <CardFrame
@@ -23,7 +30,7 @@ export function CardContrastMatrix({ number }: CardProps) {
       helpKey="cmatrix"
     >
       {palette.length < 2 ? (
-        <p className="text-text-3 font-mono text-xs">{t("card.needMatrix")}</p>
+        <CardEmpty messageKey="card.needMatrix" />
       ) : (
         <>
           <MatrixGrid
@@ -34,7 +41,7 @@ export function CardContrastMatrix({ number }: CardProps) {
             srText={t("card.cmatrix.sr")}
             diagonalClassName={`bg-surface-2 text-text-3 ${CELL}`}
             cell={(ri, ci) => {
-              const ratio = contrastRatio(rgbs[ri], rgbs[ci]);
+              const ratio = ratios[ri][ci];
               const pass = ratio >= 4.5;
               return {
                 content: ratio.toFixed(2),

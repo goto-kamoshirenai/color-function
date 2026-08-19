@@ -12,6 +12,7 @@ import {
   rgbToCmyk,
 } from "@/core/color";
 import { CardFrame } from "@/components/Card";
+import { CardEmpty } from "./CardEmpty";
 import { useSelectedColor, useCopy } from "../hooks";
 import { useT } from "@/lib/i18n/locale";
 import type { CardProps } from "../types";
@@ -87,7 +88,7 @@ export function CardSpaces({ number }: CardProps) {
       helpKey="spaces"
     >
       {!color ? (
-        <p className="text-text-3 font-mono text-xs">{t("card.empty")}</p>
+        <CardEmpty messageKey="card.empty" />
       ) : (
         <>
           <div className="bg-border border-border rounded-control grid grid-cols-1 gap-px overflow-hidden border sm:grid-cols-2">

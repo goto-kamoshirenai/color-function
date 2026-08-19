@@ -8,6 +8,11 @@ import { useT } from "@/lib/i18n/locale";
 
 const KEY = "cff-onboarded";
 const PALETTE_SELECTOR = '[data-coach-target="palette"]';
+const ADD_SELECTOR = '[data-coach-target="add"]';
+/** 吹き出しの矢の中心（パネル左端からの距離 px。left-6 + 矢の半分）。 */
+const ARROW_OFFSET = 30;
+/** 画面端に寄りすぎないための余白 px。 */
+const EDGE_MARGIN = 12;
 
 /** 初回判定（localStorage が真実の源。未設定でのみ表示。不可環境では出さない）。 */
 function isOnboarded(): boolean {
@@ -40,6 +45,9 @@ export function FirstRunHint() {
   const reducedMotion = useReducedMotion();
   const [show, setShow] = useState(false);
   const [barH, setBarH] = useState(0);
+  // 矢の先が ＋ ボタンを指すようにパネルの left を決める（押下先を明示する）
+  const [left, setLeft] = useState(22);
+  const panelRef = useRef<HTMLDivElement>(null);
   const dismissed = useRef(false);
 
   // 表示判定（クライアントのみ）。スプラッシュ後に出す。
@@ -71,7 +79,20 @@ export function FirstRunHint() {
     if (!show) return;
     const bar = document.querySelector<HTMLElement>(PALETTE_SELECTOR);
     if (!bar) return;
-    const update = () => setBarH(bar.offsetHeight);
+    const update = () => {
+      setBarH(bar.offsetHeight);
+      const add = document.querySelector<HTMLElement>(ADD_SELECTOR);
+      const panelW = panelRef.current?.offsetWidth ?? 280;
+      if (!add) return;
+      const center = add.getBoundingClientRect().left + add.offsetWidth / 2;
+      const max = window.innerWidth - panelW - EDGE_MARGIN;
+      setLeft(
+        Math.min(
+          Math.max(center - ARROW_OFFSET, EDGE_MARGIN),
+          Math.max(EDGE_MARGIN, max),
+        ),
+      );
+    };
     update();
     const ro = new ResizeObserver(update);
     ro.observe(bar);
@@ -99,10 +120,13 @@ export function FirstRunHint() {
           animate={{ opacity: 1, y: 0 }}
           exit={reducedMotion ? { opacity: 0 } : { opacity: 0, y: 8 }}
           transition={{ duration: 0.3, ease: [0.4, 0, 0.2, 1] }}
-          className="fixed left-[22px] z-30 max-w-[min(280px,calc(100vw-44px))]"
-          style={{ bottom: barH + 12 }}
+          className="fixed z-30 max-w-[min(280px,calc(100vw-44px))]"
+          style={{ bottom: barH + 12, left }}
         >
-          <div className="border-accent bg-surface rounded-panel shadow-overlay relative border px-4 py-3">
+          <div
+            ref={panelRef}
+            className="border-accent bg-surface rounded-panel shadow-overlay relative border px-4 py-3"
+          >
             <button
               type="button"
               onClick={dismiss}

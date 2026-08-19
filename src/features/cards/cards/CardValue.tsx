@@ -2,6 +2,7 @@
 
 import { parseHex, rgbToHsl, rgbToHsv } from "@/core/color";
 import { CardFrame } from "@/components/Card";
+import { CardEmpty } from "./CardEmpty";
 import { useSelectedColor, useCopy } from "../hooks";
 import { useT } from "@/lib/i18n/locale";
 import type { CardProps } from "../types";
@@ -49,7 +50,7 @@ export function CardValue({ number }: CardProps) {
       helpKey="value"
     >
       {!color ? (
-        <p className="text-text-3 font-mono text-xs">{t("card.empty")}</p>
+        <CardEmpty messageKey="card.empty" />
       ) : (
         <>
           {/* 小画面はスウォッチを上に積み、値セルは1列（値の折返し防止） */}

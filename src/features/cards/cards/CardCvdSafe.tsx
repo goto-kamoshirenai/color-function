@@ -9,6 +9,7 @@ import {
   type CvdType,
 } from "@/core/color";
 import { CardFrame } from "@/components/Card";
+import { CardEmpty } from "./CardEmpty";
 import { useColorStore } from "@/store/useColorStore";
 import { useT } from "@/lib/i18n/locale";
 import { useFormatColor } from "@/lib/colorFormat";
@@ -51,7 +52,7 @@ export function CardCvdSafe({ number }: CardProps) {
       helpKey="cvdsafe"
     >
       {palette.length < 2 ? (
-        <p className="text-text-3 font-mono text-xs">{t("card.needMatrix")}</p>
+        <CardEmpty messageKey="card.needMatrix" />
       ) : conflicts.length === 0 ? (
         <p className="text-text-2 flex items-center gap-2 font-mono text-xs">
           <Check

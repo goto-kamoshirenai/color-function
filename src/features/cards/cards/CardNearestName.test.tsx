@@ -25,9 +25,17 @@ describe("CardNearestName", () => {
     expect(screen.getByText(/ΔE/)).toBeInTheDocument();
   });
 
-  it("辞書が空なら読み込み中表示（fetchは発生させない）", () => {
+  it("辞書が空なら読み込めない旨を表示する", () => {
     __setColorNamesForTest([]);
     render(<CardNearestName number="01" />);
-    expect(screen.getByText(/読み込み中/)).toBeInTheDocument();
+    expect(screen.getByText(/色名辞書を読み込めません/)).toBeInTheDocument();
+  });
+
+  it("既定ではビルド同梱の辞書から名前が出る（fetch は発生しない）", () => {
+    __resetColorNamesForTest();
+    resetColorStore(["#FF0000"]);
+    act(() => useColorStore.getState().setUnit("single"));
+    render(<CardNearestName number="01" />);
+    expect(screen.getByText(/ΔE/)).toBeInTheDocument();
   });
 });

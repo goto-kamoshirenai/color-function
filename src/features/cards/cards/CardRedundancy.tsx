@@ -3,6 +3,7 @@
 import { Check } from "iconoir-react";
 import { parseHex, confusablePairs } from "@/core/color";
 import { CardFrame } from "@/components/Card";
+import { CardEmpty } from "./CardEmpty";
 import { useColorStore } from "@/store/useColorStore";
 import { useT } from "@/lib/i18n/locale";
 import { BookNudge } from "../BookNudge";
@@ -26,7 +27,7 @@ export function CardRedundancy({ number }: CardProps) {
       helpKey="redundancy"
     >
       {palette.length < 2 ? (
-        <p className="text-text-3 font-mono text-xs">{t("card.needMatrix")}</p>
+        <CardEmpty messageKey="card.needMatrix" />
       ) : pairs.length === 0 ? (
         <p className="text-text-2 flex items-center gap-2 font-mono text-xs">
           <Check

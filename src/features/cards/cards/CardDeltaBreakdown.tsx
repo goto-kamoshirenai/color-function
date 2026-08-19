@@ -11,6 +11,7 @@ import {
   deltaComponents,
 } from "@/core/color";
 import { CardFrame } from "@/components/Card";
+import { CardEmpty } from "./CardEmpty";
 import { usePairColors } from "../hooks";
 import { useT } from "@/lib/i18n/locale";
 import type { CardProps } from "../types";
@@ -55,7 +56,7 @@ export function CardDeltaBreakdown({ number }: CardProps) {
       helpKey="dbreak"
     >
       {!pair ? (
-        <p className="text-text-3 font-mono text-xs">{t("card.needPair")}</p>
+        <CardEmpty messageKey="card.needPair" />
       ) : (
         <div className="flex flex-col gap-3">
           <div className="bg-border border-border rounded-control grid grid-cols-2 gap-px overflow-hidden border sm:grid-cols-4">

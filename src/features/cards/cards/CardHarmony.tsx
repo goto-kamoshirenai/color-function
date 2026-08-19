@@ -2,6 +2,7 @@
 
 import { parseHex, toHex, generateScheme, contrastRatio } from "@/core/color";
 import { CardFrame } from "@/components/Card";
+import { CardEmpty } from "./CardEmpty";
 import { useColorStore } from "@/store/useColorStore";
 import { useSelectedColor } from "../hooks";
 import { useHarmonyRules } from "@/lib/useHarmonyRules";
@@ -42,11 +43,9 @@ export function CardHarmony({ number }: CardProps) {
       helpKey="harmony"
     >
       {!color ? (
-        <p className="text-text-3 font-mono text-xs">{t("card.empty")}</p>
+        <CardEmpty messageKey="card.empty" />
       ) : rules.length === 0 ? (
-        <p className="text-text-3 font-mono text-xs">
-          {t("card.harmony.loading")}
-        </p>
+        <CardEmpty messageKey="card.harmony.noRules" />
       ) : (
         <>
           <p className="text-text-3 text-meta mt-[5px] mb-[18px] font-mono tracking-[0.03em]">

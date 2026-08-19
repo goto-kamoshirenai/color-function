@@ -2,6 +2,7 @@
 
 import { parseHex, matchScheme } from "@/core/color";
 import { CardFrame } from "@/components/Card";
+import { CardEmpty } from "./CardEmpty";
 import { useColorStore } from "@/store/useColorStore";
 import { useHarmonyRules } from "@/lib/useHarmonyRules";
 import { useLocale, useT } from "@/lib/i18n/locale";
@@ -34,15 +35,11 @@ export function CardSchemeMatch({ number }: CardProps) {
       helpKey="scheme"
     >
       {palette.length < 2 ? (
-        <p className="text-text-3 font-mono text-xs">{t("card.needMatrix")}</p>
+        <CardEmpty messageKey="card.needMatrix" />
       ) : rules.length === 0 ? (
-        <p className="text-text-3 font-mono text-xs">
-          {t("card.harmony.loading")}
-        </p>
+        <CardEmpty messageKey="card.harmony.noRules" />
       ) : !match ? (
-        <p className="text-text-3 font-mono text-xs">
-          {t("card.scheme.tooFew")}
-        </p>
+        <CardEmpty messageKey="card.scheme.tooFew" />
       ) : (
         <div className="flex flex-1 flex-col">
           <div className="flex items-baseline justify-between gap-3">

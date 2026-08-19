@@ -1,13 +1,14 @@
 "use client";
 
-import { useEffect, useSyncExternalStore } from "react";
-import { loadColorNames } from "./assets";
+import { useSyncExternalStore } from "react";
+import { COLOR_NAMES } from "./assets";
 import type { ColorNameEntry } from "@/core/color";
 
-const EMPTY: ColorNameEntry[] = [];
-
-let names: ColorNameEntry[] = EMPTY;
-let status: "idle" | "loading" | "loaded" = "idle";
+/*
+ * 色名辞書はビルド同梱（assets.ts）なので、読み込み状態は持たない。
+ * 外部ストアの形は残す — テストからの差し替えで再レンダーさせるため。
+ */
+let names: ColorNameEntry[] = COLOR_NAMES;
 const listeners = new Set<() => void>();
 
 const notify = () => listeners.forEach((l) => l());
@@ -16,37 +17,20 @@ const subscribe = (cb: () => void) => {
   return () => listeners.delete(cb);
 };
 const getSnapshot = () => names;
-const getServerSnapshot = () => EMPTY;
 
-async function ensureLoaded() {
-  if (status !== "idle") return;
-  status = "loading";
-  try {
-    names = await loadColorNames();
-  } catch {
-    names = EMPTY;
-  }
-  status = "loaded";
-  notify();
-}
-
-/** 色名辞書を一度だけ読み込み、結果を購読（docs/06）。SSRでは空。 */
+/** 色名辞書（docs/06）。サーバー・クライアントで同一。 */
 export function useColorNames(): ColorNameEntry[] {
-  useEffect(() => {
-    void ensureLoaded();
-  }, []);
-  return useSyncExternalStore(subscribe, getSnapshot, getServerSnapshot);
+  return useSyncExternalStore(subscribe, getSnapshot, getSnapshot);
 }
 
-/** テスト用: 辞書を直接注入（読み込み済み扱い）。 */
+/** テスト用: 辞書を直接注入。 */
 export function __setColorNamesForTest(list: ColorNameEntry[]) {
   names = list;
-  status = "loaded";
   notify();
 }
 
-/** テスト用: 状態を初期化。 */
+/** テスト用: 同梱辞書へ戻す。 */
 export function __resetColorNamesForTest() {
-  names = EMPTY;
-  status = "idle";
+  names = COLOR_NAMES;
+  notify();
 }

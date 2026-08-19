@@ -8,6 +8,7 @@ import {
   type SortKey,
 } from "@/core/color";
 import { CardFrame } from "@/components/Card";
+import { CardEmpty } from "./CardEmpty";
 import { useColorStore } from "@/store/useColorStore";
 import { useT } from "@/lib/i18n/locale";
 import type { MessageKey } from "@/lib/i18n/messages";
@@ -62,7 +63,7 @@ export function CardSortNormalize({ number }: CardProps) {
       helpKey="sort"
     >
       {palette.length < 2 ? (
-        <p className="text-text-3 font-mono text-xs">{t("card.needMatrix")}</p>
+        <CardEmpty messageKey="card.needMatrix" />
       ) : (
         <div className="flex flex-1 flex-col gap-3">
           <p className="text-text-2 text-[13px] leading-[1.6]">

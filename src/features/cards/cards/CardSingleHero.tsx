@@ -9,6 +9,7 @@ import {
   nearestName,
 } from "@/core/color";
 import { CardFrame } from "@/components/Card";
+import { CardEmpty } from "./CardEmpty";
 import { useSelectedColor, useCopy } from "../hooks";
 import { useColorNames } from "@/lib/useColorNames";
 import { useT } from "@/lib/i18n/locale";
@@ -69,7 +70,7 @@ export function CardSingleHero({ number }: CardProps) {
       }
     >
       {!color ? (
-        <p className="text-text-3 font-mono text-xs">{t("card.empty")}</p>
+        <CardEmpty messageKey="card.empty" />
       ) : (
         <>
           <div className="flex flex-col gap-5 sm:flex-row sm:items-center">

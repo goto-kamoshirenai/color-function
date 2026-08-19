@@ -8,6 +8,7 @@ import {
   type BlendMode,
 } from "@/core/color";
 import { CardFrame } from "@/components/Card";
+import { CardEmpty } from "./CardEmpty";
 import { useColorStore } from "@/store/useColorStore";
 import { useOrderedPair } from "../hooks";
 import { useT } from "@/lib/i18n/locale";
@@ -46,7 +47,7 @@ export function CardMix({ number }: CardProps) {
       helpKey="mix"
     >
       {!pair || !fg || !bg ? (
-        <p className="text-text-3 font-mono text-xs">{t("card.needTwo")}</p>
+        <CardEmpty messageKey="card.needTwo" />
       ) : (
         <div className="grid grid-cols-2 gap-[7px] sm:grid-cols-4">
           {BLEND_MODES.map((mode) => {

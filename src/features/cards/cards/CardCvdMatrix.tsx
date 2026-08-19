@@ -2,6 +2,7 @@
 
 import { parseHex, cvdConfusablePairs, type CvdType } from "@/core/color";
 import { CardFrame } from "@/components/Card";
+import { CardEmpty } from "./CardEmpty";
 import { useColorStore } from "@/store/useColorStore";
 import { useT } from "@/lib/i18n/locale";
 import { BookNudge } from "../BookNudge";
@@ -35,7 +36,7 @@ export function CardCvdMatrix({ number }: CardProps) {
       helpKey="cvdmatrix"
     >
       {palette.length < 2 ? (
-        <p className="text-text-3 font-mono text-xs">{t("card.needMatrix")}</p>
+        <CardEmpty messageKey="card.needMatrix" />
       ) : (
         <div className="flex flex-col gap-2.5">
           {byType.map(({ type, nameKey, pairs }) => {

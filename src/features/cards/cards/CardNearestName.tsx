@@ -1,7 +1,9 @@
 "use client";
 
+import { useMemo } from "react";
 import { nearestName, parseHex } from "@/core/color";
 import { CardFrame } from "@/components/Card";
+import { CardEmpty } from "./CardEmpty";
 import { useSelectedColor } from "../hooks";
 import { useColorNames } from "@/lib/useColorNames";
 import { useT } from "@/lib/i18n/locale";
@@ -13,18 +15,21 @@ export function CardNearestName({ number }: CardProps) {
   const color = useSelectedColor();
   const names = useColorNames();
   const t = useT();
-  const result = color
-    ? nearestName(parseHex(color.hex) ?? { r: 0, g: 0, b: 0 }, names)
-    : null;
+  // 辞書全件の探索なので、対象色と辞書が変わったときだけ計算する
+  const result = useMemo(
+    () =>
+      color
+        ? nearestName(parseHex(color.hex) ?? { r: 0, g: 0, b: 0 }, names)
+        : null,
+    [color, names],
+  );
 
   return (
     <CardFrame number={number} title={t("card.name.title")} helpKey="name">
       {!color ? (
-        <p className="text-text-3 font-mono text-xs">{t("card.empty")}</p>
+        <CardEmpty messageKey="card.empty" />
       ) : !result ? (
-        <p className="text-text-3 font-mono text-xs">
-          {t("card.name.loading")}
-        </p>
+        <CardEmpty messageKey="card.name.noDict" />
       ) : (
         <div className="flex flex-1 flex-col">
           <div className="mb-1.5 text-[24px] font-extrabold tracking-[-0.02em] sm:text-[30px]">

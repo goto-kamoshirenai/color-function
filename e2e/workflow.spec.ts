@@ -123,8 +123,11 @@ test("ヘッダーから学習コンテンツ画面に遷移できる", async ({
   const first = page.getByRole("link", { name: /Contrast Checker/ }).first();
   await expect(first).toHaveAttribute("target", "_blank");
 
+  // ページ末尾にも戻り導線がある（長い用語集を読み終えた位置から戻れる）
+  await expect(page.getByRole("link", { name: "ホームに戻る" })).toHaveCount(2);
+
   // ツールへ戻れる（ヘッダーの学習トグルが「ホームに戻る」になる）
-  await page.getByRole("link", { name: "ホームに戻る" }).click();
+  await page.getByRole("link", { name: "ホームに戻る" }).first().click();
   await expect(
     page.getByRole("heading", { name: "WCAG コントラスト比" }),
   ).toBeVisible();

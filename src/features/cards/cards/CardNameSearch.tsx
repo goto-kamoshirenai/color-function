@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { Search } from "iconoir-react";
 import { CardFrame } from "@/components/Card";
+import { CardEmpty } from "./CardEmpty";
 import { useColorStore } from "@/store/useColorStore";
 import { useColorNames } from "@/lib/useColorNames";
 import { useT } from "@/lib/i18n/locale";
@@ -42,9 +43,7 @@ export function CardNameSearch({ number }: CardProps) {
       helpKey="namesearch"
     >
       {names.length === 0 ? (
-        <p className="text-text-3 font-mono text-xs">
-          {t("card.name.loading")}
-        </p>
+        <CardEmpty messageKey="card.name.noDict" />
       ) : (
         <div className="flex flex-col gap-3">
           <div className="flex items-center gap-[9px]">

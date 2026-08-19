@@ -1,5 +1,15 @@
 import { z } from "zod";
+import cssNamesJson from "../../public/data/names/css.json";
+import waNamesJson from "../../public/data/names/wa.json";
+import harmonyRulesJson from "../../public/data/harmony/rules.json";
 import type { ColorNameEntry } from "@/core/color";
+
+/*
+ * 静的データ資産（docs/06 §1）はビルドに同梱する。
+ * 合計 6KB 程度で、マニフェスト→各アセットの多段 fetch はウォーターフォールと
+ * 「読み込み中」状態を生むだけだった。public/data には SW のプリキャッシュ対象
+ * および外部から参照できる資産の正本として引き続き置き、ここから直接読む。
+ */
 
 /** 色名辞書アセットのスキーマ（docs/06 §2）。 */
 const ColorNameEntrySchema = z.object({
@@ -22,18 +32,6 @@ const NamesAssetSchema = z.object({
     locale: z.string(),
     colors: z.array(ColorNameEntrySchema),
   }),
-});
-
-const ManifestSchema = z.object({
-  schemaVersion: z.string(),
-  assets: z.record(
-    z.string(),
-    z.object({
-      path: z.string(),
-      version: z.string(),
-      lazy: z.boolean().optional(),
-    }),
-  ),
 });
 
 /** 調和ルールアセットのスキーマ（docs/06 §4.1）。 */
@@ -65,49 +63,16 @@ export function parseNamesAsset(json: unknown): ColorNameEntry[] {
 }
 
 /** 調和ルールアセット(JSON)を検証してルール配列に変換。不正なら例外。 */
-function parseHarmonyRulesAsset(json: unknown): HarmonyRule[] {
+export function parseHarmonyRulesAsset(json: unknown): HarmonyRule[] {
   return HarmonyRulesSchema.parse(json).data.rules;
 }
 
-/** 調和ルールを読み込み（docs/06 §1）。失敗時は空配列。 */
-export async function loadHarmonyRules(base = "/data"): Promise<HarmonyRule[]> {
-  try {
-    return parseHarmonyRulesAsset(
-      await fetchJson(`${base}/harmony/rules.json`),
-    );
-  } catch {
-    return [];
-  }
-}
+/** 色名辞書（ビルド同梱・検証済み）。 */
+export const COLOR_NAMES: ColorNameEntry[] = [
+  ...parseNamesAsset(cssNamesJson),
+  ...parseNamesAsset(waNamesJson),
+];
 
-async function fetchJson(url: string): Promise<unknown> {
-  const res = await fetch(url);
-  if (!res.ok) throw new Error(`fetch failed: ${url}`);
-  return res.json();
-}
-
-/**
- * マニフェスト経由で色名辞書を読み込み（docs/06 §1）。
- * 個別アセットの失敗は握りつぶし、読めたものだけ結合する。
- */
-export async function loadColorNames(
-  base = "/data",
-): Promise<ColorNameEntry[]> {
-  const manifest = ManifestSchema.parse(
-    await fetchJson(`${base}/manifest.json`),
-  );
-  const paths = Object.entries(manifest.assets)
-    .filter(([key]) => key.startsWith("names."))
-    .map(([, v]) => v.path);
-
-  const lists = await Promise.all(
-    paths.map(async (p) => {
-      try {
-        return parseNamesAsset(await fetchJson(`${base}/${p}`));
-      } catch {
-        return [] as ColorNameEntry[];
-      }
-    }),
-  );
-  return lists.flat();
-}
+/** 調和ルール（ビルド同梱・検証済み）。 */
+export const HARMONY_RULES: HarmonyRule[] =
+  parseHarmonyRulesAsset(harmonyRulesJson);

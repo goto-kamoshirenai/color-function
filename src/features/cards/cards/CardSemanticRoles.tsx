@@ -2,6 +2,7 @@
 
 import { parseHex, assignRoles } from "@/core/color";
 import { CardFrame } from "@/components/Card";
+import { CardEmpty } from "./CardEmpty";
 import { ColorCode } from "@/components/ColorCode";
 import { useColorStore } from "@/store/useColorStore";
 import { useT } from "@/lib/i18n/locale";
@@ -33,7 +34,7 @@ export function CardSemanticRoles({ number }: CardProps) {
       helpKey="semroles"
     >
       {palette.length < 2 ? (
-        <p className="text-text-3 font-mono text-xs">{t("card.needMatrix")}</p>
+        <CardEmpty messageKey="card.needMatrix" />
       ) : (
         <ul className="flex flex-col gap-2">
           {roles.map(({ role, index }) => (

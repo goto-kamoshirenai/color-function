@@ -2,6 +2,9 @@
  * UI 文言辞書（ja / en）。
  * - ja を正とし、en は MessageKey 網羅を型で強制する。
  * - プレースホルダは {name} 形式。translate() で置換する。
+ * - en の可算表現は「単複を切り替えない」方針。複数形エンジンを持たないため、
+ *   件数を含む文言は "Confusable pairs: {n}" のようにラベル＋コロン＋数値の形に
+ *   して、n=1 でも自然に読めるようにする（"{n} pair(s)" 等は使わない）。
  */
 export type Locale = "ja" | "en";
 
@@ -78,7 +81,6 @@ const JA = {
   // パレットバー
   "palette.empty": "NO SWATCHES — ＋ で追加",
   "palette.add": "色を追加",
-  "palette.count": "{count} 色",
   "palette.clear": "すべて消去",
   "palette.collapse": "パレットを折りたたむ",
 
@@ -98,8 +100,6 @@ const JA = {
   "swatch.accent": "色 {n} を UI アクセントに設定",
   "swatch.accentTitle":
     "UI アクセントに設定（この配色ツール自身の差し色になります。カードの accent ロールとは別）",
-  "swatch.reorder": "色 {n} を並べ替え",
-  "swatch.reorderTitle": "ドラッグで並べ替え / ←→ キーで移動",
   "swatch.moved": "色を {n}/{total} 番目に移動",
   "swatch.moveEdge": "これ以上移動できません（{n}/{total} 番目）",
 
@@ -146,7 +146,6 @@ const JA = {
   "learn.toLibraryLead":
     "腰を据えて学ぶなら書籍。指標との対応をつけて図書館に並べています。",
   "learn.toLibraryCta": "図書館へ",
-  "learn.jump": "セクションへ移動",
 
   // 図書館（/library）— 書籍で学ぶ
   "library.open": "図書館を開く",
@@ -161,7 +160,6 @@ const JA = {
   "library.back": "図書館に戻る",
   "library.toLearn": "記事・リファレンスで学ぶ",
   "library.toLearnCta": "学習コンテンツへ",
-  "library.noBooks": "この指標に対応する書籍はまだありません",
   "library.affiliateNote": "購入リンクは Amazon アソシエイトのリンクです（PR）",
   "library.shelf.theory": "理論",
   "library.shelf.practice": "実践",
@@ -215,7 +213,7 @@ const JA = {
 
   // カード: 最寄り色名
   "card.name.title": "最寄り色名",
-  "card.name.loading": "辞書を読み込み中…",
+  "card.name.noDict": "色名辞書を読み込めません",
   "card.name.deltaE": "色差 ΔE",
 
   // カード: WCAG コントラスト比
@@ -278,7 +276,7 @@ const JA = {
 
   // カード: 調和スキーム生成
   "card.harmony.title": "調和スキーム生成",
-  "card.harmony.loading": "調和ルールを読み込み中…",
+  "card.harmony.noRules": "調和ルールを読み込めません",
   "card.harmony.hint": "クリックでパレットに追加",
   "card.harmony.add": "{label}の色 {hex} をパレットに追加",
 
@@ -485,7 +483,6 @@ const EN: Record<MessageKey, string> = {
 
   "palette.empty": "NO SWATCHES — add with ＋",
   "palette.add": "Add color",
-  "palette.count": "{count} colors",
   "palette.clear": "Clear all",
   "palette.collapse": "Collapse palette",
 
@@ -502,8 +499,6 @@ const EN: Record<MessageKey, string> = {
   "swatch.accent": "Set color {n} as the UI accent",
   "swatch.accentTitle":
     "Set as the UI accent (tints this tool itself; distinct from the accent role in cards)",
-  "swatch.reorder": "Reorder color {n}",
-  "swatch.reorderTitle": "Drag to reorder / move with ←→ keys",
   "swatch.moved": "Moved color to position {n} of {total}",
   "swatch.moveEdge": "Cannot move further (position {n} of {total})",
 
@@ -546,7 +541,6 @@ const EN: Record<MessageKey, string> = {
   "learn.toLibraryLead":
     "For sustained study, books. The library maps each one to the metrics it covers.",
   "learn.toLibraryCta": "Go to the library",
-  "learn.jump": "Jump to section",
 
   "library.open": "Open the library",
   "library.title": "Library",
@@ -560,7 +554,6 @@ const EN: Record<MessageKey, string> = {
   "library.back": "Back to the library",
   "library.toLearn": "Learn from articles & references",
   "library.toLearnCta": "Go to learning content",
-  "library.noBooks": "No book covers this metric yet",
   "library.affiliateNote": "Purchase links are Amazon Associates links (PR)",
   "library.shelf.theory": "Theory",
   "library.shelf.practice": "Practice",
@@ -608,7 +601,7 @@ const EN: Record<MessageKey, string> = {
     "Hue wheel. Angle is hue, distance from center is chroma (saturation × value); markers show each palette color.",
 
   "card.name.title": "Nearest Color Name",
-  "card.name.loading": "Loading dictionary…",
+  "card.name.noDict": "Color name dictionary unavailable",
   "card.name.deltaE": "ΔE difference",
 
   "card.contrast.title": "WCAG Contrast Ratio",
@@ -656,14 +649,13 @@ const EN: Record<MessageKey, string> = {
   "card.dmatrix.distinct": "distinct",
 
   "card.huedist.title": "Hue Distribution",
-  "card.huedist.achromatic":
-    "{n} achromatic color(s) have no defined hue and are not plotted",
+  "card.huedist.achromatic": "Not plotted (no defined hue): {n}",
   "card.huedist.aria":
     "Hue distribution. Markers show each palette color on a 0°–360° hue strip.",
   "card.huedist.entropy": "Hue Entropy",
 
   "card.harmony.title": "Harmony Schemes",
-  "card.harmony.loading": "Loading harmony rules…",
+  "card.harmony.noRules": "Harmony rules unavailable",
   "card.harmony.hint": "click to add to the palette",
   "card.harmony.add": "Add {label} color {hex} to the palette",
 
@@ -709,7 +701,7 @@ const EN: Record<MessageKey, string> = {
   "card.overview.entropy": "Hue entropy",
   "card.overview.grayscale": "Grayscale",
   "card.overview.grayOk": "Good",
-  "card.overview.grayNg": "{n} merge",
+  "card.overview.grayNg": "Merged: {n}",
   "card.basescheme.title": "Base Scheme",
   "card.basescheme.hint": "Suggested harmony (click to add)",
   "card.basescheme.complement": "Complementary",
@@ -724,7 +716,7 @@ const EN: Record<MessageKey, string> = {
   "card.grayscale.collision": "{a} × {b} collapse (gray ΔE {de})",
   "card.cvdmatrix.title": "CVD Distinguishability",
   "card.cvdmatrix.ok": "Distinct",
-  "card.cvdmatrix.count": "{n} confusable pair(s)",
+  "card.cvdmatrix.count": "Confusable pairs: {n}",
   "card.redundancy.title": "Redundancy Detection",
   "card.redundancy.ok": "No overly similar colors (all pairs ΔE ≥ 10)",
   "card.roles.title": "Role Coverage",
@@ -801,7 +793,8 @@ const EN: Record<MessageKey, string> = {
   "splash.skip": "Skip intro animation",
 };
 
-const MESSAGES: Record<Locale, Record<MessageKey, string>> = {
+/** 文言辞書（未使用キー検出テストからも参照する）。 */
+export const MESSAGES: Record<Locale, Record<MessageKey, string>> = {
   ja: JA,
   en: EN,
 };

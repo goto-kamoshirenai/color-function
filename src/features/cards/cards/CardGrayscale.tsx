@@ -8,6 +8,7 @@ import {
   deltaE2000,
 } from "@/core/color";
 import { CardFrame } from "@/components/Card";
+import { CardEmpty } from "./CardEmpty";
 import { useColorStore } from "@/store/useColorStore";
 import { useT } from "@/lib/i18n/locale";
 import { BookNudge } from "../BookNudge";
@@ -38,7 +39,7 @@ export function CardGrayscale({ number }: CardProps) {
       helpKey="grayscale"
     >
       {palette.length === 0 ? (
-        <p className="text-text-3 font-mono text-xs">{t("card.empty")}</p>
+        <CardEmpty messageKey="card.empty" />
       ) : (
         <div className="flex flex-1 flex-col gap-3">
           {/* 上段カラー / 下段グレースケール */}
