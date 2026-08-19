@@ -26,9 +26,9 @@ export function CardPerception({ number }: CardProps) {
   const hsp = hspBrightness(rgb);
   const okL = rgbToOklch(rgb).l;
   const gray = toHex(grayscaleOf(rgb)).toUpperCase();
+  // 妥当域外（純黒・黒体軌跡から遠い色）では null が返る
   const cct = correlatedColorTemp(rgb);
   const kind = warmCoolOf(rgb);
-  const cctValid = cct > 1000 && cct < 25000;
 
   const meters: { label: string; value: number }[] = [
     { label: "HSP", value: hsp },
@@ -91,7 +91,7 @@ export function CardPerception({ number }: CardProps) {
                       ? "card.perception.cool"
                       : "card.perception.neutral",
                 )}
-                {cctValid ? ` · ${Math.round(cct)}K` : ""}
+                {cct === null ? " · —" : ` · ${Math.round(cct)}K`}
               </div>
             </div>
           </div>
