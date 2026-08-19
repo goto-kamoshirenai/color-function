@@ -28,9 +28,3 @@ export function __setColorNamesForTest(list: ColorNameEntry[]) {
   names = list;
   notify();
 }
-
-/** テスト用: 同梱辞書へ戻す。 */
-export function __resetColorNamesForTest() {
-  names = COLOR_NAMES;
-  notify();
-}

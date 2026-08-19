@@ -193,7 +193,6 @@ const JA = {
 
   // カード: 色値
   "card.value.title": "色値",
-  "card.value.copyHint": "CLICK TO COPY — 値をクリックでコピー",
 
   // カード: HSV
   "card.hsv.title": "HSV",
@@ -212,7 +211,6 @@ const JA = {
     "色相環。角度が色相、中心からの距離が鮮やかさ（彩度×明度）を表し、パレット各色の位置をマーカーで示す",
 
   // カード: 最寄り色名
-  "card.name.title": "最寄り色名",
   "card.name.noDict": "色名辞書を読み込めません",
   "card.name.deltaE": "色差 ΔE",
 
@@ -367,7 +365,6 @@ const JA = {
   "card.chartpreview.aria": "パレットを系列色に適用した棒グラフのプレビュー",
 
   // カード: 設計支援
-  "card.partner.title": "相手色提案",
   "card.lsvar.title": "明度・彩度バリエーション",
   "card.lsvar.add": "バリエーション {label} {hex} をパレットに追加",
   "card.gradient.title": "2色間グラデーション",
@@ -585,7 +582,6 @@ const EN: Record<MessageKey, string> = {
   "card.needTwo": "Needs at least 2 colors — add more with ＋ below",
 
   "card.value.title": "Color Value",
-  "card.value.copyHint": "CLICK TO COPY",
 
   "card.hsv.title": "HSV",
   "card.hsv.h": "H · Hue",
@@ -600,7 +596,6 @@ const EN: Record<MessageKey, string> = {
   "card.wheel.aria":
     "Hue wheel. Angle is hue, distance from center is chroma (saturation × value); markers show each palette color.",
 
-  "card.name.title": "Nearest Color Name",
   "card.name.noDict": "Color name dictionary unavailable",
   "card.name.deltaE": "ΔE difference",
 
@@ -740,7 +735,6 @@ const EN: Record<MessageKey, string> = {
   "card.chartpreview.aria":
     "Bar chart preview using the palette as series colors",
 
-  "card.partner.title": "Partner Colors",
   "card.lsvar.title": "S/V Variations",
   "card.lsvar.add": "Add variation {label} {hex} to the palette",
   "card.gradient.title": "Two-Color Gradient",

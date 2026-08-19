@@ -1,9 +1,7 @@
 import type { CardDef } from "./types";
-import { CardValue } from "./cards/CardValue";
 import { CardHsv } from "./cards/CardHsv";
 import { CardLuminance } from "./cards/CardLuminance";
 import { CardHueWheel } from "./cards/CardHueWheel";
-import { CardNearestName } from "./cards/CardNearestName";
 import { CardWcagContrast } from "./cards/CardWcagContrast";
 import { CardDeltaE } from "./cards/CardDeltaE";
 import { CardCvd } from "./cards/CardCvd";
@@ -29,7 +27,6 @@ import { CardSchemeMatch } from "./cards/CardSchemeMatch";
 import { CardUiPreview } from "./cards/CardUiPreview";
 import { CardSvgPreview } from "./cards/CardSvgPreview";
 import { CardChartPreview } from "./cards/CardChartPreview";
-import { CardPartner } from "./cards/CardPartner";
 import { CardLsVariations } from "./cards/CardLsVariations";
 import { CardGradient } from "./cards/CardGradient";
 import { CardMix } from "./cards/CardMix";
@@ -59,14 +56,6 @@ const ALL_DESIGN = [
 /** カードレジストリ（docs/10 §4 / docs/11 §4）。スプリント毎に追加していく。 */
 export const CARD_REGISTRY: CardDef[] = [
   {
-    key: "value",
-    title: "色値",
-    category: "space",
-    appliesTo: [...SINGLE_VERIFY],
-    helpKey: "value",
-    Component: CardValue,
-  },
-  {
     key: "hsv",
     title: "HSV",
     category: "space",
@@ -89,14 +78,6 @@ export const CARD_REGISTRY: CardDef[] = [
     appliesTo: [...SINGLE_VERIFY],
     helpKey: "wheel",
     Component: CardHueWheel,
-  },
-  {
-    key: "nearest-name",
-    title: "最寄り色名",
-    category: "naming",
-    appliesTo: [...SINGLE_VERIFY],
-    helpKey: "name",
-    Component: CardNearestName,
   },
   {
     key: "wcag-contrast",
@@ -306,14 +287,6 @@ export const CARD_REGISTRY: CardDef[] = [
   },
 
   // ---- 設計（単位共通） ----
-  {
-    key: "partner",
-    title: "相手色提案",
-    category: "harmony",
-    appliesTo: [...ALL_DESIGN],
-    helpKey: "partner",
-    Component: CardPartner,
-  },
   {
     key: "ls-variations",
     title: "明度・彩度バリエーション",

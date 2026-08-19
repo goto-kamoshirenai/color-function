@@ -3,6 +3,7 @@ import { readdirSync, readFileSync, statSync } from "node:fs";
 import { join } from "node:path";
 import { MESSAGES } from "./messages";
 import { HELP } from "@/features/cards/help";
+import { REFERENCES } from "@/lib/references";
 
 /**
  * 未使用の文言キー検出（docs/13 の「死にコードを残さない」の一環）。
@@ -43,7 +44,12 @@ describe("文言キーの参照", () => {
   });
 
   it("未使用の helpKey が無い（HELP → 参照の逆向き検査）", () => {
-    const unused = Object.keys(HELP.ja).filter((k) => !literals.has(k));
+    // ヘルプ文言はカード（helpKey）だけでなく、/learn の指標別リファレンス
+    // （references.json の topic）の見出しにも使う。どちらからも参照されない
+    // エントリだけを未使用とみなす。
+    const unused = Object.keys(HELP.ja).filter(
+      (k) => !literals.has(k) && !REFERENCES[k]?.length,
+    );
     expect(unused, `未使用ヘルプ: ${unused.join(", ")}`).toEqual([]);
   });
 });

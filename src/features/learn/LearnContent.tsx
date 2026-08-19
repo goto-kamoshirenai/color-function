@@ -5,7 +5,6 @@ import { ArrowLeft } from "iconoir-react";
 import { CardFrame } from "@/components/Card";
 import { ResourceLink } from "@/components/ResourceLink";
 import { LibraryBridge } from "@/features/library/LibraryBridge";
-import { CARD_REGISTRY } from "@/features/cards/registry";
 import { HELP } from "@/features/cards/help";
 import { REFERENCES, ARTICLES, TOOLS } from "@/lib/references";
 import { GLOSSARY } from "@/lib/glossary";
@@ -21,13 +20,17 @@ export function LearnContent() {
   const locale = useLocale();
   const t = useT();
 
-  // 指標別リファレンス（レジストリ順・資料があるものだけ。helpKey 重複は除外）
-  const topics = [
-    ...new Map(CARD_REGISTRY.map((c) => [c.helpKey, c])).values(),
-  ].filter((c) => REFERENCES[c.helpKey]?.length);
+  /*
+   * 指標別リファレンスは references.json の topic を正とする（カードの描画有無
+   * とは独立）。カードとして描かれなくなった指標（相手色提案・最寄り色名など）
+   * も学ぶ対象としては残るため、レジストリからは導かない。
+   */
+  const topics = Object.keys(REFERENCES).filter(
+    (key) => REFERENCES[key].length > 0 && HELP[locale][key],
+  );
 
   const totalLinks =
-    topics.reduce((n, c) => n + REFERENCES[c.helpKey].length, 0) +
+    topics.reduce((n, key) => n + REFERENCES[key].length, 0) +
     ARTICLES.length +
     TOOLS.length +
     GLOSSARY.length;
@@ -73,14 +76,14 @@ export function LearnContent() {
         {/* 01 指標別リファレンス */}
         <CardFrame number="01" title={t("learn.byTopic")} helpKey="learn">
           <div className="grid grid-cols-1 gap-x-6 gap-y-5 sm:grid-cols-2">
-            {topics.map((c) => (
+            {topics.map((key) => (
               // 図書館の書籍詳細（この本が扱う指標）から #topic-<helpKey> で戻れる
-              <section key={c.helpKey} id={`topic-${c.helpKey}`}>
+              <section key={key} id={`topic-${key}`}>
                 <h3 className="border-border text-text-2 mb-1.5 border-b pb-1.5 text-[13px] font-bold">
-                  {HELP[locale][c.helpKey]?.title ?? c.title}
+                  {HELP[locale][key].title}
                 </h3>
                 <ul>
-                  {REFERENCES[c.helpKey].map((r) => (
+                  {REFERENCES[key].map((r) => (
                     <li key={r.url}>
                       <ResourceLink
                         title={r.title}

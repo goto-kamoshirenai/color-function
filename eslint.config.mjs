@@ -12,6 +12,13 @@ const eslintConfig = defineConfig([
     "out/**",
     "build/**",
     "next-env.d.ts",
+    // Playwright 検証用のビルド出力（next.config の PW_DIST）
+    ".next-pw/**",
+    ".next-*/**",
+    // エージェント作業用の一時 worktree
+    ".claude/**",
+    // 生成物（カバレッジレポート）
+    "coverage/**",
   ]),
   {
     // コードベースを清潔に保つ追加ルール（コミット時に --fix で自動適用）

@@ -9,6 +9,7 @@ import {
   booksForTopic,
 } from "./references";
 import { CARD_REGISTRY } from "@/features/cards/registry";
+import { HELP } from "@/features/cards/help";
 
 describe("参考資料データ（references.json）", () => {
   // スキーマ検証自体は import 時の zod parse が担う（不正なら即失敗）
@@ -66,7 +67,9 @@ describe("書籍のメタデータ（図書館ページ用）", () => {
   });
 
   it("書籍の topics はすべて実在する指標（helpKey）", () => {
-    const keys = new Set(CARD_REGISTRY.map((c) => c.helpKey));
+    // 指標の集合はヘルプ文言（HELP）を正とする。カードとして描かれなくなった
+    // 指標（最寄り色名・相手色提案など）も /learn では学ぶ対象として残る。
+    const keys = new Set(Object.keys(HELP.ja));
     for (const b of BOOKS) {
       expect(b.topics.length, `${b.id} に topics がない`).toBeGreaterThan(0);
       for (const key of b.topics) {
