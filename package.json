@@ -17,6 +17,7 @@
     "format": "prettier --write .",
     "format:check": "prettier --check .",
     "links:check": "node scripts/check-links.mjs",
+    "screenshots": "node scripts/generate-screenshots.mjs",
     "prepare": "husky"
   },
   "dependencies": {

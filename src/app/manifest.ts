@@ -33,6 +33,24 @@ export default function manifest(): MetadataRoute.Manifest {
         purpose: "maskable",
       },
     ],
+    // インストール前のプレビュー（リッチなインストール UI 用）。
+    // 生成は scripts/generate-screenshots.mjs（pnpm screenshots）。
+    screenshots: [
+      {
+        src: "/screenshots/wide.png",
+        sizes: "1280x800",
+        type: "image/png",
+        form_factor: "wide",
+        label: "ペア×検証（コントラスト比の判定）",
+      },
+      {
+        src: "/screenshots/narrow.png",
+        sizes: "412x892",
+        type: "image/png",
+        form_factor: "narrow",
+        label: "スマホでの配色パレットと検証カード",
+      },
+    ],
     // 主要モードへの直行（インストール後のホーム画面ショートカット）
     shortcuts: [
       {
