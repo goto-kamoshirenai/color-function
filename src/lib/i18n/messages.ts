@@ -119,6 +119,8 @@ const JA = {
   "refs.title": "参考資料",
   "refs.note": "リンクは外部サイトを新しいタブで開きます",
   "refs.viewAll": "すべての資料を見る",
+  "refs.books": "この指標を学ぶ本",
+  "refs.viewLibrary": "図書館",
 
   // 学習コンテンツ（/learn）— 記事・リファレンスで学ぶ
   "learn.open": "学習コンテンツを開く",
@@ -479,6 +481,8 @@ const EN: Record<MessageKey, string> = {
   "refs.title": "References",
   "refs.note": "Links open external sites in a new tab",
   "refs.viewAll": "View all references",
+  "refs.books": "Books on this metric",
+  "refs.viewLibrary": "Library",
 
   "learn.open": "Open learning content",
   "learn.title": "Learning Content",
