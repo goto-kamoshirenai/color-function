@@ -38,8 +38,12 @@ export function CardList() {
   const cards = filterCards(CARD_REGISTRY, unit, view);
   const byKey = new Map(cards.map((c) => [c.key, c]));
   const rows = layoutFor(unit, view);
-  // 実際に配置（描画）されるカード数。registry には載るが当モードのレイアウトに
-  // 含めないカード（例: 単色ヒーローが吸収した色値/最寄り色名）は数えない。
+  /*
+   * 「CARDS — N」の N は、このモードのレイアウト枠数（= 配置されるカードの数）。
+   * 各カードが内部で「色がありません」等のプレースホルダを出していても数に含む
+   * — 表示中の指標の数ではなく「このモードが備える観点の数」を示す指標なので、
+   * 中身の有無で増減させない。
+   */
   const renderedCount = rows
     .flatMap((r) => r.keys)
     .filter((k) => byKey.has(k)).length;

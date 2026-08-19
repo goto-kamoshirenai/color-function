@@ -53,7 +53,20 @@ const ALL_DESIGN = [
   { unit: "palette", view: "design" },
 ] as const;
 
-/** カードレジストリ（docs/10 §4 / docs/11 §4）。スプリント毎に追加していく。 */
+/**
+ * カードレジストリ（docs/10 §4 / docs/11 §4）。スプリント毎に追加していく。
+ *
+ * 命名の対応関係（現状）:
+ *  - `key`     … kebab-case。LAYOUT（features/cards/layout.ts）の配置キー。
+ *  - `helpKey` … ヘルプ文言（help.ts）・参考資料（references.json の topic）の
+ *                キー。歴史的に短縮形が多く（`ls-distribution` → `lsdist` 等）、
+ *                key と一致しないものがある。i18n の接頭辞（`card.lsdist.*`）は
+ *                helpKey に揃える。
+ *  - 例外       … サマリーヒーローは単一指標ではないため既存の helpKey を借用する
+ *                （`single-hero` → `value`、`palette-overview` → `overview`）。
+ * 新規カードは key = helpKey = i18n 接頭辞を揃える（短縮しない）。既存の不一致は
+ * 文言・資料データの移行を伴うため、触るときにまとめて寄せる。
+ */
 export const CARD_REGISTRY: CardDef[] = [
   {
     key: "hsv",
