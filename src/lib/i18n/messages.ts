@@ -213,7 +213,7 @@ const JA = {
 
   // カード: 最寄り色名
   "card.name.title": "最寄り色名",
-  "card.name.loading": "辞書を読み込み中…",
+  "card.name.noDict": "色名辞書を読み込めません",
   "card.name.deltaE": "色差 ΔE",
 
   // カード: WCAG コントラスト比
@@ -276,7 +276,7 @@ const JA = {
 
   // カード: 調和スキーム生成
   "card.harmony.title": "調和スキーム生成",
-  "card.harmony.loading": "調和ルールを読み込み中…",
+  "card.harmony.noRules": "調和ルールを読み込めません",
   "card.harmony.hint": "クリックでパレットに追加",
   "card.harmony.add": "{label}の色 {hex} をパレットに追加",
 
@@ -601,7 +601,7 @@ const EN: Record<MessageKey, string> = {
     "Hue wheel. Angle is hue, distance from center is chroma (saturation × value); markers show each palette color.",
 
   "card.name.title": "Nearest Color Name",
-  "card.name.loading": "Loading dictionary…",
+  "card.name.noDict": "Color name dictionary unavailable",
   "card.name.deltaE": "ΔE difference",
 
   "card.contrast.title": "WCAG Contrast Ratio",
@@ -655,7 +655,7 @@ const EN: Record<MessageKey, string> = {
   "card.huedist.entropy": "Hue Entropy",
 
   "card.harmony.title": "Harmony Schemes",
-  "card.harmony.loading": "Loading harmony rules…",
+  "card.harmony.noRules": "Harmony rules unavailable",
   "card.harmony.hint": "click to add to the palette",
   "card.harmony.add": "Add {label} color {hex} to the palette",
 

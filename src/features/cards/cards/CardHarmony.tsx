@@ -45,7 +45,7 @@ export function CardHarmony({ number }: CardProps) {
       {!color ? (
         <CardEmpty messageKey="card.empty" />
       ) : rules.length === 0 ? (
-        <CardEmpty messageKey="card.harmony.loading" />
+        <CardEmpty messageKey="card.harmony.noRules" />
       ) : (
         <>
           <p className="text-text-3 text-meta mt-[5px] mb-[18px] font-mono tracking-[0.03em]">

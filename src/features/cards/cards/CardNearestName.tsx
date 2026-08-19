@@ -29,7 +29,7 @@ export function CardNearestName({ number }: CardProps) {
       {!color ? (
         <CardEmpty messageKey="card.empty" />
       ) : !result ? (
-        <CardEmpty messageKey="card.name.loading" />
+        <CardEmpty messageKey="card.name.noDict" />
       ) : (
         <div className="flex flex-1 flex-col">
           <div className="mb-1.5 text-[24px] font-extrabold tracking-[-0.02em] sm:text-[30px]">

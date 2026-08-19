@@ -37,7 +37,7 @@ export function CardSchemeMatch({ number }: CardProps) {
       {palette.length < 2 ? (
         <CardEmpty messageKey="card.needMatrix" />
       ) : rules.length === 0 ? (
-        <CardEmpty messageKey="card.harmony.loading" />
+        <CardEmpty messageKey="card.harmony.noRules" />
       ) : !match ? (
         <CardEmpty messageKey="card.scheme.tooFew" />
       ) : (

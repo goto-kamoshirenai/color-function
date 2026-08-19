@@ -43,7 +43,7 @@ export function CardNameSearch({ number }: CardProps) {
       helpKey="namesearch"
     >
       {names.length === 0 ? (
-        <CardEmpty messageKey="card.name.loading" />
+        <CardEmpty messageKey="card.name.noDict" />
       ) : (
         <div className="flex flex-col gap-3">
           <div className="flex items-center gap-[9px]">

@@ -1,5 +1,10 @@
 import { describe, it, expect } from "vitest";
-import { parseNamesAsset } from "./assets";
+import {
+  parseNamesAsset,
+  parseHarmonyRulesAsset,
+  COLOR_NAMES,
+  HARMONY_RULES,
+} from "./assets";
 
 const valid = {
   schemaVersion: "1.0.0",
@@ -33,5 +38,33 @@ describe("parseNamesAsset", () => {
 
   it("kind 不一致は弾く", () => {
     expect(() => parseNamesAsset({ ...valid, kind: "standards" })).toThrow();
+  });
+});
+
+describe("ビルド同梱の静的データ", () => {
+  it("色名辞書は検証済みで空でない（fetch を伴わない）", () => {
+    expect(COLOR_NAMES.length).toBeGreaterThan(0);
+    for (const c of COLOR_NAMES) {
+      expect(c.hex).toMatch(/^#[0-9A-Fa-f]{6}$/);
+      expect(c.name.length).toBeGreaterThan(0);
+    }
+  });
+
+  it("調和ルールは検証済みで空でない", () => {
+    expect(HARMONY_RULES.length).toBeGreaterThan(0);
+    for (const r of HARMONY_RULES) {
+      expect(r.hueOffsets.length).toBeGreaterThan(0);
+    }
+  });
+
+  it("調和ルールの kind 不一致は弾く", () => {
+    expect(() =>
+      parseHarmonyRulesAsset({
+        schemaVersion: "1.0.0",
+        version: "1.0.0",
+        kind: "names",
+        data: { rules: [] },
+      }),
+    ).toThrow();
   });
 });

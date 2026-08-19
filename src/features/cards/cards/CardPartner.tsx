@@ -58,7 +58,7 @@ export function CardPartner({ number }: CardProps) {
       {!color ? (
         <CardEmpty messageKey="card.empty" />
       ) : rules.length === 0 ? (
-        <CardEmpty messageKey="card.harmony.loading" />
+        <CardEmpty messageKey="card.harmony.noRules" />
       ) : (
         <div className="grid grid-cols-3 gap-[7px] sm:grid-cols-6">
           {partners.map((p) => (

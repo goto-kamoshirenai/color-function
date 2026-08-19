@@ -1,12 +1,13 @@
 "use client";
 
-import { useEffect, useSyncExternalStore } from "react";
-import { loadHarmonyRules, type HarmonyRule } from "./assets";
+import { useSyncExternalStore } from "react";
+import { HARMONY_RULES, type HarmonyRule } from "./assets";
 
-const EMPTY: HarmonyRule[] = [];
-
-let rules: HarmonyRule[] = EMPTY;
-let status: "idle" | "loading" | "loaded" = "idle";
+/*
+ * 調和ルールはビルド同梱（assets.ts）なので、読み込み状態は持たない。
+ * 外部ストアの形は残す — テストからの差し替えで再レンダーさせるため。
+ */
+let rules: HarmonyRule[] = HARMONY_RULES;
 const listeners = new Set<() => void>();
 
 const notify = () => listeners.forEach((l) => l());
@@ -15,27 +16,14 @@ const subscribe = (cb: () => void) => {
   return () => listeners.delete(cb);
 };
 const getSnapshot = () => rules;
-const getServerSnapshot = () => EMPTY;
 
-async function ensureLoaded() {
-  if (status !== "idle") return;
-  status = "loading";
-  rules = await loadHarmonyRules();
-  status = "loaded";
-  notify();
-}
-
-/** 調和ルールを一度だけ読み込み、結果を購読（docs/06 §4.1）。 */
+/** 調和ルール（docs/06 §4.1）。サーバー・クライアントで同一。 */
 export function useHarmonyRules(): HarmonyRule[] {
-  useEffect(() => {
-    void ensureLoaded();
-  }, []);
-  return useSyncExternalStore(subscribe, getSnapshot, getServerSnapshot);
+  return useSyncExternalStore(subscribe, getSnapshot, getSnapshot);
 }
 
 /** テスト用: ルールを直接注入。 */
 export function __setHarmonyRulesForTest(list: HarmonyRule[]) {
   rules = list;
-  status = "loaded";
   notify();
 }
