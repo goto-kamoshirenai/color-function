@@ -1,6 +1,17 @@
 /**
  * URL ハッシュによる配色の共有・復元（DBレス, docs/02 §2.3 / docs/10 §3）。
  * 形式: `#p=1F2933,2D6CDF,...`（# 抜き・カンマ連結・大文字HEX）。
+ *
+ * 対象は「色（HEX 列）と並び順」だけ。以下は意図的に含めない:
+ *  - 表示状態（unit / view / selectedId）… 開いた側の見たい観点を尊重する
+ *  - 役割指定（fgId / bgId / accentId）… 並び順から決定的に再構成できる
+ *    （先頭=FG / 末尾=BG・アクセント。docs/05 の reconcile 規則）
+ * これらを含めると共有 URL が長くなり、後方互換の維持コストも増える。
+ * 復元時は reconcile と clampUnit が色数に見合う既定へ整える。
+ *
+ * 複数タブの同期（storage イベント購読）は行わない。後から保存したタブの値が
+ * 勝つ（last-write-wins）。編集中のタブへ他タブの値を割り込ませると、
+ * 手元の編集が黙って消えるほうが害が大きいため。
  */
 
 export function encodePalette(hexes: string[]): string {
