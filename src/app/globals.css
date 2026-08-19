@@ -127,9 +127,13 @@ body {
   font-family: var(--font-sans), system-ui, sans-serif;
 }
 
+/*
+ * 選択範囲。--accent は --bg に対して AA(4.5:1) を満たすよう補正されるため、
+ * 文字色を --bg に連動させると明るいアクセントでも可読性が保たれる（白固定は不可）。
+ */
 ::selection {
   background: var(--accent);
-  color: #fff;
+  color: var(--bg);
 }
 
 button:focus-visible,
