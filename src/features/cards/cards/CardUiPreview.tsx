@@ -38,7 +38,9 @@ export function CardUiPreview({ number }: CardProps) {
               className="flex items-center justify-between px-4 py-2.5"
               style={{ borderBottom: `1px solid ${text}22` }}
             >
-              <span className="text-[13px] font-bold">Sample App</span>
+              <span className="text-[13px] font-bold">
+                {t("card.uipreview.sampleApp")}
+              </span>
               <span
                 className="size-2.5 rounded-full"
                 style={{ backgroundColor: accent }}
@@ -46,10 +48,11 @@ export function CardUiPreview({ number }: CardProps) {
               />
             </div>
             <div className="px-4 py-3.5">
-              <div className="mb-1 text-[15px] font-bold">見出しテキスト</div>
+              <div className="mb-1 text-[15px] font-bold">
+                {t("card.uipreview.sampleHeading")}
+              </div>
               <p className="mb-3 text-[12px] leading-[1.6] opacity-90">
-                本文テキストのサンプルです。割当:
-                背景・テキスト・プライマリ・アクセント。
+                {t("card.uipreview.sampleBody")}
               </p>
               <div className="flex items-center gap-2">
                 <span

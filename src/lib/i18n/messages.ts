@@ -349,6 +349,10 @@ const JA = {
   "card.scheme.tooFew": "有彩色が2色以上必要です",
   "card.scheme.note": "最も近い既知スキームとの合致度",
   "card.uipreview.title": "UI モックプレビュー",
+  "card.uipreview.sampleApp": "サンプルアプリ",
+  "card.uipreview.sampleHeading": "見出しテキスト",
+  "card.uipreview.sampleBody":
+    "本文テキストのサンプルです。割当: 背景・テキスト・プライマリ・アクセント。",
   "card.uipreview.note":
     "並び順で色を割当（1=背景・2=テキスト・3=primary・4=accent）",
   "card.svgpreview.title": "SVG プレビュー",
@@ -718,6 +722,10 @@ const EN: Record<MessageKey, string> = {
   "card.scheme.tooFew": "Needs at least 2 chromatic colors",
   "card.scheme.note": "Match score against the closest known scheme",
   "card.uipreview.title": "UI Mock Preview",
+  "card.uipreview.sampleApp": "Sample App",
+  "card.uipreview.sampleHeading": "Heading text",
+  "card.uipreview.sampleBody":
+    "Sample body text. Roles: background, text, primary, accent.",
   "card.uipreview.note":
     "Colors follow palette order (1=background, 2=text, 3=primary, 4=accent)",
   "card.svgpreview.title": "SVG Preview",
