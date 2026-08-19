@@ -72,7 +72,8 @@ export function LearnContent() {
         <CardFrame number="01" title={t("learn.byTopic")} helpKey="learn">
           <div className="grid grid-cols-1 gap-x-6 gap-y-5 sm:grid-cols-2">
             {topics.map((c) => (
-              <section key={c.helpKey}>
+              // 図書館の書籍詳細（この本が扱う指標）から #topic-<helpKey> で戻れる
+              <section key={c.helpKey} id={`topic-${c.helpKey}`}>
                 <h3 className="border-border text-text-2 mb-1.5 border-b pb-1.5 text-[13px] font-bold">
                   {HELP[locale][c.helpKey]?.title ?? c.title}
                 </h3>
