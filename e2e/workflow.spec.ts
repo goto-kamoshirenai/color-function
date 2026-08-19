@@ -97,7 +97,7 @@ test("設計ビュー: ペア単位のままでもスウォッチ選択が基準
   await page.getByRole("radio", { name: "設計" }).click();
   await expect(page.getByText("BASE #080808")).toBeVisible();
 
-  await page.getByRole("button", { name: /色 2 #009B4C を選択/ }).click();
+  await page.getByRole("button", { name: /色 2\/\d+ #009B4C を選択/ }).click();
   await expect(page.getByText("BASE #009B4C")).toBeVisible();
 });
 
@@ -108,11 +108,10 @@ test("ヘッダーから学習コンテンツ画面に遷移できる", async ({
   await expect(
     page.getByRole("heading", { name: "学習コンテンツ" }),
   ).toBeVisible();
-  // 指標別・記事・書籍・ツール・用語集の5セクション
+  // 指標別・記事・ツール・用語集の4セクション（書籍は図書館へ分離）
   for (const name of [
     "指標別リファレンス",
     "記事・読み物",
-    "書籍",
     "ベンチツール",
     "用語集",
   ]) {
@@ -125,6 +124,53 @@ test("ヘッダーから学習コンテンツ画面に遷移できる", async ({
   await expect(first).toHaveAttribute("target", "_blank");
 
   // ツールへ戻れる（ヘッダーの学習トグルが「ホームに戻る」になる）
+  await page.getByRole("link", { name: "ホームに戻る" }).click();
+  await expect(
+    page.getByRole("heading", { name: "WCAG コントラスト比" }),
+  ).toBeVisible();
+});
+
+test("学習コンテンツから図書館へ渡り、書籍の詳細まで辿れる", async ({
+  page,
+}) => {
+  await page.goto("/learn");
+
+  // /learn 先頭の帯から図書館へ
+  await page.getByRole("link", { name: /書籍で学ぶ/ }).click();
+  await expect(page.getByRole("heading", { name: "図書館" })).toBeVisible();
+  await expect(page.getByRole("heading", { name: "蔵書" })).toBeVisible();
+
+  // 購入リンクは別タブ・sponsored
+  const buy = page
+    .getByRole("link", { name: /カラー・アクセシビリティ を Amazon で見る/ })
+    .first();
+  await expect(buy).toHaveAttribute("target", "_blank");
+  await expect(buy).toHaveAttribute("rel", /sponsored/);
+
+  // 書名から詳細ページへ
+  await page
+    .getByRole("link", { name: "カラー・アクセシビリティ", exact: true })
+    .first()
+    .click();
+  await expect(
+    page.getByRole("heading", { level: 1, name: "カラー・アクセシビリティ" }),
+  ).toBeVisible();
+  await expect(
+    page.getByRole("heading", { name: "この本について" }),
+  ).toBeVisible();
+
+  // 扱う指標から指標別リファレンスへ戻れる
+  await page
+    .getByRole("link", { name: "WCAG コントラスト比", exact: true })
+    .click();
+  await expect(page).toHaveURL(/\/learn#topic-contrast$/);
+});
+
+test("ヘッダーの図書館トグルでホームと往復できる", async ({ page }) => {
+  await page.goto("/");
+  await page.getByRole("link", { name: "図書館を開く" }).click();
+  await expect(page.getByRole("heading", { name: "図書館" })).toBeVisible();
+
   await page.getByRole("link", { name: "ホームに戻る" }).click();
   await expect(
     page.getByRole("heading", { name: "WCAG コントラスト比" }),
@@ -182,6 +228,42 @@ test.describe("アクセシビリティ (axe)", () => {
       // [data-specimen] はユーザー指定色をそのまま表示する標本領域
       // （プレビュー・CVDサンプル・調和チップ）。そのコントラストは
       // アプリが「測定して見せる対象」であり、UI の a11y 違反ではない。
+      const results = await new AxeBuilder({ page })
+        .exclude("[data-specimen]")
+        .analyze();
+      const serious = results.violations.filter(
+        (v) => v.impact === "serious" || v.impact === "critical",
+      );
+      expect(serious, JSON.stringify(serious, null, 2)).toEqual([]);
+    });
+  }
+});
+
+/**
+ * 学習・図書館の各ページも a11y 検査の対象にする（docs/02 §4）。
+ * 初回コーチマークはフェード中に解析すると色コントラストを誤検出するため、
+ * 表示済み扱いにして抑止してから回す。
+ */
+test.describe("アクセシビリティ (axe) — 学習・図書館", () => {
+  const PAGES = [
+    { label: "学習コンテンツ", path: "/learn" },
+    { label: "図書館", path: "/library" },
+    { label: "書籍の詳細", path: "/library/coady-color-accessibility" },
+  ] as const;
+
+  for (const { label, path } of PAGES) {
+    test(`${label} で重大違反ゼロ`, async ({ page }) => {
+      await page.addInitScript(() => {
+        try {
+          sessionStorage.setItem("cff-splash-shown", "1");
+          localStorage.setItem("cff-hint-seen", "1");
+        } catch {
+          // localStorage 不可環境は既定値のまま検査する
+        }
+      });
+      await page.goto(path);
+      await expect(page.locator("h1").first()).toBeVisible();
+
       const results = await new AxeBuilder({ page })
         .exclude("[data-specimen]")
         .analyze();
