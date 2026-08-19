@@ -83,6 +83,10 @@ export function PaletteBar() {
   const [draggingId, setDraggingId] = useState<string | null>(null);
   const [dropTargetId, setDropTargetId] = useState<string | null>(null);
 
+  // キーボード並べ替え後は、移動した色のスウォッチへフォーカスを追従させる
+  // （色 id をキーに描画するため DOM ノードごと移動し、フォーカスが保持される。
+  //   index をキーにすると位置にフォーカスが残るため id キーを崩さないこと）。
+
   // 配色パレットは Home（/）専用。他ページ（/learn 等）では出さない。
   // フック呼び出し後に早期 return（パレット状態は保持され、Home 復帰で再表示）。
   const pathname = usePathname();
@@ -106,15 +110,20 @@ export function PaletteBar() {
     setDropTargetId(null);
   };
 
-  /** 矢印キーでの 1 つ隣への移動（左右端は何もしない）。 */
+  /** 矢印キーでの 1 つ隣への移動（左右端は移動不可を通知する）。 */
   const moveBy = (id: string, dir: -1 | 1) => {
     const ids = palette.map((c) => c.id);
     const i = ids.indexOf(id);
     const j = i + dir;
-    if (i < 0 || j < 0 || j >= ids.length) return;
+    if (i < 0) return;
+    if (j < 0 || j >= ids.length) {
+      // 端に到達したことを（視覚だけでなく）通知する
+      showToast(t("swatch.moveEdge", { n: i + 1, total: ids.length }));
+      return;
+    }
     [ids[i], ids[j]] = [ids[j], ids[i]];
     apply({ kind: "reorder", order: ids });
-    showToast(t("swatch.moved", { n: j + 1 }));
+    showToast(t("swatch.moved", { n: j + 1, total: ids.length }));
   };
 
   /** 選択・強調の状態（設計ビューは単位を問わず基準色 selectedId の選択）。 */
@@ -171,6 +180,7 @@ export function PaletteBar() {
                     onClick={() => selectSwatch(color.id)}
                     aria-label={t("swatch.select", {
                       n: i + 1,
+                      total: palette.length,
                       hex: fmt(color.hex),
                       badge,
                     })}
@@ -225,6 +235,7 @@ export function PaletteBar() {
                 key={color.id}
                 color={color}
                 index={i}
+                total={palette.length}
                 badge={isFg ? "FG" : isBg ? "BG" : ""}
                 highlighted={highlighted}
                 dimmed={!active}

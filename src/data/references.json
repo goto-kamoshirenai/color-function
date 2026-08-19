@@ -1,5 +1,5 @@
 {
-  "schemaVersion": "2.0.0",
+  "schemaVersion": "3.0.0",
   "topics": {
     "value": [
       {
@@ -729,6 +729,33 @@
       "author": "ジョセフ・アルバース",
       "publisher": "ビー・エヌ・エヌ新社",
       "year": 2016,
+      "shelf": "theory",
+      "accent": "#D9502B",
+      "topics": [
+        "wheel",
+        "mix",
+        "gradient",
+        "perception",
+        "warmcool",
+        "huedist",
+        "deltae"
+      ],
+      "pitch": {
+        "ja": "「色は隣り合う色で別の色に見える」。相互作用としての色を実習で体得する古典。",
+        "en": "The classic on color as interaction — the same color reads as two when the neighbor changes."
+      },
+      "summary": {
+        "ja": [
+          "色は単独ではなく、隣り合う色との関係で見える。バウハウスからイェール大学へ渡ったジョセフ・アルバースが、講義で積み重ねた色の実習を1冊にまとめた古典。理論の解説よりも、実際に色紙を並べて「同じ色が違って見える」体験を積むことに主眼が置かれている。",
+          "本ツールが数値で示す色差 ΔE や色相分布は、あくまで刺激としての色の量。それが人にどう見えるかは、隣接する色や面積比によって変わる。数値が同じでも印象が違う理由を、この本は実例で示してくれる。",
+          "最初の1冊にも、数値に慣れたあとの「なぜ数値どおりに見えないのか」を埋める1冊にも向く。"
+        ],
+        "en": [
+          "Color is almost never seen as it really is. Josef Albers distilled decades of teaching at the Bauhaus and Yale into a book built around exercises rather than theory: you place papers side by side and watch one color read as two.",
+          "The delta-E and hue-distribution figures in this tool describe color as stimulus. How it is actually perceived depends on what sits beside it and in what proportion. This book demonstrates why identical numbers can leave different impressions.",
+          "It works as a first book, and equally as the one that fills the gap once you are fluent in the numbers."
+        ]
+      },
       "links": {
         "print": "https://amzn.to/4gfxoyW"
       }
@@ -739,6 +766,34 @@
       "author": "桜井輝子",
       "publisher": "SBクリエイティブ",
       "year": 2017,
+      "shelf": "practice",
+      "accent": "#E0507F",
+      "topics": [
+        "harmony",
+        "scheme",
+        "templates",
+        "partner",
+        "complement",
+        "tone",
+        "lsvar",
+        "warmcool"
+      ],
+      "pitch": {
+        "ja": "イメージ別の配色見本を大量に引ける実務のアイデア帳。手が止まったときの起点に。",
+        "en": "A browsable idea book of ready-made schemes by mood — a starting point when you are stuck."
+      },
+      "summary": {
+        "ja": [
+          "「やさしい」「レトロ」「和」といったイメージ別に、3〜5色の配色見本を大量に収録した実務向けのアイデア帳。1見開き1テーマで CMYK・RGB の数値付きのため、そのまま試せる。",
+          "本ツールの調和スキーム生成や配色テンプレートは幾何的な規則から色を出すが、この本は文化的・情緒的な文脈から配色を引く。規則で出した候補を、狙う印象へ寄せて調整するときの辞書として使える。",
+          "出発点づくりに最も効く。作った配色はコントラスト比・色覚識別性で検証すれば、印象と可読性を両立できる。"
+        ],
+        "en": [
+          "A working designer's idea book: hundreds of three-to-five color schemes organized by impression — soft, retro, Japanese traditional — one theme per spread, with CMYK and RGB values you can type in directly.",
+          "This tool derives harmony schemes and templates from geometric rules. This book pulls them from cultural and emotional context instead, which makes it a dictionary for nudging a rule-derived palette toward a specific mood.",
+          "Best used to create a starting point; verify the result here with contrast ratio and CVD distinctness so impression and legibility hold together."
+        ]
+      },
       "links": {
         "print": "https://amzn.to/466P6Qp",
         "kindle": "https://amzn.to/3SlGceL"
@@ -750,6 +805,35 @@
       "author": "色彩検定協会（A・F・T）",
       "publisher": "色彩検定協会",
       "year": 2020,
+      "shelf": "reference",
+      "accent": "#2F7A55",
+      "topics": [
+        "value",
+        "hsv",
+        "spaces",
+        "name",
+        "namesearch",
+        "wheel",
+        "huedist",
+        "lsdist",
+        "tone"
+      ],
+      "pitch": {
+        "ja": "表色系・色名・配色技法を試験範囲として体系化。用語の土台をそろえる1冊。",
+        "en": "Order systems, color naming and combination technique, organized as a syllabus."
+      },
+      "summary": {
+        "ja": [
+          "色彩検定（A・F・T）2級の公式テキスト。光と色の物理、表色系（PCCS・マンセル）、色名、配色技法、照明や景観への応用までを、試験範囲として体系的に並べている。",
+          "本ツールが扱う色相・明度・彩度、トーン、対照・類似といった語はこの体系の上に乗っている。定義が揺れていると指標の読み違いが起きるため、土台を一度そろえる価値は大きい。",
+          "通読よりも、用語集で引っかかった項目を辞書的に参照する使い方が現実的。3級から入ると物理・生理の基礎が丁寧に扱われる。"
+        ],
+        "en": [
+          "The official textbook for Level 2 of Japan's AFT color certification. It lays out the physics of light and color, order systems (PCCS and Munsell), color naming, combination technique, and applications to lighting and environment as an exam syllabus.",
+          "The vocabulary this tool uses — hue, lightness, chroma, tone, contrasting versus analogous — sits on top of that system. Shaky definitions lead to misread metrics, so leveling the foundation once pays off.",
+          "More practical as a dictionary for terms you hit in the glossary than as a cover-to-cover read. Level 3 covers the physical and physiological basics more gently."
+        ]
+      },
       "links": {
         "print": "https://amzn.to/4g4Ibx5"
       }
@@ -760,6 +844,38 @@
       "author": "Geri Coady",
       "publisher": "ビー・エヌ・エヌ新社",
       "year": 2017,
+      "shelf": "accessibility",
+      "accent": "#1F63AA",
+      "topics": [
+        "contrast",
+        "apca",
+        "cvd",
+        "cvdmatrix",
+        "cvdsafe",
+        "cmatrix",
+        "grayscale",
+        "nudge",
+        "luminance",
+        "roles",
+        "semroles",
+        "uipreview"
+      ],
+      "pitch": {
+        "ja": "Web のための色覚とコントラスト設計。本ツールの検証指標に最も直結する1冊。",
+        "en": "Color vision and contrast for the web — the closest match to this tool's verification metrics."
+      },
+      "summary": {
+        "ja": [
+          "Web デザインにおける色覚とコントラストを扱った実務書。1型・2型・3型色覚それぞれで何が起きるか、色だけに依存しない情報設計とは何かを、実際の UI 例で説明する。",
+          "本ツールの検証指標——WCAG コントラスト比、APCA、色覚シミュレーション、色覚識別性、グレースケール耐性——と最も直結する。数値が基準を割ったときに「どう直すか」の判断材料がここにある。",
+          "アクセシブル化ナッジや色覚セーフ提案の背景を理解しておくと、機械的な補正に頼らず、意図を保ったまま基準を満たせるようになる。"
+        ],
+        "en": [
+          "A practical book on color vision and contrast for web design. It walks through what protanopia, deuteranopia and tritanopia actually do to an interface, and what it means to design information that never depends on color alone.",
+          "It is the closest match to this tool's verification metrics — WCAG contrast, APCA, CVD simulation, CVD distinctness, grayscale resilience. When a number falls below threshold, the reasoning for how to fix it lives here.",
+          "Understanding the thinking behind the accessibility nudge and CVD-safe suggestions lets you meet the thresholds while keeping design intent, instead of accepting a mechanical correction."
+        ]
+      },
       "links": {
         "print": "https://amzn.to/3SG4ct5",
         "kindle": "https://amzn.to/4ifVgoH"
@@ -771,6 +887,32 @@
       "author": "ポーポー・プロダクション",
       "publisher": "日本文芸社",
       "year": 2019,
+      "shelf": "psychology",
+      "accent": "#7147B5",
+      "topics": [
+        "warmcool",
+        "perception",
+        "name",
+        "huedist",
+        "roles",
+        "semroles"
+      ],
+      "pitch": {
+        "ja": "色が感情や行動に与える影響を図鑑形式で。ロール割当の根拠づくりに。",
+        "en": "An illustrated guide to how color moves emotion and behavior — reasoning for role assignment."
+      },
+      "summary": {
+        "ja": [
+          "色が感情・記憶・行動に与える影響を、実験や事例を引きながら図鑑形式でまとめた読み物。赤が時間感覚を伸ばす、青が集中を助けるといった知見を、色ごと・場面ごとに引ける。",
+          "本ツールのセマンティックロール割当や役割カバレッジは、成功・警告・危険といった意味に色を割り当てる。その割当が慣習として妥当かを検討するときの引き出しになる。",
+          "心理効果は文脈と文化に強く依存する。断定的に使うのではなく、選択肢を広げる材料として読むのが健全。"
+        ],
+        "en": [
+          "An illustrated survey of how color affects emotion, memory and behavior, drawing on experiments and case studies — findings such as red stretching perceived duration or blue aiding concentration, indexed by color and by situation.",
+          "This tool's semantic role assignment and role coverage map colors onto meanings like success, warning and danger. This book supplies the reasoning when you need to check whether such an assignment matches convention.",
+          "Psychological effects depend heavily on context and culture. Read it to widen the option space rather than as a set of rules to apply literally."
+        ]
+      },
       "links": {
         "print": "https://amzn.to/4bYxfi9",
         "kindle": "https://amzn.to/45ywpVO"

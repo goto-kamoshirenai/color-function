@@ -10,6 +10,7 @@ import { ColorCode } from "./ColorCode";
 type Props = {
   color: Color;
   index: number;
+  total: number;
   badge: "FG" | "BG" | "";
   highlighted: boolean;
   dimmed: boolean;
@@ -34,6 +35,7 @@ type Props = {
 export function Swatch({
   color,
   index,
+  total,
   badge,
   highlighted,
   dimmed,
@@ -100,6 +102,7 @@ export function Swatch({
           onKeyDown={handleKeyDown}
           aria-label={t("swatch.select", {
             n,
+            total,
             hex: fmt(color.hex),
             badge: badge ? ` (${badge})` : "",
           })}

@@ -82,7 +82,7 @@ const JA = {
   "palette.expand": "パレットを展開",
 
   // スウォッチ
-  "swatch.select": "色 {n} {hex}{badge} を選択",
+  "swatch.select": "色 {n}/{total} {hex}{badge} を選択",
   "swatch.selectTitle":
     "クリックで選択 / ダブルクリックで編集 / ドラッグ・←→で並べ替え",
   "swatch.remove": "色 {n} を削除",
@@ -90,7 +90,8 @@ const JA = {
   "swatch.accentTitle": "アクセントに設定（画面の差し色に反映）",
   "swatch.reorder": "色 {n} を並べ替え",
   "swatch.reorderTitle": "ドラッグで並べ替え / ←→ キーで移動",
-  "swatch.moved": "色を {n} 番目に移動",
+  "swatch.moved": "色を {n}/{total} 番目に移動",
+  "swatch.moveEdge": "これ以上移動できません（{n}/{total} 番目）",
 
   // FG/BG 役割セレクタ（ペア×検証）
   "role.pairLabel": "文字色と背景色",
@@ -419,7 +420,7 @@ const EN: Record<MessageKey, string> = {
   "palette.collapse": "Collapse palette",
   "palette.expand": "Expand palette",
 
-  "swatch.select": "Select color {n} {hex}{badge}",
+  "swatch.select": "Select color {n} of {total} {hex}{badge}",
   "swatch.selectTitle":
     "Click to select / double-click to edit / drag or ←→ to reorder",
   "swatch.remove": "Remove color {n}",
@@ -427,7 +428,8 @@ const EN: Record<MessageKey, string> = {
   "swatch.accentTitle": "Set as accent (used as the UI accent color)",
   "swatch.reorder": "Reorder color {n}",
   "swatch.reorderTitle": "Drag to reorder / move with ←→ keys",
-  "swatch.moved": "Moved color to position {n}",
+  "swatch.moved": "Moved color to position {n} of {total}",
+  "swatch.moveEdge": "Cannot move further (position {n} of {total})",
 
   // FG/BG role selectors (pair × verify)
   "role.pairLabel": "Text & background",

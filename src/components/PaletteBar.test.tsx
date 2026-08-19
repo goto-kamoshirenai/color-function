@@ -66,7 +66,7 @@ describe("PaletteBar", () => {
       expect(after).toEqual([before[1], before[0], before[2]]);
     });
 
-    it("先頭で ←キー を押しても順序は変わらない", () => {
+    it("先頭で ←キー を押しても順序は変わらず、端であることを通知する", () => {
       renderBar();
       const before = useColorStore.getState().palette.map((c) => c.hex);
       const tiles = screen.getAllByRole("button", { name: /を選択$/ });
@@ -75,6 +75,27 @@ describe("PaletteBar", () => {
       expect(useColorStore.getState().palette.map((c) => c.hex)).toEqual(
         before,
       );
+      expect(useColorStore.getState().toast).toBe(
+        "これ以上移動できません（1/3 番目）",
+      );
+    });
+
+    it("移動後もフォーカスは移動した色に追従する", () => {
+      renderBar();
+      const movedHex = useColorStore.getState().palette[0].hex;
+      const tiles = screen.getAllByRole("button", { name: /を選択$/ });
+      tiles[0].focus();
+      fireEvent.keyDown(tiles[0], { key: "ArrowRight" });
+
+      const focused = document.activeElement as HTMLElement | null;
+      expect(focused?.getAttribute("aria-label")).toContain(movedHex);
+      expect(focused?.getAttribute("aria-label")).toContain("2/3");
+    });
+
+    it("スウォッチのラベルには総数を含める", () => {
+      renderBar();
+      const tiles = screen.getAllByRole("button", { name: /を選択$/ });
+      expect(tiles[0].getAttribute("aria-label")).toMatch(/^色 1\/3 /);
     });
 
     it("色カードのドラッグ＆ドロップで対象位置へ移動する", () => {
