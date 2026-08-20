@@ -32,7 +32,8 @@
 ### 横断機能
 
 - **学習コンテンツ（/learn）** — 指標別リファレンス・記事・ベンチツール・用語集。各カードの「?」（解説）と本マーク（参考資料）からも参照可能
-- **図書館（/library）** — 書籍で学ぶ側の入口。蔵書一覧・指標からの索引・書籍ごとの詳細ページ（`/library/[id]`）。カードの本マークと、診断結果に連動した「次の一手」からも到達できる
+- **図書館（/library）** — 書籍で学ぶ側の入口。蔵書一覧（読者で絞り込み）・指標からの索引・書籍ごとの詳細ページ（`/library/[id]`）。カードの本マークと、結果に連動した1行の導線からも到達できる
+- **実装（/code）** — 指標を自分のコードで出すための計算ライブラリ集（culori・Color.js・apca-w3・CSS ネイティブなど）と、指標からの索引。各カードの `⟨/⟩` から、いま表示中の色を埋めたスニペットをコピーできる
 - **共有 URL** — パレットは URL ハッシュに同期され、リンクを開くだけで再現
 - **カラーコード** — 表示形式（HEX/RGB/HSL/HSV）をアプリ全体で切替、どこでもクリックコピー
 - **テーマ / 言語** — ライト・ダーク、日本語・英語（設定メニューから切替、localStorage に保持）
@@ -70,13 +71,14 @@ pnpm links:check    # 参考資料リンクの生存確認（手動メンテ用�
 
 ```
 src/
-  app/            # App Router（/ ・/learn・/library、レイアウト、PWA マニフェスト）
+  app/            # App Router（/ ・/learn・/library・/code、レイアウト、PWA マニフェスト）
   components/     # 共有 UI（ヘッダー・パレットバー・設定・ピッカー等）
   core/color/     # 色計算の純関数層（変換・コントラスト・色差・CVD・分析・提案）
   features/
     cards/        # 指標カード（registry 駆動）・ヘルプ・テンプレート・書籍導線
     learn/        # 学習コンテンツ画面（記事・リファレンス）
     library/      # 図書館画面（蔵書一覧・書籍詳細）
+    code/         # 実装画面（計算ライブラリ・指標からの索引）
   data/           # 構造化データ（references.json・glossary.json）
   lib/            # i18n・テーマ・アセットローダー等
   store/          # zustand ストア（パレット・モード・ピッカー）
@@ -126,6 +128,29 @@ e2e/              # Playwright テスト
 `topics` に書いた helpKey は実在するカードの指標である必要があり、
 `pnpm test`（`src/lib/references.test.ts`）が検証する。
 `links` に両方の版があると「単行本」「Kindle」の 2 チップが並ぶ。
+
+## 計算ライブラリとスニペットの追加
+
+`/code` に並ぶ計算ライブラリは `src/data/references.json` の `libraries` を編集する:
+
+```jsonc
+{
+  "id": "culori", // 安定した識別子（/code のアンカー・スニペットの参照先）
+  "name": "culori",
+  "pkg": "culori", // npm パッケージ名。CSS ネイティブなど入れるものが無ければ省略
+  "kind": "js", // js / css
+  "url": "https://culorijs.org/", // ドキュメント（一次情報）
+  "repo": "https://github.com/Evercoder/culori", // 省略可
+  "api": "converter() / wcagContrast()", // 代表 API（言語別に持たない）
+  "topics": ["contrast", "deltae"], // 効く指標（カードの helpKey）
+  "pitch": { "ja": "一言", "en": "..." },
+}
+```
+
+カード見出しの `⟨/⟩` が出すスニペットは `src/features/cards/snippets.ts` に
+`helpKey → (ctx) => コード` で定義する。`ctx` には画面の色（基準色・FG/BG・
+パレット全色）が入るので、貼れば動く形にできる。期待値のコメントは
+`core/color` の計算結果から生成する（表示と食い違わせない）。
 
 結果連動の導線は 2 ファイルに分かれる:
 

@@ -9,7 +9,9 @@ import raw from "@/data/references.json";
  *
  * リンクの追加・修正は JSON の編集だけで完結する:
  *  - topics.<helpKey>: カードの本マークと /learn の指標別リファレンス
- *  - articles / tools / books: /learn の各セクション
+ *  - articles / tools: /learn の各セクション
+ *  - books: 図書館（/library）
+ *  - libraries: 実装（/code）の計算ライブラリ
  */
 const LocalizedSchema = z.object({
   ja: z.string().min(1),
@@ -75,16 +77,39 @@ const BookSchema = z.object({
   links: BookLinksSchema,
 });
 
+/**
+ * 計算ライブラリ（/code）。図書館の「蔵書（Book）」とは別物で、
+ * 「この指標を自分のコードで出すなら何を使うか」を指標に紐づけて並べる。
+ */
+const CodeLibrarySchema = z.object({
+  id: z.string().min(1),
+  name: z.string().min(1),
+  /** npm パッケージ名。CSS ネイティブなど、入れるものが無い場合は省略 */
+  pkg: z.string().min(1).optional(),
+  kind: z.enum(["js", "css"]),
+  /** ドキュメント（一次情報） */
+  url: z.url(),
+  /** ソース。ドキュメントが GitHub 自体のときは省略 */
+  repo: z.url().optional(),
+  /** 代表的な API（識別子なので言語別に持たない） */
+  api: z.string().min(1),
+  /** この道具が効く指標（helpKey） */
+  topics: z.array(z.string().min(1)).min(1),
+  pitch: LocalizedSchema,
+});
+
 const ReferencesAssetSchema = z.object({
   schemaVersion: z.string(),
   topics: z.record(z.string(), z.array(ReferenceSchema).min(1)),
   articles: z.array(ReferenceSchema).min(1),
   tools: z.array(ReferenceSchema).min(1),
   books: z.array(BookSchema).min(1),
+  libraries: z.array(CodeLibrarySchema).min(1),
 });
 
 export type Reference = z.infer<typeof ReferenceSchema>;
 export type Book = z.infer<typeof BookSchema>;
+export type CodeLibrary = z.infer<typeof CodeLibrarySchema>;
 /** 書籍リンクの版種別（単行本 / Kindle）。 */
 export type BookFormat = keyof z.infer<typeof BookLinksSchema>;
 
@@ -98,6 +123,8 @@ export const ARTICLES: Reference[] = data.articles;
 export const TOOLS: Reference[] = data.tools;
 /** 書籍。 */
 export const BOOKS: Book[] = data.books;
+/** 計算ライブラリ（実装で使う道具）。 */
+export const CODE_LIBRARIES: CodeLibrary[] = data.libraries;
 
 /** 書籍の版種別と購入 URL の組（表示順は単行本→Kindle）。 */
 export type BookLinkEntry = { format: BookFormat; url: string };
@@ -130,4 +157,29 @@ const BY_TOPIC = BOOKS.reduce<Map<string, Book[]>>((acc, book) => {
 /** その指標を扱う書籍を返す（該当なしは空配列）。 */
 export function booksForTopic(helpKey: string): Book[] {
   return BY_TOPIC.get(helpKey) ?? [];
+}
+
+/** 指標（helpKey）→ その指標を計算できるライブラリ。CODE_LIBRARIES の並び順を保つ。 */
+const LIBS_BY_TOPIC = CODE_LIBRARIES.reduce<Map<string, CodeLibrary[]>>(
+  (acc, lib) => {
+    for (const topic of lib.topics) {
+      const list = acc.get(topic);
+      if (list) list.push(lib);
+      else acc.set(topic, [lib]);
+    }
+    return acc;
+  },
+  new Map(),
+);
+
+const LIB_BY_ID = new Map(CODE_LIBRARIES.map((l) => [l.id, l]));
+
+/** ID からライブラリを引く（カードのスニペットから使う）。 */
+export function codeLibraryById(id: string): CodeLibrary | undefined {
+  return LIB_BY_ID.get(id);
+}
+
+/** その指標を計算できるライブラリを返す（該当なしは空配列）。 */
+export function librariesForTopic(helpKey: string): CodeLibrary[] {
+  return LIBS_BY_TOPIC.get(helpKey) ?? [];
 }

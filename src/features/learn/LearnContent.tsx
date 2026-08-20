@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { ArrowLeft } from "iconoir-react";
+import { ArrowLeft, ArrowUpRight } from "iconoir-react";
 import { CardFrame } from "@/components/Card";
 import { ResourceLink } from "@/components/ResourceLink";
 import { LibraryBridge } from "@/features/library/LibraryBridge";
@@ -72,6 +72,31 @@ export function LearnContent() {
       <div className="flex flex-col gap-3.5">
         {/* 書籍で学ぶ経路（/library）への導線 */}
         <LibraryBridge />
+
+        {/* 実装で使う側（/code）への導線。読むだけで終わらせないための出口 */}
+        <Link
+          href="/code"
+          className="border-border-strong bg-surface rounded-control hover:border-accent group flex flex-wrap items-center justify-between gap-x-5 gap-y-3 border px-4 py-3.5 sm:px-[22px]"
+        >
+          <span className="min-w-0">
+            <span className="group-hover:text-accent block text-[14px] font-bold">
+              {t("code.pageTitle")}
+            </span>
+            <span className="text-text-2 mt-0.5 block text-[12.5px] leading-[1.6]">
+              {t("code.lead")}
+            </span>
+          </span>
+          <span className="cff-control text-text-2 group-hover:border-accent group-hover:text-accent inline-flex min-h-9 flex-none items-center gap-1.5 px-3 font-mono text-[12px] tracking-[0.06em]">
+            {t("code.viewAll")}
+            <ArrowUpRight
+              width={12}
+              height={12}
+              strokeWidth={2}
+              className="rotate-45"
+              aria-hidden
+            />
+          </span>
+        </Link>
 
         {/* 01 指標別リファレンス */}
         <CardFrame number="01" title={t("learn.byTopic")} helpKey="learn">

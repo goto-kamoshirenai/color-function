@@ -145,19 +145,34 @@ export function LibraryContent() {
             <p className="text-text-2 min-w-0 text-[12.5px] leading-[1.65]">
               {t("learn.lead")}
             </p>
-            <Link
-              href="/learn"
-              className="cff-control text-text-2 hover:border-accent hover:text-accent inline-flex min-h-9 flex-none items-center gap-1.5 px-3 font-mono text-[12px] tracking-[0.06em]"
-            >
-              {t("library.toLearnCta")}
-              <ArrowUpRight
-                width={12}
-                height={12}
-                strokeWidth={2}
-                className="rotate-45"
-                aria-hidden
-              />
-            </Link>
+            <span className="flex flex-none flex-wrap items-center gap-2">
+              <Link
+                href="/learn"
+                className="cff-control text-text-2 hover:border-accent hover:text-accent inline-flex min-h-9 items-center gap-1.5 px-3 font-mono text-[12px] tracking-[0.06em]"
+              >
+                {t("library.toLearnCta")}
+                <ArrowUpRight
+                  width={12}
+                  height={12}
+                  strokeWidth={2}
+                  className="rotate-45"
+                  aria-hidden
+                />
+              </Link>
+              <Link
+                href="/code"
+                className="cff-control text-text-2 hover:border-accent hover:text-accent inline-flex min-h-9 items-center gap-1.5 px-3 font-mono text-[12px] tracking-[0.06em]"
+              >
+                {t("code.pageTitle")}
+                <ArrowUpRight
+                  width={12}
+                  height={12}
+                  strokeWidth={2}
+                  className="rotate-45"
+                  aria-hidden
+                />
+              </Link>
+            </span>
           </div>
         </CardFrame>
       </div>

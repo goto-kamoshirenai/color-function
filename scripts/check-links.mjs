@@ -14,6 +14,11 @@ const refs = [
   ),
   ...data.articles.map((r) => ({ ...r, where: "articles" })),
   ...data.tools.map((r) => ({ ...r, where: "tools" })),
+  ...data.libraries.flatMap((l) =>
+    [l.url, l.repo]
+      .filter(Boolean)
+      .map((url) => ({ url, where: `libraries.${l.id}` })),
+  ),
 ];
 
 // 同一 URL は1回だけ確認

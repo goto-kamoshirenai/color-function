@@ -153,6 +153,28 @@ const JA = {
     "腰を据えて学ぶなら書籍。指標との対応をつけて図書館に並べています。",
   "learn.toLibraryCta": "図書館へ",
 
+  // 実装（/code）— 計算ライブラリとスニペット
+  "code.open": "実装リファレンスを開く",
+  "code.pageTitle": "実装",
+  "code.lead":
+    "この画面の数値を自分のコードで出すための道具。指標との対応をつけて並べています。",
+  "code.libraries": "計算ライブラリ",
+  "code.byTopic": "指標から探す",
+  "code.snippets": "カードから取り出せるコード",
+  "code.snippetsLead":
+    "カード見出しの ⟨/⟩ から、いま表示中の色を埋めたスニペットをコピーできます。",
+  "code.docs": "ドキュメント",
+  "code.repo": "ソース",
+  "code.kind.js": "JS",
+  "code.kind.css": "CSS",
+  "code.toLearn": "記事・リファレンスで学ぶ",
+  "code.toLibrary": "書籍で学ぶ",
+  "code.title": "実装例",
+  "code.aria": "{title} の実装例",
+  "code.copy": "コピー",
+  "code.note": "いま表示中の色を埋めています",
+  "code.viewAll": "ライブラリ一覧",
+
   // 図書館（/library）— 書籍で学ぶ
   "library.open": "図書館を開く",
   "library.title": "図書館",
@@ -542,6 +564,27 @@ const EN: Record<MessageKey, string> = {
   "learn.toLibraryLead":
     "For sustained study, books. The library maps each one to the metrics it covers.",
   "learn.toLibraryCta": "Go to the library",
+
+  "code.open": "Open the implementation reference",
+  "code.pageTitle": "Implementation",
+  "code.lead":
+    "The tools for producing these numbers in your own code, mapped to the metrics on screen.",
+  "code.libraries": "Color Libraries",
+  "code.byTopic": "Find by Metric",
+  "code.snippets": "Code You Can Pull From a Card",
+  "code.snippetsLead":
+    "The ⟨/⟩ button in a card header copies a snippet with your current colors already in it.",
+  "code.docs": "Docs",
+  "code.repo": "Source",
+  "code.kind.js": "JS",
+  "code.kind.css": "CSS",
+  "code.toLearn": "Learn from articles",
+  "code.toLibrary": "Learn from books",
+  "code.title": "Code",
+  "code.aria": "Code for {title}",
+  "code.copy": "Copy",
+  "code.note": "Filled in with the colors on screen",
+  "code.viewAll": "All libraries",
 
   "library.open": "Open the library",
   "library.title": "Library",

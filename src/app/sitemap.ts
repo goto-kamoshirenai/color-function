@@ -8,7 +8,7 @@ import { SITE_URL } from "@/lib/site";
  * 列挙するのは実ページだけ。
  */
 export default function sitemap(): MetadataRoute.Sitemap {
-  const routes = ["/", "/learn", "/library"];
+  const routes = ["/", "/learn", "/library", "/code"];
   return [
     ...routes.map((path) => ({
       url: `${SITE_URL}${path}`,

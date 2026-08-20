@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { BookStack, GraduationCap } from "iconoir-react";
+import { BookStack, GraduationCap, Code } from "iconoir-react";
 import { BrandMark } from "./BrandMark";
 import { ColorFormatSelect } from "./ColorFormatSelect";
 import { HelpButton } from "./HelpButton";
@@ -15,12 +15,13 @@ const navStyle = (active: boolean) =>
     ? "border-(--text) bg-(--text) text-(--bg) hover:bg-(--text)"
     : "text-text-2 hover:border-accent hover:text-accent";
 
-/** ヘッダー（v2: 56px・ロゴブロック・表示形式・学習/図書館・設定）。 */
+/** ヘッダー（v2: 56px・ロゴブロック・表示形式・学習/図書館/実装・設定）。 */
 export function AppHeader() {
   const t = useT();
   const pathname = usePathname();
   const onLearn = pathname === "/learn";
   const onLibrary = pathname.startsWith("/library");
+  const onCode = pathname === "/code";
   return (
     <header className="border-border-strong bg-surface z-5 flex h-(--header-h) flex-none items-center justify-between border-b pt-[env(safe-area-inset-top)] pr-3 sm:pr-[18px]">
       {/* ロゴブロック全体を / への導線にする（ホームへ戻る） */}
@@ -46,7 +47,7 @@ export function AppHeader() {
         <ColorFormatSelect />
         {/* 使い方ヘルプ（旧: パレットバー下段。学習導線の隣に集約） */}
         <HelpButton helpKey="usage" variant="header" />
-        {/* 学びの2系統。記事・リファレンス = /learn、書籍 = /library。
+        {/* 学びの3系統。記事 = /learn、書籍 = /library、実装 = /code。
             現在地では再押下でホームへ戻るトグルになる */}
         <Link
           href={onLearn ? "/" : "/learn"}
@@ -71,6 +72,18 @@ export function AppHeader() {
           }
         >
           <BookStack width={15} height={15} aria-hidden />
+        </Link>
+        <Link
+          href={onCode ? "/" : "/code"}
+          aria-label={onCode ? t("nav.backHome") : t("code.open")}
+          title={onCode ? t("nav.backHome") : t("code.open")}
+          aria-current={onCode ? "page" : undefined}
+          className={
+            "cff-control flex size-9 items-center justify-center " +
+            navStyle(onCode)
+          }
+        >
+          <Code width={15} height={15} aria-hidden />
         </Link>
         {/* テーマ・言語は設定メニューに集約 */}
         <SettingsMenu />

@@ -16,7 +16,7 @@
  * キャッシュ名に VERSION を含め、activate で旧世代を破棄する。
  */
 
-const VERSION = "v1";
+const VERSION = "v2";
 const SHELL_CACHE = `cff-shell-${VERSION}`;
 const ASSET_CACHE = `cff-assets-${VERSION}`;
 
@@ -25,6 +25,7 @@ const PRECACHE_URLS = [
   "/",
   "/learn",
   "/library",
+  "/code",
   "/manifest.webmanifest",
   "/data/manifest.json",
   "/data/harmony/rules.json",

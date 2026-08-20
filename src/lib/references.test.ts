@@ -4,9 +4,12 @@ import {
   ARTICLES,
   TOOLS,
   BOOKS,
+  CODE_LIBRARIES,
   bookLinks,
   bookById,
   booksForTopic,
+  codeLibraryById,
+  librariesForTopic,
 } from "./references";
 import { CARD_REGISTRY } from "@/features/cards/registry";
 import { HELP } from "@/features/cards/help";
@@ -20,6 +23,15 @@ describe("参考資料データ（references.json）", () => {
     for (const r of all) {
       expect(() => new URL(r.url)).not.toThrow();
       expect(r.url).toMatch(/^https?:\/\//);
+    }
+  });
+
+  it("計算ライブラリの URL が妥当", () => {
+    for (const lib of CODE_LIBRARIES) {
+      for (const url of [lib.url, lib.repo].filter((u) => u !== undefined)) {
+        expect(() => new URL(url), lib.id).not.toThrow();
+        expect(url, lib.id).toMatch(/^https:\/\//);
+      }
     }
   });
 
@@ -101,6 +113,41 @@ describe("書籍のメタデータ（図書館ページ用）", () => {
   it("書籍を1冊も持たない指標があってもよいが、検証系の主要指標は必ず持つ", () => {
     for (const key of ["contrast", "cvd", "harmony", "value"]) {
       expect(booksForTopic(key).length, key).toBeGreaterThan(0);
+    }
+  });
+});
+
+describe("計算ライブラリ（/code）", () => {
+  it("ID は一意で、ID から引ける", () => {
+    expect(new Set(CODE_LIBRARIES.map((l) => l.id)).size).toBe(
+      CODE_LIBRARIES.length,
+    );
+    for (const lib of CODE_LIBRARIES) expect(codeLibraryById(lib.id)).toBe(lib);
+    expect(codeLibraryById("no-such-library")).toBeUndefined();
+  });
+
+  it("topics はすべて実在する指標（helpKey）", () => {
+    const keys = new Set(Object.keys(HELP.ja));
+    for (const lib of CODE_LIBRARIES) {
+      for (const key of lib.topics) {
+        expect(keys.has(key), `${lib.id} の topics "${key}" が未知の指標`).toBe(
+          true,
+        );
+      }
+    }
+  });
+
+  it("librariesForTopic は指標に紐づくライブラリを並び順で返す", () => {
+    for (const lib of CODE_LIBRARIES) {
+      for (const key of lib.topics)
+        expect(librariesForTopic(key)).toContain(lib);
+    }
+    expect(librariesForTopic("no-such-topic")).toEqual([]);
+  });
+
+  it("検証の主要指標には必ず1つ以上ある", () => {
+    for (const key of ["contrast", "apca", "deltae", "cvd", "spaces"]) {
+      expect(librariesForTopic(key).length, key).toBeGreaterThan(0);
     }
   });
 });

@@ -1,5 +1,5 @@
 {
-  "schemaVersion": "4.0.0",
+  "schemaVersion": "5.0.0",
   "topics": {
     "value": [
       {
@@ -1413,6 +1413,190 @@
       "links": {
         "print": "https://amzn.to/4xgG4wq",
         "kindle": "https://amzn.to/4zrOmD5"
+      }
+    }
+  ],
+  "libraries": [
+    {
+      "id": "culori",
+      "name": "culori",
+      "pkg": "culori",
+      "kind": "js",
+      "url": "https://culorijs.org/",
+      "repo": "https://github.com/Evercoder/culori",
+      "api": "converter() / formatCss() / wcagContrast() / differenceCiede2000() / clampChroma() / filterDeficiencyDeuter()",
+      "topics": [
+        "value",
+        "spaces",
+        "luminance",
+        "contrast",
+        "deltae",
+        "dbreak",
+        "gamut",
+        "cvd",
+        "grayscale",
+        "tone",
+        "gradient",
+        "mix",
+        "harmony"
+      ],
+      "pitch": {
+        "ja": "本ツールの計算エンジン。変換・色差・WCAG 比・ガマット・色覚フィルタまで揃い、必要な関数だけを取り込める。",
+        "en": "The engine behind this tool: conversion, difference, WCAG ratios, gamut mapping, and CVD filters, imported one function at a time."
+      }
+    },
+    {
+      "id": "colorjs-io",
+      "name": "Color.js",
+      "pkg": "colorjs.io",
+      "kind": "js",
+      "url": "https://colorjs.io/",
+      "repo": "https://github.com/color-js/color.js",
+      "api": "new Color() / .to() / .contrast(bg, \"APCA\") / .deltaE() / .toGamut()",
+      "topics": ["value", "spaces", "gamut", "deltae", "contrast", "apca"],
+      "pitch": {
+        "ja": "CSS Color 4/5 の仕様に忠実な実装。コントラストのアルゴリズム（WCAG21・APCA・Lstar 等）を選べるのが強み。",
+        "en": "A spec-faithful implementation of CSS Color 4/5, with selectable contrast algorithms (WCAG21, APCA, Lstar)."
+      }
+    },
+    {
+      "id": "chroma-js",
+      "name": "chroma.js",
+      "pkg": "chroma-js",
+      "kind": "js",
+      "url": "https://gka.github.io/chroma.js/",
+      "repo": "https://github.com/gka/chroma.js",
+      "api": "chroma.scale([...]).mode(\"oklch\") / .bezier() / .luminance()",
+      "topics": ["gradient", "tone", "lsvar", "huedist", "chartpreview"],
+      "pitch": {
+        "ja": "スケールと補間の定番。段階数を指定した配色の生成や、補間空間の切り替えが短く書ける。",
+        "en": "The classic for scales and interpolation — generate stepped ramps and switch interpolation spaces in a line."
+      }
+    },
+    {
+      "id": "colord",
+      "name": "colord",
+      "pkg": "colord",
+      "kind": "js",
+      "url": "https://github.com/omgovich/colord",
+      "api": "colord(\"#3A7BD5\").toHex() / .contrast() / プラグイン: a11y, mix, harmonies",
+      "topics": ["value", "contrast", "mix", "harmony"],
+      "pitch": {
+        "ja": "約 2.5KB の軽量ライブラリ。プラグインで a11y 判定やミックスを足せる。バンドルサイズを削りたい場面向け。",
+        "en": "A ~2.5KB library with opt-in plugins for a11y checks and mixing — for when bundle size is the constraint."
+      }
+    },
+    {
+      "id": "apca-w3",
+      "name": "apca-w3",
+      "pkg": "apca-w3",
+      "kind": "js",
+      "url": "https://github.com/Myndex/apca-w3",
+      "repo": "https://github.com/Myndex/SAPC-APCA",
+      "api": "APCAcontrast(sRGBtoY(txt), sRGBtoY(bg))",
+      "topics": ["apca"],
+      "pitch": {
+        "ja": "APCA（WCAG 3 ドラフト系の知覚コントラスト）の本家実装。Lc 値を自前で出すならこれ。",
+        "en": "The reference implementation of APCA, the perceptual contrast metric behind the WCAG 3 drafts."
+      }
+    },
+    {
+      "id": "color-blind",
+      "name": "color-blind",
+      "pkg": "color-blind",
+      "kind": "js",
+      "url": "https://github.com/skratchdot/color-blind",
+      "api": "blinder.deuteranopia(\"#3A7BD5\")",
+      "topics": ["cvd", "cvdmatrix", "cvdsafe"],
+      "pitch": {
+        "ja": "色覚シミュレーションを1行で。型ごとの関数が用意されており、テストコードに組み込みやすい。",
+        "en": "Color-vision simulation in one call, with a function per type — easy to drop into tests."
+      }
+    },
+    {
+      "id": "leonardo",
+      "name": "Leonardo",
+      "pkg": "@adobe/leonardo-contrast-colors",
+      "kind": "js",
+      "url": "https://leonardocolor.io/",
+      "repo": "https://github.com/adobe/leonardo",
+      "api": "new Theme({ colors, backgroundColor, lightness, contrast })",
+      "topics": ["tone", "nudge", "roles", "tokens", "darklight"],
+      "pitch": {
+        "ja": "「この背景でコントラスト比 4.5 の色」を逆算してパレットを生成する。基準先行で配色を組むときに強い。",
+        "en": "Generates palettes by solving for contrast — \"the color that hits 4.5:1 on this background\" — criteria first."
+      }
+    },
+    {
+      "id": "material-color-utilities",
+      "name": "Material Color Utilities",
+      "pkg": "@material/material-color-utilities",
+      "kind": "js",
+      "url": "https://github.com/material-foundation/material-color-utilities",
+      "api": "themeFromSourceColor() / Hct.fromInt()",
+      "topics": [
+        "harmony",
+        "scheme",
+        "roles",
+        "semroles",
+        "tokens",
+        "darklight"
+      ],
+      "pitch": {
+        "ja": "1色から役割つきのカラースキーム一式（Material 3）を生成する。HCT という知覚寄りの色空間を使う。",
+        "en": "Generates a full role-based scheme (Material 3) from a single seed color, using the perceptual HCT space."
+      }
+    },
+    {
+      "id": "radix-colors",
+      "name": "Radix Colors",
+      "pkg": "@radix-ui/colors",
+      "kind": "js",
+      "url": "https://www.radix-ui.com/colors",
+      "api": "blue.blue9 / blueDark / blueA（透過スケール）",
+      "topics": ["roles", "semroles", "tokens", "darklight"],
+      "pitch": {
+        "ja": "12段階の各ステップに用途（背景・境界・テキスト）が定義済みのスケール。役割の決め方をそのまま借りられる。",
+        "en": "12-step scales where every step has an assigned job (surface, border, text) — a role system you can borrow wholesale."
+      }
+    },
+    {
+      "id": "d3-color",
+      "name": "D3（d3-color / d3-interpolate / d3-scale-chromatic）",
+      "pkg": "d3-scale-chromatic",
+      "kind": "js",
+      "url": "https://d3js.org/d3-scale-chromatic",
+      "repo": "https://github.com/d3/d3-scale-chromatic",
+      "api": "d3.interpolateOklab() / d3.schemeTableau10 / d3.scaleSequential()",
+      "topics": ["chartpreview", "svgpreview", "huedist", "gradient"],
+      "pitch": {
+        "ja": "データビズの配色。連続・発散・カテゴリの各スキームが検証済みで揃っており、系列色に迷わない。",
+        "en": "Data-viz color: vetted sequential, diverging, and categorical schemes so series colors are not guesswork."
+      }
+    },
+    {
+      "id": "open-props",
+      "name": "Open Props",
+      "pkg": "open-props",
+      "kind": "css",
+      "url": "https://open-props.style/",
+      "api": "var(--red-5) / var(--gray-0) … var(--gray-12)",
+      "topics": ["tokens", "tone", "darklight"],
+      "pitch": {
+        "ja": "CSS 変数だけで使えるパレット。ビルド構成を増やさずにトークン運用を始められる。",
+        "en": "A palette delivered as plain CSS variables — start using tokens without adding a build step."
+      }
+    },
+    {
+      "id": "css-native",
+      "name": "CSS ネイティブ",
+      "kind": "css",
+      "url": "https://developer.mozilla.org/ja/docs/Web/CSS/color_value",
+      "api": "oklch() / color-mix() / light-dark() / rgb(from … r g b / 50%)",
+      "topics": ["mix", "spaces", "alpha", "darklight", "gradient", "tokens"],
+      "pitch": {
+        "ja": "混色・明度調整・ダーク切替は、いまはブラウザだけでできる。まずライブラリを足さずに済むかを確認する。",
+        "en": "Mixing, lightness tweaks, and dark mode now work in the browser alone — check here before adding a dependency."
       }
     }
   ]
