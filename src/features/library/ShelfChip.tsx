@@ -10,6 +10,7 @@ const SHELF_KEY = {
   accessibility: "library.shelf.accessibility",
   psychology: "library.shelf.psychology",
   reference: "library.shelf.reference",
+  engineering: "library.shelf.engineering",
 } as const satisfies Record<Book["shelf"], MessageKey>;
 
 /** 書架（書籍の性格）のチップ。図書館の一覧・詳細で共用。 */

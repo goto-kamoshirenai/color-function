@@ -109,7 +109,8 @@ e2e/              # Playwright テスト
   "author": "著者名",
   "publisher": "出版社",
   "year": 2017, // 邦訳版・改訂版はその版の発行年
-  "shelf": "accessibility", // theory / practice / accessibility / psychology / reference
+  "shelf": "accessibility", // theory / practice / accessibility / psychology / reference / engineering
+  "audience": "engineer", // engineer / designer / both（図書館の「読者で絞る」に効く）
   "accent": "#1F63AA", // カバータイルの地色（書影は規約上使えないため色で識別する）
   "topics": ["contrast", "cvd"], // 扱う指標（カードの helpKey）。索引と本マークに効く
   "pitch": { "ja": "一言レコメンド", "en": "..." }, // 一覧に出る 1 行

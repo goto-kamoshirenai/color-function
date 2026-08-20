@@ -1,5 +1,5 @@
 {
-  "schemaVersion": "3.0.0",
+  "schemaVersion": "4.0.0",
   "topics": {
     "value": [
       {
@@ -730,6 +730,7 @@
       "publisher": "ビー・エヌ・エヌ新社",
       "year": 2016,
       "shelf": "theory",
+      "audience": "both",
       "accent": "#D9502B",
       "topics": [
         "wheel",
@@ -770,6 +771,7 @@
       "publisher": "SBクリエイティブ",
       "year": 2017,
       "shelf": "practice",
+      "audience": "designer",
       "accent": "#E0507F",
       "topics": [
         "harmony",
@@ -811,6 +813,7 @@
       "publisher": "色彩検定協会",
       "year": 2020,
       "shelf": "reference",
+      "audience": "both",
       "accent": "#2F7A55",
       "topics": [
         "value",
@@ -850,6 +853,7 @@
       "publisher": "ビー・エヌ・エヌ新社",
       "year": 2017,
       "shelf": "accessibility",
+      "audience": "both",
       "accent": "#1F63AA",
       "topics": [
         "contrast",
@@ -894,6 +898,7 @@
       "publisher": "日本文芸社",
       "year": 2019,
       "shelf": "psychology",
+      "audience": "both",
       "accent": "#7147B5",
       "topics": [
         "warmcool",
@@ -931,6 +936,7 @@
       "publisher": "技術評論社",
       "year": 2023,
       "shelf": "accessibility",
+      "audience": "engineer",
       "accent": "#0E7C86",
       "topics": [
         "contrast",
@@ -970,6 +976,7 @@
       "publisher": "オライリー・ジャパン",
       "year": 2021,
       "shelf": "practice",
+      "audience": "engineer",
       "accent": "#B47A16",
       "topics": [
         "chartpreview",
@@ -1006,6 +1013,7 @@
       "publisher": "ボーンデジタル",
       "year": 2018,
       "shelf": "practice",
+      "audience": "both",
       "accent": "#3F4A8C",
       "topics": ["tokens", "semroles", "roles", "templates"],
       "pitch": {
@@ -1036,6 +1044,7 @@
       "publisher": "東京電機大学出版局",
       "year": 2001,
       "shelf": "reference",
+      "audience": "engineer",
       "accent": "#4C5866",
       "topics": [
         "gamut",
@@ -1065,6 +1074,345 @@
       },
       "links": {
         "print": "https://amzn.to/4g4nO38"
+      }
+    },
+    {
+      "id": "ota-ihara-designing-web-a11y",
+      "title": "デザイニングWebアクセシビリティ",
+      "author": "太田良典・伊原力也",
+      "publisher": "ボーンデジタル",
+      "year": 2015,
+      "shelf": "accessibility",
+      "audience": "engineer",
+      "accent": "#1F7A99",
+      "topics": ["contrast", "roles", "semroles", "uipreview", "cvd"],
+      "pitch": {
+        "ja": "アクセシビリティを「あとで直す修正項目」ではなく設計手順として扱う。実装者が読み切れる1冊。",
+        "en": "Treats accessibility as a design process, not a punch list — and stays readable for implementers."
+      },
+      "summary": {
+        "ja": [
+          "アクセシビリティ対応を「リリース前のチェック」ではなく、情報設計・UI設計の手順そのものとして組み立て直す本。何をどの順で決めれば結果的に基準を満たすのか、という進め方が主題になっている。",
+          "色に関わる部分では、コントラスト比を「達成基準の数字」としてではなく、テキスト・UI 部品・状態表示それぞれの役割から決めていく。本ツールのコントラスト比カードや役割カバレッジが示す結果を、設計判断へ翻訳するための地図として使える。",
+          "実装者が自分の仕事の言葉で読める点が特長で、非デザイナーがアクセシビリティの入口に置く1冊として扱いやすい。"
+        ],
+        "en": [
+          "Rebuilds accessibility as part of the information- and UI-design process rather than a pre-release checklist, focusing on the order in which decisions should be made so the criteria end up satisfied.",
+          "On color, contrast is derived from the role each element plays — body text, controls, state indicators — instead of being chased as a number. It turns this tool's contrast and role-coverage readings into design decisions.",
+          "Written in language implementers already use, which makes it a practical first accessibility book for non-designers."
+        ]
+      },
+      "links": {
+        "print": "https://amzn.to/4g9y1eL",
+        "kindle": "https://amzn.to/4gIe5j7"
+      }
+    },
+    {
+      "id": "pickering-inclusive-html-css-js",
+      "title": "インクルーシブHTML+CSS & JavaScript",
+      "author": "Heydon Pickering",
+      "publisher": "ボーンデジタル",
+      "year": 2017,
+      "shelf": "accessibility",
+      "audience": "engineer",
+      "accent": "#6A4FBF",
+      "topics": ["contrast", "cvd", "redundancy", "semroles", "uipreview"],
+      "pitch": {
+        "ja": "コードで示されるパターン集。「色だけに頼らない」を実装の型として身につけられる。",
+        "en": "A pattern book written in code — how to stop relying on color alone, as an implementable habit."
+      },
+      "summary": {
+        "ja": [
+          "ボタン・フォーム・ナビゲーションといった具体的な部品ごとに、多様な利用状況で壊れない実装を HTML・CSS・JavaScript のコードで示すパターン集。抽象論ではなくマークアップとスタイルの単位で語られる。",
+          "色の扱いは「色に意味を持たせるなら、色以外の手がかりも同時に与える」という原則が全体を貫く。本ツールの色覚識別性・冗長性検出・グレースケール耐性が警告を出したとき、では実装をどう変えるのかの答えがここにある。",
+          "1パターンずつ独立して読めるため、必要になった部品の章だけを引く使い方もできる。"
+        ],
+        "en": [
+          "A pattern book that shows, component by component, what robust markup, CSS, and JavaScript look like when the audience is genuinely diverse.",
+          "Its through-line on color: if color carries meaning, something other than color must carry it too. That is the concrete answer to warnings raised by this tool's CVD-distinctness, redundancy, and grayscale cards.",
+          "Each pattern stands alone, so it also works as a reference you open only for the component you are building."
+        ]
+      },
+      "links": {
+        "print": "https://amzn.to/4zrFBJ5",
+        "kindle": "https://amzn.to/4x6oQBH"
+      }
+    },
+    {
+      "id": "cudo-color-universal-design",
+      "title": "カラーユニバーサルデザイン",
+      "author": "NPO法人カラーユニバーサルデザイン機構",
+      "publisher": "ハート出版",
+      "year": 2009,
+      "shelf": "accessibility",
+      "audience": "both",
+      "accent": "#C05621",
+      "topics": ["cvd", "cvdmatrix", "cvdsafe", "grayscale", "roles"],
+      "pitch": {
+        "ja": "色覚の多様性に配慮した配色の日本語決定版。見分けにくい組み合わせと、その回避策が具体的。",
+        "en": "The definitive Japanese guide to color-universal design: which pairs fail, and what to use instead."
+      },
+      "summary": {
+        "ja": [
+          "色覚の型によって何がどう見えるのかを示したうえで、実際の印刷物・サイン・画面で「使ってよい組み合わせ／避けるべき組み合わせ」を具体的に提示する。カラーユニバーサルデザイン機構（CUDO）による、日本語で読める標準的な一冊。",
+          "本ツールの色覚シミュレーションと色覚識別性カードは Machado 2009 のモデルで「混同しうるペア」を検出するが、では代わりに何を選ぶかまでは示さない。その先を、実務の作例とともに埋めてくれる。",
+          "/learn の CUDO リンクと同じ出所なので、Web の情報で足りなくなったときの次の資料として自然につながる。"
+        ],
+        "en": [
+          "Shows how colors appear under different types of color vision, then gives concrete do-and-don't combinations for print, signage, and screens, from the Color Universal Design Organization.",
+          "This tool's CVD simulation and distinctness cards flag confusable pairs using the Machado 2009 model, but stop short of prescribing replacements. This book covers that ground with worked examples.",
+          "It comes from the same source as the CUDO link in the learning section, so it is the natural next step once web resources run out."
+        ]
+      },
+      "links": {
+        "print": "https://amzn.to/4ijqyLo"
+      }
+    },
+    {
+      "id": "kudo-tailwind-css",
+      "title": "Tailwind CSS実践入門",
+      "author": "工藤智祥",
+      "publisher": "技術評論社",
+      "year": 2024,
+      "shelf": "engineering",
+      "audience": "engineer",
+      "accent": "#1B7F79",
+      "topics": ["tokens", "roles", "templates", "darklight"],
+      "pitch": {
+        "ja": "ユーティリティファーストの設計思想から、テーマ拡張とデザインシステム構築まで。トークン出力の受け皿。",
+        "en": "From utility-first thinking to theme customization — where this tool's token output actually lands."
+      },
+      "summary": {
+        "ja": [
+          "Tailwind CSS の使い方だけでなく、なぜユーティリティファーストなのかという設計思想、テーマのカスタマイズ、プラグインによる拡張、デザインシステムとしての育て方までを扱う。",
+          "本ツールのデザイントークン出力カードが吐く CSS 変数や `@theme` の断片は、そのままでは「値の羅列」でしかない。それをどう命名し、どこまでテーマへ寄せ、どこからユーティリティで書くかの判断基準がこの本にある。",
+          "配色を決めたあと、コードベースへ落とすところで迷う人向け。"
+        ],
+        "en": [
+          "Covers not just how to use Tailwind CSS but why utility-first works, how to customize the theme, extend it with plugins, and grow it into a design system.",
+          "The CSS variables and `@theme` fragments emitted by the design-token card are only a list of values on their own. This book supplies the judgment for naming them and deciding what belongs in the theme.",
+          "Aimed at the step after the palette is settled: getting it into the codebase."
+        ]
+      },
+      "links": {
+        "print": "https://amzn.to/4qrsrYx",
+        "kindle": "https://amzn.to/3SHG7SM"
+      }
+    },
+    {
+      "id": "ueno-ooui",
+      "title": "オブジェクト指向UIデザイン",
+      "author": "上野学",
+      "publisher": "技術評論社",
+      "year": 2020,
+      "shelf": "practice",
+      "audience": "engineer",
+      "accent": "#B03060",
+      "topics": ["roles", "semroles", "uipreview", "templates"],
+      "pitch": {
+        "ja": "画面をタスクではなくオブジェクトから組み立てる。「なぜこの色がこの役割か」を構造で説明できるようになる。",
+        "en": "Build screens from objects, not tasks — the structural reason a color belongs to a particular role."
+      },
+      "summary": {
+        "ja": [
+          "「やること（タスク）」から画面を作ると操作が増え、「もの（オブジェクト）」から作ると画面は素直になる、という原則を、豊富な演習とともに解説する。プログラマにとってはモデルとビューの対応の話として読める。",
+          "配色の観点では、色は装飾ではなく構造の写像である、という視点が得られる。本ツールのセマンティックロール割当や役割カバレッジが「この色を primary、この色を accent」と提案するとき、その割当が妥当かどうかを判断する足場になる。",
+          "非デザイナーが UI の良し悪しを言語化するための、最も実装者に近い1冊。"
+        ],
+        "en": [
+          "Argues that screens built from objects rather than tasks come out simpler, with plenty of exercises. Programmers can read it as a book about model-to-view correspondence.",
+          "For color, it supplies the view that color maps structure rather than decorating it — the footing you need to judge whether this tool's semantic-role assignments are actually right.",
+          "The closest thing to an implementer's book for putting UI quality into words."
+        ]
+      },
+      "links": {
+        "print": "https://amzn.to/45Cz7tq",
+        "kindle": "https://amzn.to/3UJ7oVn"
+      }
+    },
+    {
+      "id": "pickering-bell-every-layout",
+      "title": "Every Layout",
+      "author": "Heydon Pickering・Andy Bell",
+      "publisher": "ボーンデジタル",
+      "year": 2021,
+      "shelf": "engineering",
+      "audience": "engineer",
+      "accent": "#5A6E1F",
+      "topics": ["templates", "uipreview"],
+      "pitch": {
+        "ja": "レイアウトを部品ではなく原理から組む CSS 設計論。配色の前提になる「面の分け方」が身につく。",
+        "en": "Layout from primitives, not components — the surface structure a color system sits on."
+      },
+      "summary": {
+        "ja": [
+          "Stack・Sidebar・Cluster といったレイアウトプリミティブを定義し、それらの組み合わせでページを構成する CSS 設計論。ブレークポイントを列挙する代わりに、要素自身が使える幅に応じて振る舞うよう書く。",
+          "色の本ではないが、配色は「面の分割」の上に乗る。背景・面・境界をどの粒度で分けるかが決まっていないと、いくら色を厳密に決めても一貫性は出ない。本ツールの UI モックプレビューが示す構造を、実際のコードへ落とすときの土台になる。",
+          "CSS をある程度書ける人向けで、入門書ではない。"
+        ],
+        "en": [
+          "Defines layout primitives — Stack, Sidebar, Cluster — and composes pages from them, writing CSS that responds to available space instead of enumerating breakpoints.",
+          "Not a color book, but color sits on top of how surfaces are divided. Without a settled structure of backgrounds, panels, and borders, precise color choices still fail to read as consistent.",
+          "Assumes working CSS knowledge; it is not an introduction."
+        ]
+      },
+      "links": {
+        "print": "https://amzn.to/4bZKdfu",
+        "kindle": "https://amzn.to/46dO3OG"
+      }
+    },
+    {
+      "id": "handa-css-design-guide",
+      "title": "CSS設計完全ガイド",
+      "author": "半田惇志",
+      "publisher": "技術評論社",
+      "year": 2020,
+      "shelf": "engineering",
+      "audience": "engineer",
+      "accent": "#35657F",
+      "topics": ["tokens", "templates"],
+      "pitch": {
+        "ja": "命名・粒度・責務分割。トークンを運用に載せる前に必要な CSS 設計の前提知識。",
+        "en": "Naming, granularity, separation of concerns — the CSS groundwork tokens need to survive."
+      },
+      "summary": {
+        "ja": [
+          "BEM をはじめとする CSS 設計手法を、思想の紹介で終わらせず「どの粒度で何を分けるか」まで踏み込んで解説する。詳細度・命名・モディファイアの扱いといった、崩れやすい部分の判断基準が中心。",
+          "デザイントークンは、それを受け取る CSS 側の設計が整っていないと機能しない。色トークンを増やしたのに結局その場しのぎの上書きが増える、という失敗を避けるための前提知識としてこの本がある。",
+          "本ツールのトークン出力を実プロジェクトへ持ち込む前に読んでおくと効く。"
+        ],
+        "en": [
+          "Goes past introducing methodologies like BEM into the actual decisions — what to split, at what granularity, and how to handle specificity, naming, and modifiers.",
+          "Design tokens only work if the CSS receiving them is organized. This is the groundwork that prevents a growing token set from turning into a growing pile of overrides.",
+          "Worth reading before taking this tool's token output into a real project."
+        ]
+      },
+      "links": {
+        "print": "https://amzn.to/4gndLVE",
+        "kindle": "https://amzn.to/4gDVkNP"
+      }
+    },
+    {
+      "id": "weinschenk-interface-psychology",
+      "title": "インタフェースデザインの心理学 第2版",
+      "author": "Susan Weinschenk",
+      "publisher": "オライリー・ジャパン",
+      "year": 2021,
+      "shelf": "psychology",
+      "audience": "engineer",
+      "accent": "#8C3B8C",
+      "topics": ["perception", "warmcool", "semroles", "roles"],
+      "pitch": {
+        "ja": "「人はこう見る・こう反応する」を実験の裏付きで100項目。知覚カードの結果を人間側から説明できる。",
+        "en": "A hundred research-backed facts about how people actually perceive and react to interfaces."
+      },
+      "summary": {
+        "ja": [
+          "視覚・記憶・注意・意思決定について、実験に裏づけられた知見を短い項目に分けて解説する。1項目が数ページなので、必要なところだけ拾って読める。",
+          "色に関する項目では、周辺視野での色の見え方、色覚の個人差、色が注意を引く条件などを扱う。本ツールの知覚明度カードや暖寒バランスが示す数値が、なぜその印象につながるのかを人間側から説明してくれる。",
+          "根拠を求めるエンジニアにとって、感覚的な UI 論より受け入れやすい形式になっている。"
+        ],
+        "en": [
+          "Research-backed findings on vision, memory, attention, and decision-making, broken into short entries you can read out of order.",
+          "Its color entries cover peripheral vision, individual variation in color perception, and when color actually attracts attention — the human-side explanation for what the perceptual-lightness and warm-cool cards report.",
+          "The evidence-first format tends to land better with engineers than impressionistic UI writing."
+        ]
+      },
+      "links": {
+        "print": "https://amzn.to/4gnMB16"
+      }
+    },
+    {
+      "id": "nagata-dataviz-design",
+      "title": "データ視覚化のデザイン",
+      "author": "永田ゆかり",
+      "publisher": "SBクリエイティブ",
+      "year": 2020,
+      "shelf": "practice",
+      "audience": "engineer",
+      "accent": "#A8551E",
+      "topics": ["chartpreview", "huedist", "lsdist", "cvd"],
+      "pitch": {
+        "ja": "チャートの色をどう決めるか、日本語で読める実務の入口。ダッシュボード設計まで具体的。",
+        "en": "A practical Japanese entry point to chart color and dashboard design."
+      },
+      "summary": {
+        "ja": [
+          "データ視覚化の目的から始めて、チャート選択・色と前注意的属性の使い方・ダッシュボードの構成・組織への定着までを扱う。事例が具体的で、手を動かす人向けに書かれている。",
+          "色については、系列色を何色まで使えるか、強調に色を使うときの原則、背景とのコントラストといった、本ツールのデータビズプレビューや色相分布が扱う論点を実務の言葉で説明する。",
+          "英訳で読む Wilke『データビジュアライゼーションの基礎』に対して、日本語で先に入る側の1冊として置いている。"
+        ],
+        "en": [
+          "Starts from the purpose of a visualization and works through chart choice, preattentive attributes, dashboard composition, and organizational adoption, with concrete examples.",
+          "On color it addresses how many series colors are usable, principles for emphasis, and contrast against the background — the same questions raised by the data-viz preview and hue-distribution cards.",
+          "Positioned as the Japanese-language on-ramp to Wilke's Fundamentals of Data Visualization."
+        ]
+      },
+      "links": {
+        "print": "https://amzn.to/3SJwsLq",
+        "kindle": "https://amzn.to/4ijjleb"
+      }
+    },
+    {
+      "id": "cgarts-digital-image-processing",
+      "title": "ディジタル画像処理［改訂第二版］",
+      "author": "CG-ARTS協会 編",
+      "publisher": "CG-ARTS協会",
+      "year": 2020,
+      "shelf": "reference",
+      "audience": "engineer",
+      "accent": "#5B4636",
+      "topics": ["spaces", "gamut", "value", "luminance", "perception"],
+      "pitch": {
+        "ja": "色空間・変換・量子化を工学として扱う教科書。数式の根拠を確かめたいときに引く。",
+        "en": "An engineering textbook on color spaces, conversion, and quantization — for checking the math."
+      },
+      "summary": {
+        "ja": [
+          "画像処理の標準的な教科書で、色空間の定義、表色系の相互変換、ガンマと量子化、色の測定といった基礎が体系的にまとまっている。検定テキストでもあるため記述が整理されている。",
+          "本ツールの拡張色空間カードやガマット判定が使う変換式は、いずれもこの領域の標準的な定義に基づく。「なぜ sRGB のガンマはあの形なのか」「XYZ から Lab への変換で何が起きているのか」を確かめたいときの参照先になる。",
+          "通読よりも、必要な章を引く使い方が向く。同じ棚の『色彩工学』より入手しやすい。"
+        ],
+        "en": [
+          "A standard image-processing textbook covering color-space definitions, conversions between color systems, gamma and quantization, and color measurement in an organized way.",
+          "The conversions behind this tool's extended-color-space and gamut cards rest on these standard definitions — the place to check why sRGB's transfer function has the shape it does, or what happens between XYZ and Lab.",
+          "Better used as a reference than read cover to cover, and easier to obtain than Ohta's Color Engineering on the same shelf."
+        ]
+      },
+      "links": {
+        "print": "https://amzn.to/4gGiUcO",
+        "kindle": "https://amzn.to/4ghbfjK"
+      }
+    },
+    {
+      "id": "knaflic-storytelling-with-data",
+      "title": "Google流資料作成術",
+      "author": "Cole Nussbaumer Knaflic",
+      "publisher": "日本実業出版社",
+      "year": 2017,
+      "shelf": "practice",
+      "audience": "both",
+      "accent": "#7A6C1F",
+      "topics": ["chartpreview", "roles", "warmcool"],
+      "pitch": {
+        "ja": "「強調に色を使う」判断の型。使う色を減らすほど伝わる、を実例で示す。",
+        "en": "How to spend color on emphasis — and why using less of it communicates more."
+      },
+      "summary": {
+        "ja": [
+          "データを説明するための資料づくりを、ノイズの削減と注意の誘導という観点から組み立て直す本。ビフォー・アフターの作例が多く、何を消すと伝わるようになるかが視覚的にわかる。",
+          "色の扱いは一貫して「原則グレー、強調だけに色」。本ツールの役割カバレッジやデータビズプレビューでアクセントをどこに置くかを決めるとき、この配分の考え方が効く。",
+          "配色そのものの本ではないため、色の理論を求める場合は他の棚を見るとよい。"
+        ],
+        "en": [
+          "Reframes explanatory data work around removing noise and directing attention, with many before-and-after examples that make the effect of deletion visible.",
+          "Its color rule is consistent: gray by default, color only for emphasis — a useful allocation principle when deciding where the accent goes in the role-coverage and data-viz cards.",
+          "Not a book about color theory as such; look to the other shelves for that."
+        ]
+      },
+      "links": {
+        "print": "https://amzn.to/4xgG4wq",
+        "kindle": "https://amzn.to/4zrOmD5"
       }
     }
   ]

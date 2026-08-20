@@ -1,13 +1,27 @@
 "use client";
 
+import { useState } from "react";
 import Link from "next/link";
 import { ArrowUpRight } from "iconoir-react";
+import { ToggleButtonGroup, ToggleButton } from "react-aria-components";
 import { CardFrame } from "@/components/Card";
+import { segCompactClass, pickKey } from "@/components/segmented";
 import { CARD_REGISTRY } from "@/features/cards/registry";
 import { HELP } from "@/features/cards/help";
 import { BOOKS, booksForTopic } from "@/lib/references";
 import { useLocale, useT } from "@/lib/i18n/locale";
+import type { MessageKey } from "@/lib/i18n/messages";
 import { BookRow } from "./BookRow";
+
+/** 蔵書の絞り込み軸（読者）。`both` の書籍はどちらの側にも出す。 */
+const AUDIENCES = ["all", "engineer", "designer"] as const;
+type AudienceFilter = (typeof AUDIENCES)[number];
+
+const AUDIENCE_KEY = {
+  all: "library.audience.all",
+  engineer: "library.audience.engineer",
+  designer: "library.audience.designer",
+} as const satisfies Record<AudienceFilter, MessageKey>;
 
 /**
  * 図書館画面（/library）。
@@ -17,6 +31,12 @@ import { BookRow } from "./BookRow";
 export function LibraryContent() {
   const locale = useLocale();
   const t = useT();
+  const [audience, setAudience] = useState<AudienceFilter>("all");
+
+  const books = BOOKS.filter(
+    (b) =>
+      audience === "all" || b.audience === audience || b.audience === "both",
+  );
 
   // 指標→書籍の索引（カードのレジストリ順・書籍がある指標だけ）
   const topics = [...new Map(CARD_REGISTRY.map((c) => [c.helpKey, c])).values()]
@@ -52,16 +72,39 @@ export function LibraryContent() {
             </p>
           </div>
           <div className="text-text-3 text-right font-mono text-[11px] leading-[1.9] tracking-[0.08em] whitespace-nowrap">
-            <div>BOOKS — {BOOKS.length}</div>
+            <div>BOOKS — {books.length}</div>
           </div>
         </div>
       </div>
 
       <div className="flex flex-col gap-3.5">
-        {/* 01 蔵書 */}
-        <CardFrame number="01" title={t("library.books")} helpKey="learn">
+        {/* 01 蔵書（読者で絞り込める。実装者が自分の棚へ最短で行けるように） */}
+        <CardFrame
+          number="01"
+          title={t("library.books")}
+          helpKey="learn"
+          rightSlot={
+            <ToggleButtonGroup
+              selectionMode="single"
+              disallowEmptySelection
+              aria-label={t("library.audience")}
+              selectedKeys={[audience]}
+              onSelectionChange={(keys) => {
+                const next = pickKey(keys, AUDIENCES);
+                if (next) setAudience(next);
+              }}
+              className="border-border-strong rounded-control inline-flex shrink-0 overflow-hidden border"
+            >
+              {AUDIENCES.map((a) => (
+                <ToggleButton key={a} id={a} className={segCompactClass}>
+                  {t(AUDIENCE_KEY[a])}
+                </ToggleButton>
+              ))}
+            </ToggleButtonGroup>
+          }
+        >
           <ul className="grid grid-cols-1 gap-x-7 gap-y-6 sm:grid-cols-2">
-            {BOOKS.map((b) => (
+            {books.map((b) => (
               <li key={b.id}>
                 <BookRow book={b} />
               </li>

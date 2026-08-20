@@ -44,7 +44,15 @@ const BookShelfSchema = z.enum([
   "accessibility",
   "psychology",
   "reference",
+  "engineering",
 ]);
+
+/**
+ * 主な読者。図書館の絞り込みに使う。
+ * デザイナー以外（実装者）が自分の棚を見つけられるようにするための軸で、
+ * 内容の性格を表す shelf とは独立している。
+ */
+const BookAudienceSchema = z.enum(["engineer", "designer", "both"]);
 
 const BookSchema = z.object({
   /** React キー・テスト用の安定 ID（書名や版が変わっても据え置く。URL にも使う） */
@@ -55,6 +63,7 @@ const BookSchema = z.object({
   /** 邦訳版・改訂版がある書籍はその版の発行年 */
   year: z.int().min(1900).max(2100),
   shelf: BookShelfSchema,
+  audience: BookAudienceSchema,
   /** カバータイルの地色（書影は使えないため、色で識別する） */
   accent: z.string().regex(/^#[0-9A-Fa-f]{6}$/),
   /** この書籍が扱う指標（helpKey）。カードの参考資料と図書館の索引に使う */
