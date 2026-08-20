@@ -1,5 +1,7 @@
 "use client";
 
+import Link from "next/link";
+import { usePathname } from "next/navigation";
 import {
   DialogTrigger,
   Button,
@@ -25,6 +27,7 @@ export function HelpButton({
 }) {
   const locale = useLocale();
   const t = useT();
+  const pathname = usePathname();
   const help = HELP[locale][helpKey];
   if (!help) return null;
   const isHeader = variant === "header";
@@ -68,6 +71,20 @@ export function HelpButton({
               <p className="text-control font-mono">{help.guide}</p>
             </div>
           </div>
+          {/* 使い方だけは、より詳しい解説ページを持つ（そのページ自身では出さない） */}
+          {helpKey === "usage" && pathname !== "/guide" ? (
+            <div className="border-border flex items-center justify-between gap-3 border-t px-[18px] py-2.5">
+              <p className="text-text-3 text-meta font-mono tracking-[0.04em]">
+                {t("guide.helpNote")}
+              </p>
+              <Link
+                href="/guide"
+                className="text-text-2 hover:text-accent text-meta inline-flex min-h-6 flex-none items-center font-mono underline-offset-2 hover:underline"
+              >
+                {t("guide.open")}
+              </Link>
+            </div>
+          ) : null}
         </Dialog>
       </Popover>
     </DialogTrigger>

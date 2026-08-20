@@ -171,6 +171,13 @@ test.describe("オーバーレイ表示中", () => {
   });
 });
 
+test("使い方（/guide）で違反ゼロ", async ({ page }) => {
+  await page.addInitScript(skipSplash);
+  await page.goto("/guide");
+  await expect(page.getByRole("heading", { name: "使い方" })).toBeVisible();
+  await analyze(page);
+});
+
 test("学習コンテンツ（/learn）で違反ゼロ", async ({ page }) => {
   await page.addInitScript(skipSplash);
   await page.goto("/learn");

@@ -153,6 +153,68 @@ const JA = {
     "腰を据えて学ぶなら書籍。指標との対応をつけて図書館に並べています。",
   "learn.toLibraryCta": "図書館へ",
 
+  // 使い方（/guide）
+  "guide.open": "詳しい使い方を見る",
+  "guide.helpNote": "はじめての方へ",
+  "guide.title": "使い方",
+  "guide.lead":
+    "色を入れてから、判断して、持ち出すまで。実際の画面で追えるようにまとめました。",
+  "guide.quickstart": "30秒で始める",
+  "guide.step1.title": "色を入れる",
+  "guide.step1.body":
+    "画面下のパレットバーの ＋ から色を追加します。HEX を貼っても、色相・彩度・明度のスライダーで作っても構いません。共有リンク（#p=…）を開いた場合は、その配色がそのまま復元されます。",
+  "guide.step2.title": "単位と観点を選ぶ",
+  "guide.step2.body":
+    "「単位」は一度に見る色の数（単色 / ペア / パレット）、「観点」は目的（検証＝いまの配色を診断する / 設計＝配色をつくる）。この2つの組み合わせで表示されるカードが決まります。ペア×検証では、スウォッチの FG / BG バッジで文字色と背景色を指定します。",
+  "guide.step3.title": "結果を持ち出す",
+  "guide.step3.body":
+    "デザイントークン（CSS 変数 / Tailwind / JSON）としてコピー、リンクとして共有、AI に渡す Markdown として書き出す。パレットは自動で URL に入るので、保存操作は要りません。",
+  "guide.modes": "モードと表示されるカード",
+  "guide.modesLead":
+    "カードはモードごとに決まっています。目的のカードが見当たらないときは、単位か観点を切り替えてください。",
+  "guide.modeCards": "枚",
+  "guide.designNote": "設計は単位を問わず同じカードです。",
+  "guide.cardActions": "カード見出しの3つのボタン",
+  "guide.cardActionsLead":
+    "どのカードにも、指標を掘り下げるための同じ3つの入口があります（該当する内容が無いカードでは表示されません）。",
+  "guide.action.help.title": "? — 指標の説明",
+  "guide.action.help.body":
+    "その指標が何を測っているか、どの値が目安かを短く読めます。",
+  "guide.action.refs.title": "本 — 参考資料と書籍",
+  "guide.action.refs.body":
+    "一次情報へのリンクと、その指標を扱う蔵書。腰を据えて学ぶときの入口です。",
+  "guide.action.code.title": "⟨/⟩ — 実装例",
+  "guide.action.code.body":
+    "いま表示中の色を埋めたコードをコピーできます。期待値のコメントは画面の数値と同じ計算から生成しています。",
+  "guide.export": "結果の持ち出し方",
+  "guide.export.tokens.title": "デザイントークン",
+  "guide.export.tokens.body":
+    "設計ビューの最後にあるカードから、CSS 変数・Tailwind の @theme・JSON の3形式でコピーできます。色名は役割（background / text / primary / accent / neutral）が割り当てられます。",
+  "guide.export.share.title": "共有リンク",
+  "guide.export.share.body":
+    "パレットは URL ハッシュ（#p=…）に同期されます。パレットバーの「リンク」でコピーでき、開いた相手には同じ配色が再現されます。色はサーバーに送られません。",
+  "guide.export.ai.title": "AI に渡す",
+  "guide.export.ai.body":
+    "「AI」ボタンで、コントラスト比・APCA・ΔE・危険なペアをまとめた Markdown をコピーします。エディタの AI に貼れば、そのまま修正指示として使えます。",
+  "guide.tips": "覚えておくと速い",
+  "guide.tip.swatch":
+    "スウォッチはクリックで選択、ダブルクリックで編集、← → で並べ替え。右下の塗りつぶしアイコンでアプリ自身の差し色（UI アクセント）に指定できます。",
+  "guide.tip.format":
+    "カラーコードの表示形式（HEX / RGB / HSL / HSV）はヘッダーで切り替わり、アプリ全体に効きます。コードはクリックでコピーできます。",
+  "guide.tip.theme":
+    "テーマ（ライト / ダーク）と言語（日本語 / English）は設定メニュー。次回訪問時も保持されます。",
+  "guide.tip.offline":
+    "インストール（PWA）すればオフラインでも起動します。計算はすべてブラウザ内で完結します。",
+  "guide.more": "もっと深く知る",
+  "guide.shot.palette":
+    "画面下のパレットバー。スウォッチ・FG/BG バッジ・単位/観点の切替・リンク/AI ボタンが並んでいる",
+  "guide.shot.card":
+    "WCAG コントラスト比のカード。比の数値・AA/AAA の判定・可読性プレビューと、見出し右の3つのボタン",
+  "guide.shot.snippet":
+    "実装例のポップオーバー。表示中の色が埋まった culori のコードとコピーボタン",
+  "guide.shot.tokens":
+    "デザイントークン出力のカード。CSS 変数・Tailwind・JSON を切り替えてコピーできる",
+
   // AI に渡す（診断結果の Markdown コピー）
   "ai.label": "AI",
   "ai.copy": "診断結果を Markdown でコピー（AI に渡す）",
@@ -576,6 +638,67 @@ const EN: Record<MessageKey, string> = {
   "learn.toLibraryLead":
     "For sustained study, books. The library maps each one to the metrics it covers.",
   "learn.toLibraryCta": "Go to the library",
+
+  "guide.open": "Read the full guide",
+  "guide.helpNote": "New here?",
+  "guide.title": "How to Use",
+  "guide.lead":
+    "From adding colors to judging them to taking the result away — walked through on the real screens.",
+  "guide.quickstart": "Start in 30 Seconds",
+  "guide.step1.title": "Add colors",
+  "guide.step1.body":
+    "Use ＋ in the palette bar at the bottom. Paste a HEX value or build one with the hue/saturation/value sliders. Opening a share link (#p=…) restores that palette as-is.",
+  "guide.step2.title": "Pick a unit and a view",
+  "guide.step2.body":
+    "Unit is how many colors you look at (single / pair / palette); view is what for (verify = diagnose what you have, design = build something new). The pair of them decides which cards appear. In pair × verify, the FG / BG badges on the swatches set text and background.",
+  "guide.step3.title": "Take the result away",
+  "guide.step3.body":
+    "Copy design tokens (CSS variables / Tailwind / JSON), share a link, or export Markdown for an AI. The palette syncs to the URL, so there is nothing to save.",
+  "guide.modes": "Modes and the Cards They Show",
+  "guide.modesLead":
+    "Cards belong to modes. If the card you want is missing, switch the unit or the view.",
+  "guide.modeCards": "cards",
+  "guide.designNote": "The design view shows the same cards for every unit.",
+  "guide.cardActions": "Three Buttons in Every Card Header",
+  "guide.cardActionsLead":
+    "Each card offers the same three ways to go deeper (a button is hidden when it has nothing to show).",
+  "guide.action.help.title": "? — What the metric means",
+  "guide.action.help.body":
+    "A short read on what is being measured and which values to aim for.",
+  "guide.action.refs.title": "Book — References and books",
+  "guide.action.refs.body":
+    "Primary sources for the metric, plus the books on the shelf that cover it.",
+  "guide.action.code.title": "⟨/⟩ — Code",
+  "guide.action.code.body":
+    "Copy code with your current colors already in it. The expected values in the comments come from the same math as the screen.",
+  "guide.export": "Getting the Result Out",
+  "guide.export.tokens.title": "Design tokens",
+  "guide.export.tokens.body":
+    "The last card in the design view copies CSS variables, a Tailwind @theme block, or JSON. Names follow the assigned roles (background / text / primary / accent / neutral).",
+  "guide.export.share.title": "Share link",
+  "guide.export.share.body":
+    "The palette syncs to the URL hash (#p=…). Copy it with the link button; whoever opens it sees the same palette. Colors never leave the browser.",
+  "guide.export.ai.title": "Hand it to an AI",
+  "guide.export.ai.body":
+    "The AI button copies Markdown with the contrast ratio, APCA, delta-E, and the risky pairs. Paste it into your editor's AI and it reads as a set of instructions.",
+  "guide.tips": "Worth Knowing",
+  "guide.tip.swatch":
+    "Click a swatch to select, double-click to edit, ← → to reorder. The fill icon at the bottom right makes that color the app's own accent.",
+  "guide.tip.format":
+    "The color format (HEX / RGB / HSL / HSV) switches in the header and applies everywhere. Any code can be clicked to copy.",
+  "guide.tip.theme":
+    "Theme (light / dark) and language (Japanese / English) live in the settings menu and persist across visits.",
+  "guide.tip.offline":
+    "Install it (PWA) and it starts offline. All computation happens in the browser.",
+  "guide.more": "Going Deeper",
+  "guide.shot.palette":
+    "The palette bar: swatches, FG/BG badges, the unit and view toggles, and the link and AI buttons",
+  "guide.shot.card":
+    "The WCAG contrast card: the ratio, the AA/AAA verdicts, the readability preview, and the three buttons in the header",
+  "guide.shot.snippet":
+    "The code popover: culori code with the current colors filled in, and a copy button",
+  "guide.shot.tokens":
+    "The design token card, switching between CSS variables, Tailwind, and JSON",
 
   "ai.label": "AI",
   "ai.copy": "Copy the findings as Markdown (for AI)",

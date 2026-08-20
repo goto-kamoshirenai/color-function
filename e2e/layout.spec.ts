@@ -181,6 +181,7 @@ const SCENES: {
   },
   { name: "1色のみ", hash: "#p=336699" },
   { name: "空のパレット", hash: "#p=" },
+  { name: "使い方", path: "/guide" },
   { name: "学習コンテンツ", path: "/learn" },
   { name: "図書館", path: "/library" },
   { name: "書籍の詳細", path: "/library/coady-color-accessibility" },

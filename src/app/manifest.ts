@@ -60,6 +60,12 @@ export default function manifest(): MetadataRoute.Manifest {
         url: "/",
       },
       {
+        name: "使い方",
+        short_name: "使い方",
+        description: "操作手順と結果の持ち出し方",
+        url: "/guide",
+      },
+      {
         name: "学習コンテンツ",
         short_name: "学習",
         description: "指標別リファレンス・記事・用語集",

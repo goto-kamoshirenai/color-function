@@ -48,6 +48,14 @@
   color-scheme: dark;
 }
 
+/*
+ * dark: バリアント。テーマはメディアクエリではなく data-theme（lib/theme.ts）で
+ * 切り替わるため、Tailwind の既定（prefers-color-scheme）を上書きして紐づける。
+ * 使いどころは「テーマごとに別アセットを出し分ける」等の限られた場面のみ
+ * — 色はトークン（--surface 等）で自動追従するので dark: を書く必要はない。
+ */
+@custom-variant dark ([data-theme="dark"] &);
+
 /* トークンを Tailwind ユーティリティに公開（bg-surface, text-text-2 等） */
 @theme inline {
   --color-bg: var(--bg);

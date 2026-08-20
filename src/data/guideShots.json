@@ -1,0 +1,21 @@
+{
+  "schemaVersion": "1.0.0",
+  "shots": {
+    "palette": {
+      "width": 1180,
+      "height": 171
+    },
+    "card": {
+      "width": 848,
+      "height": 428
+    },
+    "snippet": {
+      "width": 438,
+      "height": 257
+    },
+    "tokens": {
+      "width": 471,
+      "height": 340
+    }
+  }
+}

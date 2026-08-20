@@ -16,13 +16,14 @@
  * キャッシュ名に VERSION を含め、activate で旧世代を破棄する。
  */
 
-const VERSION = "v2";
+const VERSION = "v3";
 const SHELL_CACHE = `cff-shell-${VERSION}`;
 const ASSET_CACHE = `cff-assets-${VERSION}`;
 
 /** インストール時に確実に取っておくもの（ルート HTML と静的データ）。 */
 const PRECACHE_URLS = [
   "/",
+  "/guide",
   "/learn",
   "/library",
   "/code",
@@ -44,6 +45,9 @@ const CACHE_FIRST_PREFIXES = [
   "/logo/",
   "/help/",
   "/locales/",
+  // 使い方ページの画面写真（撮り直すとファイル名は同じまま中身が変わるが、
+  // VERSION を上げれば世代ごと入れ替わる）
+  "/guide/",
 ];
 
 self.addEventListener("install", (event) => {
