@@ -69,10 +69,7 @@ export function CardRedundancy({ number }: CardProps) {
           ))}
         </ul>
       )}
-      <BookNudge
-        helpKey="redundancy"
-        when={palette.length >= 2 && pairs.length > 0}
-      />
+      <BookNudge helpKey="redundancy" />
     </CardFrame>
   );
 }

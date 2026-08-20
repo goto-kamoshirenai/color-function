@@ -21,12 +21,11 @@ export function CardCvdMatrix({ number }: CardProps) {
   const t = useT();
 
   const rgbs = palette.map((c) => parseHex(c.hex) ?? { r: 0, g: 0, b: 0 });
-  // 型ごとの混同ペア（描画と書籍導線の条件で同じ結果を使う）
+  // 型ごとの混同ペア
   const byType = TYPES.map((entry) => ({
     ...entry,
     pairs: cvdConfusablePairs(rgbs, entry.type, 10),
   }));
-  const confusable = byType.some((entry) => entry.pairs.length > 0);
 
   return (
     <CardFrame
@@ -87,7 +86,7 @@ export function CardCvdMatrix({ number }: CardProps) {
           })}
         </div>
       )}
-      <BookNudge helpKey="cvdmatrix" when={palette.length >= 2 && confusable} />
+      <BookNudge helpKey="cvdmatrix" />
     </CardFrame>
   );
 }

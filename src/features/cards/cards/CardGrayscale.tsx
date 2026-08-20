@@ -100,7 +100,7 @@ export function CardGrayscale({ number }: CardProps) {
           </div>
         </div>
       )}
-      <BookNudge helpKey="grayscale" when={collisions.length > 0} />
+      <BookNudge helpKey="grayscale" />
     </CardFrame>
   );
 }

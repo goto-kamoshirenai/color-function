@@ -190,8 +190,7 @@ export function CardWcagContrast({ number }: CardProps) {
           </div>
         </>
       )}
-      {/* 通常テキストの AA を割ったときだけ、直し方を扱う書籍へ送る */}
-      <BookNudge helpKey="contrast" when={!!pair && !v.aaNormal} />
+      <BookNudge helpKey="contrast" />
     </CardFrame>
   );
 }

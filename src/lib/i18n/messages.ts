@@ -181,20 +181,13 @@ const JA = {
   "book.kindle": "Kindle",
   "book.buyAria": "{title} を Amazon で見る（{format}・PR）",
 
-  // 結果連動の書籍導線（カード末尾）
-  "booknudge.label": "次の一手",
-  "booknudge.contrast":
-    "この組み合わせは通常テキストの基準に届いていません。意図を保ったまま基準を満たす直し方を、体系立てて学ぶなら。",
-  "booknudge.apca":
-    "Lc が本文の目安（75）に届いていません。知覚に沿ったコントラストの考え方を学ぶなら。",
-  "booknudge.cvdmatrix":
-    "特定の色覚で見分けにくいペアがあります。色だけに頼らない情報設計を学ぶなら。",
-  "booknudge.grayscale":
-    "脱色すると潰れるペアがあります。明度で情報を担保する設計を学ぶなら。",
-  "booknudge.redundancy":
-    "似すぎている色があります。隣り合う色で見えが変わる仕組みを、実習で体得するなら。",
-  "booknudge.scheme":
-    "規則としての調和は取れています。狙う印象へ寄せる引き出しを増やすなら。",
+  // 結果連動の書籍導線（カード末尾の1行。結果が理由を語るので説明文は持たない）
+  "booknudge.contrast": "基準の直し方",
+  "booknudge.apca": "知覚に沿った読みやすさ",
+  "booknudge.cvdmatrix": "色に頼らない設計",
+  "booknudge.grayscale": "明度で情報を担保する",
+  "booknudge.redundancy": "隣り合う色の効果",
+  "booknudge.scheme": "印象を寄せる引き出し",
 
   // カード共通の案内
   "card.empty": "色がありません — 下の ＋ から追加してください",
@@ -577,19 +570,12 @@ const EN: Record<MessageKey, string> = {
   "book.kindle": "Kindle",
   "book.buyAria": "View {title} on Amazon ({format}, PR)",
 
-  "booknudge.label": "Next step",
-  "booknudge.contrast":
-    "This pair falls short of the normal-text threshold. To learn how to meet it without losing your design intent:",
-  "booknudge.apca":
-    "Lc is below the body-text guide of 75. To learn contrast the way perception actually works:",
-  "booknudge.cvdmatrix":
-    "Some pairs are hard to tell apart under certain color vision. To learn information design that never relies on color alone:",
-  "booknudge.grayscale":
-    "Some pairs collapse when desaturated. To learn how to carry information in lightness:",
-  "booknudge.redundancy":
-    "Some colors are too similar. To learn by exercise how neighboring colors change what you see:",
-  "booknudge.scheme":
-    "Harmony holds as a rule. To widen your repertoire for a specific impression:",
+  "booknudge.contrast": "How to fix it",
+  "booknudge.apca": "Readability as perceived",
+  "booknudge.cvdmatrix": "Design beyond color",
+  "booknudge.grayscale": "Carry it in lightness",
+  "booknudge.redundancy": "How neighbors interact",
+  "booknudge.scheme": "Widen the repertoire",
 
   "card.empty": "No colors — use ＋ below to add one",
   "card.needPair": "A pair needs at least 2 colors — add more with ＋ below",

@@ -4,6 +4,8 @@ import { useColorStore, type Unit, type View } from "@/store/useColorStore";
 import { CARD_REGISTRY } from "@/features/cards/registry";
 import { filterCards } from "@/features/cards/types";
 import { layoutFor } from "@/features/cards/layout";
+import { useActiveNudge } from "@/features/cards/nudge";
+import { NudgeSlotProvider } from "@/features/cards/nudgeSlot";
 import { PairRolePicker } from "./PairRolePicker";
 import { useT } from "@/lib/i18n/locale";
 import type { MessageKey } from "@/lib/i18n/messages";
@@ -34,6 +36,8 @@ export function CardList() {
   const view = useColorStore((s) => s.view);
   const paletteCount = useColorStore((s) => s.palette.length);
   const t = useT();
+  // 結果連動の書籍導線は1画面に1件だけ（どのカードに付けるかをここで配る）
+  const nudge = useActiveNudge();
 
   const cards = filterCards(CARD_REGISTRY, unit, view);
   const byKey = new Map(cards.map((c) => [c.key, c]));
@@ -99,17 +103,22 @@ export function CardList() {
         </div>
       </div>
 
-      <div className="flex flex-col gap-3.5">
-        {rows.map((row, ri) => (
-          <div key={ri} className={`grid grid-cols-1 gap-3.5 ${row.className}`}>
-            {row.keys.map((key) => {
-              const def = byKey.get(key);
-              if (!def) return null;
-              return <def.Component key={key} number={nextNumber()} />;
-            })}
-          </div>
-        ))}
-      </div>
+      <NudgeSlotProvider value={nudge}>
+        <div className="flex flex-col gap-3.5">
+          {rows.map((row, ri) => (
+            <div
+              key={ri}
+              className={`grid grid-cols-1 gap-3.5 ${row.className}`}
+            >
+              {row.keys.map((key) => {
+                const def = byKey.get(key);
+                if (!def) return null;
+                return <def.Component key={key} number={nextNumber()} />;
+              })}
+            </div>
+          ))}
+        </div>
+      </NudgeSlotProvider>
     </div>
   );
 }

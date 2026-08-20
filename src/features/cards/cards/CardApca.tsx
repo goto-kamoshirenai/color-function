@@ -73,7 +73,7 @@ export function CardApca({ number }: CardProps) {
           </div>
         </div>
       )}
-      <BookNudge helpKey="apca" when={!!pair && usage === "fail"} />
+      <BookNudge helpKey="apca" />
     </CardFrame>
   );
 }

@@ -62,7 +62,7 @@ export function CardSchemeMatch({ number }: CardProps) {
           </p>
         </div>
       )}
-      <BookNudge helpKey="scheme" when={!!match} />
+      <BookNudge helpKey="scheme" />
     </CardFrame>
   );
 }

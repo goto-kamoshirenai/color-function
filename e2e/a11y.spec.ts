@@ -188,11 +188,11 @@ test("書籍の詳細（/library/[id]）で違反ゼロ", async ({ page }) => {
 
 test("結果連動の書籍導線が出た状態で違反ゼロ", async ({ page }) => {
   await page.addInitScript(skipSplash);
-  // コントラスト不足のペア＝カード末尾に「次の一手」が出ている
+  // コントラスト不足のペア＝カード末尾に書籍導線の1行が出ている
   await page.goto("/#p=777777,808080");
   await ready(page);
   await coachSettled(page, true);
-  await expect(page.getByText("次の一手").first()).toBeVisible();
+  await expect(page.getByRole("link", { name: /基準の直し方/ })).toBeVisible();
   await analyze(page);
 });
 
