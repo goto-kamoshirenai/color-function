@@ -47,7 +47,8 @@ const SNIPPETS: Record<string, (ctx: SnippetContext) => CodeSnippet> = {
     lang: "ts",
     code: `import { wcagLuminance } from "culori";
 
-const y = wcagLuminance("${primary}"); // → ${relativeLuminance(rgb(primary)).toFixed(4)}`,
+const y = wcagLuminance("${primary}");
+// → ${relativeLuminance(rgb(primary)).toFixed(4)}`,
   }),
 
   contrast: ({ fg, bg }) => ({
@@ -55,8 +56,8 @@ const y = wcagLuminance("${primary}"); // → ${relativeLuminance(rgb(primary)).
     lang: "ts",
     code: `import { wcagContrast } from "culori";
 
-const ratio = wcagContrast("${fg}", "${bg}"); // → ${contrastRatio(rgb(fg), rgb(bg)).toFixed(2)}
-const passesAA = ratio >= 4.5; // 通常テキスト`,
+const ratio = wcagContrast("${fg}", "${bg}");
+// → ${contrastRatio(rgb(fg), rgb(bg)).toFixed(2)}（通常テキストは 4.5 以上）`,
   }),
 
   apca: ({ fg, bg }) => ({
@@ -68,7 +69,8 @@ const passesAA = ratio >= 4.5; // 通常テキスト`,
 const lc = APCAcontrast(
   sRGBtoY(colorParsley("${fg}")),
   sRGBtoY(colorParsley("${bg}")),
-); // → ${apcaContrast(rgb(fg), rgb(bg)).toFixed(1)}`,
+);
+// → ${apcaContrast(rgb(fg), rgb(bg)).toFixed(1)}（本文の目安は 75）`,
   }),
 
   deltae: ({ fg, bg }) => ({
@@ -77,7 +79,8 @@ const lc = APCAcontrast(
     code: `import { differenceCiede2000 } from "culori";
 
 const deltaE = differenceCiede2000();
-deltaE("${fg}", "${bg}"); // → ${deltaE2000(lab(fg), lab(bg)).toFixed(2)}`,
+deltaE("${fg}", "${bg}");
+// → ${deltaE2000(lab(fg), lab(bg)).toFixed(2)}`,
   }),
 
   cvd: ({ primary }) => ({
@@ -99,9 +102,15 @@ const simulate = filterDeficiencyDeuter(1);
 const deltaE = differenceCiede2000();
 
 // シミュレーション後の色差が 10 未満なら見分けにくい組み合わせ
-const confusable = palette.flatMap((a, i) =>
-  palette.slice(i + 1).map((b) => ({ a, b, de: deltaE(simulate(a), simulate(b)) })),
-).filter(({ de }) => de < 10);`,
+const confusable = palette
+  .flatMap((a, i) =>
+    palette.slice(i + 1).map((b) => ({
+      a,
+      b,
+      de: deltaE(simulate(a), simulate(b)),
+    })),
+  )
+  .filter(({ de }) => de < 10);`,
   }),
 
   grayscale: ({ primary }) => ({
@@ -128,7 +137,8 @@ formatCss(toOklch("${primary}")); // → "oklch(… … …)"`,
     code: `import { inGamut, clampChroma, formatCss } from "culori";
 
 inGamut("rgb")("${primary}"); // sRGB に収まるか
-formatCss(clampChroma("${primary}", "oklch")); // 収まらない色を明度・色相を保って収める`,
+// 収まらない色は、明度と色相を保ったまま彩度だけ落として収める
+formatCss(clampChroma("${primary}", "oklch"));`,
   }),
 
   tone: ({ primary }) => ({
