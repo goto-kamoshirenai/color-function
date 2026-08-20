@@ -184,6 +184,7 @@ const SCENES: {
   { name: "学習コンテンツ", path: "/learn" },
   { name: "図書館", path: "/library" },
   { name: "書籍の詳細", path: "/library/coady-color-accessibility" },
+  { name: "実装", path: "/code" },
   {
     // 基準未達のペア＝カード末尾の書籍導線が出ている状態
     name: "ペア×検証（コントラスト不足）",

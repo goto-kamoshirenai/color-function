@@ -9,7 +9,8 @@ import AxeBuilder from "@axe-core/playwright";
  *    moderate には見出し階層・landmark・ARIA 属性の不備など、SR 利用に
  *    実害のある指摘が含まれるため素通ししない。
  *  - ホームの3モードだけでなく、オーバーレイ（ピッカー・確認ダイアログ・
- *    設定メニュー・ヘルプ／参考資料ポップオーバー）・`/learn`・`/library`・
+ *    設定メニュー・ヘルプ／参考資料／実装例ポップオーバー）・`/learn`・
+ *    `/library`・`/code`・
  *    書籍導線が出た状態・スプラッシュ表示中も解析対象にする。
  *  - `[data-specimen]` はユーザー指定色をそのまま見せる標本領域
  *    （プレビュー・CVDサンプル・調和チップ）。そのコントラストはアプリが
@@ -150,6 +151,15 @@ test.describe("オーバーレイ表示中", () => {
     await analyze(page);
   });
 
+  test("カードの実装例ポップオーバーで違反ゼロ", async ({ page }) => {
+    await page
+      .getByRole("button", { name: /の実装例$/ })
+      .first()
+      .click();
+    await expect(page.getByRole("heading", { name: "実装例" })).toBeVisible();
+    await analyze(page);
+  });
+
   test("FG/BG バーのヒントで違反ゼロ", async ({ page }) => {
     // タブレット幅以上では常時表示のヒントボタンが出る
     await page.setViewportSize({ width: 1024, height: 800 });
@@ -167,6 +177,13 @@ test("学習コンテンツ（/learn）で違反ゼロ", async ({ page }) => {
   await expect(
     page.getByRole("heading", { name: "学習コンテンツ" }),
   ).toBeVisible();
+  await analyze(page);
+});
+
+test("実装（/code）で違反ゼロ", async ({ page }) => {
+  await page.addInitScript(skipSplash);
+  await page.goto("/code");
+  await expect(page.getByRole("heading", { name: "実装" })).toBeVisible();
   await analyze(page);
 });
 

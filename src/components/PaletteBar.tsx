@@ -6,6 +6,7 @@ import { Plus, NavArrowDown, NavArrowUp } from "iconoir-react";
 import { useColorStore, type Color } from "@/store/useColorStore";
 import { ModeToggle } from "./ModeToggle";
 import { ShareButton } from "./ShareButton";
+import { AiExportButton } from "./AiExportButton";
 import { Swatch } from "./Swatch";
 import { useT } from "@/lib/i18n/locale";
 import { useFormatColor } from "@/lib/colorFormat";
@@ -279,6 +280,7 @@ export function PaletteBar() {
         <ModeToggle />
         <div className="flex items-center gap-2.5">
           <ShareButton />
+          <AiExportButton />
           {palette.length > 0 ? (
             <button
               type="button"

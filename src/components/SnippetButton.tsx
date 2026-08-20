@@ -76,7 +76,11 @@ export function SnippetButton({ helpKey }: { helpKey: string }) {
           </div>
 
           <div className="px-[18px] py-3.5">
-            <pre className="border-border bg-surface-2 rounded-control overflow-x-auto border px-3 py-2.5 font-mono text-[11.5px] leading-[1.65]">
+            {/* 横スクロールする領域はキーボードでも辿れる必要がある（axe: scrollable-region-focusable） */}
+            <pre
+              tabIndex={0}
+              className="border-border bg-surface-2 rounded-control overflow-x-auto border px-3 py-2.5 font-mono text-[11.5px] leading-[1.65]"
+            >
               {snippet.code}
             </pre>
             <div className="mt-2.5 flex flex-wrap items-center justify-between gap-2">

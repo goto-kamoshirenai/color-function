@@ -153,6 +153,18 @@ const JA = {
     "腰を据えて学ぶなら書籍。指標との対応をつけて図書館に並べています。",
   "learn.toLibraryCta": "図書館へ",
 
+  // AI に渡す（診断結果の Markdown コピー）
+  "ai.label": "AI",
+  "ai.copy": "診断結果を Markdown でコピー（AI に渡す）",
+  "ai.copyTitle": "診断結果を Markdown でコピー（エディタの AI に貼れます）",
+  "ai.copied": "診断結果を Markdown でコピーしました",
+  "ai.reportTitle": "配色レポート — Color Follows Function",
+  "ai.palette": "パレット",
+  "ai.pairSection": "ペア（文字色 {fg} / 背景色 {bg}）",
+  "ai.paletteSection": "パレット全体",
+  "ai.refSection": "参考",
+  "ai.none": "なし",
+
   // 実装（/code）— 計算ライブラリとスニペット
   "code.open": "実装リファレンスを開く",
   "code.pageTitle": "実装",
@@ -564,6 +576,17 @@ const EN: Record<MessageKey, string> = {
   "learn.toLibraryLead":
     "For sustained study, books. The library maps each one to the metrics it covers.",
   "learn.toLibraryCta": "Go to the library",
+
+  "ai.label": "AI",
+  "ai.copy": "Copy the findings as Markdown (for AI)",
+  "ai.copyTitle": "Copy the findings as Markdown — paste into your editor's AI",
+  "ai.copied": "Copied the findings as Markdown",
+  "ai.reportTitle": "Color report — Color Follows Function",
+  "ai.palette": "Palette",
+  "ai.pairSection": "Pair (text {fg} / background {bg})",
+  "ai.paletteSection": "Whole palette",
+  "ai.refSection": "References",
+  "ai.none": "None",
 
   "code.open": "Open the implementation reference",
   "code.pageTitle": "Implementation",

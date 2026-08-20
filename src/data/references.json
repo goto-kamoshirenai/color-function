@@ -257,6 +257,18 @@
         "source": "Wikipedia",
         "url": "https://en.wikipedia.org/wiki/Oklab_color_space",
         "lang": "en"
+      },
+      {
+        "title": "CSS Color Module Level 4",
+        "source": "W3C",
+        "url": "https://www.w3.org/TR/css-color-4/",
+        "lang": "en"
+      },
+      {
+        "title": "Oklab（色空間の設計意図）",
+        "source": "Björn Ottosson",
+        "url": "https://bottosson.github.io/posts/oklab/",
+        "lang": "en"
       }
     ],
     "perception": [
@@ -304,6 +316,12 @@
         "title": "Web colors",
         "source": "Wikipedia",
         "url": "https://en.wikipedia.org/wiki/Web_colors",
+        "lang": "en"
+      },
+      {
+        "title": "Gamut clipping（ガマット外の色をどう収めるか）",
+        "source": "Björn Ottosson",
+        "url": "https://bottosson.github.io/posts/gamutclipping/",
         "lang": "en"
       }
     ],
@@ -529,6 +547,12 @@
         "source": "Wikipedia",
         "url": "https://en.wikipedia.org/wiki/Blend_modes",
         "lang": "en"
+      },
+      {
+        "title": "color-mix() — 2色を指定空間で混ぜる",
+        "source": "MDN Web Docs",
+        "url": "https://developer.mozilla.org/ja/docs/Web/CSS/color_value/color-mix",
+        "lang": "ja"
       }
     ],
     "nudge": [
@@ -585,6 +609,12 @@
         "source": "Wikipedia",
         "url": "https://en.wikipedia.org/wiki/Oklab_color_space",
         "lang": "en"
+      },
+      {
+        "title": "light-dark() — テーマで値を切り替える",
+        "source": "MDN Web Docs",
+        "url": "https://developer.mozilla.org/ja/docs/Web/CSS/color_value/light-dark",
+        "lang": "ja"
       }
     ],
     "sort": [
@@ -613,6 +643,12 @@
         "source": "design.digital.go.jp",
         "url": "https://design.digital.go.jp/",
         "lang": "ja"
+      },
+      {
+        "title": "Material 3 — Color roles",
+        "source": "Google",
+        "url": "https://m3.material.io/styles/color/roles",
+        "lang": "en"
       }
     ],
     "namesearch": [
@@ -655,6 +691,12 @@
         "source": "tailwindcss.com",
         "url": "https://tailwindcss.com/docs/theme",
         "lang": "en"
+      },
+      {
+        "title": "Radix Colors — Understanding the scale",
+        "source": "Radix UI",
+        "url": "https://www.radix-ui.com/colors/docs/palette-composition/understanding-the-scale",
+        "lang": "en"
       }
     ]
   },
@@ -681,6 +723,66 @@
       "title": "ウェブアクセシビリティ導入ガイドブック",
       "source": "デジタル庁",
       "url": "https://www.digital.go.jp/resources/introduction-to-web-accessibility-guidebook",
+      "lang": "ja"
+    },
+    {
+      "title": "Color Spaces（インタラクティブ解説）",
+      "source": "Bartosz Ciechanowski",
+      "url": "https://ciechanow.ski/color-spaces/",
+      "lang": "en"
+    },
+    {
+      "title": "Oklab — A perceptual color space for image processing",
+      "source": "Björn Ottosson",
+      "url": "https://bottosson.github.io/posts/oklab/",
+      "lang": "en"
+    },
+    {
+      "title": "LCH colors in CSS: what, why, and how?",
+      "source": "Lea Verou",
+      "url": "https://lea.verou.me/blog/2020/04/lch-colors-in-css-what-why-and-how/",
+      "lang": "en"
+    },
+    {
+      "title": "OKLCH in CSS: why we moved from RGB and HSL",
+      "source": "Evil Martians",
+      "url": "https://evilmartians.com/chronicles/oklch-in-css-why-quit-rgb-hsl",
+      "lang": "en"
+    },
+    {
+      "title": "Color Formats in CSS",
+      "source": "Josh W. Comeau",
+      "url": "https://www.joshwcomeau.com/css/color-formats/",
+      "lang": "en"
+    },
+    {
+      "title": "Programming Design Systems — Color（無料の教科書）",
+      "source": "Rune Madsen",
+      "url": "https://programmingdesignsystems.com/color/color-models-and-color-spaces/",
+      "lang": "en"
+    },
+    {
+      "title": "Designing accessible color systems",
+      "source": "Stripe",
+      "url": "https://stripe.com/blog/accessible-color-systems",
+      "lang": "en"
+    },
+    {
+      "title": "Refactoring UI（公式・書籍サイト）",
+      "source": "Adam Wathan & Steve Schoger",
+      "url": "https://www.refactoringui.com/",
+      "lang": "en"
+    },
+    {
+      "title": "freee アクセシビリティー・ガイドライン",
+      "source": "freee",
+      "url": "https://a11y-guidelines.freee.co.jp/",
+      "lang": "ja"
+    },
+    {
+      "title": "SmartHR Design System — 色",
+      "source": "SmartHR",
+      "url": "https://smarthr.design/basics/colors/",
       "lang": "ja"
     }
   ],

@@ -91,7 +91,8 @@ export function CodeContent() {
                 <p className="text-text-2 mt-1.5 text-[12.5px] leading-[1.65]">
                   {lib.pitch[locale]}
                 </p>
-                <p className="text-text-3 border-border bg-surface-2 rounded-control mt-2 overflow-x-auto border px-2.5 py-1.5 font-mono text-[11.5px] leading-[1.6]">
+                {/* API 名は折り返す（横スクロール領域にしない = キーボード操作の負担を増やさない） */}
+                <p className="text-text-3 border-border bg-surface-2 rounded-control mt-2 border px-2.5 py-1.5 font-mono text-[11.5px] leading-[1.6] break-words">
                   {lib.api}
                 </p>
                 <div className="mt-2 flex flex-wrap items-center gap-x-3 gap-y-1.5">
