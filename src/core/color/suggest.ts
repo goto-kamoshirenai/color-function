@@ -150,11 +150,7 @@ export function equalizeLightness(rgbs: RGB[]): RGB[] {
 }
 
 export type SemanticRole =
-  | "background"
-  | "text"
-  | "primary"
-  | "accent"
-  | "neutral";
+  "background" | "text" | "primary" | "accent" | "neutral";
 
 /**
  * セマンティックロール割当（ヒューリスティック）:
